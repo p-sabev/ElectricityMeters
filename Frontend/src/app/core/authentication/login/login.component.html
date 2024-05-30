@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center my-5">
+      <div class="cont s--signup" [ngClass]="{'s--signup': isSignUp}">
+        <div class="form sign-in">
+          <h2 style="color: #1d3557;">Добре дошли,</h2>
+          <label>
+            <span>Имейл</span>
+            <input class="form-control" [(ngModel)]="loginModel.email" type="email" />
+          </label>
+          <label>
+            <span>Парола</span>
+            <input class="form-control" [(ngModel)]="loginModel.password" type="password" />
+          </label>
+          <p class="forgot-pass">Забравена парола?</p>
+          <button type="button" class="submit" (click)="logIn()">Вход</button>
+        </div>
+        <div class="sub-cont">
+          <div class="img">
+            <div class="img__text m--up">
+              <h2>Нямате регистрация?</h2>
+              <p class="mt-4">Направете си регистрация!</p>
+            </div>
+            <div class="img__text m--in">
+<!--              <h2>One of us?</h2>-->
+<!--              <p>If you already has an account, just sign in. We've missed you!</p>-->
+            </div>
+            <div class="img__btn">
+              <span class="m--up" (click)="isSignUp = true;">Регистрация</span>
+              <span class="m--in">Sign In</span>
+            </div>
+          </div>
+          <div class="form sign-up">
+            <h2>Влезте в света на науката,</h2>
+            <label>
+              <span>Име</span>
+              <input type="text" />
+            </label>
+            <label>
+              <span>Имейл</span>
+              <input type="email" />
+            </label>
+            <label>
+              <span>Парола</span>
+              <input type="password" />
+            </label>
+            <button type="button" class="submit">Регистрация</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

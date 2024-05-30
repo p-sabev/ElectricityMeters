@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-5">
+
+      <p-table [value]="subscribers" [tableStyle]="{ 'width': '100%' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Номер/Страница</th>
+            <th>Име</th>
+            <th>Табло</th>
+            <th>Електромер</th>
+            <th>Последно показание</th>
+            <th>Последен запис</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-subscriber>
+          <tr>
+            <td>{{ subscriber.number }}</td>
+            <td class="font-weight-bold">{{ subscriber.name }}</td>
+            <td>{{ subscriber.switchboard }}</td>
+            <td>{{ subscriber.electricMeterNumber }}</td>
+            <td>{{ subscriber.lastReading }} квч.</td>
+            <td>
+              <span *ngIf="subscriber.lastRecordDate">{{ subscriber.lastRecordDate | date: 'dd.MM.yyyy'}}</span>
+              <span *ngIf="!subscriber.lastRecordDate">-</span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+
+    </div>
+  </div>
+</div>

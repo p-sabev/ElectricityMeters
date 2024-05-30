@@ -1,0 +1,6 @@
+@ElectricityMeters_HostAddress = http://localhost:5285
+
+GET {{ElectricityMeters_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

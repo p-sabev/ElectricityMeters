@@ -1,0 +1,46 @@
+@layer bootstrap-reboot, bootstrap-grid, bootsrap, primeng, primeng-theme;
+
+@import "../node_modules/bootstrap/dist/css/bootstrap-reboot" layer(bootstrap-rebooot);
+@import "../node_modules/bootstrap/dist/css/bootstrap-grid" layer(bootstrap-grid);
+@import "../node_modules/bootstrap/dist/css/bootstrap" layer(bootstrap);
+@import "primeng/resources/themes/mira/theme.css" layer(primeng-theme);
+@import "primeng/resources/primeng.min.css" layer(primeng);
+@import "primeicons/primeicons.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import 'styles/big-buttons';
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  margin: 0 auto !important;
+}
+
+i {
+  margin-right: 10px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.page-container {
+  //background-image: url("https://www.transparenttextures.com/patterns/dark-brick-wall.png");
+  //min-height: calc(100vh - 65px);
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  text-decoration: none;
+}
+
+.p-tabview-nav-link {
+  width: max-content;
+}
+.p-tabview-nav {
+  margin-bottom: 2px !important;
+}

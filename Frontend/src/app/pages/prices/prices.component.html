@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-5">
+
+      <p-table [value]="prices" [tableStyle]="{ 'width': '100%' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Номер</th>
+            <th>Цена в лв.</th>
+            <th>Дата от</th>
+            <th>Дата до</th>
+            <th>Бележка</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-price>
+          <tr>
+            <td>{{ price.id }}</td>
+            <td class="font-weight-bold">{{ price.price }}лв.</td>
+            <td>{{ price.dateFrom | date: 'dd.MM.yyyy'}}</td>
+            <td>
+              <span *ngIf="price.dateTo">{{ price.dateTo | date: 'dd.MM.yyyy'}}</span>
+              <span *ngIf="!price.dateTo">-</span>
+            </td>
+            <td>{{ price.note }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+
+    </div>
+  </div>
+</div>

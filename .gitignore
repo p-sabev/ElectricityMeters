@@ -1,0 +1,90 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+../dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+package-lock.json
+
+# profiling files
+chrome-profiler-events.json
+speed-measure-plugin.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.nx
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+*.swp
+*.*~
+project.lock.json
+*.pyc
+*.xml
+
+# Visual Studio Code
+.vscode
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Visual Studio 2015
+.vs/
+
+/Frontend/dist/SCUD/
+/Frontend/node_modules/
+/Backend/Presentation/ADS Service/.config/dotnet-tools.json
+/Backend/Presentation/EMN Service/.config
+/docker-compose.yml
+/settings.env
+/vim.exe.stackdump
+/Frontend/src/styles/variables.scss
+/CareerCenters/.idea/.gitignore
+/CareerCenters/.idea/CareerCenters.iml
+/Backend/Core/Lirex.Container.Core.Models/Response/GetProfessorDocentAssistantsCandidate.cs
