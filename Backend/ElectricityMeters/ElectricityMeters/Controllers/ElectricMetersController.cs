@@ -31,7 +31,7 @@ namespace ElectricityMeters.Controllers
         {
             if (_dbContext == null || _dbContext.ElectricMeters == null)
             {
-                return Problem("Entity set 'DbContext.ElectricMeters' is null.");
+                return NotFound();
             }
 
             _dbContext.ElectricMeters.Add(electricMeter);
@@ -43,6 +43,11 @@ namespace ElectricityMeters.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditElectricMeter(int id, ElectricMeter electricMeter)
         {
+            if (_dbContext == null || _dbContext.ElectricMeters == null)
+            {
+                return NotFound();
+            }
+
             if (id != electricMeter.Id)
             {
                 return BadRequest();
@@ -81,6 +86,13 @@ namespace ElectricityMeters.Controllers
             if (electricMeter == null)
             {
                 return NotFound();
+            }
+
+            // Check if any subscriber is connected to the electric meter
+            var hasConnectedSubscribers = await _dbContext.Subscribers.AnyAsync(s => s.ElectricMeter.Id == id);
+            if (hasConnectedSubscribers)
+            {
+                return BadRequest("Cannot delete the electric meter as there are subscribers connected to it.");
             }
 
             _dbContext.ElectricMeters.Remove(electricMeter);
