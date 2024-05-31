@@ -1,10 +1,12 @@
+@import '../../../../styles/variables';
+
 .navbar-logo{
   padding: 15px;
   color: #fff;
   z-index: 100;
 }
 .navbar-mainbg{
-  background-color: #1D3557;
+  background-color: $dark;
   padding: 0px;
   position: relative;
 }
@@ -46,7 +48,7 @@
   position: relative;
 }
 #navbarSupportedContent>ul>li.active>a{
-  color: #A8DADC;
+  color: $primary;
   background-color: transparent;
   transition: all 0.7s;
 }

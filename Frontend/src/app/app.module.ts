@@ -16,13 +16,15 @@ import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontaweso
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TabViewModule} from "primeng/tabview";
 import {ButtonModule} from "primeng/button";
 import { TreeModule } from 'primeng/tree';
 import {ComingSoonComponent} from "./pages/coming-soon/coming-soon.component";
 import {SharedModule} from "./shared/shared/shared.module";
+import {LoaderInterceptorService} from "./core/interceptors/loader-interceptor.service";
+import {TokenInterceptor} from "./core/interceptors/token-interceptor.interceptor";
 
 @NgModule({
   declarations: [
@@ -51,7 +53,17 @@ import {SharedModule} from "./shared/shared/shared.module";
     TreeModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptorService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

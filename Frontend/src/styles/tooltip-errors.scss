@@ -1,0 +1,43 @@
+// Tooltip to display errors in forms
+.tooltip-error {
+  opacity: 0.9;
+  position: absolute;
+  z-index: 99;
+  width: 90%;
+  left: 0;
+  top: 47px;
+  margin: 0 5%;
+  padding: 5px 10px;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.tooltip-error:hover {
+  opacity: 1;
+}
+
+.tooltip-error::before {
+  border-bottom: 5px solid red;
+  margin-top: -5px;
+}
+.tooltip-error::before,
+.tooltip-error::after {
+  content: '';
+  position: absolute;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  top: 0;
+  left: 50%;
+  margin-left: -6px;
+}
+.tooltip-error::after {
+  border-bottom: 10px solid white;
+  margin-top: -4px;
+  z-index: 1;
+}
+
+.icon-error {
+  margin-right: 5px;
+  display: inline-block;
+  font-size: 18px;
+}
