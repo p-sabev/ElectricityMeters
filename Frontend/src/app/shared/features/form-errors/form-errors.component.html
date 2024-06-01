@@ -1,0 +1,16 @@
+@if (control && !control.valid && control.touched && control.errors) {
+  <span class="text-danger"
+        [ngClass]="{ 'info-msg tooltip-error border border-danger animate__animated animate__fadeIn': !withoutTooltip }">
+    <span class="icon-error text-danger"><i class="fa fa-exclamation-circle"></i></span>
+    @if (control.errors['required']) { <span>{{ 'TheFieldIsRequired' | translate }}</span> }
+    @if (control.errors['maxlength']) { <span>{{ 'FieldShouldBeLessThanNCharacters' | translate: { max: max } }}<br/></span> }
+    @if (control.errors['minlength']) { <span>{{ 'FieldShouldBeMoreThanNCharacters' | translate: { min: min } }}<br/></span> }
+    @if (control.errors['pattern']) { <span>{{ 'FieldIsInIncorrectFormat' | translate }}</span> }
+    @if (control.errors['email']) { <span>{{ 'PleaseEnterValidEmail' | translate }}</span> }
+    @if (control.errors['duplicateEmail']) { <span>{{ 'EmailDublicate' | translate }}</span> }
+    @if (control.errors['incorrectEmail']) { <span>{{ 'PleaseEnterValidEmail' | translate }}</span> }
+    @if (control.errors['invalidValue']) { <span>{{ 'PleaseEnterValidValue' | translate }}</span> }
+    @if (control.errors['notUnique']) { <span>{{ 'ValueIsNotUnique' | translate }}</span> }
+  </span>
+}
+

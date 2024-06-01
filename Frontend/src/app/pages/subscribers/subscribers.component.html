@@ -1,16 +1,22 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 mt-5">
+
+    <div class="col-12 mt-5" (click)="initAddSubscriber()">
+      <button class="btn btn-outline-success">{{'AddSubscriber' | translate}}</button>
+    </div>
+
+    <div class="col-12 mt-3">
 
       <p-table [value]="subscribers" [tableStyle]="{ 'width': '100%' }">
         <ng-template pTemplate="header">
           <tr>
-            <th>Номер/Страница</th>
-            <th>Име</th>
-            <th>Табло</th>
-            <th>Електромер</th>
-            <th>Последно показание</th>
-            <th>Последен запис</th>
+            <th translate>NumberPage</th>
+            <th translate>Name</th>
+            <th translate>Табло</th>
+            <th translate>Switchboard</th>
+            <th translate>LastReading</th>
+            <th translate>LastRecord</th>
+            <th></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-subscriber>
@@ -19,10 +25,18 @@
             <td class="font-weight-bold">{{ subscriber.name }}</td>
             <td>{{ subscriber.switchboard }}</td>
             <td>{{ subscriber.electricMeterNumber }}</td>
-            <td>{{ subscriber.lastReading }} квч.</td>
+            <td>{{ subscriber.lastReading }} {{'kvh' | translate}}</td>
             <td>
               <span *ngIf="subscriber.lastRecordDate">{{ subscriber.lastRecordDate | date: 'dd.MM.yyyy'}}</span>
               <span *ngIf="!subscriber.lastRecordDate">-</span>
+            </td>
+            <td>
+              <a class="nav-link text-warning cursor-pointer btn-action" (click)="openSubscriberForEdit(subscriber)">
+                <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
+              </a>
+              <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeleteSubscriber(subscriber)">
+                <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
+              </a>
             </td>
           </tr>
         </ng-template>
@@ -32,3 +46,7 @@
     </div>
   </div>
 </div>
+
+<ng-container *ngIf="addSubscriber || subscriberForEdit">
+  <app-add-edit-subscribers [subscriberToEdit]="subscriberForEdit"></app-add-edit-subscribers>
+</ng-container>

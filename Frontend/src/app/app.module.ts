@@ -16,7 +16,7 @@ import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontaweso
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import {FormsModule} from "@angular/forms";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TabViewModule} from "primeng/tabview";
 import {ButtonModule} from "primeng/button";
@@ -25,6 +25,10 @@ import {ComingSoonComponent} from "./pages/coming-soon/coming-soon.component";
 import {SharedModule} from "./shared/shared/shared.module";
 import {LoaderInterceptorService} from "./core/interceptors/loader-interceptor.service";
 import {TokenInterceptor} from "./core/interceptors/token-interceptor.interceptor";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {SimpleNotificationsModule} from "angular2-notifications";
+import {FormErrorsComponent} from "./shared/features/form-errors/form-errors.component";
 
 @NgModule({
   declarations: [
@@ -43,6 +47,14 @@ import {TokenInterceptor} from "./core/interceptors/token-interceptor.intercepto
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+    SimpleNotificationsModule.forRoot(),
     FormsModule,
     AppRoutingModule,
     SharedModule,
@@ -59,11 +71,11 @@ import {TokenInterceptor} from "./core/interceptors/token-interceptor.intercepto
       useClass: LoaderInterceptorService,
       multi: true,
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: TokenInterceptor,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent]
 })
@@ -72,4 +84,8 @@ export class AppModule {
   constructor(fasLibrary: FaIconLibrary) {
     fasLibrary.addIconPacks(fas, far);
   }
+}
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
 }

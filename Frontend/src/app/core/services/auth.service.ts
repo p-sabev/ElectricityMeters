@@ -5,7 +5,9 @@ import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
 import {LogInCredentials} from "../authentication/login/login.model";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
   constructor(
     private router: Router,

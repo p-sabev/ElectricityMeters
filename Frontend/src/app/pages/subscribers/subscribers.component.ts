@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {DatePipe, NgIf} from "@angular/common";
 import {SharedModule} from "primeng/api";
 import {TableModule} from "primeng/table";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {Subscriber} from "../../core/models/subscribers.model";
+import {NotificationsEmitterService} from "../../core/services/notifications.service";
+import {TranslateModule} from "@ngx-translate/core";
+import {AddEditSubscribersComponent} from "./add-edit-subscribers/add-edit-subscribers.component";
 
 @Component({
   selector: 'app-subscribers',
@@ -10,19 +15,26 @@ import {TableModule} from "primeng/table";
     DatePipe,
     NgIf,
     SharedModule,
-    TableModule
+    TableModule,
+    FaIconComponent,
+    TranslateModule,
+    AddEditSubscribersComponent
   ],
   templateUrl: './subscribers.component.html',
   styleUrl: './subscribers.component.scss'
 })
 export class SubscribersComponent implements OnInit {
 
-  constructor() {}
+  constructor(private notifications: NotificationsEmitterService) {}
 
   subscribers: any[] = [];
 
+  addSubscriber: boolean = false;
+  subscriberForEdit: Subscriber | null = null;
+
   ngOnInit() {
     this.fetchPricesList();
+    this.notifications.Success.emit('Success');
   }
 
   fetchPricesList() {
@@ -76,6 +88,18 @@ export class SubscribersComponent implements OnInit {
         note: ''
       },
     ]
+  }
+
+  initAddSubscriber() {
+    this.addSubscriber = true;
+  }
+
+  openSubscriberForEdit(subscriber: Subscriber) {
+    this.subscriberForEdit = subscriber;
+  }
+
+  askToDeleteSubscriber(subscriber: Subscriber) {
+    alert('Are you sure');
   }
 
 }
