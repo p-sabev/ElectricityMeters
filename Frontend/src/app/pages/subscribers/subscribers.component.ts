@@ -1,12 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {DatePipe, NgIf} from "@angular/common";
-import {SharedModule} from "primeng/api";
+import {ConfirmationService, SharedModule} from "primeng/api";
 import {TableModule} from "primeng/table";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {Subscriber} from "../../core/models/subscribers.model";
 import {NotificationsEmitterService} from "../../core/services/notifications.service";
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AddEditSubscribersComponent} from "./add-edit-subscribers/add-edit-subscribers.component";
+import {SubscribersService} from "./subscribers.service";
+import {ErrorService} from "../../core/services/error.service";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-subscribers',
@@ -18,76 +21,36 @@ import {AddEditSubscribersComponent} from "./add-edit-subscribers/add-edit-subsc
     TableModule,
     FaIconComponent,
     TranslateModule,
-    AddEditSubscribersComponent
+    AddEditSubscribersComponent,
+    ConfirmDialogModule
   ],
+  providers: [ConfirmationService],
   templateUrl: './subscribers.component.html',
   styleUrl: './subscribers.component.scss'
 })
 export class SubscribersComponent implements OnInit {
 
-  constructor(private notifications: NotificationsEmitterService) {}
+  constructor(private notifications: NotificationsEmitterService,
+              private subscribersService: SubscribersService,
+              private errorService: ErrorService,
+              private confirmService: ConfirmationService,
+              private translate: TranslateService) {}
 
-  subscribers: any[] = [];
+  subscribers: Subscriber[] = [];
 
   addSubscriber: boolean = false;
   subscriberForEdit: Subscriber | null = null;
 
   ngOnInit() {
-    this.fetchPricesList();
-    this.notifications.Success.emit('Success');
+    this.fetchSubscribersList();
   }
 
-  fetchPricesList() {
-    this.subscribers = [
-      {
-        id: 2,
-        number: 27,
-        name: 'Сава Събев',
-        switchboard: '1',
-        electricMeterNumber: '213',
-        address: '',
-        phone: '',
-        lastReading: '1698',
-        lastRecordDate: '2024-05-21T14:10:50.824Z',
-        note: ''
-      },
-      {
-        id: 2,
-        number: 28,
-        name: 'Георги Шошев',
-        switchboard: '1',
-        electricMeterNumber: '214',
-        address: '',
-        phone: '',
-        lastReading: '2534',
-        lastRecordDate: '2024-05-21T14:10:50.824Z',
-        note: ''
-      },
-      {
-        id: 2,
-        number: 29,
-        name: 'Андрей Хаджирадков',
-        switchboard: '1',
-        electricMeterNumber: '215',
-        address: '',
-        phone: '',
-        lastReading: '12983',
-        lastRecordDate: '2024-05-21T14:10:50.824Z',
-        note: ''
-      },
-      {
-        id: 2,
-        number: 30,
-        name: 'Стефан Иванов',
-        switchboard: '1',
-        electricMeterNumber: '216',
-        address: '',
-        phone: '',
-        lastReading: '254',
-        lastRecordDate: '2024-05-21T14:10:50.824Z',
-        note: ''
-      },
-    ]
+  fetchSubscribersList() {
+    this.subscribersService.getAllSubscribers().subscribe(resp => {
+      this.subscribers = resp;
+    }, error => {
+      this.errorService.processError(error);
+    });
   }
 
   initAddSubscriber() {
@@ -99,7 +62,27 @@ export class SubscribersComponent implements OnInit {
   }
 
   askToDeleteSubscriber(subscriber: Subscriber) {
-    alert('Are you sure');
+    const message = 'AreYouSureToDeleteThisSubscriber';
+    const header = 'AreYouSure';
+    this.translate.get([message, header]).subscribe((data) => {
+      this.confirmService.confirm({
+        message: `${data[message]} - ${subscriber.name}?`,
+        icon: 'fa fa-question-circle-o',
+        header: data[header],
+        accept: () => {
+          this.deleteSubscriber(subscriber);
+        },
+      });
+    });
+  }
+
+  deleteSubscriber(subscriber: Subscriber) {
+    this.subscribersService.deleteSubscriber(subscriber.id).subscribe(() => {
+      this.notifications.Success.emit("SuccessfullyDeletedSubscriber");
+      this.fetchSubscribersList();
+    }, error => {
+      this.errorService.processError(error);
+    });
   }
 
 }

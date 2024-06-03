@@ -24,5 +24,13 @@
   "PleaseEnterValidValue": "Въведена е некоректна стойност",
   "EmailDublicate": "Въведения имейл вече съществува",
   "ValueIsNotUnique": "Стойността трябва да е уникална",
-  "TheFieldIsRequired": "Полето е задължително!"
+  "TheFieldIsRequired": "Полето е задължително!",
+  "Add": "Добави",
+  "Edit": "Редакция",
+  "Close": "Затвори",
+  "AreYouSureToDeleteThisSubscriber": "Сигурни ли сте, че искате да изтриете абонат",
+  "Confirmation": "Потвърждение",
+  "Yes": "Да",
+  "No": "Не",
+  "AreYouSure": "Сигурни ли сте?"
 }

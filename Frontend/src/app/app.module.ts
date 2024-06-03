@@ -29,6 +29,8 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {SimpleNotificationsModule} from "angular2-notifications";
 import {FormErrorsComponent} from "./shared/features/form-errors/form-errors.component";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ConfirmationService} from "primeng/api";
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import {FormErrorsComponent} from "./shared/features/form-errors/form-errors.com
     HttpClientModule,
     TabViewModule,
     ButtonModule,
-    TreeModule
+    TreeModule,
+    ConfirmDialogModule
   ],
   providers: [
     provideClientHydration(),
@@ -71,6 +74,7 @@ import {FormErrorsComponent} from "./shared/features/form-errors/form-errors.com
       useClass: LoaderInterceptorService,
       multi: true,
     },
+    ConfirmationService
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: TokenInterceptor,

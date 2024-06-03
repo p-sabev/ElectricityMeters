@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {EditSubscriber, InsertSubscriber} from "../../core/models/subscribers.model";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class SubscribersService {
   constructor(private http: HttpClient) { }
 
   // Get all
-  getAllSubscribers() {
+  getAllSubscribers(): Observable<any> {
     return this.http.get('/api/subscribers');
   }
 

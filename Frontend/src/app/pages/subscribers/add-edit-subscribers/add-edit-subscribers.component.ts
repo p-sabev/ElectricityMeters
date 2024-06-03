@@ -5,10 +5,11 @@ import {SubscribersService} from "../subscribers.service";
 import {ErrorService} from "../../../core/services/error.service";
 import {NotificationsEmitterService} from "../../../core/services/notifications.service";
 import {TranslateModule} from "@ngx-translate/core";
-import {NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {ElectricMetersService} from "../../electric-meters/electric-meters.service";
 import {ElectricMeter} from "../../../core/models/electric-meters.model";
 import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-add-edit-subscribers',
@@ -18,7 +19,9 @@ import {FormErrorsComponent} from "../../../shared/features/form-errors/form-err
     FormsModule,
     ReactiveFormsModule,
     FormErrorsComponent,
-    NgIf
+    NgIf,
+    NgForOf,
+    FaIconComponent
   ],
   templateUrl: './add-edit-subscribers.component.html',
   styleUrl: './add-edit-subscribers.component.scss'
@@ -75,7 +78,7 @@ export class AddEditSubscribersComponent implements OnInit {
 
   editSubscriber() {
     const body = this.addEditForm?.getRawValue() || {};
-    this.subscribersService.insertSubscriber(body).subscribe(() => {
+    this.subscribersService.editSubscriber(body).subscribe(() => {
       this.notifications.Success.emit('SuccessfullyEditedSubscriber');
       this.close.emit();
     }, error => {

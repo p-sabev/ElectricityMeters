@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg animate__animated animate__fadeIn">
     <div class="modal-content">
       <div class="modal-header">
-        <i class="fa fa-ICON fa-2x text-dark pr-3" aria-hidden="true"></i>
+        <fa-icon [icon]="['fas', 'person-shelter']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
         <h3 *ngIf="!subscriberToEdit" translate>AddSubscriber</h3>
         <h3 *ngIf="subscriberToEdit" translate>EditSubscriber</h3>
 
@@ -27,7 +27,7 @@
                 title="{{ 'NumberPage' | translate }}*"
                 placeholder="{{ 'NumberPage' | translate }}*" />
 
-              <app-form-errors [control]="addEditForm.get('numberPage')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('numberPage')"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -42,7 +42,7 @@
                 title="{{ 'Name' | translate }}*"
                 placeholder="{{ 'Name' | translate }}*" />
 
-              <app-form-errors [control]="addEditForm.get('name')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('name')"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -56,7 +56,7 @@
                 </option>
               </select>
 
-              <app-form-errors [control]="addEditForm.get('electricMeterId')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('electricMeterId')"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -71,7 +71,7 @@
                 title="{{ 'Address' | translate }}"
                 placeholder="{{ 'Address' | translate }}" />
 
-              <app-form-errors [control]="addEditForm.get('address')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('address')"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -86,7 +86,7 @@
                 title="{{ 'Phone' | translate }}"
                 placeholder="{{ 'Phone' | translate }}" />
 
-              <app-form-errors [control]="addEditForm.get('phone')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('phone')"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -101,7 +101,7 @@
                 title="{{ 'MeterNumber' | translate }}"
                 placeholder="{{ 'MeterNumber' | translate }}" />
 
-              <app-form-errors [control]="addEditForm.get('meterNumber')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('meterNumber')"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -116,7 +116,7 @@
                 title="{{ 'Note' | translate }}"
                 placeholder="{{ 'Note' | translate }}" />
 
-              <app-form-errors [control]="addEditForm.get('note')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('note')"></app-form-errors>
             </div>
 
           </div>
@@ -129,11 +129,12 @@
             <button
               type="button"
               (click)="subscriberToEdit ? editSubscriber() : addSubscriber()"
-              class="btn btn-primary pull-right"
+              class="btn float-end {{(subscriberToEdit ? 'btn-warning' : 'btn-success')}}"
               [disabled]="!addEditForm.valid">
-              <i class="fa fa-floppy-o pr-2" aria-hidden="true"></i>{{ (subscriberToEdit ? 'Edit' : 'Add') | translate }}
+              <fa-icon [icon]="['fas', (subscriberToEdit ? 'edit' : 'plus')]" [class]="'me-2'"></fa-icon>
+              {{ (subscriberToEdit ? 'Edit' : 'Add') | translate }}
             </button>
-            <button type="button" class="btn btn-secondary pull-left" (click)="close.emit()" translate>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
               Close
             </button>
           </div>
