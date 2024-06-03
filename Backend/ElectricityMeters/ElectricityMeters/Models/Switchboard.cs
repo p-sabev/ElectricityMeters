@@ -1,14 +1,14 @@
 ﻿namespace ElectricityMeters.Models
 {
-    public class ElectricMeter
+    public class Switchboard
     {
 
         public required int Id { get; set; }
         public required string Name { get; set; }
 
-        public ElectricMeter() { }
+        public Switchboard() { }
 
-        public ElectricMeter(int id, string name)
+        public Switchboard(int id, string name)
         {
             Id = id;
             Name = name;

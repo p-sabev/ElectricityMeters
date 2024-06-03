@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row my-4">
+
+    <div class="col-12 mt-5" (click)="initAddSwitchboard()">
+      <button class="btn btn-outline-success">
+        <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
+        {{'AddSwitchboard' | translate}}
+      </button>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-12 mt-4" *ngFor="let switchboard of switchboardsList">
+      <div class="card" style="width: 100%;">
+        <div class="card-body bg-secondary text-light">
+          <h5 class="card-title">{{'Switchboard' | translate}} - {{switchboard.name}}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+<!--          <li class="list-group-item" *ngFor="let subscriber of switchboard.meterSubscribers">-->
+<!--            {{subscriber.number}} - {{subscriber.name}}-->
+<!--          </li>-->
+        </ul>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 text-right">
+              <button class="btn btn-outline-danger float-end"
+                      (click)="askToDeleteSwitchboard(switchboard)">
+                <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+              </button>
+              <button class="btn btn-outline-warning float-end me-2"
+                      (click)="switchboardForEdit = switchboard;">
+                <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+              </button>
+              <button class="btn btn-outline-primary float-end me-2">
+                Въведи показания
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-container *ngIf="addSwitchboard || switchboardForEdit">
+  <app-add-edit-switchboard [switchboardToEdit]="switchboardForEdit"
+                            (close)="addSwitchboard = false; switchboardForEdit = null; fetchSwitchboardsList();"></app-add-edit-switchboard>
+</ng-container>
+
+<p-confirmDialog
+  header="{{ 'Confirmation' | translate }}"
+  icon="pi pi-exclamation-triangle"
+  rejectLabel="{{ 'No' | translate }}"
+  acceptLabel="{{ 'Yes' | translate }}"></p-confirmDialog>
