@@ -5,7 +5,7 @@
         public required int Id { get; set; }
         public required int NumberPage { get; set; }
         public required string Name { get; set; }
-        public required ElectricMeter ElectricMeter { get; set; }
+        public required Switchboard Switchboard { get; set; }
         public string? Address { get; set; }
         public string? Phone { get; set; }
         public string? MeterNumber { get; set; }
@@ -16,12 +16,12 @@
 
         public Subscriber() { }
 
-        public Subscriber(int id, int numberPage, string name, ElectricMeter electricMeter, string? address, string? phone, string? meterNumber, DateTime? lastRecordDate, double? lastReading, string note)
+        public Subscriber(int id, int numberPage, string name, Switchboard switchboard, string? address, string? phone, string? meterNumber, DateTime? lastRecordDate, double? lastReading, string note)
         {
             Id=id;
             NumberPage=numberPage;
             Name=name;
-            ElectricMeter=electricMeter;
+            Switchboard=switchboard;
             Address=address;
             Phone=phone;
             MeterNumber=meterNumber;

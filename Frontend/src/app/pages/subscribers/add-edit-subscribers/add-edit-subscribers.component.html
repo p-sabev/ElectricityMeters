@@ -50,13 +50,13 @@
 
               <select name="switchboard" id="switchboard"
                       class="form-control"
-                      formControlName="electricMeterId">
+                      formControlName="switchboardId">
                 <option *ngFor="let switchboard of switchBoardsList" [ngValue]="switchboard.id">
                   {{switchboard.name}}
                 </option>
               </select>
 
-              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('electricMeterId')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('switchboardId')"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">

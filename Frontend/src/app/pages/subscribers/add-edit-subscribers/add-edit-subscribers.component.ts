@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Subscriber, SubscriberAddEdit} from "../../../core/models/subscribers.model";
+import {Subscriber} from "../../../core/models/subscribers.model";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SubscribersService} from "../subscribers.service";
 import {ErrorService} from "../../../core/services/error.service";
 import {NotificationsEmitterService} from "../../../core/services/notifications.service";
 import {TranslateModule} from "@ngx-translate/core";
 import {NgForOf, NgIf} from "@angular/common";
-import {ElectricMetersService} from "../../electric-meters/electric-meters.service";
-import {ElectricMeter} from "../../../core/models/electric-meters.model";
+import {SwitchboardsService} from "../../switchboards/switchboards.service";
+import {Switchboard} from "../../../core/models/switchboards.model";
 import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
@@ -31,18 +31,18 @@ export class AddEditSubscribersComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private subscribersService: SubscribersService,
-              private electricMetersService: ElectricMetersService,
+              private switchBoardsService: SwitchboardsService,
               private notifications: NotificationsEmitterService,
               private errorService: ErrorService) {
   }
 
   addEditForm!: FormGroup;
 
-  switchBoardsList: ElectricMeter[] = [];
+  switchBoardsList: Switchboard[] = [];
 
   ngOnInit() {
     this.initAddEditForm();
-    this.getAllElectricMeters();
+    this.getAllSwitchboards();
   }
 
   initAddEditForm() {
@@ -50,7 +50,7 @@ export class AddEditSubscribersComponent implements OnInit {
       id: new FormControl<number | null>(this.subscriberToEdit ? this.subscriberToEdit.id : null),
       numberPage: new FormControl<number | null>(this.subscriberToEdit ? this.subscriberToEdit.numberPage : null, [Validators.required, Validators.max(500)]),
       name: new FormControl<string>(this.subscriberToEdit?.name ? this.subscriberToEdit.name : '', [Validators.required, Validators.maxLength(250)]),
-      electricMeterId: new FormControl<number | null>(this.subscriberToEdit?.electricMeter?.id ? this.subscriberToEdit.electricMeter.id : null, [Validators.required]),
+      switchboardId: new FormControl<number | null>(this.subscriberToEdit?.switchboard?.id ? this.subscriberToEdit.switchboard.id : null, [Validators.required]),
       address: new FormControl<string>(this.subscriberToEdit?.address ? this.subscriberToEdit.address : '', [Validators.maxLength(250)]),
       phone: new FormControl<string>(this.subscriberToEdit?.phone ? this.subscriberToEdit.phone : '', [Validators.maxLength(250)]),
       meterNumber: new FormControl<string>(this.subscriberToEdit?.meterNumber ? this.subscriberToEdit.meterNumber : '', [Validators.maxLength(50)]),
@@ -58,10 +58,10 @@ export class AddEditSubscribersComponent implements OnInit {
     });
   }
 
-  getAllElectricMeters() {
-    this.electricMetersService.getAllElectricMeters().subscribe(resp => {
+  getAllSwitchboards() {
+    this.switchBoardsService.getAllSwitchboards().subscribe(resp => {
       this.switchBoardsList = resp || [];
-    }, error => {
+    }, (error: any) => {
       this.errorService.processError(error);
     });
   }

@@ -6,7 +6,7 @@ import {LoginComponent} from "./core/authentication/login/login.component";
 import {SignupComponent} from "./core/authentication/signup/signup.component";
 import {UsersComponent} from "./pages/users/users.component";
 import {SubscribersComponent} from "./pages/subscribers/subscribers.component";
-import {ElectricMetersComponent} from "./pages/electric-meters/electric-meters.component";
+import {SwitchboardsComponent} from "./pages/switchboards/switchboards.component";
 import {PricesComponent} from "./pages/prices/prices.component";
 import {ReadingsComponent} from "./pages/readings/readings.component";
 
@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: 'electric-meters',
-    component: ElectricMetersComponent,
+    component: SwitchboardsComponent,
     data: { title: 'Табла' },
   },
   {

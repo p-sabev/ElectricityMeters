@@ -31,15 +31,15 @@ namespace ElectricityMeters.Controllers
         [HttpPost]
         public async Task<ActionResult<Subscriber>> InsertSubscriber(InsertSubscriber insertSubscriber)
         {
-            if (_dbContext == null || _dbContext.Subscribers == null || _dbContext.ElectricMeters == null)
+            if (_dbContext == null || _dbContext.Subscribers == null || _dbContext.Switchboards == null)
             {
                 return Problem("Entity set 'DbContext' is null.");
             }
 
-            var electricMeter = await _dbContext.ElectricMeters.FindAsync(insertSubscriber.ElectricMeterId);
-            if (electricMeter == null)
+            var switchboard = await _dbContext.Switchboards.FindAsync(insertSubscriber.SwitchboardId);
+            if (switchboard == null)
             {
-                return BadRequest("Invalid ElectricMeterId.");
+                return BadRequest("Invalid Switchboard Id.");
             }
 
             var subscriber = new Subscriber
@@ -47,7 +47,7 @@ namespace ElectricityMeters.Controllers
                 Id = 0,
                 NumberPage = insertSubscriber.NumberPage,
                 Name = insertSubscriber.Name,
-                ElectricMeter = electricMeter,
+                Switchboard = switchboard,
                 Address = insertSubscriber.Address,
                 Phone = insertSubscriber.Phone,
                 MeterNumber = insertSubscriber.MeterNumber,
@@ -65,7 +65,7 @@ namespace ElectricityMeters.Controllers
         [HttpPut]
         public async Task<IActionResult> EditSubscriber(EditSubscriber editSubscriber)
         {
-            if (_dbContext == null || _dbContext.Subscribers == null || _dbContext.ElectricMeters == null)
+            if (_dbContext == null || _dbContext.Subscribers == null || _dbContext.Switchboards == null)
             {
                 return Problem("Entity set 'DbContext' is null.");
             }
@@ -77,15 +77,15 @@ namespace ElectricityMeters.Controllers
                 return NotFound();
             }
 
-            var electricMeter = await _dbContext.ElectricMeters.FindAsync(editSubscriber.ElectricMeterId);
-            if (electricMeter == null)
+            var switchboard = await _dbContext.Switchboards.FindAsync(editSubscriber.SwitchboardId);
+            if (switchboard == null)
             {
-                return BadRequest("Invalid ElectricMeterId.");
+                return BadRequest("Invalid Switchboard Id.");
             }
 
             existingSubscriber.Name = editSubscriber.Name;
             existingSubscriber.NumberPage = editSubscriber.NumberPage;
-            existingSubscriber.ElectricMeter = electricMeter;
+            existingSubscriber.Switchboard = switchboard;
             existingSubscriber.Address = editSubscriber.Address;
             existingSubscriber.Phone = editSubscriber.Phone;
             existingSubscriber.MeterNumber = editSubscriber.MeterNumber;

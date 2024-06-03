@@ -1,10 +1,10 @@
-import {ElectricMeter} from "./electric-meters.model";
+import {Switchboard} from "./switchboards.model";
 
 export interface Subscriber {
   id: number;
   numberPage: number;
   name: string;
-  electricMeter: ElectricMeter;
+  switchboard: Switchboard;
   address?: string;
   phone?: string;
   meterNumber?: string;
@@ -16,7 +16,7 @@ export interface Subscriber {
 export interface InsertSubscriber {
   numberPage: number;
   name: string;
-  electricMeterId: number;
+  switchboardId: number;
   address?: string;
   phone?: string;
   meterNumber?: string;
@@ -27,7 +27,7 @@ export interface EditSubscriber {
   id: number;
   numberPage: number;
   name: string;
-  electricMeterId: number;
+  switchboardId: number;
   address?: string;
   phone?: string;
   meterNumber?: string;
@@ -38,7 +38,7 @@ export interface SubscriberAddEdit {
   id?: number | null;
   numberPage: number;
   name: string;
-  electricMeterId: number;
+  switchboardId: number;
   address?: string;
   phone?: string;
   meterNumber?: string;

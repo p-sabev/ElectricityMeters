@@ -32,5 +32,11 @@
   "Confirmation": "Потвърждение",
   "Yes": "Да",
   "No": "Не",
-  "AreYouSure": "Сигурни ли сте?"
+  "AreYouSure": "Сигурни ли сте?",
+  "SuccessfullyAddedSwitchboard": "Успешно добавено табло",
+  "SuccessfullyEditedSwitchboard": "Успешно редактирано табло",
+  "SuccessfullyDeletedSwitchboard": "Успешно изтрито табло",
+  "AreYouSureToDeleteThisSwitchboard": "Сигурни ли сте, че искате да изтриете табло",
+  "AddSwitchboard": "Добави табло",
+  "EditSwitchboard": "Редакция на табло"
 }
