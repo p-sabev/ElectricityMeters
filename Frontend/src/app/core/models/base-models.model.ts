@@ -4,6 +4,6 @@ export interface Paging {
 }
 
 export interface Sorting {
-  sortField: string;
-  sortDirection: string;
+  sortProp: string;
+  sortDirection: number;
 }

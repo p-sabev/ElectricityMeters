@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {EditPrice, InsertPrice} from "../../core/models/prices.model";
+import {EditPrice, InsertPrice, SearchPrices} from "../../core/models/prices.model";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -13,6 +13,11 @@ export class PricesService {
   // Get all
   getAllPrices(): Observable<any> {
     return this.http.get('/api/prices');
+  }
+
+  // Get all
+  searchPrices(body: SearchPrices): Observable<any> {
+    return this.http.post('/api/prices/search', body);
   }
 
   // Add

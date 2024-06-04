@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row">
 
-    <div class="col-12 mt-5" (click)="initAddPrice()">
-      <button class="btn btn-outline-success">
+    <div class="col-12 mt-5">
+      <button class="btn btn-outline-success" (click)="initAddPrice()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
         {{'AddPrice' | translate}}
       </button>
@@ -10,13 +10,22 @@
 
     <div class="col-12 mt-5">
 
-      <p-table [value]="pricesList" [tableStyle]="{ 'width': '100%' }">
+      <p-table [value]="pricesList"
+               styleClass="p-datatable-gridlines"
+               [tableStyle]="{ 'width': '100%' }"
+               [lazy]="true"
+               (onLazyLoad)="fetchPricesList($event)"
+               [sortField]="sortField" [sortOrder]="sortOrder"
+               [totalRecords]="totalRecords"
+               [paginator]="true"
+               [rows]="10"
+               [rowsPerPageOptions]="[5, 10, 20, 50]">
         <ng-template pTemplate="header">
           <tr>
-            <th translate>Number</th>
-            <th translate>PriceInBGN</th>
-            <th translate>DateFrom</th>
-            <th translate>DateTo</th>
+            <th pSortableColumn="id" translate>Number<p-sortIcon field="id" /></th>
+            <th pSortableColumn="priceInLv" translate>PriceInBGN<p-sortIcon field="priceInLv" /></th>
+            <th pSortableColumn="dateFrom" translate>DateFrom<p-sortIcon field="dateFrom" /></th>
+            <th pSortableColumn="dateTo" translate>DateTo<p-sortIcon field="dateTo" /></th>
             <th translate>Note</th>
             <th></th>
           </tr>

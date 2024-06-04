@@ -9,6 +9,7 @@
         public double AmountDue { get; set; }
         public double Difference { get; set; }
         public double CurrentPrice { get; set; }
+        public int UsedPrice { get; set; }
 
 
         public Reading() { }

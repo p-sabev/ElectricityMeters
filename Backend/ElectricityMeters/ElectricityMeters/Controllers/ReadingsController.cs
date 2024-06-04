@@ -76,7 +76,8 @@ namespace ElectricityMeters.Controllers
                 Value = insertReading.Value,
                 Difference = difference,
                 AmountDue = amountDue,
-                CurrentPrice = currentPrice.PriceInLv
+                CurrentPrice = currentPrice.PriceInLv,
+                UsedPrice = currentPrice.Id
             };
 
             _dbContext.Readings.Add(reading);
@@ -142,6 +143,7 @@ namespace ElectricityMeters.Controllers
             reading.Difference = difference;
             reading.AmountDue = amountDue;
             reading.CurrentPrice = currentPrice.PriceInLv;
+            reading.UsedPrice = currentPrice.Id;
 
             try
             {

@@ -1,8 +1,9 @@
 <div class="container">
   <div class="row">
 
-    <div class="col-12 mt-5" (click)="initAddSubscriber()">
-      <button class="btn btn-outline-success">
+    <div class="col-12 mt-5">
+      <button class="btn btn-outline-success"
+              (click)="initAddSubscriber()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
         {{'AddSubscriber' | translate}}
       </button>
@@ -10,7 +11,9 @@
 
     <div class="col-12 mt-3">
 
-      <p-table [value]="subscribers" [tableStyle]="{ 'width': '100%' }">
+      <p-table [value]="subscribers"
+               styleClass="p-datatable-gridlines"
+               [tableStyle]="{ 'width': '100%' }">
         <ng-template pTemplate="header">
           <tr>
             <th translate>NumberPage</th>

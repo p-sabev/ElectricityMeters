@@ -816,6 +816,14 @@ p-checkbox.checkboxWithContract {
   padding: 0.5rem;
 }
 
+.p-datatable .p-datatable-tbody > tr > td {
+  border: 1px solid #c7e5e5;
+}
+
+.p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon {
+  color: #eceff4;
+}
+
 @media screen and (max-width: 376px) {
   body .fitCascadeSelect > .p-cascadeselect > p-overlay > .p-overlay .p-cascadeselect-panel .p-cascadeselect-items {
     width: 235px;

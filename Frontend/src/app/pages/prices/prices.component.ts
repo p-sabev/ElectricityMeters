@@ -29,17 +29,34 @@ export class PricesComponent implements OnInit {
   }
 
   pricesList: any[] = [];
+  sortField = 'dateFrom';
+  sortOrder = -1;
+  page = 0;
+  pageSize = 10;
+  totalRecords = 0;
 
   addPrice: boolean = false;
   priceForEdit: Price | null = null;
 
   ngOnInit() {
-    this.fetchPricesList();
+    // this.fetchPricesList();
   }
 
-  fetchPricesList() {
-    this.pricesService.getAllPrices().subscribe(resp => {
-      this.pricesList = resp;
+  fetchPricesList(settings: any = null) {
+    const body = {
+      paging: {
+        page: settings.first / settings.rows,
+        pageSize: settings.rows
+      },
+      sorting: {
+        sortProp: settings.sortField,
+        sortDirection: settings.sortOrder
+      }
+    }
+    console.log(body);
+    this.pricesService.searchPrices(body).subscribe(resp => {
+      this.pricesList = resp?.data || [];
+      this.totalRecords = resp?.totalRecords || 0;
     }, (error: any) => {
       this.errorService.processError(error);
     });
