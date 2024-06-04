@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Request\Prices\" />
     <Folder Include="Response\" />
   </ItemGroup>
 

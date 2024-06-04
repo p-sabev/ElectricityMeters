@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {EditPrice, InsertPrice} from "../../core/models/prices.model";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class PricesService {
   constructor(private http: HttpClient) { }
 
   // Get all
-  getAllPrices() {
+  getAllPrices(): Observable<any> {
     return this.http.get('/api/prices');
   }
 

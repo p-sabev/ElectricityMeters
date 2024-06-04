@@ -1,0 +1,87 @@
+<div #addEditModal class="modal show-modal" *ngIf="addEditForm">
+  <div class="modal-dialog modal-lg animate__animated animate__fadeIn">
+    <div class="modal-content">
+      <div class="modal-header">
+        <fa-icon [icon]="['fas', 'money-bill-wave']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <h3 *ngIf="!priceToEdit" translate>AddPrice</h3>
+        <h3 *ngIf="priceToEdit" translate>EditPrice</h3>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close.emit()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="addEditForm" class="pb-5">
+          <div class="row">
+
+            <div class="col-lg-6 col-md-12 mt-3">
+              <label>{{ 'PriceInBGN' | translate }}*</label>
+
+              <input
+                type="number"
+                class="form-control"
+                name="priceInLv"
+                id="priceInLv"
+                formControlName="priceInLv"
+                title="{{ 'PriceInBGN' | translate }}*"
+                placeholder="{{ 'PriceInBGN' | translate }}*" />
+
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('priceInLv')" [max]="1000"></app-form-errors>
+            </div>
+
+            <div class="col-lg-6 col-md-12 mt-3">
+              <label>{{ 'DateFrom' | translate }}*</label>
+
+              <p-calendar
+                formControlName="dateFrom"
+                [firstDayOfWeek]="1"
+                [style]="{ width: '100%' }"
+                [inputStyle]="{ width: '100%' }"
+                dateFormat="dd.mm.yy"
+                [readonlyInput]="false"
+                [appendTo]="addEditModal"
+                [showButtonBar]="true"></p-calendar>
+
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('dateFrom')" [max]="1000"></app-form-errors>
+            </div>
+
+            <div class="col-lg-6 col-md-12 mt-3">
+              <label>{{ 'Note' | translate }}</label>
+
+              <input
+                type="text"
+                class="form-control"
+                name="note"
+                id="note"
+                formControlName="note"
+                title="{{ 'Note' | translate }}"
+                placeholder="{{ 'Note' | translate }}" />
+
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('note')" [max]="250"></app-form-errors>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <div class="row" style="width: 100%">
+          <div class="col-12 p-0">
+            <button
+              type="button"
+              (click)="priceToEdit ? editPrice() : addPrice()"
+              class="btn float-end {{(priceToEdit ? 'btn-warning' : 'btn-success')}}"
+              [disabled]="!addEditForm.valid">
+              <fa-icon [icon]="['fas', (priceToEdit ? 'edit' : 'plus')]" [class]="'me-2'"></fa-icon>
+              {{ (priceToEdit ? 'Edit' : 'Add') | translate }}
+            </button>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,6 +12,7 @@
   "Note": "Бележка",
   "Address": "Адрес",
   "Phone": "Телефон",
+  "Number": "Номер",
   "SuccessfullyAddedSubscriber": "Успешно добавен абонат",
   "SuccessfullyEditedSubscriber": "Успешно редактиран абонат",
   "SuccessfullyDeletedSubscriber": "Успешно изтрит абонат",
@@ -38,5 +39,15 @@
   "SuccessfullyDeletedSwitchboard": "Успешно изтрито табло",
   "AreYouSureToDeleteThisSwitchboard": "Сигурни ли сте, че искате да изтриете табло",
   "AddSwitchboard": "Добави табло",
-  "EditSwitchboard": "Редакция на табло"
+  "EditSwitchboard": "Редакция на табло",
+  "AreYouSureToDeleteThisPrice": "Сигурни ли сте, че искате да изтриете тази цена",
+  "SuccessfullyAddedPrice": "Успешно добавена цена",
+  "SuccessfullyEditedPrice": "Успешно редактирана цена",
+  "SuccessfullyDeletedPrice": "Успешно изтрита цена",
+  "AddPrice": "Добави цена",
+  "EditPrice": "Редакция на цена",
+  "PriceInBGN": "Цена, лв.",
+  "DateFrom": "Дата от",
+  "DateTo": "Дата до",
+  "EnterReadings": "Въведи показания"
 }

@@ -808,6 +808,14 @@ p-checkbox.checkboxWithContract {
   }
 }
 
+.p-confirm-dialog-message {
+  margin-top: 30px;
+}
+
+.p-dialog .p-dialog-footer {
+  padding: 0.5rem;
+}
+
 @media screen and (max-width: 376px) {
   body .fitCascadeSelect > .p-cascadeselect > p-overlay > .p-overlay .p-cascadeselect-panel .p-cascadeselect-items {
     width: 235px;

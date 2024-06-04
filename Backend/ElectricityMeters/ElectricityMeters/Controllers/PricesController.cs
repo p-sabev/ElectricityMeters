@@ -1,4 +1,5 @@
 ﻿using ElectricityMeters.Models;
+using ElectricityMeters.Request.Prices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,30 +28,39 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Price>> InsertPrice(Price price)
+        public async Task<ActionResult<Price>> InsertPrice(InsertPrice insertPrice)
         {
-            if (price == null)
+            if (insertPrice == null)
             {
                 return BadRequest();
             }
 
             // Намиране на най-близкия предишен запис
             var previousPrice = await _dbContext.Prices
-                .Where(p => p.DateFrom < price.DateFrom)
+                .Where(p => p.DateFrom < insertPrice.DateFrom)
                 .OrderByDescending(p => p.DateFrom)
                 .FirstOrDefaultAsync();
 
             if (previousPrice != null)
             {
-                previousPrice.DateTo = price.DateFrom;
+                previousPrice.DateTo = insertPrice.DateFrom;
                 _dbContext.Prices.Update(previousPrice);
             }
 
             // Намиране на най-близкия следващ запис
             var nextPrice = await _dbContext.Prices
-                .Where(p => p.DateFrom > price.DateFrom)
+                .Where(p => p.DateFrom > insertPrice.DateFrom)
                 .OrderBy(p => p.DateFrom)
                 .FirstOrDefaultAsync();
+
+            var price = new Price
+            {
+                Id = 0,
+                PriceInLv = insertPrice.PriceInLv,
+                DateFrom = insertPrice.DateFrom,
+                DateTo = null,
+                Note = insertPrice.Note
+            };
 
             if (nextPrice != null)
             {
@@ -63,15 +73,11 @@ namespace ElectricityMeters.Controllers
             return CreatedAtAction(nameof(GetAllPrices), new { id = price.Id }, price);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePrice(int id, Price price)
+        [HttpPut]
+        public async Task<IActionResult> UpdatePrice(EditPrice editPrice)
         {
-            if (id != price.Id)
-            {
-                return BadRequest();
-            }
 
-            var existingPrice = await _dbContext.Prices.FindAsync(id);
+            var existingPrice = await _dbContext.Prices.FindAsync(editPrice.Id);
             if (existingPrice == null)
             {
                 return NotFound();
@@ -79,40 +85,40 @@ namespace ElectricityMeters.Controllers
 
             // Намиране на най-близкия предишен запис
             var previousPrice = await _dbContext.Prices
-                .Where(p => p.DateFrom < existingPrice.DateFrom && p.Id != price.Id)
+                .Where(p => p.DateFrom < existingPrice.DateFrom && p.Id != editPrice.Id)
                 .OrderByDescending(p => p.DateFrom)
                 .FirstOrDefaultAsync();
 
             // Намиране на най-близкия следващ запис
             var nextPrice = await _dbContext.Prices
-                .Where(p => p.DateFrom > existingPrice.DateFrom && p.Id != price.Id)
+                .Where(p => p.DateFrom > existingPrice.DateFrom && p.Id != editPrice.Id)
                 .OrderBy(p => p.DateFrom)
                 .FirstOrDefaultAsync();
 
-            if (previousPrice != null && price.DateFrom <= previousPrice.DateFrom)
+            if (previousPrice != null && editPrice.DateFrom <= previousPrice.DateFrom)
             {
                 return BadRequest("ThereIsAPriceBeforeTheEditDate");
             }
 
-            if (nextPrice != null && price.DateFrom >= nextPrice.DateFrom)
+            if (nextPrice != null && editPrice.DateFrom >= nextPrice.DateFrom)
             {
                 return BadRequest("ThereIsAPriceAfterTheEditDate");
             }
 
             if (previousPrice != null)
             {
-                previousPrice.DateTo = price.DateFrom;
+                previousPrice.DateTo = editPrice.DateFrom;
                 _dbContext.Prices.Update(previousPrice);
             }
 
             if (nextPrice != null)
             {
-                price.DateTo = nextPrice.DateFrom;
+                existingPrice.DateTo = nextPrice.DateFrom;
             }
 
-            existingPrice.PriceInLv = price.PriceInLv;
-            existingPrice.DateFrom = price.DateFrom;
-            existingPrice.Note = price.Note;
+            existingPrice.PriceInLv = editPrice.PriceInLv;
+            existingPrice.DateFrom = editPrice.DateFrom;
+            existingPrice.Note = editPrice.Note;
 
             _dbContext.Prices.Update(existingPrice);
             await _dbContext.SaveChangesAsync();
