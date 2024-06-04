@@ -1,4 +1,5 @@
-﻿using ElectricityMeters.Models;
+﻿using ElectricityMeters.Interfaces;
+using ElectricityMeters.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,22 +9,24 @@ namespace ElectricityMeters.Controllers
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
-        private readonly Models.DbContext _dbContext;
+        private readonly IUsersService _usersService;
 
-        public UsersController(Models.DbContext dbContext)
+        public UsersController(IUsersService usersService)
         {
-            _dbContext = dbContext;
+            _usersService = usersService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<Switchboard>>> GetAllUsers()
         {
-            if (_dbContext == null || _dbContext.Users == null)
+            var users = await _usersService.GetAllUsersAsync();
+            if (users == null)
             {
                 return NotFound();
             }
 
-            return await _dbContext.Users.ToListAsync();
+            return Ok(users);
         }
+
     }
 }

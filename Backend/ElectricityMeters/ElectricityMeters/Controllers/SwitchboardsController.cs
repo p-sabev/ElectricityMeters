@@ -1,4 +1,5 @@
-﻿using ElectricityMeters.Models;
+﻿using ElectricityMeters.Interfaces;
+using ElectricityMeters.Models;
 using ElectricityMeters.Request.Subscribers;
 using ElectricityMeters.Request.Switchboards;
 using Microsoft.AspNetCore.Mvc;
@@ -10,40 +11,33 @@ namespace ElectricityMeters.Controllers
     [Route("api/switchboards")]
     public class SwitchboardsController : ControllerBase
     {
-        private readonly Models.DbContext _dbContext;
+        private readonly ISwitchboardService _switchboardService;
 
-        public SwitchboardsController(Models.DbContext dbContext)
+        public SwitchboardsController(ISwitchboardService switchboardService)
         {
-            _dbContext = dbContext;
+            _switchboardService = switchboardService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Switchboard>>> GetAllSwitchboards()
         {
-            if (_dbContext == null || _dbContext.Switchboards == null)
+            var switchboards = await _switchboardService.GetAllSwitchboardsAsync();
+            if (switchboards == null)
             {
                 return NotFound();
             }
 
-            return await _dbContext.Switchboards.ToListAsync();
+            return Ok(switchboards);
         }
 
         [HttpPost]
         public async Task<ActionResult<Switchboard>> InsertSwitchboard(InsertSwitchboard insertSwitchboard)
         {
-            if (_dbContext == null || _dbContext.Switchboards == null)
+            var switchboard = await _switchboardService.InsertSwitchboardAsync(insertSwitchboard);
+            if (switchboard == null)
             {
-                return NotFound();
+                return BadRequest();
             }
-
-            var switchboard = new Switchboard
-            {
-                Id = 0,
-                Name = insertSwitchboard.Name
-            };
-
-            _dbContext.Switchboards.Add(switchboard);
-            await _dbContext.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetAllSwitchboards), new { id = switchboard.Id }, switchboard);
         }
@@ -51,33 +45,10 @@ namespace ElectricityMeters.Controllers
         [HttpPut]
         public async Task<IActionResult> EditSwitchboard(EditSwitchboard editSwitchboard)
         {
-            if (_dbContext == null || _dbContext.Switchboards == null)
+            var result = await _switchboardService.EditSwitchboardAsync(editSwitchboard);
+            if (!result)
             {
-                return NotFound();
-            }
-
-            var switchboard = await _dbContext.Switchboards.FindAsync(editSwitchboard.Id);
-            if (switchboard == null)
-            {
-                return BadRequest("Invalid Switchboard Id.");
-            }
-
-            switchboard.Name = editSwitchboard.Name;
-
-            try
-            {
-                await _dbContext.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SwitchboardExists(editSwitchboard.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest("Invalid Switchboard Id or Switchboard does not exist.");
             }
 
             return NoContent();
@@ -86,33 +57,13 @@ namespace ElectricityMeters.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSwitchboard(int id)
         {
-            if (_dbContext == null || _dbContext.Switchboards == null)
+            var result = await _switchboardService.DeleteSwitchboardAsync(id);
+            if (!result)
             {
-                return NotFound();
+                return BadRequest("Cannot delete the switchboard as there are subscribers connected to it.");
             }
-
-            var switchboard = await _dbContext.Switchboards.FindAsync(id);
-            if (switchboard == null)
-            {
-                return NotFound();
-            }
-
-            // Check if any subscriber is connected to the electric meter
-            var hasConnectedSubscribers = await _dbContext.Subscribers.AnyAsync(s => s.Switchboard.Id == id);
-            if (hasConnectedSubscribers)
-            {
-                return BadRequest("Cannot delete the electric meter as there are subscribers connected to it.");
-            }
-
-            _dbContext.Switchboards.Remove(switchboard);
-            await _dbContext.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool SwitchboardExists(int id)
-        {
-            return (_dbContext?.Switchboards?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
