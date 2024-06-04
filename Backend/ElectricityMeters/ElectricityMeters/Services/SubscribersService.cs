@@ -1,6 +1,7 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
 using ElectricityMeters.Request.Subscribers;
+using ElectricityMeters.Response.Subscribers;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElectricityMeters.Services
@@ -17,6 +18,50 @@ namespace ElectricityMeters.Services
         public async Task<IEnumerable<Subscriber>> GetAllSubscribersAsync()
         {
             return await _dbContext.Subscribers.ToListAsync();
+        }
+
+        public async Task<SearchSubscribersResponse> SearchSubscribersList(SearchSubscribersRequest request)
+        {
+            var query = _dbContext.Subscribers.AsQueryable();
+
+            // Сортиране
+            if (!string.IsNullOrEmpty(request.Sorting.SortProp))
+            {
+                query = request.Sorting.SortDirection == 1
+                    ? query.OrderByDynamic(request.Sorting.SortProp)
+                    : query.OrderByDescendingDynamic(request.Sorting.SortProp);
+            }
+
+            // Общо записи преди пейджинг
+            var totalRecords = await query.CountAsync();
+
+            // Пейджинг
+            query = query
+                .Skip(request.Paging.Page * request.Paging.PageSize)
+                .Take(request.Paging.PageSize);
+
+            // Извличане на данни
+            var subscribers = await query
+                .Select(p => new SubscribersResponse
+                {
+                    Id = p.Id,
+                    NumberPage = p.NumberPage,
+                    Name = p.Name,
+                    Switchboard = p.Switchboard,
+                    Address = p.Address,
+                    Phone = p.Phone,
+                    MeterNumber = p.MeterNumber,
+                    LastRecordDate = p.LastRecordDate,
+                    LastReading = p.LastReading,
+                    Note = p.Note,
+                })
+                .ToListAsync();
+
+            return new SearchSubscribersResponse
+            {
+                Data = subscribers,
+                TotalRecords = totalRecords
+            };
         }
 
         public async Task<Subscriber> InsertSubscriberAsync(InsertSubscriber insertSubscriber)

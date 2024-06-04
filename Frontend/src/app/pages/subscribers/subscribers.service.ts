@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {EditSubscriber, InsertSubscriber} from "../../core/models/subscribers.model";
+import {EditSubscriber, InsertSubscriber, SearchSubscribersRequest} from "../../core/models/subscribers.model";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -13,6 +13,11 @@ export class SubscribersService {
   // Get all
   getAllSubscribers(): Observable<any> {
     return this.http.get('/api/subscribers');
+  }
+
+  // Search
+  searchSubscribers(body: SearchSubscribersRequest): Observable<any> {
+    return this.http.post('/api/subscribers/search', body);
   }
 
   // Add

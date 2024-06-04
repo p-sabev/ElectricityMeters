@@ -49,5 +49,11 @@
   "PriceInBGN": "Цена, лв.",
   "DateFrom": "Дата от",
   "DateTo": "Дата до",
-  "EnterReadings": "Въведи показания"
+  "EnterReadings": "Въведи показания",
+  "SuccessfullyAddedReading": "Успешно добавено показание",
+  "SuccessfullyEditedReading": "Успешно редактирано показание",
+  "AddReading": "Добавяне на показание",
+  "EditReading": "Редакция на показание",
+  "ReadingInKvh": "Показание, квч.",
+  "Date": "Дата"
 }

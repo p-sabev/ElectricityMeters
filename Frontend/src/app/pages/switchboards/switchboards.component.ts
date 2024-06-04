@@ -31,6 +31,10 @@ export class SwitchboardsComponent implements OnInit {
 
   switchboardsList: Switchboard[] = [];
 
+  sortField = 'name';
+  sortOrder = 1;
+  totalRecords = 0;
+
   addSwitchboard: boolean = false;
   switchboardForEdit: Switchboard | null = null;
 
@@ -39,8 +43,20 @@ export class SwitchboardsComponent implements OnInit {
   }
 
   fetchSwitchboardsList() {
-    this.switchboardsService.getAllSwitchboards().subscribe(resp => {
-      this.switchboardsList = resp;
+    const body = {
+      paging: {
+        page: 0,
+        pageSize: 2147483647
+      },
+      sorting: {
+        sortProp: this.sortField,
+        sortDirection: this.sortOrder
+      },
+      name: ''
+    }
+    this.switchboardsService.searchSwitchboards(body).subscribe(resp => {
+      this.switchboardsList = resp?.data || [];
+      this.totalRecords = resp?.totalRecords || 0;
     }, (error: any) => {
       this.errorService.processError(error);
     });

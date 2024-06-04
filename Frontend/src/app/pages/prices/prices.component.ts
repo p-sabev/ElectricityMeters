@@ -31,9 +31,8 @@ export class PricesComponent implements OnInit {
   pricesList: any[] = [];
   sortField = 'dateFrom';
   sortOrder = -1;
-  page = 0;
-  pageSize = 10;
   totalRecords = 0;
+  lastUsedSettings: any = null;
 
   addPrice: boolean = false;
   priceForEdit: Price | null = null;
@@ -42,7 +41,8 @@ export class PricesComponent implements OnInit {
     // this.fetchPricesList();
   }
 
-  fetchPricesList(settings: any = null) {
+  fetchPricesList(settings: any = this.lastUsedSettings) {
+    this.lastUsedSettings = settings;
     const body = {
       paging: {
         page: settings.first / settings.rows,

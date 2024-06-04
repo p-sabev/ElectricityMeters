@@ -15,18 +15,19 @@
           <h5 class="card-title">{{'Switchboard' | translate}} - {{switchboard.name}}</h5>
         </div>
         <ul class="list-group list-group-flush">
-<!--          <li class="list-group-item" *ngFor="let subscriber of switchboard.meterSubscribers">-->
-<!--            {{subscriber.number}} - {{subscriber.name}}-->
-<!--          </li>-->
+          <li class="list-group-item" *ngFor="let subscriber of switchboard.subscribers">
+            {{subscriber.numberPage}} - {{subscriber.name}}
+          </li>
         </ul>
         <div class="card-body">
           <div class="row">
             <div class="col-12 text-right">
-              <button class="btn btn-outline-danger float-end"
+              <button class="btn btn-outline-danger float-end ms-2"
+                      *ngIf="!switchboard.subscribers?.length"
                       (click)="askToDeleteSwitchboard(switchboard)">
                 <fa-icon [icon]="['fas', 'trash']"></fa-icon>
               </button>
-              <button class="btn btn-outline-warning float-end me-2"
+              <button class="btn btn-outline-warning float-end"
                       (click)="switchboardForEdit = switchboard;">
                 <fa-icon [icon]="['fas', 'edit']"></fa-icon>
               </button>

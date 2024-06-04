@@ -1,0 +1,74 @@
+<div #addEditModal class="modal show-modal" *ngIf="addEditReadingForm">
+  <div class="modal-dialog modal-lg animate__animated animate__fadeIn">
+    <div class="modal-content">
+      <div class="modal-header">
+        <fa-icon [icon]="['fas', 'rectangle-list']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <h3 *ngIf="!readingToEdit" translate>AddReading</h3>
+        <h3 *ngIf="readingToEdit" translate>EditReading</h3>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close.emit()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="addEditReadingForm" class="pb-5">
+          <div class="row">
+
+            <div class="col-lg-6 col-md-12 mt-3">
+              <label>{{ 'ReadingInKvh' | translate }}*</label>
+
+              <input
+                type="number"
+                class="form-control"
+                name="value"
+                id="value"
+                formControlName="value"
+                title="{{ 'ReadingInKvh' | translate }}*"
+                placeholder="{{ 'ReadingInKvh' | translate }}*" />
+
+              <app-form-errors [withoutTooltip]="true"
+                               [control]="addEditReadingForm.get('value')"
+                               [max]="2147483647"></app-form-errors>
+            </div>
+
+            <div class="col-lg-6 col-md-12 mt-3">
+              <label>{{ 'Date' | translate }}*</label>
+
+              <p-calendar
+                formControlName="date"
+                [firstDayOfWeek]="1"
+                [style]="{ width: '100%' }"
+                [inputStyle]="{ width: '100%' }"
+                dateFormat="dd.mm.yy"
+                [readonlyInput]="false"
+                [appendTo]="addEditModal"
+                [showButtonBar]="true"></p-calendar>
+
+              <app-form-errors [withoutTooltip]="true" [control]="addEditReadingForm.get('date')" [max]="1000"></app-form-errors>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <div class="row" style="width: 100%">
+          <div class="col-12 p-0">
+            <button
+              type="button"
+              (click)="readingToEdit ? editReading() : addReading()"
+              class="btn float-end {{(readingToEdit ? 'btn-warning' : 'btn-success')}}"
+              [disabled]="!addEditReadingForm.valid">
+              <fa-icon [icon]="['fas', (readingToEdit ? 'edit' : 'plus')]" [class]="'me-2'"></fa-icon>
+              {{ (readingToEdit ? 'Edit' : 'Add') | translate }}
+            </button>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

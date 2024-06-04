@@ -67,6 +67,11 @@ namespace ElectricityMeters.Services
             };
 
             _dbContext.Readings.Add(reading);
+
+            subscriber.LastReading = insertReading.Value;
+            subscriber.LastRecordDate = insertReading.Date;
+            _dbContext.Update(subscriber);
+
             await _dbContext.SaveChangesAsync();
 
             return reading;

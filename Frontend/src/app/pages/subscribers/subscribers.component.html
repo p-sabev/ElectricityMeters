@@ -13,15 +13,22 @@
 
       <p-table [value]="subscribers"
                styleClass="p-datatable-gridlines"
-               [tableStyle]="{ 'width': '100%' }">
+               [tableStyle]="{ 'width': '100%' }"
+               [lazy]="true"
+               (onLazyLoad)="fetchSubscribersList($event)"
+               [sortField]="sortField" [sortOrder]="sortOrder"
+               [totalRecords]="totalRecords"
+               [paginator]="true"
+               [rows]="10"
+               [rowsPerPageOptions]="[5, 10, 20, 50]">
         <ng-template pTemplate="header">
           <tr>
-            <th translate>NumberPage</th>
-            <th translate>Name</th>
-            <th translate>Switchboard</th>
-            <th translate>MeterNumber</th>
-            <th translate>LastReading</th>
-            <th translate>LastRecord</th>
+            <th pSortableColumn="numberPage" translate>NumberPage<p-sortIcon field="numberPage" /></th>
+            <th pSortableColumn="name" translate>Name<p-sortIcon field="name" /></th>
+            <th pSortableColumn="switchboard" translate>Switchboard<p-sortIcon field="switchboard" /></th>
+            <th pSortableColumn="meterNumber" translate>MeterNumber<p-sortIcon field="meterNumber" /></th>
+            <th pSortableColumn="lastReading" translate>LastReading<p-sortIcon field="lastReading" /></th>
+            <th pSortableColumn="lastRecordDate" translate>LastRecord<p-sortIcon field="lastRecordDate" /></th>
             <th></th>
           </tr>
         </ng-template>
@@ -29,7 +36,7 @@
           <tr>
             <td>{{ subscriber.numberPage }}</td>
             <td class="font-weight-bold">{{ subscriber.name }}</td>
-            <td>{{ subscriber.switchboard }}</td>
+            <td>{{ subscriber.switchboard?.name }}</td>
             <td>{{ subscriber.meterNumber }}</td>
             <td>
               <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
@@ -40,6 +47,9 @@
               <span *ngIf="!subscriber.lastRecordDate">-</span>
             </td>
             <td>
+              <a class="nav-link text-success cursor-pointer btn-action" (click)="subscriberToAddRecord = subscriber">
+                <fa-icon [icon]="['fas', 'plus-square']" [class]="'me-2'"></fa-icon>
+              </a>
               <a class="nav-link text-warning cursor-pointer btn-action" (click)="openSubscriberForEdit(subscriber)">
                 <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
               </a>
@@ -55,6 +65,11 @@
     </div>
   </div>
 </div>
+
+<ng-container *ngIf="subscriberToAddRecord">
+  <app-add-reading-for-subscriber [subscriber]="subscriberToAddRecord"
+                                  (close)="subscriberToAddRecord = null; fetchSubscribersList();"></app-add-reading-for-subscriber>
+</ng-container>
 
 <ng-container *ngIf="addSubscriber || subscriberForEdit">
   <app-add-edit-subscribers [subscriberToEdit]="subscriberForEdit"

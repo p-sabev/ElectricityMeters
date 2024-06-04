@@ -1,6 +1,9 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
+using ElectricityMeters.Request.Prices;
 using ElectricityMeters.Request.Subscribers;
+using ElectricityMeters.Response.Prices;
+using ElectricityMeters.Response.Subscribers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +30,13 @@ namespace ElectricityMeters.Controllers
             }
 
             return Ok(subscribers);
+        }
+
+        [HttpPost("search")]
+        public async Task<ActionResult<SearchSubscribersResponse>> SearchSubscribers([FromBody] SearchSubscribersRequest request)
+        {
+            var result = await _subscriberService.SearchSubscribersList(request);
+            return Ok(result);
         }
 
         [HttpPost]

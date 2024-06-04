@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {EditSwitchboard, Switchboard, InsertSwitchboard} from "../../core/models/switchboards.model";
+import {
+  EditSwitchboard,
+  Switchboard,
+  InsertSwitchboard,
+  SearchSwitchboardsRequest
+} from "../../core/models/switchboards.model";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -13,6 +18,11 @@ export class SwitchboardsService {
   // Get all
   getAllSwitchboards(): Observable<any> {
     return this.http.get('/api/switchboards');
+  }
+
+  // Search
+  searchSwitchboards(body: SearchSwitchboardsRequest): Observable<any> {
+    return this.http.post('/api/switchboards/search', body);
   }
 
   // Add

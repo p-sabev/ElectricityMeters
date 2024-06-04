@@ -2,6 +2,9 @@
 using ElectricityMeters.Models;
 using ElectricityMeters.Request.Subscribers;
 using ElectricityMeters.Request.Switchboards;
+using ElectricityMeters.Response.Subscribers;
+using ElectricityMeters.Response.Switchboards;
+using ElectricityMeters.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +31,13 @@ namespace ElectricityMeters.Controllers
             }
 
             return Ok(switchboards);
+        }
+
+        [HttpPost("search")]
+        public async Task<ActionResult<SearchSwitchboardsResponse>> SearchSwitchboards([FromBody] SearchSwitchboardsRequest request)
+        {
+            var result = await _switchboardService.SearchSwitchboardsList(request);
+            return Ok(result);
         }
 
         [HttpPost]

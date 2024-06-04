@@ -1,4 +1,5 @@
 import {Switchboard} from "./switchboards.model";
+import {Paging, Sorting} from "./base-models.model";
 
 export interface Subscriber {
   id: number;
@@ -43,4 +44,10 @@ export interface SubscriberAddEdit {
   phone?: string;
   meterNumber?: string;
   note?: string;
+}
+
+export interface SearchSubscribersRequest {
+  paging: Paging;
+  sorting: Sorting;
+  name: string;
 }

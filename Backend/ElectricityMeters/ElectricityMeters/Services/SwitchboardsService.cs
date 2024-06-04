@@ -1,6 +1,9 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
+using ElectricityMeters.Request.Subscribers;
 using ElectricityMeters.Request.Switchboards;
+using ElectricityMeters.Response.Subscribers;
+using ElectricityMeters.Response.Switchboards;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElectricityMeters.Services
@@ -17,6 +20,77 @@ namespace ElectricityMeters.Services
         public async Task<IEnumerable<Switchboard>> GetAllSwitchboardsAsync()
         {
             return await _dbContext.Switchboards.ToListAsync();
+        }
+
+        public async Task<SearchSwitchboardsResponse> SearchSwitchboardsList(SearchSwitchboardsRequest request)
+        {
+            var query = _dbContext.Switchboards.AsQueryable();
+
+            // Сортиране
+            if (!string.IsNullOrEmpty(request.Sorting.SortProp))
+            {
+                query = request.Sorting.SortDirection == 1
+                    ? query.OrderByDynamic(request.Sorting.SortProp)
+                    : query.OrderByDescendingDynamic(request.Sorting.SortProp);
+            }
+
+            // Общо записи преди пейджинг
+            var totalRecords = await query.CountAsync();
+
+            // Пейджинг
+            query = query
+                .Skip(request.Paging.Page * request.Paging.PageSize)
+                .Take(request.Paging.PageSize);
+
+            var switchboards = await query
+                .Select(p => new SwitchboardsResponse
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Subscribers = _dbContext.Subscribers
+                        .Where(s => s.Switchboard.Id == p.Id)
+                        .Select(s => new SwitchboardSubscribers
+                        {
+                            Id = s.Id,
+                            NumberPage = s.NumberPage,
+                            Name = s.Name,
+                            Address = s.Address,
+                            Phone = s.Phone,
+                            MeterNumber = s.MeterNumber,
+                            LastRecordDate = s.LastRecordDate,
+                            LastReading = s.LastReading,
+                            Note = s.Note
+                        })
+                        .ToList() // This will still be an IQueryable, so we need to materialize it later
+                })
+                .ToListAsync();
+
+            // Process each switchboard to fetch subscribers asynchronously
+            foreach (var switchboard in switchboards)
+            {
+                // Await each set of subscribers separately
+                switchboard.Subscribers = await _dbContext.Subscribers
+                    .Where(s => s.Switchboard.Id == switchboard.Id)
+                    .Select(s => new SwitchboardSubscribers
+                    {
+                        Id = s.Id,
+                        NumberPage = s.NumberPage,
+                        Name = s.Name,
+                        Address = s.Address,
+                        Phone = s.Phone,
+                        MeterNumber = s.MeterNumber,
+                        LastRecordDate = s.LastRecordDate,
+                        LastReading = s.LastReading,
+                        Note = s.Note
+                    })
+                    .ToListAsync();
+            }
+
+            return new SearchSwitchboardsResponse
+            {
+                Data = switchboards,
+                TotalRecords = totalRecords
+            };
         }
 
         public async Task<Switchboard> InsertSwitchboardAsync(InsertSwitchboard insertSwitchboard)

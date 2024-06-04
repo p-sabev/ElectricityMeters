@@ -10,6 +10,9 @@ import {AddEditSubscribersComponent} from "./add-edit-subscribers/add-edit-subsc
 import {SubscribersService} from "./subscribers.service";
 import {ErrorService} from "../../core/services/error.service";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {
+  AddReadingForSubscriberComponent
+} from "../readings/add-reading-for-subscriber/add-reading-for-subscriber.component";
 
 @Component({
   selector: 'app-subscribers',
@@ -22,7 +25,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     FaIconComponent,
     TranslateModule,
     AddEditSubscribersComponent,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AddReadingForSubscriberComponent
   ],
   providers: [ConfirmationService],
   templateUrl: './subscribers.component.html',
@@ -38,16 +42,37 @@ export class SubscribersComponent implements OnInit {
 
   subscribers: Subscriber[] = [];
 
+  sortField = 'numberPage';
+  sortOrder = 1;
+  totalRecords = 0;
+  lastUsedSettings: any = null;
+
   addSubscriber: boolean = false;
   subscriberForEdit: Subscriber | null = null;
 
+  subscriberToAddRecord: Subscriber | null = null;
+
   ngOnInit() {
-    this.fetchSubscribersList();
+
   }
 
-  fetchSubscribersList() {
-    this.subscribersService.getAllSubscribers().subscribe(resp => {
-      this.subscribers = resp;
+  fetchSubscribersList(settings: any = this.lastUsedSettings) {
+    this.lastUsedSettings = settings;
+    const body = {
+      paging: {
+        page: settings.first / settings.rows,
+        pageSize: settings.rows
+      },
+      sorting: {
+        sortProp: settings.sortField,
+        sortDirection: settings.sortOrder
+      },
+      name: ''
+    }
+    console.log(body);
+    this.subscribersService.searchSubscribers(body).subscribe(resp => {
+      this.subscribers = resp?.data || [];
+      this.totalRecords = resp?.totalRecords || 0;
     }, error => {
       this.errorService.processError(error);
     });
