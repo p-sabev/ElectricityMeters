@@ -28,7 +28,6 @@ import {TokenInterceptor} from "./core/interceptors/token-interceptor.intercepto
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {SimpleNotificationsModule} from "angular2-notifications";
-import {FormErrorsComponent} from "./shared/features/form-errors/form-errors.component";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 
@@ -80,6 +79,8 @@ import {ConfirmationService} from "primeng/api";
     //   useClass: TokenInterceptor,
     //   multi: true,
     // },
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })

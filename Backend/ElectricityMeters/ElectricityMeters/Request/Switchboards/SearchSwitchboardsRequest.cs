@@ -1,6 +1,6 @@
 ﻿namespace ElectricityMeters.Request.Switchboards
 {
-    public class SearchSwitchboardsRequest
+    public class SearchSwitchboardRequest
     {
         public required Paging Paging { get; set; }
         public required Sorting Sorting { get; set; }

@@ -8,7 +8,7 @@ namespace ElectricityMeters.Interfaces
     public interface ISwitchboardService
     {
         Task<IEnumerable<Switchboard>> GetAllSwitchboardsAsync();
-        Task<SearchSwitchboardsResponse> SearchSwitchboardsList(SearchSwitchboardsRequest request);
+        Task<SearchSwitchboardsResponse> SearchSwitchboardsList(SearchSwitchboardRequest request);
         Task<Switchboard> InsertSwitchboardAsync(InsertSwitchboard insertSwitchboard);
         Task<bool> EditSwitchboardAsync(EditSwitchboard editSwitchboard);
         Task<bool> DeleteSwitchboardAsync(int id);

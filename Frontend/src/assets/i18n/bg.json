@@ -8,6 +8,7 @@
   "LastReading": "Последно показание",
   "LastRecord": "Последен запис",
   "kvh": "квч.",
+  "BgnVaultSmall": "лв.",
   "MeterNumber": "Номер на електромер",
   "Note": "Бележка",
   "Address": "Адрес",
@@ -58,5 +59,12 @@
   "EditReading": "Редакция на показание",
   "ReadingInKvh": "Показание, квч.",
   "Date": "Дата",
-  "Subscriber": "Абонат"
+  "Subscriber": "Абонат",
+  "AreYouSureToDeleteThisReading": "Сигурни ли сте, че искате да изтриете това показание",
+  "SuccessfullyDeletedReading": "Успешно изтрито показание",
+  "Difference": "Разлика",
+  "ForPaymentInBgn": "За плащане, лв.",
+  "TariffInBgn": "Тарифа, лв.",
+  "Print": "Принтирай",
+  "PrintReceipt": "Принтиране на касов ордер и квитанция"
 }

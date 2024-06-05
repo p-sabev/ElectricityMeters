@@ -1,8 +1,8 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
 using ElectricityMeters.Request.Readings;
+using ElectricityMeters.Response.Readings;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ElectricityMeters.Controllers
 {
@@ -27,6 +27,13 @@ namespace ElectricityMeters.Controllers
             }
 
             return Ok(readings);
+        }
+
+        [HttpPost("search")]
+        public async Task<ActionResult<SearchReadingsResponse>> SearchReadingsList([FromBody] SearchReadingsRequest request)
+        {
+            var result = await _readingService.SearchReadingsList(request);
+            return Ok(result);
         }
 
         [HttpPost]

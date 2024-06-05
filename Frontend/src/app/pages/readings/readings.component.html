@@ -1,1 +1,67 @@
-<p>readings works!</p>
+<div class="container">
+  <div class="row">
+
+    <div class="col-12 mt-3">
+
+      <p-table [value]="readingsList"
+               styleClass="p-datatable-gridlines"
+               [tableStyle]="{ 'width': '100%' }"
+               [lazy]="true"
+               (onLazyLoad)="fetchReadingsList($event)"
+               [sortField]="sortField" [sortOrder]="sortOrder"
+               [totalRecords]="totalRecords"
+               [paginator]="true"
+               [rows]="10"
+               [rowsPerPageOptions]="[5, 10, 20, 50]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="id" translate>Id<p-sortIcon field="id" /></th>
+            <th pSortableColumn="subscriber" translate>Subscriber<p-sortIcon field="subscriber" /></th>
+            <th pSortableColumn="date" translate>Date<p-sortIcon field="date" /></th>
+            <th pSortableColumn="value" translate>ReadingInKvh<p-sortIcon field="value" /></th>
+            <th pSortableColumn="difference" translate>Difference<p-sortIcon field="difference" /></th>
+            <th pSortableColumn="currentPrice" translate>TariffInBgn<p-sortIcon field="currentPrice" /></th>
+            <th pSortableColumn="amountDue" translate>ForPaymentInBgn<p-sortIcon field="amountDue" /></th>
+            <th translate>MeterNumber</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-reading>
+          <tr>
+            <td>{{ reading.id }}</td>
+            <td class="font-weight-bold">{{ reading.subscriber?.name }}</td>
+            <td>{{ reading.date | date: 'dd.MM.yyyy' }}</td>
+            <td>{{ reading.value }}  {{'kvh' | translate}}</td>
+            <td>{{ reading.difference }}  {{'kvh' | translate}}</td>
+            <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
+            <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
+            <td>{{ reading.subscriber?.switchboardNumber }}</td>
+            <td>
+              <a class="nav-link text-warning cursor-pointer btn-action" (click)="openReadingForEdit(reading)">
+                <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
+              </a>
+              <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeleteReading(reading)">
+                <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
+              </a>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="readingForEdit">
+  <app-add-reading-for-subscriber [readingToEdit]="readingForEdit"
+                                  (close)="readingForEdit = null; fetchReadingsList();"></app-add-reading-for-subscriber>
+</ng-container>
+
+<p-confirmDialog
+  header="{{ 'Confirmation' | translate }}"
+  icon="pi pi-exclamation-triangle"
+  rejectLabel="{{ 'No' | translate }}"
+  acceptLabel="{{ 'Yes' | translate }}"></p-confirmDialog>
+
+<app-receipt></app-receipt>

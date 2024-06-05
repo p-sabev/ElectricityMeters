@@ -34,7 +34,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost("search")]
-        public async Task<ActionResult<SearchSwitchboardsResponse>> SearchSwitchboards([FromBody] SearchSwitchboardsRequest request)
+        public async Task<ActionResult<SearchSwitchboardsResponse>> SearchSwitchboards([FromBody] SearchSwitchboardRequest request)
         {
             var result = await _switchboardService.SearchSwitchboardsList(request);
             return Ok(result);

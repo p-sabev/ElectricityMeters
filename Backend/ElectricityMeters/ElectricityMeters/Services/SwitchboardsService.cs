@@ -22,7 +22,7 @@ namespace ElectricityMeters.Services
             return await _dbContext.Switchboards.ToListAsync();
         }
 
-        public async Task<SearchSwitchboardsResponse> SearchSwitchboardsList(SearchSwitchboardsRequest request)
+        public async Task<SearchSwitchboardsResponse> SearchSwitchboardsList(SearchSwitchboardRequest request)
         {
             var query = _dbContext.Switchboards.AsQueryable();
 

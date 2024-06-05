@@ -16,7 +16,8 @@
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let subscriber of switchboard.subscribers">
-            {{subscriber.numberPage}} - {{subscriber.name}}
+            {{subscriber.numberPage}}/{{subscriber.name}}
+            <span class="float-end font-weight-bold">{{subscriber.lastReading}} {{'kvh' | translate}}</span>
           </li>
         </ul>
         <div class="card-body">

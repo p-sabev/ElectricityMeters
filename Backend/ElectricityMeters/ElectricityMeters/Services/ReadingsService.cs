@@ -1,6 +1,8 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
 using ElectricityMeters.Request.Readings;
+using ElectricityMeters.Response.Readings;
+using ElectricityMeters.Response.Switchboards;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElectricityMeters.Services
@@ -17,6 +19,73 @@ namespace ElectricityMeters.Services
         public async Task<IEnumerable<Reading>> GetAllReadingsAsync()
         {
             return await _dbContext.Readings.ToListAsync();
+        }
+
+        public async Task<SearchReadingsResponse> SearchReadingsList(SearchReadingsRequest request)
+        {
+            var query = _dbContext.Readings.AsQueryable();
+
+            // Сортиране
+            if (!string.IsNullOrEmpty(request.Sorting.SortProp))
+            {
+                query = request.Sorting.SortDirection == 1
+                    ? query.OrderByDynamic(request.Sorting.SortProp)
+                    : query.OrderByDescendingDynamic(request.Sorting.SortProp);
+            }
+
+            // Общо записи преди пейджинг
+            var totalRecords = await query.CountAsync();
+
+            // Пейджинг
+            query = query
+                .Skip(request.Paging.Page * request.Paging.PageSize)
+                .Take(request.Paging.PageSize);
+
+        // Извличане на данни
+        var readings = await query
+                .Select(r => new ReadingsResponse
+                {
+                    Id = r.Id,
+                    Date = r.Date,
+                    Value = r.Value,
+                    AmountDue = r.AmountDue,
+                    Difference = r.Difference,
+                    CurrentPrice = r.CurrentPrice,
+                    UsedPrice = _dbContext.Prices
+                        .Where(p => p.Id == r.UsedPrice)
+                        .Select(p => new Price
+                        {
+                            Id = p.Id,
+                            PriceInLv = p.PriceInLv,
+                            DateFrom = p.DateFrom,
+                            DateTo = p.DateTo,
+                            Note = p.Note
+                        })
+                        .FirstOrDefault(),
+                    Subscriber = _dbContext.Subscribers
+                        .Where(s => s.Id == r.Subscriber.Id)
+                        .Select(s => new ReadingSubscriber
+                        {
+                            Id = s.Id,
+                            NumberPage = s.NumberPage,
+                            Name = s.Name,
+                            Address = s.Address,
+                            Phone = s.Phone,
+                            SwitchboardNumber = s.Switchboard.Name,
+                            MeterNumber = s.MeterNumber,
+                            LastRecordDate = s.LastRecordDate,
+                            LastReading = s.LastReading,
+                            Note = s.Note
+                        })
+                        .FirstOrDefault()
+                })
+                .ToListAsync();
+
+            return new SearchReadingsResponse
+            {
+                Data = readings,
+                TotalRecords = totalRecords
+            };
         }
 
         public async Task<Reading> InsertReadingAsync(InsertReading insertReading)

@@ -11,11 +11,12 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {AddEditSwitchboardComponent} from "../switchboards/add-edit-switchboard/add-edit-switchboard.component";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {AddEditPricesComponent} from "./add-edit-prices/add-edit-prices.component";
+import {TwoAfterDotPipe} from "../../shared/pipes/twoAfterDot.pipe";
 
 @Component({
   selector: 'app-prices',
   standalone: true,
-  imports: [CommonModule, TableModule, FaIconComponent, TranslateModule, AddEditSwitchboardComponent, ConfirmDialogModule, AddEditPricesComponent],
+  imports: [CommonModule, TableModule, FaIconComponent, TranslateModule, AddEditSwitchboardComponent, ConfirmDialogModule, AddEditPricesComponent, TwoAfterDotPipe],
   templateUrl: './prices.component.html',
   styleUrl: './prices.component.scss'
 })

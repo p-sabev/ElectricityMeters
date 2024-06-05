@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
-import {EditReading, InsertMultipleReadings, InsertReading} from "../../core/models/readings.model";
+import {
+  EditReading,
+  InsertMultipleReadings,
+  InsertReading,
+  SearchReadingsRequest
+} from "../../core/models/readings.model";
 import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +18,11 @@ export class ReadingsService {
   // Get all
   getAllReadings() {
     return this.http.get('/api/readings');
+  }
+
+  // Search
+  searchReadings(body: SearchReadingsRequest): Observable<any> {
+    return this.http.post('/api/readings/search', body);
   }
 
   // Add

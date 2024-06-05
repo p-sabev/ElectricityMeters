@@ -1,4 +1,5 @@
 import {InsertSubscriber, Subscriber} from "./subscribers.model";
+import {Paging, Sorting} from "./base-models.model";
 
 export interface Reading {
   id: number;
@@ -26,4 +27,10 @@ export interface EditReading {
   date: Date | string;
   value: number;
   currentPrice?: number;
+}
+
+export interface SearchReadingsRequest {
+  paging: Paging;
+  sorting: Sorting;
+  name: string;
 }
