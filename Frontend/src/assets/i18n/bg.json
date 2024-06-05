@@ -51,9 +51,12 @@
   "DateTo": "Дата до",
   "EnterReadings": "Въведи показания",
   "SuccessfullyAddedReading": "Успешно добавено показание",
+  "SuccessfullyAddedReadings": "Успешно добавени показания",
   "SuccessfullyEditedReading": "Успешно редактирано показание",
   "AddReading": "Добавяне на показание",
+  "AddReadings": "Добавяне на показания",
   "EditReading": "Редакция на показание",
   "ReadingInKvh": "Показание, квч.",
-  "Date": "Дата"
+  "Date": "Дата",
+  "Subscriber": "Абонат"
 }

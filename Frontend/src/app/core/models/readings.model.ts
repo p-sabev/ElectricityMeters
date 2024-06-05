@@ -1,4 +1,4 @@
-import {Subscriber} from "./subscribers.model";
+import {InsertSubscriber, Subscriber} from "./subscribers.model";
 
 export interface Reading {
   id: number;
@@ -14,6 +14,10 @@ export interface InsertReading {
   subscriberId: number;
   date: Date | string;
   value: number;
+}
+
+export interface InsertMultipleReadings {
+  subscribersReading: InsertReading[];
 }
 
 export interface EditReading {

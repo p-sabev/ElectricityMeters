@@ -9,5 +9,6 @@ namespace ElectricityMeters.Interfaces
         Task<Reading> InsertReadingAsync(InsertReading insertReading);
         Task<bool> EditReadingAsync(int id, EditReading editReading);
         Task<bool> DeleteReadingAsync(int id);
+        Task<IEnumerable<Reading>> InsertMultipleReadingsAsync(InsertMultipleReadings insertMultipleReadings);
     }
 }

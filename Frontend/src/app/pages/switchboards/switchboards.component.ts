@@ -11,11 +11,15 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {AddEditSubscribersComponent} from "../subscribers/add-edit-subscribers/add-edit-subscribers.component";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {AddEditSwitchboardComponent} from "./add-edit-switchboard/add-edit-switchboard.component";
+import {Subscriber} from "../../core/models/subscribers.model";
+import {
+  AddReadingForSwitchboardComponent
+} from "../readings/add-reading-for-switchboard/add-reading-for-switchboard.component";
 
 @Component({
   selector: 'app-switchboards',
   standalone: true,
-  imports: [FormsModule, CommonModule, TranslateModule, FaIconComponent, AddEditSubscribersComponent, ConfirmDialogModule, AddEditSwitchboardComponent],
+  imports: [FormsModule, CommonModule, TranslateModule, FaIconComponent, AddEditSubscribersComponent, ConfirmDialogModule, AddEditSwitchboardComponent, AddReadingForSwitchboardComponent],
   providers: [ConfirmationService],
   templateUrl: './switchboards.component.html',
   styleUrl: './switchboards.component.scss'
@@ -37,6 +41,7 @@ export class SwitchboardsComponent implements OnInit {
 
   addSwitchboard: boolean = false;
   switchboardForEdit: Switchboard | null = null;
+  subscribersToAddReadings: Subscriber[] | null | undefined = null;
 
   ngOnInit() {
     this.fetchSwitchboardsList();

@@ -8,4 +8,9 @@ namespace ElectricityMeters.Request.Readings
         public required DateTime Date { get; set; }
         public required double Value { get; set; }
     }
+
+    public class InsertMultipleReadings
+    {
+        public required List<InsertReading> SubscribersReading { get; set; }
+    }
 }

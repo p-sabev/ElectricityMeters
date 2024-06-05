@@ -61,7 +61,7 @@ export class AddReadingForSubscriberComponent implements OnInit {
       this.close.emit();
     }, error => {
       this.errorService.processError(error);
-    })
+    });
   }
 
   editReading() {
@@ -71,7 +71,7 @@ export class AddReadingForSubscriberComponent implements OnInit {
       this.close.emit();
     }, error => {
       this.errorService.processError(error);
-    })
+    });
   }
 
 }

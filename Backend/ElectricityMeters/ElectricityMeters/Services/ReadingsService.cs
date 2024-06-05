@@ -77,6 +77,66 @@ namespace ElectricityMeters.Services
             return reading;
         }
 
+        public async Task<IEnumerable<Reading>> InsertMultipleReadingsAsync(InsertMultipleReadings insertMultipleReadings)
+        {
+            var readings = new List<Reading>();
+
+            foreach (var insertReading in insertMultipleReadings.SubscribersReading)
+            {
+                var subscriber = await _dbContext.Subscribers.FindAsync(insertReading.SubscriberId);
+                if (subscriber == null)
+                {
+                    continue; // Skip this reading if the subscriber is not found
+                }
+
+                var lastReading = await _dbContext.Readings
+                    .Where(r => r.Subscriber.Id == insertReading.SubscriberId)
+                    .OrderByDescending(r => r.Date)
+                    .FirstOrDefaultAsync();
+
+                if (lastReading != null && (insertReading.Date <= lastReading.Date || insertReading.Value < lastReading.Value))
+                {
+                    continue; // Skip invalid readings
+                }
+
+                var currentPrice = await _dbContext.Prices
+                    .Where(p => p.DateFrom <= insertReading.Date && (p.DateTo == null || p.DateTo >= insertReading.Date))
+                    .OrderByDescending(p => p.DateFrom)
+                    .FirstOrDefaultAsync();
+
+                if (currentPrice == null)
+                {
+                    continue; // Skip if no valid price is found
+                }
+
+                var difference = lastReading != null ? insertReading.Value - lastReading.Value : insertReading.Value;
+                var amountDue = difference * currentPrice.PriceInLv;
+
+                var reading = new Reading
+                {
+                    Subscriber = subscriber,
+                    Date = insertReading.Date,
+                    Value = insertReading.Value,
+                    Difference = difference,
+                    AmountDue = amountDue,
+                    CurrentPrice = currentPrice.PriceInLv,
+                    UsedPrice = currentPrice.Id
+                };
+
+                _dbContext.Readings.Add(reading);
+
+                subscriber.LastReading = insertReading.Value;
+                subscriber.LastRecordDate = insertReading.Date;
+                _dbContext.Update(subscriber);
+
+                readings.Add(reading);
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return readings;
+        }
+
         public async Task<bool> EditReadingAsync(int id, EditReading editReading)
         {
             var reading = await _dbContext.Readings

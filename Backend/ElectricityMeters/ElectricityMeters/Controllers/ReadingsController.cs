@@ -41,6 +41,18 @@ namespace ElectricityMeters.Controllers
             return CreatedAtAction(nameof(GetAllReadings), new { id = reading.Id }, reading);
         }
 
+        [HttpPost("add-multiple-readings")]
+        public async Task<ActionResult<IEnumerable<Reading>>> InsertMultipleReadings(InsertMultipleReadings insertMultipleReadings)
+        {
+            var readings = await _readingService.InsertMultipleReadingsAsync(insertMultipleReadings);
+            if (readings == null || !readings.Any())
+            {
+                return BadRequest("No valid readings were added.");
+            }
+
+            return Ok(readings);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> EditReading(int id, EditReading editReading)
         {

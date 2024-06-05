@@ -1,0 +1,98 @@
+<div #addEditModal class="modal show-modal" *ngIf="subscribers?.length">
+  <div class="modal-dialog modal-lg animate__animated animate__fadeIn">
+    <div class="modal-content">
+      <div class="modal-header">
+        <fa-icon [icon]="['fas', 'rectangle-list']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <h3 translate>AddReadings</h3>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close.emit()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-12">
+                    <label class="font-weight-bold">{{ 'Date' | translate }}*</label>
+
+                    <p-calendar
+                      #dateField="ngModel"
+                      [(ngModel)]="readingsDate"
+                      [firstDayOfWeek]="1"
+                      [style]="{ width: '100%' }"
+                      [inputStyle]="{ width: '100%' }"
+                      dateFormat="dd.mm.yy"
+                      [readonlyInput]="false"
+                      [appendTo]="addEditModal"
+                      [showButtonBar]="true"></p-calendar>
+
+                    <app-form-errors [withoutTooltip]="true" [control]="dateField" [max]="1000"></app-form-errors>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item" *ngFor="let subscriber of subscribers; let i = index;">
+                <div class="row my-3">
+                  <div class="col-12">
+                    <h6>
+                      <span class="font-weight-bold">{{'Subscriber' | translate}}</span>: {{subscriber.name}}
+                    </h6>
+                    <h6>
+                      <span class="font-weight-bold">{{'LastReading' | translate}}</span>:
+                      <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
+                      <span *ngIf="!subscriber.lastReading">-</span>
+                    </h6>
+                  </div>
+
+                  <div class="col-12 my-1">
+                    <hr>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="font-weight-bold">{{ 'ReadingInKvh' | translate }}*</label>
+
+                    <input
+                      #readingField="ngModel"
+                      [(ngModel)]="readingsValues[i]"
+                      type="number"
+                      class="form-control"
+                      name="value"
+                      id="value"
+                      title="{{ 'ReadingInKvh' | translate }}*"
+                      placeholder="{{ 'ReadingInKvh' | translate }}*" />
+
+                    <app-form-errors [withoutTooltip]="true"
+                                     [control]="readingField"
+                                     [max]="2147483647"></app-form-errors>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="row" style="width: 100%">
+          <div class="col-12 p-0">
+            <button
+              type="button"
+              (click)="addReadings()"
+              class="btn float-end btn-success">
+              <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
+              {{ 'Add' | translate }}
+            </button>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

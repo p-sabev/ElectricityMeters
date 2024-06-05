@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {EditReading, InsertReading} from "../../core/models/readings.model";
+import {EditReading, InsertMultipleReadings, InsertReading} from "../../core/models/readings.model";
 import {HttpClient} from "@angular/common/http";
 
 @Injectable({
@@ -17,6 +17,11 @@ export class ReadingsService {
   // Add
   insertReading(body: InsertReading) {
     return this.http.post('/api/readings', body);
+  }
+
+  // Add multiple readings
+  insertReadingsForSubscribers(body: InsertMultipleReadings) {
+    return this.http.post('/api/readings/add-multiple-readings', body);
   }
 
   // Edit

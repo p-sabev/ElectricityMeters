@@ -4,6 +4,6 @@
     {
         public required Paging Paging { get; set; }
         public required Sorting Sorting { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

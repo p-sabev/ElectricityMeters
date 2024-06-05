@@ -31,7 +31,9 @@
                       (click)="switchboardForEdit = switchboard;">
                 <fa-icon [icon]="['fas', 'edit']"></fa-icon>
               </button>
-              <button class="btn btn-outline-primary float-end me-2">
+              <button class="btn btn-outline-primary float-end me-2"
+                      *ngIf="switchboard.subscribers?.length"
+                      (click)="subscribersToAddReadings = switchboard.subscribers;">
                 {{'EnterReadings' | translate}}
               </button>
             </div>
@@ -46,6 +48,11 @@
 <ng-container *ngIf="addSwitchboard || switchboardForEdit">
   <app-add-edit-switchboard [switchboardToEdit]="switchboardForEdit"
                             (close)="addSwitchboard = false; switchboardForEdit = null; fetchSwitchboardsList();"></app-add-edit-switchboard>
+</ng-container>
+
+<ng-container *ngIf="subscribersToAddReadings?.length">
+  <app-add-reading-for-switchboard [subscribers]="subscribersToAddReadings"
+                                   (close)="subscribersToAddReadings = null; fetchSwitchboardsList();"></app-add-reading-for-switchboard>
 </ng-container>
 
 <p-confirmDialog
