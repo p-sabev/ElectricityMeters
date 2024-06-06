@@ -1,0 +1,130 @@
+<div #infoModal class="modal show-modal">
+  <div class="modal-dialog modal-xl animate__animated animate__fadeIn">
+    <div class="modal-content">
+      <div class="modal-header">
+        <fa-icon [icon]="['fas', 'user']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <h3>{{ 'SubscriberInfo' | translate }} - <span class="font-weight-bold">{{subscriber.name}}</span></h3>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close.emit()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-md-6 col-sm-12 mt-3">
+            <ul class="list-group">
+              <li class="list-group-item text-center font-weight-bold bg-secondary text-light">
+                {{'Personal' | translate}}
+              </li>
+              <li class="list-group-item">
+                <span class="font-weight-bold">{{'Name' | translate}}: </span>
+                {{subscriber.name}}
+              </li>
+              <li class="list-group-item">
+                <span class="font-weight-bold">{{'NumberPage' | translate}}: </span>
+                {{subscriber.numberPage}}
+              </li>
+              <li class="list-group-item">
+                <span class="font-weight-bold">{{'Address' | translate}}: </span>
+                {{subscriber.address}}
+              </li>
+              <li class="list-group-item">
+                <span class="font-weight-bold">{{'Phone' | translate}}: </span>
+                {{subscriber.phone}}
+              </li>
+              <li class="list-group-item">
+                <span class="font-weight-bold">{{'Note' | translate}}: </span>
+                {{subscriber.note}}
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-md-6 col-sm-12 mt-3">
+            <ul class="list-group">
+              <li class="list-group-item text-center font-weight-bold bg-secondary text-light">
+                {{'Switchboard' | translate}}
+              </li>
+              <li class="list-group-item">
+                <span class="font-weight-bold">{{'Switchboard' | translate}}: </span>
+                {{subscriber.switchboard.name}}
+              </li>
+              <li class="list-group-item">
+                <span class="font-weight-bold">{{'MeterNumber' | translate}}: </span>
+                {{subscriber.meterNumber}}
+              </li>
+              <li class="list-group-item">
+                <span class="font-weight-bold">{{'LastReading' | translate}}: </span>
+                <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
+                <span *ngIf="!subscriber.lastReading">-</span>
+              </li>
+              <li class="list-group-item">
+                <span class="font-weight-bold">{{'LastRecord' | translate}}: </span>
+                <span *ngIf="subscriber.lastRecordDate">{{ subscriber.lastRecordDate | date: 'dd.MM.yyyy'}}</span>
+                <span *ngIf="!subscriber.lastRecordDate">-</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-12 mt-3">
+            <ul class="list-group">
+              <li class="list-group-item text-center font-weight-bold bg-secondary text-light">
+                {{'Readings' | translate}}
+              </li>
+              <li class="list-group-item">
+
+                <span *ngIf="!searchingForReadings && !subscriberReadings?.length">
+                  {{'NoReadingsEntered' | translate}}
+                </span>
+
+                <p-table *ngIf="subscriberReadings?.length"
+                         [value]="subscriberReadings"
+                         styleClass="p-datatable-gridlines"
+                         [tableStyle]="{ 'width': '100%' }">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th translate>Id</th>
+                      <th translate>Date</th>
+                      <th translate>ReadingInKvh</th>
+                      <th translate>Difference</th>
+                      <th translate>TariffInBgn</th>
+                      <th translate>ForPaymentInBgn</th>
+                      <th></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-reading>
+                    <tr>
+                      <td>{{ reading.id }}</td>
+                      <td>{{ reading.date | date: 'dd.MM.yyyy' }}</td>
+                      <td>{{ reading.value }} {{'kvh' | translate}}</td>
+                      <td>{{ reading.difference }} {{'kvh' | translate}}</td>
+                      <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
+                      <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
+                      <td>
+                        <a class="nav-link text-success cursor-pointer btn-action" (click)="readingToPrintReceipt = reading;">
+                          <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
+                        </a>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="row" style="width: 100%">
+          <div class="col-12 p-0">
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

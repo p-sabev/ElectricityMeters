@@ -1,4 +1,5 @@
-﻿using ElectricityMeters.Interfaces;
+﻿using Azure.Core;
+using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
 using ElectricityMeters.Request.Readings;
 using ElectricityMeters.Response.Readings;
@@ -303,6 +304,14 @@ namespace ElectricityMeters.Services
             await _dbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<IEnumerable<Reading>> GetAllReadingsBySubscriberIdAsync(int subscriberId)
+        {
+            return await _dbContext.Readings
+                .Where(r => r.Subscriber.Id == subscriberId)
+                .OrderByDescendingDynamic("date")
+                .ToListAsync();
         }
 
         private bool ReadingExists(int id)

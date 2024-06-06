@@ -71,5 +71,10 @@
   "ForPaymentInBgn": "За плащане, лв.",
   "TariffInBgn": "Тарифа, лв.",
   "Print": "Принтирай",
-  "PrintReceipt": "Принтиране на касов ордер и квитанция"
+  "PrintReceipt": "Принтиране на касов ордер и квитанция",
+  "SearchBy": "Търсене по",
+  "Filtrate": "Търси",
+  "SubscriberInfo": "Детайлна информация за абонат",
+  "Personal": "Лична",
+  "NoReadingsEntered": "Няма въведени показания"
 }

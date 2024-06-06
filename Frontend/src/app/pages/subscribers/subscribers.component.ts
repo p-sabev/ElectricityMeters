@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DatePipe, NgIf} from "@angular/common";
+import {DatePipe, LowerCasePipe, NgForOf, NgIf} from "@angular/common";
 import {ConfirmationService, SharedModule} from "primeng/api";
 import {TableModule} from "primeng/table";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
@@ -14,6 +14,10 @@ import {
   AddReadingForSubscriberComponent
 } from "../readings/add-reading-for-subscriber/add-reading-for-subscriber.component";
 import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
+import {FormControl, FormGroup, FormsModule, Validators} from "@angular/forms";
+import {Switchboard} from "../../core/models/switchboards.model";
+import {SwitchboardsService} from "../switchboards/switchboards.service";
+import {DetailsForSubscriberComponent} from "./details-for-subscriber/details-for-subscriber.component";
 
 @Component({
   selector: 'app-subscribers',
@@ -28,7 +32,11 @@ import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.comp
     AddEditSubscribersComponent,
     ConfirmDialogModule,
     AddReadingForSubscriberComponent,
-    PageHeadingComponent
+    PageHeadingComponent,
+    LowerCasePipe,
+    FormsModule,
+    NgForOf,
+    DetailsForSubscriberComponent
   ],
   providers: [ConfirmationService],
   templateUrl: './subscribers.component.html',
@@ -40,10 +48,12 @@ export class SubscribersComponent implements OnInit {
               private subscribersService: SubscribersService,
               private errorService: ErrorService,
               private confirmService: ConfirmationService,
-              private translate: TranslateService) {}
+              private translate: TranslateService,
+              private switchBoardsService: SwitchboardsService) {}
 
   subscribers: Subscriber[] = [];
 
+  page = 0;
   sortField = 'numberPage';
   sortOrder = 1;
   totalRecords = 0;
@@ -51,11 +61,28 @@ export class SubscribersComponent implements OnInit {
 
   addSubscriber: boolean = false;
   subscriberForEdit: Subscriber | null = null;
-
   subscriberToAddRecord: Subscriber | null = null;
+  subscriberToShowDetailedInfo: Subscriber | null = null;
+
+  filtersModel = {
+    numberPage: null,
+    name: '',
+    switchboard: null,
+    electricMeterName: ''
+  };
+
+  switchboardsList: Switchboard[] = [];
 
   ngOnInit() {
+    this.getAllSwitchboards();
+  }
 
+  getAllSwitchboards() {
+    this.switchBoardsService.getAllSwitchboards().subscribe(resp => {
+      this.switchboardsList = resp || [];
+    }, (error: any) => {
+      this.errorService.processError(error);
+    });
   }
 
   fetchSubscribersList(settings: any = this.lastUsedSettings) {
@@ -69,9 +96,12 @@ export class SubscribersComponent implements OnInit {
         sortProp: settings.sortField,
         sortDirection: settings.sortOrder
       },
-      name: ''
+      numberPage: this.filtersModel.numberPage || null,
+      name: this.filtersModel.name || null,
+      switchboardId: this.filtersModel.switchboard || null,
+      electricMeterName: this.filtersModel.electricMeterName || null,
     }
-    console.log(body);
+
     this.subscribersService.searchSubscribers(body).subscribe(resp => {
       this.subscribers = resp?.data || [];
       this.totalRecords = resp?.totalRecords || 0;

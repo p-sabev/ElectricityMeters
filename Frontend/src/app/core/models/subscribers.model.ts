@@ -49,5 +49,8 @@ export interface SubscriberAddEdit {
 export interface SearchSubscribersRequest {
   paging: Paging;
   sorting: Sorting;
-  name: string;
+  numberPage: number | null;
+  name: string | null;
+  switchboardId: number | null;
+  electricMeterName: string | null;
 }

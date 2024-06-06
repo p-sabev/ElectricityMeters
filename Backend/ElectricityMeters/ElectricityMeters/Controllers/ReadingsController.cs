@@ -83,5 +83,16 @@ namespace ElectricityMeters.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("by-subscriber/{subscriberId}")]
+        public async Task<ActionResult<IEnumerable<Reading>>> GetAllReadingsBySubscriberId(int subscriberId)
+        {
+            var readings = await _readingService.GetAllReadingsBySubscriberIdAsync(subscriberId);
+            if (readings == null || !readings.Any())
+            {
+                return NotFound("No readings found for the specified subscriber.");
+            }
+            return Ok(readings);
+        }
     }
 }

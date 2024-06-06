@@ -24,6 +24,27 @@ namespace ElectricityMeters.Services
         {
             var query = _dbContext.Subscribers.AsQueryable();
 
+            // Филтриране
+            if (request.NumberPage.HasValue)
+            {
+                query = query.Where(s => s.NumberPage == request.NumberPage);
+            }
+
+            if (!string.IsNullOrEmpty(request.Name))
+            {
+                query = query.Where(s => s.Name.Contains(request.Name));
+            }
+
+            if (request.SwitchboardId.HasValue)
+            {
+                query = query.Where(s => s.Switchboard.Id == request.SwitchboardId);
+            }
+
+            if (!string.IsNullOrEmpty(request.ElectricMeterName))
+            {
+                query = query.Where(s => s.MeterNumber != null && s.MeterNumber.Contains(request.ElectricMeterName));
+            }
+
             // Сортиране
             if (!string.IsNullOrEmpty(request.Sorting.SortProp))
             {

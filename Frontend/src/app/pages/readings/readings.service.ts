@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   EditReading,
   InsertMultipleReadings,
-  InsertReading,
+  InsertReading, Reading,
   SearchReadingsRequest
 } from "../../core/models/readings.model";
 import {HttpClient} from "@angular/common/http";
@@ -16,8 +16,13 @@ export class ReadingsService {
   constructor(private http: HttpClient) { }
 
   // Get all
-  getAllReadings() {
-    return this.http.get('/api/readings');
+  getAllReadings(): Observable<Reading[]> {
+    return this.http.get<Reading[]>('/api/readings');
+  }
+
+  // Get all readings by subscriber id
+  getAllReadingsBySubscriberId(subscriberId: number): Observable<Reading[]> {
+    return this.http.get<Reading[]>(`/api/readings/by-subscriber/${subscriberId}`);
   }
 
   // Search
