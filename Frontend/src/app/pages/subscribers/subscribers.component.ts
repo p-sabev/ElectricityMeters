@@ -13,6 +13,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {
   AddReadingForSubscriberComponent
 } from "../readings/add-reading-for-subscriber/add-reading-for-subscriber.component";
+import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
 
 @Component({
   selector: 'app-subscribers',
@@ -26,7 +27,8 @@ import {
     TranslateModule,
     AddEditSubscribersComponent,
     ConfirmDialogModule,
-    AddReadingForSubscriberComponent
+    AddReadingForSubscriberComponent,
+    PageHeadingComponent
   ],
   providers: [ConfirmationService],
   templateUrl: './subscribers.component.html',

@@ -15,11 +15,12 @@ import {Subscriber} from "../../core/models/subscribers.model";
 import {
   AddReadingForSwitchboardComponent
 } from "../readings/add-reading-for-switchboard/add-reading-for-switchboard.component";
+import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
 
 @Component({
   selector: 'app-switchboards',
   standalone: true,
-  imports: [FormsModule, CommonModule, TranslateModule, FaIconComponent, AddEditSubscribersComponent, ConfirmDialogModule, AddEditSwitchboardComponent, AddReadingForSwitchboardComponent],
+  imports: [FormsModule, CommonModule, TranslateModule, FaIconComponent, AddEditSubscribersComponent, ConfirmDialogModule, AddEditSwitchboardComponent, AddReadingForSwitchboardComponent, PageHeadingComponent],
   providers: [ConfirmationService],
   templateUrl: './switchboards.component.html',
   styleUrl: './switchboards.component.scss'

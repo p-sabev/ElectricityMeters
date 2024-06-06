@@ -1,0 +1,85 @@
+<div class="receipt-container">
+  <div class="receipt-left">
+    <div class="header">
+      <h2>ПРИХОДЕН КАСОВ ОРДЕР</h2>
+      <div class="header-info">
+        <span>№: ______</span>
+        <span>Дата: {{today | date: 'dd.MM.yyyy'}}г.</span>
+      </div>
+    </div>
+    <div class="content">
+      <p class="p-border first-el-border">
+        <span class="font-weight-bold">
+          Да се приеме от:
+        </span> Емил Лятев
+      </p>
+      <p class="p-border">
+        <span class="font-weight-bold">
+          За/срещу:
+        </span>
+        н:{{reading.value}} - с:{{reading.value - reading.difference}} = {{reading.difference}} {{'kvh' | translate}} * {{reading.currentPrice | twoAfterDot}} {{'BgnVaultSmall' | translate}}</p>
+      <p class="p-border">
+        <span class="font-weight-bold">
+          Сумата:
+        </span>
+        {{reading.amountDue | twoAfterDot}} лв.</p>
+      <p class="p-border last-el-border">
+        <span class="font-weight-bold">
+          С думи:
+        </span>
+        {{priceToWords(reading.amountDue)}}</p>
+    </div>
+    <div class="footer">
+      <p class="p-border all-el-border">
+        <span class="font-weight-bold">
+          Гл. счетоводител:
+        </span>
+      </p>
+    </div>
+  </div>
+  <div class="receipt-right">
+    <div class="header">
+      <h2>КВИТАНЦИЯ</h2>
+      <div class="header-info text-center" style="display: block;">Към приходен касов ордер № ______</div>
+    </div>
+    <div class="content">
+      <p class="p-border first-el-border">
+        <span class="font-weight-bold">
+          Получена от:
+        </span>
+        {{reading.subscriber?.name}}</p>
+      <p class="p-border">
+        <span class="font-weight-bold">
+          За/срещу:
+        </span>
+        н:{{reading.value}} - с:{{reading.value - reading.difference}} = {{reading.difference}} {{'kvh' | translate}} * {{reading.currentPrice | twoAfterDot}} {{'BgnVaultSmall' | translate}}</p>
+      <p class="p-border">
+        <span class="font-weight-bold">
+          Сумата:
+        </span>
+        {{reading.amountDue | twoAfterDot}} лв.</p>
+      <p class="p-border last-el-border">
+        <span class="font-weight-bold">
+          С думи:
+        </span>
+        {{priceToWords(reading.amountDue)}}</p>
+    </div>
+    <div class="footer">
+      <p class="p-border first-el-border">
+        <span class="font-weight-bold">
+          Дата:
+        </span>
+        {{today | date: 'dd.MM.yyyy'}}г.</p>
+      <p class="p-border">
+        <span class="font-weight-bold">
+          Касиер:
+        </span>
+      </p>
+      <p class="p-border last-el-border">
+        <span class="font-weight-bold">
+          Главен счетоводител:
+        </span>
+      <p>
+    </div>
+  </div>
+</div>

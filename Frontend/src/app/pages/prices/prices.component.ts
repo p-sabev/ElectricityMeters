@@ -12,11 +12,12 @@ import {AddEditSwitchboardComponent} from "../switchboards/add-edit-switchboard/
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {AddEditPricesComponent} from "./add-edit-prices/add-edit-prices.component";
 import {TwoAfterDotPipe} from "../../shared/pipes/twoAfterDot.pipe";
+import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
 
 @Component({
   selector: 'app-prices',
   standalone: true,
-  imports: [CommonModule, TableModule, FaIconComponent, TranslateModule, AddEditSwitchboardComponent, ConfirmDialogModule, AddEditPricesComponent, TwoAfterDotPipe],
+  imports: [CommonModule, TableModule, FaIconComponent, TranslateModule, AddEditSwitchboardComponent, ConfirmDialogModule, AddEditPricesComponent, TwoAfterDotPipe, PageHeadingComponent],
   templateUrl: './prices.component.html',
   styleUrl: './prices.component.scss'
 })

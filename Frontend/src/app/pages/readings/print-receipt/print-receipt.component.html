@@ -1,0 +1,39 @@
+<div #printModal class="modal show-modal">
+  <div class="modal-dialog modal-xl animate__animated animate__fadeIn">
+    <div class="modal-content">
+      <div class="modal-header">
+        <fa-icon [icon]="['fas', 'print']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <h3 translate>PrintReceipt</h3>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close.emit()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12" #printSection id="print-section">
+            <app-receipt [reading]="reading"></app-receipt>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="row" style="width: 100%">
+          <div class="col-12 p-0">
+            <button
+              type="button"
+              class="btn float-end btn-success"
+              (click)="callPrint()">
+              <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
+              {{ 'Print' | translate }}
+            </button>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,6 +12,8 @@ import {Reading} from "../../core/models/readings.model";
 import {AddReadingForSubscriberComponent} from "./add-reading-for-subscriber/add-reading-for-subscriber.component";
 import {TwoAfterDotPipe} from "../../shared/pipes/twoAfterDot.pipe";
 import {ReceiptComponent} from "./receipt/receipt.component";
+import {PrintReceiptComponent} from "./print-receipt/print-receipt.component";
+import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
 
 @Component({
   selector: 'app-readings',
@@ -26,7 +28,9 @@ import {ReceiptComponent} from "./receipt/receipt.component";
     TranslateModule,
     AddReadingForSubscriberComponent,
     TwoAfterDotPipe,
-    ReceiptComponent
+    ReceiptComponent,
+    PrintReceiptComponent,
+    PageHeadingComponent
   ],
   templateUrl: './readings.component.html',
   styleUrl: './readings.component.scss'
@@ -47,6 +51,7 @@ export class ReadingsComponent {
   lastUsedSettings: any = null;
 
   readingForEdit: Reading | null = null;
+  readingToPrintReceipt!: Reading | null;
 
   fetchReadingsList(settings: any = this.lastUsedSettings) {
     this.lastUsedSettings = settings;

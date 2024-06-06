@@ -1,6 +1,10 @@
 <div class="container">
   <div class="row">
 
+    <div class="col-12">
+      <app-page-heading [title]="'Readings'"></app-page-heading>
+    </div>
+
     <div class="col-12 mt-3">
 
       <p-table [value]="readingsList"
@@ -22,6 +26,7 @@
             <th pSortableColumn="difference" translate>Difference<p-sortIcon field="difference" /></th>
             <th pSortableColumn="currentPrice" translate>TariffInBgn<p-sortIcon field="currentPrice" /></th>
             <th pSortableColumn="amountDue" translate>ForPaymentInBgn<p-sortIcon field="amountDue" /></th>
+            <th translate>Switchboard</th>
             <th translate>MeterNumber</th>
             <th></th>
           </tr>
@@ -31,12 +36,16 @@
             <td>{{ reading.id }}</td>
             <td class="font-weight-bold">{{ reading.subscriber?.name }}</td>
             <td>{{ reading.date | date: 'dd.MM.yyyy' }}</td>
-            <td>{{ reading.value }}  {{'kvh' | translate}}</td>
-            <td>{{ reading.difference }}  {{'kvh' | translate}}</td>
+            <td>{{ reading.value }} {{'kvh' | translate}}</td>
+            <td>{{ reading.difference }} {{'kvh' | translate}}</td>
             <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ reading.subscriber?.switchboardNumber }}</td>
+            <td>{{ reading.subscriber?.meterNumber }}</td>
             <td>
+              <a class="nav-link text-success cursor-pointer btn-action" (click)="readingToPrintReceipt = reading;">
+                <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
+              </a>
               <a class="nav-link text-warning cursor-pointer btn-action" (click)="openReadingForEdit(reading)">
                 <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
               </a>
@@ -58,10 +67,13 @@
                                   (close)="readingForEdit = null; fetchReadingsList();"></app-add-reading-for-subscriber>
 </ng-container>
 
+<ng-container *ngIf="readingToPrintReceipt">
+  <app-print-receipt [reading]="readingToPrintReceipt"
+                     (close)="readingToPrintReceipt = null;"></app-print-receipt>
+</ng-container>
+
 <p-confirmDialog
   header="{{ 'Confirmation' | translate }}"
   icon="pi pi-exclamation-triangle"
   rejectLabel="{{ 'No' | translate }}"
   acceptLabel="{{ 'Yes' | translate }}"></p-confirmDialog>
-
-<app-receipt></app-receipt>

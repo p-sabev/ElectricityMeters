@@ -1,5 +1,10 @@
 {
   "AppTitle": "Ел-метъри",
+  "Readings": "Показания",
+  "Prices": "Цени",
+  "Switchboards": "Табла",
+  "Subscribers": "Абонати",
+  "Users": "Потребители",
   "Success": "Успех",
   "AddSubscriber": "Добави абонат",
   "NumberPage": "Номер/Страница",
