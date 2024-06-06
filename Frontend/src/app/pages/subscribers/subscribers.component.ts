@@ -14,7 +14,7 @@ import {
   AddReadingForSubscriberComponent
 } from "../readings/add-reading-for-subscriber/add-reading-for-subscriber.component";
 import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
-import {FormControl, FormGroup, FormsModule, Validators} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import {Switchboard} from "../../core/models/switchboards.model";
 import {SwitchboardsService} from "../switchboards/switchboards.service";
 import {DetailsForSubscriberComponent} from "./details-for-subscriber/details-for-subscriber.component";
