@@ -77,5 +77,6 @@
   "Filtrate": "Търси",
   "SubscriberInfo": "Детайлна информация за абонат",
   "Personal": "Лична",
-  "NoReadingsEntered": "Няма въведени показания"
+  "NoReadingsEntered": "Няма въведени показания",
+  "Id": "Номер"
 }

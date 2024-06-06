@@ -3,7 +3,7 @@
 }
 
 .mast-widget {
-  background-color: #5594c3;
+  background-color: #156075;
   margin: 30px auto 0 auto;
   background-size: cover;
   background-repeat: no-repeat;
@@ -105,6 +105,12 @@
   }
   &.mast-gray {
     background-image: url(../assets/img/disabled-bk.jpg);
+  }
+  &.mast-dark {
+    background-image: url(../assets/img/dark-bk.jpg);
+  }
+  &.mast-real-green {
+    background-image: url(../assets/img/real-green-bk.jpg);
   }
   &.disabled-mast-widget {
     background-image: url(../assets/img/disabled-bk.jpg) !important;

@@ -49,7 +49,7 @@
               <a class="nav-link text-warning cursor-pointer btn-action" (click)="openPriceForEdit(price)">
                 <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
               </a>
-              <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeletePrice(price)">
+              <a *ngIf="!price.isUsed" class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeletePrice(price)">
                 <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
               </a>
             </td>

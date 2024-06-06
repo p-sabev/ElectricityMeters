@@ -6,6 +6,7 @@ export interface Price {
   dateFrom: Date | string;
   dateTo: null | Date | string;
   note: string;
+  isUsed?: boolean;
 }
 
 export interface InsertPrice {

@@ -43,19 +43,25 @@ export class AddReadingForSubscriberComponent implements OnInit {
   addEditReadingForm!: FormGroup;
 
   ngOnInit() {
+    if (this.readingToEdit) {
+      this.subscriber = this.readingToEdit.subscriber;
+    }
     this.initAddReadingForm();
   }
 
   initAddReadingForm() {
     this.addEditReadingForm = new FormGroup({
+      id: new FormControl<number | null>(this.readingToEdit?.id || null, this.readingToEdit ? [Validators.required] : []),
       subscriberId: new FormControl<number>(this.subscriber.id, [Validators.required]),
-      value: new FormControl<number | null>(null, [Validators.required, Validators.max(2147483647)]),
-      date: new FormControl<Date>(moment(new Date()).toDate(), [Validators.required]),
+      value: new FormControl<number | null>(this.readingToEdit ? this.readingToEdit.value : null, [Validators.required, Validators.max(2147483647)]),
+      date: new FormControl<Date>(this.readingToEdit ? moment(this.readingToEdit.date).toDate() : moment(new Date()).toDate(), [Validators.required]),
     });
   }
 
   addReading() {
     const body = this.addEditReadingForm?.getRawValue() || {};
+    body.date = moment(body.date).format('YYYY-MM-DD') + 'T00:00:00.000Z';
+    delete body.id;
     this.readingsService.insertReading(body).subscribe(() => {
       this.notifications.Success.emit('SuccessfullyAddedReading');
       this.close.emit();
@@ -66,7 +72,8 @@ export class AddReadingForSubscriberComponent implements OnInit {
 
   editReading() {
     const body = this.addEditReadingForm?.getRawValue() || {};
-    this.readingsService.insertReading(body).subscribe(() => {
+    body.date = moment(body.date).format('YYYY-MM-DD') + 'T00:00:00.000Z';
+    this.readingsService.editReading(body).subscribe(() => {
       this.notifications.Success.emit('SuccessfullyEditedReading');
       this.close.emit();
     }, error => {

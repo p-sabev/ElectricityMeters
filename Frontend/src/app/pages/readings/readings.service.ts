@@ -42,7 +42,7 @@ export class ReadingsService {
 
   // Edit
   editReading(body: EditReading) {
-    return this.http.put('/api/readings', body);
+    return this.http.put(`/api/readings/${body.id}`, body);
   }
 
   // Delete

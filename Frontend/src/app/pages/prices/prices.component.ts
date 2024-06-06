@@ -30,7 +30,7 @@ export class PricesComponent implements OnInit {
               private notifications: NotificationsEmitterService) {
   }
 
-  pricesList: any[] = [];
+  pricesList: Price[] = [];
   sortField = 'dateFrom';
   sortOrder = -1;
   totalRecords = 0;
