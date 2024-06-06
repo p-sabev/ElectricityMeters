@@ -102,7 +102,7 @@
                       <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
                       <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
                       <td>
-                        <a class="nav-link text-success cursor-pointer btn-action" (click)="readingToPrintReceipt = reading;">
+                        <a class="nav-link text-success cursor-pointer btn-action" (click)="openPrintReading(reading)">
                           <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
                         </a>
                       </td>
@@ -128,3 +128,8 @@
     </div>
   </div>
 </div>
+
+<ng-container *ngIf="readingToPrintReceipt">
+  <app-print-receipt [reading]="readingToPrintReceipt"
+                     (close)="readingToPrintReceipt = null;"></app-print-receipt>
+</ng-container>

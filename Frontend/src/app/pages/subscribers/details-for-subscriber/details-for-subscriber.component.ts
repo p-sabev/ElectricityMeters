@@ -9,6 +9,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {SharedModule} from "primeng/api";
 import {TableModule} from "primeng/table";
 import {TwoAfterDotPipe} from "../../../shared/pipes/twoAfterDot.pipe";
+import {PrintReceiptComponent} from "../../readings/print-receipt/print-receipt.component";
 
 @Component({
   selector: 'app-details-for-subscriber',
@@ -21,7 +22,8 @@ import {TwoAfterDotPipe} from "../../../shared/pipes/twoAfterDot.pipe";
     DatePipe,
     SharedModule,
     TableModule,
-    TwoAfterDotPipe
+    TwoAfterDotPipe,
+    PrintReceiptComponent
   ],
   templateUrl: './details-for-subscriber.component.html',
   styleUrl: './details-for-subscriber.component.scss'
@@ -52,5 +54,11 @@ export class DetailsForSubscriberComponent implements OnInit {
       this.errorService.processError(error);
       this.searchingForReadings = false;
     });
+  }
+
+  openPrintReading(reading: Reading) {
+    let readingAndSubscriber = reading;
+    readingAndSubscriber.subscriber = this.subscriber;
+    this.readingToPrintReceipt = readingAndSubscriber;
   }
 }
