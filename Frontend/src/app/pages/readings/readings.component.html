@@ -16,19 +16,20 @@
                [totalRecords]="totalRecords"
                [paginator]="true"
                [rows]="10"
-               [rowsPerPageOptions]="[5, 10, 20, 50]">
+               [rowsPerPageOptions]="[5, 10, 20, 50]"
+               [scrollable]="true" scrollHeight="80vh">
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="id" translate>Id<p-sortIcon field="id" /></th>
-            <th pSortableColumn="subscriber" translate>Subscriber<p-sortIcon field="subscriber" /></th>
-            <th pSortableColumn="date" translate>Date<p-sortIcon field="date" /></th>
-            <th pSortableColumn="value" translate>ReadingInKvh<p-sortIcon field="value" /></th>
-            <th pSortableColumn="difference" translate>Difference<p-sortIcon field="difference" /></th>
-            <th pSortableColumn="currentPrice" translate>TariffInBgn<p-sortIcon field="currentPrice" /></th>
-            <th pSortableColumn="amountDue" translate>ForPaymentInBgn<p-sortIcon field="amountDue" /></th>
-            <th translate>Switchboard</th>
-            <th translate>MeterNumber</th>
-            <th></th>
+            <th pSortableColumn="subscriber" style="min-width: 160px;" translate>Subscriber<p-sortIcon field="subscriber" /></th>
+            <th pSortableColumn="date" style="min-width: 120px;" translate>Date<p-sortIcon field="date" /></th>
+            <th pSortableColumn="value" style="min-width: 120px;" translate>ReadingInKvh<p-sortIcon field="value" /></th>
+            <th pSortableColumn="difference" style="min-width: 120px;" translate>Difference<p-sortIcon field="difference" /></th>
+            <th pSortableColumn="currentPrice" style="min-width: 120px;" translate>TariffInBgn<p-sortIcon field="currentPrice" /></th>
+            <th pSortableColumn="amountDue" style="min-width: 120px;" translate>ForPaymentInBgn<p-sortIcon field="amountDue" /></th>
+            <th style="min-width: 80px;" translate>Switchboard</th>
+            <th style="min-width: 80px;" translate>MeterNumber</th>
+            <th alignFrozen="right" pFrozenColumn></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-reading>
@@ -42,7 +43,7 @@
             <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ reading.subscriber?.switchboardNumber }}</td>
             <td>{{ reading.subscriber?.meterNumber }}</td>
-            <td>
+            <td alignFrozen="right" pFrozenColumn>
               <a class="nav-link text-success cursor-pointer btn-action" (click)="readingToPrintReceipt = reading;">
                 <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
               </a>

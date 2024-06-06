@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "start_via_ip": "ng serve --proxy-config proxy_via_ip.config.json --port 4200 -c development",
-    "start_local": "ng serve --proxy-config proxy_via_localhost.config.json --port 4200 -c development",
+    "start_local": "ng serve --proxy-config proxy_via_localhost.config.json --port 4200 -c development --host 0.0.0.0",
     "build": "ng build",
     "build_gp": "ng build --aot --base-href https://malkyatmuk1.github.io/electricity-meters/",
     "publish_gp": "npx angular-cli-ghpages --dir=dist/electricity-meters",

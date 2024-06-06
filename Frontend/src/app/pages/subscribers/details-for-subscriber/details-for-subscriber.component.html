@@ -13,15 +13,15 @@
       <div class="modal-body">
         <div class="row">
 
-          <div class="col-md-6 col-sm-12 mt-3">
+          <div class="col-md-6 col-sm-12 mt-4">
             <ul class="list-group">
               <li class="list-group-item text-center font-weight-bold bg-secondary text-light">
                 {{'Personal' | translate}}
               </li>
-              <li class="list-group-item">
-                <span class="font-weight-bold">{{'Name' | translate}}: </span>
-                {{subscriber.name}}
-              </li>
+<!--              <li class="list-group-item">-->
+<!--                <span class="font-weight-bold">{{'Name' | translate}}: </span>-->
+<!--                {{subscriber.name}}-->
+<!--              </li>-->
               <li class="list-group-item">
                 <span class="font-weight-bold">{{'NumberPage' | translate}}: </span>
                 {{subscriber.numberPage}}
@@ -41,7 +41,7 @@
             </ul>
           </div>
 
-          <div class="col-md-6 col-sm-12 mt-3">
+          <div class="col-md-6 col-sm-12 mt-4">
             <ul class="list-group">
               <li class="list-group-item text-center font-weight-bold bg-secondary text-light">
                 {{'Switchboard' | translate}}
@@ -67,7 +67,7 @@
             </ul>
           </div>
 
-          <div class="col-12 mt-3">
+          <div class="col-12 mt-4 mb-5">
             <ul class="list-group">
               <li class="list-group-item text-center font-weight-bold bg-secondary text-light">
                 {{'Readings' | translate}}
@@ -81,16 +81,17 @@
                 <p-table *ngIf="subscriberReadings?.length"
                          [value]="subscriberReadings"
                          styleClass="p-datatable-gridlines"
-                         [tableStyle]="{ 'width': '100%' }">
+                         [tableStyle]="{ 'width': '100%' }"
+                         [scrollable]="true" scrollHeight="80vh">
                   <ng-template pTemplate="header">
                     <tr>
                       <th translate>Id</th>
-                      <th translate>Date</th>
-                      <th translate>ReadingInKvh</th>
-                      <th translate>Difference</th>
-                      <th translate>TariffInBgn</th>
-                      <th translate>ForPaymentInBgn</th>
-                      <th></th>
+                      <th style="min-width: 120px;" translate>Date</th>
+                      <th style="min-width: 120px;" translate>ReadingInKvh</th>
+                      <th style="min-width: 120px;" translate>Difference</th>
+                      <th style="min-width: 100px;" translate>TariffInBgn</th>
+                      <th style="min-width: 120px;" translate>ForPaymentInBgn</th>
+                      <th alignFrozen="right" pFrozenColumn></th>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-reading>
@@ -101,7 +102,7 @@
                       <td>{{ reading.difference }} {{'kvh' | translate}}</td>
                       <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
                       <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
-                      <td>
+                      <td alignFrozen="right" pFrozenColumn>
                         <a class="nav-link text-success cursor-pointer btn-action" (click)="openPrintReading(reading)">
                           <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
                         </a>

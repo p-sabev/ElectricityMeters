@@ -23,20 +23,21 @@
                [totalRecords]="totalRecords"
                [paginator]="true"
                [rows]="10"
-               [rowsPerPageOptions]="[5, 10, 20, 50]">
+               [rowsPerPageOptions]="[5, 10, 20, 50]"
+               [scrollable]="true" scrollHeight="80vh">
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="id" translate>Number<p-sortIcon field="id" /></th>
-            <th pSortableColumn="priceInLv" translate>PriceInBGN<p-sortIcon field="priceInLv" /></th>
-            <th pSortableColumn="dateFrom" translate>DateFrom<p-sortIcon field="dateFrom" /></th>
-            <th pSortableColumn="dateTo" translate>DateTo<p-sortIcon field="dateTo" /></th>
-            <th translate>Note</th>
-            <th></th>
+<!--            <th pSortableColumn="id" translate>Number<p-sortIcon field="id" /></th>-->
+            <th pSortableColumn="priceInLv" style="min-width: 100px;" translate>PriceInBGN<p-sortIcon field="priceInLv" /></th>
+            <th pSortableColumn="dateFrom" style="min-width: 120px;" translate>DateFrom<p-sortIcon field="dateFrom" /></th>
+            <th pSortableColumn="dateTo" style="min-width: 120px;" translate>DateTo<p-sortIcon field="dateTo" /></th>
+            <th style="min-width: 120px;" translate>Note</th>
+            <th alignFrozen="right" pFrozenColumn></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-price>
           <tr>
-            <td>{{ price.id }}</td>
+<!--            <td>{{ price.id }}</td>-->
             <td class="font-weight-bold">{{ price.priceInLv | twoAfterDot }}лв.</td>
             <td>{{ price.dateFrom | date: 'dd.MM.yyyy'}}</td>
             <td>
@@ -44,7 +45,7 @@
               <span *ngIf="!price.dateTo">-</span>
             </td>
             <td>{{ price.note }}</td>
-            <td>
+            <td alignFrozen="right" pFrozenColumn>
               <a class="nav-link text-warning cursor-pointer btn-action" (click)="openPriceForEdit(price)">
                 <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
               </a>

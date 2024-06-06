@@ -25,16 +25,17 @@
                [totalRecords]="totalRecords"
                [paginator]="true"
                [rows]="10"
-               [rowsPerPageOptions]="[5, 10, 20, 50]">
+               [rowsPerPageOptions]="[5, 10, 20, 50]"
+               [scrollable]="true" scrollHeight="80vh">
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="numberPage" translate>NumberPage<p-sortIcon field="numberPage" /></th>
-            <th pSortableColumn="name" translate>Name<p-sortIcon field="name" /></th>
+            <th pSortableColumn="name" style="min-width: 160px;" translate>Name<p-sortIcon field="name" /></th>
             <th pSortableColumn="switchboard" translate>Switchboard<p-sortIcon field="switchboard" /></th>
             <th pSortableColumn="meterNumber" translate>MeterNumber<p-sortIcon field="meterNumber" /></th>
-            <th pSortableColumn="lastReading" translate>LastReading<p-sortIcon field="lastReading" /></th>
-            <th pSortableColumn="lastRecordDate" translate>LastRecord<p-sortIcon field="lastRecordDate" /></th>
-            <th></th>
+            <th pSortableColumn="lastReading" style="min-width: 120px;" translate>LastReading<p-sortIcon field="lastReading" /></th>
+            <th pSortableColumn="lastRecordDate" style="min-width: 120px;" translate>LastRecord<p-sortIcon field="lastRecordDate" /></th>
+            <th alignFrozen="right" pFrozenColumn></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="colgroup">
@@ -72,7 +73,7 @@
             </td>
             <td class="p-2"></td>
             <td class="p-2"></td>
-            <td class="p-2">
+            <td alignFrozen="right" pFrozenColumn class="p-2" style="background: #FFFFFF;">
               <button type="button" class="btn btn-outline-secondary float-end"
                       (click)="page = 0; fetchSubscribersList()" translate>
                 <fa-icon [icon]="['fas', 'search']" [class]="'me-2'"></fa-icon>
@@ -98,7 +99,7 @@
               <span *ngIf="subscriber.lastRecordDate">{{ subscriber.lastRecordDate | date: 'dd.MM.yyyy'}}</span>
               <span *ngIf="!subscriber.lastRecordDate">-</span>
             </td>
-            <td>
+            <td alignFrozen="right" pFrozenColumn>
               <a class="nav-link text-primary cursor-pointer btn-action" (click)="subscriberToShowDetailedInfo = subscriber">
                 <fa-icon [icon]="['fas', 'circle-info']" [class]="'me-2'"></fa-icon>
               </a>

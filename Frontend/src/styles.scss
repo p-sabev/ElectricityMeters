@@ -23,6 +23,11 @@ body {
   margin: 0 auto !important;
 }
 
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
 i {
   margin-right: 10px;
 }
@@ -52,7 +57,7 @@ i {
 }
 
 .container {
-  padding: 50px 0 50px 0;
+  padding: 50px 5px 50px 5px;
 }
 
 .p-datepicker {
