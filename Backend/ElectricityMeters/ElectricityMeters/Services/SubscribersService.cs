@@ -8,9 +8,9 @@ namespace ElectricityMeters.Services
 {
     public class SubscriberService : ISubscriberService
     {
-        private readonly Models.DbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public SubscriberService(Models.DbContext dbContext)
+        public SubscriberService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

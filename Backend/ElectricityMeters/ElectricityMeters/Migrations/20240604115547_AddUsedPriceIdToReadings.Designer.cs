@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ElectricityMeters.Migrations
 {
-    [DbContext(typeof(Models.DbContext))]
+    [DbContext(typeof(Models.ApplicationDbContext))]
     [Migration("20240604115547_AddUsedPriceIdToReadings")]
     partial class AddUsedPriceIdToReadings
     {

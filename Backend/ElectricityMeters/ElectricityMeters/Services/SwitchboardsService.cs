@@ -1,8 +1,6 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
-using ElectricityMeters.Request.Subscribers;
 using ElectricityMeters.Request.Switchboards;
-using ElectricityMeters.Response.Subscribers;
 using ElectricityMeters.Response.Switchboards;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +8,9 @@ namespace ElectricityMeters.Services
 {
     public class SwitchboardService : ISwitchboardService
     {
-        private readonly Models.DbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public SwitchboardService(Models.DbContext dbContext)
+        public SwitchboardService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

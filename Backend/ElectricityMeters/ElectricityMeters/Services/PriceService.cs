@@ -7,9 +7,9 @@ namespace ElectricityMeters.Services
 {
     public class PriceService : IPriceService
     {
-        private readonly Models.DbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public PriceService(Models.DbContext dbContext)
+        public PriceService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

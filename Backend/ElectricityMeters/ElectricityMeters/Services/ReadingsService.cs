@@ -1,18 +1,16 @@
-﻿using Azure.Core;
-using ElectricityMeters.Interfaces;
+﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
 using ElectricityMeters.Request.Readings;
 using ElectricityMeters.Response.Readings;
-using ElectricityMeters.Response.Switchboards;
 using Microsoft.EntityFrameworkCore;
 
 namespace ElectricityMeters.Services
 {
     public class ReadingService : IReadingsService
     {
-        private readonly Models.DbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public ReadingService(Models.DbContext dbContext)
+        public ReadingService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

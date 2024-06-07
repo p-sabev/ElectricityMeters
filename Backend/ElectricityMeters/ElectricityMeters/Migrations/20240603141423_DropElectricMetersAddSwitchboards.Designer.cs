@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ElectricityMeters.Migrations
 {
-    [DbContext(typeof(Models.DbContext))]
+    [DbContext(typeof(Models.ApplicationDbContext))]
     [Migration("20240603141423_DropElectricMetersAddSwitchboards")]
     partial class DropElectricMetersAddSwitchboards
     {
