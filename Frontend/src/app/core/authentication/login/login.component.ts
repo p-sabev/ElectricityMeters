@@ -26,21 +26,25 @@ export class LoginComponent {
   logIn() {
     const data = Object.assign({}, this.loginModel);
     this.authService.login(data).subscribe(resp => {
-      const response = JSON.parse(resp);
-      this.logUserIntoTheSystem(response);
+      this.logUserIntoTheSystem(resp);
     });
   }
 
   logUserIntoTheSystem(userData: UserSuccessfullLogInCredentials) {
     localStorage.setItem('userId', (userData.userId || ''));
-    this.setToken(userData.access_token);
-    this.setRefreshToken(userData.refresh_token);
+    this.setToken(userData.token);
+    this.setRoles(userData.roles);
+    // this.setRefreshToken(userData.refresh_token);
     this.router.navigate(['']);
   }
 
   setToken(token: string) {
     localStorage.setItem('token', token);
     this.storageService.Token.emit(token);
+  }
+
+  setRoles(roles: string[]) {
+    localStorage.setItem('roles', JSON.stringify(roles));
   }
 
   setRefreshToken(refreshToken: string) {

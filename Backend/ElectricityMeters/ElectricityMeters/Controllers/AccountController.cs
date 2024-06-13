@@ -32,10 +32,10 @@ namespace ElectricityMeters.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            var (token, roles) = await _accountService.LoginAsync(model);
+            var (token, roles, userId) = await _accountService.LoginAsync(model);
             if (token != null)
             {
-                return Ok(new { token, roles });
+                return Ok(new { token, roles, userId });
             }
 
             return Unauthorized();

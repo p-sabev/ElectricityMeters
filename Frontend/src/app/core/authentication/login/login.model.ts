@@ -4,7 +4,8 @@ export interface LogInCredentials {
 }
 
 export interface UserSuccessfullLogInCredentials {
-  access_token: string;
-  refresh_token: string;
+  token: string;
+  roles: string[];
+  // refresh_token: string;
   userId?: string;
 }

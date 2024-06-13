@@ -12,8 +12,20 @@
 
   <div class="navbar-collapse" id="navbarSupportedContent"
        [ngClass]="{'collapse': collapseMenu}">
-    <ul class="navbar-nav ms-auto">
-<!--      <div class="hori-selector"><div class="left"></div><div class="right"></div></div>-->
+
+    <ul class="navbar-nav ms-auto" *ngIf="!authService.isAuthenticated()">
+      <li class="nav-item"
+          routerLinkActive="active"
+          routerLink="login"
+          (click)="collapseMenu = true;">
+        <a class="nav-link" href="javascript:void(0);">
+          <fa-icon [icon]="['fas', 'right-to-bracket']" [class]="'me-1'"></fa-icon>
+          {{'Login' | translate}}
+        </a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ms-auto" *ngIf="authService.isAuthenticated()">
       <li class="nav-item"
           routerLinkActive="active"
           routerLink="users"

@@ -49,7 +49,7 @@ namespace ElectricityMeters.Services
             return result;
         }
 
-        public async Task<(string token, IList<string> roles)> LoginAsync(LoginModel model)
+        public async Task<(string token, IList<string> roles, string userId)> LoginAsync(LoginModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
@@ -73,10 +73,10 @@ namespace ElectricityMeters.Services
 
                 var roles = await _userManager.GetRolesAsync(user);
 
-                return (new JwtSecurityTokenHandler().WriteToken(token), roles);
+                return (new JwtSecurityTokenHandler().WriteToken(token), roles, user.Id);
             }
 
-            return (null, null);
+            return (null, null, null);
         }
 
         public async Task<IdentityResult> AddRoleAsync(RoleModel model)

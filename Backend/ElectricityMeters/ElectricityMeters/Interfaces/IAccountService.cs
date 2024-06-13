@@ -7,7 +7,7 @@ namespace ElectricityMeters.Interfaces
     public interface IAccountService
     {
         Task<IdentityResult> RegisterAsync(RegisterModel model);
-        Task<(string token, IList<string> roles)> LoginAsync(LoginModel model);
+        Task<(string token, IList<string> roles, string userId)> LoginAsync(LoginModel model);
         Task<IdentityResult> AddRoleAsync(RoleModel model);
     }
 }

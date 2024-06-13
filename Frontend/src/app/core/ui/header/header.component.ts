@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { filter, map, mergeMap } from 'rxjs/operators';
 import {Title} from "@angular/platform-browser";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,8 @@ export class HeaderComponent implements OnInit{
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private titleDom: Title
+    private titleDom: Title,
+    public authService: AuthService
   ) { }
 
   collapseMenu = true;
