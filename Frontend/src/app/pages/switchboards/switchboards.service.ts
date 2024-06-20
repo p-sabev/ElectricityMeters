@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {
   EditSwitchboard,
-  Switchboard,
   InsertSwitchboard,
   SearchSwitchboardsRequest
 } from "../../core/models/switchboards.model";
