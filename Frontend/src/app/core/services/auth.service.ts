@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
 import {LogInCredentials} from "../authentication/login/login.model";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class AuthService {
   }
 
   login(credentials: LogInCredentials): Observable<any> {
-    return this.http.post('/api/Account/login', credentials);
+    return this.http.post(environment.url + '/api/Account/login', credentials);
   }
 
   // login(data) {
@@ -76,26 +77,26 @@ export class AuthService {
   }
 
   isTokenValid() {
-    return this.http.get('/container/Account/IsTokenValid', { params: { dontShowLoader: 'true' } });
+    return this.http.get(environment.url + '/container/Account/IsTokenValid', { params: { dontShowLoader: 'true' } });
   }
 
   changePassword(body: any) {
-    return this.http.post('/container/Account/ChangePassword', body);
+    return this.http.post(environment.url + '/container/Account/ChangePassword', body);
   }
 
   forgottenPassword(body: { email: string; siteCode: string }) {
-    return this.http.post(`/container/Account/GenerateForgottenPasswordMail`, body);
+    return this.http.post(environment.url + `/container/Account/GenerateForgottenPasswordMail`, body);
   }
   changeForgottenPassword(body: any) {
-    return this.http.post('/container/Account/ChangePasswordFromMail', body);
+    return this.http.post(environment.url + '/container/Account/ChangePasswordFromMail', body);
   }
 
   getExpirationMinutes() {
-    return this.http.get('/container/Account/JwtExpireMinutes', { params: { dontShowLoader: 'true' } });
+    return this.http.get(environment.url + '/container/Account/JwtExpireMinutes', { params: { dontShowLoader: 'true' } });
   }
 
   refreshToken() {
-    return this.http.get('/container/Account/GetRefreshToken', {
+    return this.http.get(environment.url + '/container/Account/GetRefreshToken', {
       responseType: 'text',
       params: { dontShowLoader: 'true' },
     });

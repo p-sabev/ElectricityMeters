@@ -8,8 +8,26 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
 using System.Text;
+using Microsoft.Extensions.Hosting.WindowsServices;
+using Microsoft.AspNetCore.Hosting;
+using Serilog;
+using Serilog.Events;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Serilog from appsettings.json
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File(
+        path: "C:\\LOGS\\ElectricityMeters\\API.txt",
+        rollingInterval: RollingInterval.Day,
+        restrictedToMinimumLevel: LogEventLevel.Information)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 
@@ -88,17 +106,40 @@ builder.Services.AddSwaggerGen(opt =>
     });
 });
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        builder =>
+        {
+            builder.WithOrigins(
+                "http://localhost:4200",
+                "http://192.168.0.207:4200",
+                "http://91.139.199.178:4200",
+                "http://elmeters.site:4200",
+                "http://elmeters.site")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
+builder.WebHost.UseUrls("http://*:7007");
+builder.Host.UseWindowsService();
+
 var app = builder.Build();
 
+app.UseCors("AllowSpecificOrigins");
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
+// if (app.Environment.IsDevelopment())
+// {
+app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -123,4 +164,18 @@ async Task SeedRoles(IServiceProvider serviceProvider)
             await roleManager.CreateAsync(new IdentityRole(roleName));
         }
     }
+}
+
+try
+{
+    Log.Information("Starting web host");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
 }

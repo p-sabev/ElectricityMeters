@@ -7,6 +7,7 @@ import {
 } from "../../core/models/readings.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -17,32 +18,32 @@ export class ReadingsService {
 
   // Get all
   getAllReadings(): Observable<Reading[]> {
-    return this.http.get<Reading[]>('/api/readings');
+    return this.http.get<Reading[]>(environment.url + '/api/readings');
   }
 
   // Get all readings by subscriber id
   getAllReadingsBySubscriberId(subscriberId: number): Observable<Reading[]> {
-    return this.http.get<Reading[]>(`/api/readings/by-subscriber/${subscriberId}`);
+    return this.http.get<Reading[]>(environment.url + `/api/readings/by-subscriber/${subscriberId}`);
   }
 
   // Search
   searchReadings(body: SearchReadingsRequest): Observable<any> {
-    return this.http.post('/api/readings/search', body);
+    return this.http.post(environment.url + '/api/readings/search', body);
   }
 
   // Add
   insertReading(body: InsertReading) {
-    return this.http.post('/api/readings', body);
+    return this.http.post(environment.url + '/api/readings', body);
   }
 
   // Add multiple readings
   insertReadingsForSubscribers(body: InsertMultipleReadings) {
-    return this.http.post('/api/readings/add-multiple-readings', body);
+    return this.http.post(environment.url + '/api/readings/add-multiple-readings', body);
   }
 
   // Edit
   editReading(body: EditReading) {
-    return this.http.put(`/api/readings/${body.id}`, body);
+    return this.http.put(environment.url + `/api/readings/${body.id}`, body);
   }
 
   // Delete
