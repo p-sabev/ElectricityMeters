@@ -38,9 +38,9 @@
               <li class="list-group-item" *ngFor="let subscriber of subscribers; let i = index;">
                 <div class="row my-3">
                   <div class="col-12">
-                    <h6>
-                      <span class="font-weight-bold">{{'Subscriber' | translate}}</span>: {{subscriber.name}}
-                    </h6>
+                    <h5 class="text-center">
+                      <span class="text-primary font-weight-bold">{{subscriber.numberPage}}/{{subscriber.name}}</span>
+                    </h5>
                     <h6>
                       <span class="font-weight-bold">{{'LastReading' | translate}}</span>:
                       <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
@@ -48,8 +48,8 @@
                     </h6>
                   </div>
 
-                  <div class="col-12 my-1">
-                    <hr>
+                  <div class="col-12 m-0 text-primary">
+                    <hr class="m-1">
                   </div>
 
                   <div class="col-12">

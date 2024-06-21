@@ -14,6 +14,7 @@ import {TwoAfterDotPipe} from "../../shared/pipes/twoAfterDot.pipe";
 import {ReceiptComponent} from "./receipt/receipt.component";
 import {PrintReceiptComponent} from "./print-receipt/print-receipt.component";
 import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
+import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
 
 @Component({
   selector: 'app-readings',
@@ -30,7 +31,8 @@ import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.comp
     TwoAfterDotPipe,
     ReceiptComponent,
     PrintReceiptComponent,
-    PageHeadingComponent
+    PageHeadingComponent,
+    RoleAccessDirective
   ],
   templateUrl: './readings.component.html',
   styleUrl: './readings.component.scss'

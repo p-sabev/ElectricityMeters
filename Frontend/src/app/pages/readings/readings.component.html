@@ -44,15 +44,22 @@
             <td>{{ reading.subscriber?.switchboardNumber }}</td>
             <td>{{ reading.subscriber?.meterNumber }}</td>
             <td alignFrozen="right" pFrozenColumn>
-              <a class="nav-link text-success cursor-pointer btn-action" (click)="readingToPrintReceipt = reading;">
-                <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
-              </a>
-              <a class="nav-link text-warning cursor-pointer btn-action" (click)="openReadingForEdit(reading)">
-                <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
-              </a>
-              <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeleteReading(reading)">
-                <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
-              </a>
+              <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
+                <a class="nav-link text-success cursor-pointer btn-action" (click)="readingToPrintReceipt = reading;">
+                  <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
+                </a>
+              </ng-container>
+
+              <ng-container *appRoleAccess="'Administrator, Moderator'">
+                <a class="nav-link text-warning cursor-pointer btn-action" (click)="openReadingForEdit(reading)">
+                  <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
+                </a>
+              </ng-container>
+              <ng-container *appRoleAccess="'Administrator'">
+                <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeleteReading(reading)">
+                  <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
+                </a>
+              </ng-container>
             </td>
           </tr>
         </ng-template>

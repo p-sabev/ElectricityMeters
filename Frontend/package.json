@@ -34,6 +34,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "@popperjs/core": "^2.11.8",
     "angular2-notifications": "^16.0.1",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.3.3",

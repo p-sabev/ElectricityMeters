@@ -5,7 +5,8 @@
     <img src="../../../../assets/img/logo.png" alt="Ел-рекърд" style="height: 35px">
   </a>
 
-  <button class="navbar-toggler" type="button"
+  <button *ngIf="authService.isAuthenticated()"
+          class="navbar-toggler" type="button"
           (click)="collapseMenu = !collapseMenu">
     <fa-icon [icon]="['fas', 'bars']"></fa-icon>
   </button>
@@ -26,7 +27,8 @@
     </ul>
 
     <ul class="navbar-nav ms-auto" *ngIf="authService.isAuthenticated()">
-      <li class="nav-item"
+      <li *appRoleAccess="'Administrator'"
+          class="nav-item"
           routerLinkActive="active"
           routerLink="users"
           (click)="collapseMenu = true;">
@@ -35,7 +37,9 @@
           {{'Users' | translate}}
         </a>
       </li>
-      <li class="nav-item"
+
+      <li *appRoleAccess="'Administrator, Moderator'"
+          class="nav-item"
           routerLinkActive="active"
           routerLink="subscribers"
           (click)="collapseMenu = true;">
@@ -44,7 +48,9 @@
           {{'Subscribers' | translate}}
         </a>
       </li>
-      <li class="nav-item"
+
+      <li *appRoleAccess="'Administrator, Moderator, Basic'"
+          class="nav-item"
           routerLinkActive="active"
           routerLink="electric-meters"
           (click)="collapseMenu = true;">
@@ -53,7 +59,9 @@
           {{'Switchboards' | translate}}
         </a>
       </li>
-      <li class="nav-item"
+
+      <li *appRoleAccess="'Administrator, Moderator'"
+          class="nav-item"
           routerLinkActive="active"
           routerLink="prices"
           (click)="collapseMenu = true;">
@@ -62,7 +70,9 @@
           {{'Prices' | translate}}
         </a>
       </li>
-      <li class="nav-item"
+
+      <li *appRoleAccess="'Administrator, Moderator, Basic'"
+          class="nav-item"
           routerLinkActive="active"
           routerLink="readings"
           (click)="collapseMenu = true;">
@@ -71,6 +81,48 @@
           {{'Readings' | translate}}
         </a>
       </li>
+
+      <li class="nav-item"
+          (click)="logOut(); collapseMenu = true;">
+        <a class="nav-link text-danger" href="javascript:void(0);">
+          <fa-icon [icon]="['fas', 'sign-out']" [class]="'me-1'"></fa-icon>
+        </a>
+      </li>
+
+<!--      <li>-->
+<!--        <div class="btn-group dropleft">-->
+<!--          <div-->
+<!--            class="dropdown-toggle text-light cursor-pointer"-->
+<!--            data-toggle="dropdown"-->
+<!--            aria-haspopup="true"-->
+<!--            aria-expanded="false"-->
+<!--            style="padding: 20px;">-->
+<!--            <fa-icon [icon]="['fas', 'user']"-->
+<!--                     [class]="'me-1'"></fa-icon><b class="caret"></b>-->
+<!--          </div>-->
+<!--          <ul class="dropdown-menu px-1 user-panel">-->
+<!--            <li>-->
+<!--              <p class="text-center text-uppercase text-secondary my-2" style="font-size: 20px">-->
+<!--                <b>Hello, admin</b>-->
+<!--              </p>-->
+<!--            </li>-->
+<!--            <hr class="m-0" />-->
+<!--            <li class="p-1 text-center cursor-pointer text-primary" [routerLink]="['change-password']">-->
+<!--              <button class="btn btn-outline-secondary btn-sm no-box-shadow" style="width: 100%">-->
+<!--                <i class="fa fa-key" aria-hidden="true"></i>-->
+<!--                <span class="pl-2" translate>ChangePassword</span>-->
+<!--              </button>-->
+<!--            </li>-->
+<!--            <hr class="m-0" />-->
+<!--            <li class="p-1 text-center mb-2" (click)="logOut()">-->
+<!--              <button class="btn btn-outline-danger btn-sm no-box-shadow" style="width: 100%">-->
+<!--                <i class="fa fa-power-off" aria-hidden="true"></i>-->
+<!--                <span class="pl-2" translate>LogOut</span>-->
+<!--              </button>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </li>-->
     </ul>
   </div>
 </nav>

@@ -3,62 +3,67 @@
 
     <div class="row">
 
-      <div class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
+      <div *appRoleAccess="'Administrator'"
+           class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
         <div class="mast-widget mast-red cursor-pointer"
              (click)="openRoute('users')">
           <div class="w-info">
             <div class="icon-sec">
               <fa-icon [icon]="['fas', 'people-group']" [class]="'me-1'"></fa-icon>
             </div>
-            <div class="text-sec" translate>Потребители</div>
+            <div class="text-sec" translate>Users</div>
           </div>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
+      <div *appRoleAccess="'Administrator, Moderator'"
+           class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
         <div class="mast-widget mast-blue cursor-pointer"
              (click)="openRoute('subscribers')">
           <div class="w-info">
             <div class="icon-sec">
               <fa-icon [icon]="['fas', 'person-shelter']" [class]="'me-1'"></fa-icon>
             </div>
-            <div class="text-sec" translate>Абонати</div>
+            <div class="text-sec" translate>Subscribers</div>
           </div>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
+      <div *appRoleAccess="'Administrator, Moderator, Basic'"
+           class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
         <div class="mast-widget mast-yellow cursor-pointer"
              (click)="openRoute('electric-meters')">
           <div class="w-info">
             <div class="icon-sec">
               <fa-icon [icon]="['fas', 'bolt']" [class]="'me-1'"></fa-icon>
             </div>
-            <div class="text-sec" translate>Табла</div>
+            <div class="text-sec" translate>Switchboards</div>
           </div>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
+      <div *appRoleAccess="'Administrator, Moderator'"
+           class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
         <div class="mast-widget mast-green cursor-pointer"
              (click)="openRoute('prices')">
           <div class="w-info">
             <div class="icon-sec">
               <fa-icon [icon]="['fas', 'money-bill-wave']" [class]="'me-1'"></fa-icon>
             </div>
-            <div class="text-sec" translate>Цени</div>
+            <div class="text-sec" translate>Prices</div>
           </div>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
+      <div *appRoleAccess="'Administrator, Moderator, Basic'"
+           class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
         <div class="mast-widget mast-gray cursor-pointer"
              (click)="openRoute('readings')">
           <div class="w-info">
             <div class="icon-sec">
               <fa-icon [icon]="['fas', 'rectangle-list']" [class]="'me-1'"></fa-icon>
             </div>
-            <div class="text-sec" translate>Показания</div>
+            <div class="text-sec" translate>Readings</div>
           </div>
         </div>
       </div>

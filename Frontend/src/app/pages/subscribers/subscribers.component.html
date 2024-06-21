@@ -5,7 +5,7 @@
       <app-page-heading [title]="'Subscribers'"></app-page-heading>
     </div>
 
-    <div class="col-12 mt-5">
+    <div *appRoleAccess="'Administrator'" class="col-12 mt-5">
       <button class="btn btn-outline-success"
               (click)="initAddSubscriber()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
@@ -100,18 +100,27 @@
               <span *ngIf="!subscriber.lastRecordDate">-</span>
             </td>
             <td alignFrozen="right" pFrozenColumn>
-              <a class="nav-link text-primary cursor-pointer btn-action" (click)="subscriberToShowDetailedInfo = subscriber">
-                <fa-icon [icon]="['fas', 'circle-info']" [class]="'me-2'"></fa-icon>
-              </a>
-              <a class="nav-link text-success cursor-pointer btn-action" (click)="subscriberToAddRecord = subscriber">
-                <fa-icon [icon]="['fas', 'plus-square']" [class]="'me-2'"></fa-icon>
-              </a>
-              <a class="nav-link text-warning cursor-pointer btn-action" (click)="openSubscriberForEdit(subscriber)">
-                <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
-              </a>
-              <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeleteSubscriber(subscriber)">
-                <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
-              </a>
+
+              <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
+                <a class="nav-link text-primary cursor-pointer btn-action" (click)="subscriberToShowDetailedInfo = subscriber">
+                  <fa-icon [icon]="['fas', 'circle-info']" [class]="'me-2'"></fa-icon>
+                </a>
+              </ng-container>
+
+              <ng-container *appRoleAccess="'Administrator, Moderator'">
+                <a class="nav-link text-success cursor-pointer btn-action" (click)="subscriberToAddRecord = subscriber">
+                  <fa-icon [icon]="['fas', 'plus-square']" [class]="'me-2'"></fa-icon>
+                </a>
+              </ng-container>
+              <ng-container *appRoleAccess="'Administrator'">
+                <a class="nav-link text-warning cursor-pointer btn-action" (click)="openSubscriberForEdit(subscriber)">
+                  <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
+                </a>
+                <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeleteSubscriber(subscriber)">
+                  <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
+                </a>
+              </ng-container>
+
             </td>
           </tr>
         </ng-template>

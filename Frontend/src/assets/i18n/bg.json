@@ -79,5 +79,6 @@
   "Personal": "Лична",
   "NoReadingsEntered": "Няма въведени показания",
   "Id": "Номер",
-  "Login": "Вход"
+  "Login": "Вход",
+  "ThereAreNoSubscribersForThisSwitchboard": "Няма добавени абонати към това табло!"
 }

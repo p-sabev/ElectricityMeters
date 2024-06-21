@@ -166,6 +166,18 @@ i {
   box-shadow: 0 1px 4px 0 $btn-shadow;
 }
 
+@media (max-width: 1200px) {
+  body {
+    zoom: 0.9;
+  }
+}
+
+@media (max-width: 800px) {
+  body {
+    zoom: 0.8;
+  }
+}
+
 @media (min-width: 1200px) {
   .container {
     max-width: 1100px !important;

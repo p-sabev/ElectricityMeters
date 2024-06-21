@@ -13,11 +13,12 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {AddEditPricesComponent} from "./add-edit-prices/add-edit-prices.component";
 import {TwoAfterDotPipe} from "../../shared/pipes/twoAfterDot.pipe";
 import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
+import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
 
 @Component({
   selector: 'app-prices',
   standalone: true,
-  imports: [CommonModule, TableModule, FaIconComponent, TranslateModule, AddEditSwitchboardComponent, ConfirmDialogModule, AddEditPricesComponent, TwoAfterDotPipe, PageHeadingComponent],
+  imports: [CommonModule, TableModule, FaIconComponent, TranslateModule, AddEditSwitchboardComponent, ConfirmDialogModule, AddEditPricesComponent, TwoAfterDotPipe, PageHeadingComponent, RoleAccessDirective],
   templateUrl: './prices.component.html',
   styleUrl: './prices.component.scss'
 })

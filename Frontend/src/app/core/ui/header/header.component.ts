@@ -1,13 +1,26 @@
 import {Component, OnInit} from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router, RouterModule} from "@angular/router";
 import { filter, map, mergeMap } from 'rxjs/operators';
 import {Title} from "@angular/platform-browser";
 import {AuthService} from "../../services/auth.service";
+import {TranslateModule, TranslatePipe} from "@ngx-translate/core";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {RoleAccessDirective} from "../../../shared/directives/role-access.directive";
+import {NgClass, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  standalone: true,
+  imports: [
+    TranslateModule,
+    FaIconComponent,
+    RoleAccessDirective,
+    NgClass,
+    NgIf,
+    RouterModule
+  ]
 })
 export class HeaderComponent implements OnInit{
 
@@ -41,5 +54,9 @@ export class HeaderComponent implements OnInit{
       .subscribe((event) => {
         this.titleDom.setTitle(event['title']);
       });
+  }
+
+  logOut() {
+    this.authService.logout(true);
   }
 }

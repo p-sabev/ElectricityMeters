@@ -18,6 +18,7 @@ import {FormsModule} from "@angular/forms";
 import {Switchboard} from "../../core/models/switchboards.model";
 import {SwitchboardsService} from "../switchboards/switchboards.service";
 import {DetailsForSubscriberComponent} from "./details-for-subscriber/details-for-subscriber.component";
+import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
 
 @Component({
   selector: 'app-subscribers',
@@ -36,7 +37,8 @@ import {DetailsForSubscriberComponent} from "./details-for-subscriber/details-fo
     LowerCasePipe,
     FormsModule,
     NgForOf,
-    DetailsForSubscriberComponent
+    DetailsForSubscriberComponent,
+    RoleAccessDirective
   ],
   providers: [ConfirmationService],
   templateUrl: './subscribers.component.html',

@@ -5,7 +5,7 @@
       <app-page-heading [title]="'Prices'"></app-page-heading>
     </div>
 
-    <div class="col-12 mt-5">
+    <div class="col-12 mt-5" *appRoleAccess="'Administrator'">
       <button class="btn btn-outline-success" (click)="initAddPrice()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
         {{'AddPrice' | translate}}
@@ -32,7 +32,7 @@
             <th pSortableColumn="dateFrom" style="min-width: 120px;" translate>DateFrom<p-sortIcon field="dateFrom" /></th>
             <th pSortableColumn="dateTo" style="min-width: 120px;" translate>DateTo<p-sortIcon field="dateTo" /></th>
             <th style="min-width: 120px;" translate>Note</th>
-            <th alignFrozen="right" pFrozenColumn></th>
+            <th *appRoleAccess="'Administrator'" alignFrozen="right" pFrozenColumn></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-price>
@@ -45,13 +45,18 @@
               <span *ngIf="!price.dateTo">-</span>
             </td>
             <td>{{ price.note }}</td>
-            <td alignFrozen="right" pFrozenColumn>
-              <a class="nav-link text-warning cursor-pointer btn-action" (click)="openPriceForEdit(price)">
-                <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
-              </a>
-              <a *ngIf="!price.isUsed" class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeletePrice(price)">
-                <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
-              </a>
+            <td *appRoleAccess="'Administrator'" alignFrozen="right" pFrozenColumn>
+              <ng-container *appRoleAccess="'Administrator'">
+                <a class="nav-link text-warning cursor-pointer btn-action"
+                   (click)="openPriceForEdit(price)">
+                  <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
+                </a>
+                <a *ngIf="!price.isUsed"
+                   class="nav-link text-danger cursor-pointer btn-action"
+                   (click)="askToDeletePrice(price)">
+                  <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
+                </a>
+              </ng-container>
             </td>
           </tr>
         </ng-template>

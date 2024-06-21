@@ -70,10 +70,10 @@ export class AuthService {
       }
     }
 
-    const auth = JSON.parse(localStorage.getItem('userAuth') || '');
-    if (!auth || !auth.rememberMe) {
-      localStorage.removeItem('userAuth');
-    }
+    // const auth = JSON.parse(localStorage.getItem('userAuth') || '');
+    // if (!auth || !auth.rememberMe) {
+    //   localStorage.removeItem('userAuth');
+    // }
   }
 
   isTokenValid() {

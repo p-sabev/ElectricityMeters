@@ -7,8 +7,6 @@ import { LoginComponent } from './core/authentication/login/login.component';
 import { SignupComponent } from './core/authentication/signup/signup.component';
 import { RestorePasswordComponent } from './core/authentication/restore-password/restore-password.component';
 import { FooterComponent } from './core/ui/footer/footer.component';
-import { HeaderComponent } from './core/ui/header/header.component';
-import { HomeComponent } from './core/ui/home/home.component';
 import { LoaderComponent } from './core/ui/loader/loader.component';
 import { MenuComponent } from './core/ui/menu/menu.component';
 import { NotFoundComponent } from './core/ui/not-found/not-found.component';
@@ -24,12 +22,12 @@ import { TreeModule } from 'primeng/tree';
 import {ComingSoonComponent} from "./pages/coming-soon/coming-soon.component";
 import {SharedModule} from "./shared/shared/shared.module";
 import {LoaderInterceptorService} from "./core/interceptors/loader-interceptor.service";
-import {TokenInterceptor} from "./core/interceptors/token-interceptor.interceptor";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {SimpleNotificationsModule} from "angular2-notifications";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
+import {HeaderComponent} from "./core/ui/header/header.component";
 
 @NgModule({
   declarations: [
@@ -38,12 +36,10 @@ import {ConfirmationService} from "primeng/api";
     SignupComponent,
     RestorePasswordComponent,
     FooterComponent,
-    HeaderComponent,
-    HomeComponent,
     LoaderComponent,
     MenuComponent,
     NotFoundComponent,
-    ComingSoonComponent
+    ComingSoonComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +60,8 @@ import {ConfirmationService} from "primeng/api";
     TabViewModule,
     ButtonModule,
     TreeModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    HeaderComponent
   ],
   providers: [
     provideClientHydration(),
