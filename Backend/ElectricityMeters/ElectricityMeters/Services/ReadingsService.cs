@@ -72,8 +72,6 @@ namespace ElectricityMeters.Services
                             Phone = s.Phone,
                             SwitchboardNumber = s.Switchboard.Name,
                             MeterNumber = s.MeterNumber,
-                            LastRecordDate = s.LastRecordDate,
-                            LastReading = s.LastReading,
                             Note = s.Note
                         })
                         .FirstOrDefault()
@@ -136,10 +134,6 @@ namespace ElectricityMeters.Services
 
             _dbContext.Readings.Add(reading);
 
-            subscriber.LastReading = insertReading.Value;
-            subscriber.LastRecordDate = insertReading.Date;
-            _dbContext.Update(subscriber);
-
             await _dbContext.SaveChangesAsync();
 
             return reading;
@@ -192,10 +186,6 @@ namespace ElectricityMeters.Services
                 };
 
                 _dbContext.Readings.Add(reading);
-
-                subscriber.LastReading = insertReading.Value;
-                subscriber.LastRecordDate = insertReading.Date;
-                _dbContext.Update(subscriber);
 
                 readings.Add(reading);
             }

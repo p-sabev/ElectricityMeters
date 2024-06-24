@@ -1,5 +1,6 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
+using ElectricityMeters.Request.Readings;
 using ElectricityMeters.Request.Subscribers;
 using ElectricityMeters.Response.Subscribers;
 using Microsoft.EntityFrameworkCore;
@@ -62,7 +63,25 @@ namespace ElectricityMeters.Services
                 .Take(request.Paging.PageSize);
 
             // Извличане на данни
-            var subscribers = await query
+            var subscribersData = await query
+                .Select(p => new
+                {
+                    Id = p.Id,
+                    NumberPage = p.NumberPage,
+                    Name = p.Name,
+                    Switchboard = p.Switchboard,
+                    Address = p.Address,
+                    Phone = p.Phone,
+                    MeterNumber = p.MeterNumber,
+                    Note = p.Note,
+                    LastReadingData = _dbContext.Readings
+                        .Where(r => p.Id == r.Subscriber.Id)
+                        .OrderByDescending(r => r.Date)
+                        .FirstOrDefault()
+                })
+                .ToListAsync();
+
+            var subscribers = subscribersData
                 .Select(p => new SubscribersResponse
                 {
                     Id = p.Id,
@@ -72,11 +91,11 @@ namespace ElectricityMeters.Services
                     Address = p.Address,
                     Phone = p.Phone,
                     MeterNumber = p.MeterNumber,
-                    LastRecordDate = p.LastRecordDate,
-                    LastReading = p.LastReading,
                     Note = p.Note,
+                    LastRecordDate = p.LastReadingData?.Date,
+                    LastReading = p.LastReadingData?.Value
                 })
-                .ToListAsync();
+                .ToList();
 
             return new SearchSubscribersResponse
             {
@@ -102,9 +121,7 @@ namespace ElectricityMeters.Services
                 Address = insertSubscriber.Address,
                 Phone = insertSubscriber.Phone,
                 MeterNumber = insertSubscriber.MeterNumber,
-                Note = insertSubscriber.Note,
-                LastRecordDate = null,
-                LastReading = null
+                Note = insertSubscriber.Note
             };
 
             _dbContext.Subscribers.Add(subscriber);

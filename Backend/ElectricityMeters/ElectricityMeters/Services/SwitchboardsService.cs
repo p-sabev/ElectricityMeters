@@ -55,11 +55,19 @@ namespace ElectricityMeters.Services
                             Address = s.Address,
                             Phone = s.Phone,
                             MeterNumber = s.MeterNumber,
-                            LastRecordDate = s.LastRecordDate,
-                            LastReading = s.LastReading,
+                            LastRecordDate = _dbContext.Readings
+                                .Where(r => r.Subscriber.Id == s.Id)
+                                .OrderByDescending(r => r.Date)
+                                .Select(r => r.Date)
+                                .FirstOrDefault(),
+                            LastReading = _dbContext.Readings
+                                .Where(r => r.Subscriber.Id == s.Id)
+                                .OrderByDescending(r => r.Date)
+                                .Select(r => r.Value)
+                                .FirstOrDefault(),
                             Note = s.Note
                         })
-                        .ToList() // This will still be an IQueryable, so we need to materialize it later
+                        .ToList()
                 })
                 .ToListAsync();
 
@@ -77,8 +85,16 @@ namespace ElectricityMeters.Services
                         Address = s.Address,
                         Phone = s.Phone,
                         MeterNumber = s.MeterNumber,
-                        LastRecordDate = s.LastRecordDate,
-                        LastReading = s.LastReading,
+                        LastRecordDate = _dbContext.Readings
+                            .Where(r => r.Subscriber.Id == s.Id)
+                            .OrderByDescending(r => r.Date)
+                            .Select(r => r.Date)
+                            .FirstOrDefault(),
+                        LastReading = _dbContext.Readings
+                            .Where(r => r.Subscriber.Id == s.Id)
+                            .OrderByDescending(r => r.Date)
+                            .Select(r => r.Value)
+                            .FirstOrDefault(),
                         Note = s.Note
                     })
                     .ToListAsync();

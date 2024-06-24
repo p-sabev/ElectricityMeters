@@ -9,14 +9,12 @@
         public string? Address { get; set; }
         public string? Phone { get; set; }
         public string? MeterNumber { get; set; }
-        public DateTime? LastRecordDate { get; set; }
-        public double? LastReading { get; set; }
         public string Note { get; set; }
 
 
         public Subscriber() { }
 
-        public Subscriber(int id, int numberPage, string name, Switchboard switchboard, string? address, string? phone, string? meterNumber, DateTime? lastRecordDate, double? lastReading, string note)
+        public Subscriber(int id, int numberPage, string name, Switchboard switchboard, string? address, string? phone, string? meterNumber, string note)
         {
             Id=id;
             NumberPage=numberPage;
@@ -25,8 +23,6 @@
             Address=address;
             Phone=phone;
             MeterNumber=meterNumber;
-            LastRecordDate=lastRecordDate;
-            LastReading=lastReading;
             Note=note;
 
         }
