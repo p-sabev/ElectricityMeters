@@ -76,7 +76,7 @@ namespace ElectricityMeters.Services
                     Note = p.Note,
                     LastReadingData = _dbContext.Readings
                         .Where(r => p.Id == r.Subscriber.Id)
-                        .OrderByDescending(r => r.Date)
+                        .OrderByDescending(r => r.DateTo)
                         .FirstOrDefault()
                 })
                 .ToListAsync();
@@ -92,7 +92,7 @@ namespace ElectricityMeters.Services
                     Phone = p.Phone,
                     MeterNumber = p.MeterNumber,
                     Note = p.Note,
-                    LastRecordDate = p.LastReadingData?.Date,
+                    LastRecordDate = p.LastReadingData?.DateTo,
                     LastReading = p.LastReadingData?.Value
                 })
                 .ToList();

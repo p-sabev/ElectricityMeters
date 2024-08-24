@@ -9,7 +9,7 @@ export interface Subscriber {
   address?: string;
   phone?: string;
   meterNumber?: string;
-  lastRecordDate?: null | string | Date;
+  lastRecordDate?: null | Date;
   lastReading?: number;
   note?: string;
 }

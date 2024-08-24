@@ -37,10 +37,22 @@ export class AddReadingForSwitchboardComponent implements OnInit {
               private errorService: ErrorService) {
   }
 
-  readingsDate: Date | string = moment(new Date()).toDate();
+  minDateFrom: Date | null = null;
+  readingsDateFrom: Date | null = null;
+  readingsDateTo: Date | null = moment(new Date()).toDate();
   readingsValues: number[] = new Array(this.subscribers?.length).fill(0);
 
   ngOnInit() {
+    if (this.subscribers?.length) {
+      this.subscribers.forEach((subscriber: Subscriber) => {
+        if (subscriber.lastRecordDate) {
+          if (!this.minDateFrom || (this.minDateFrom && moment(subscriber.lastRecordDate).isAfter(moment(this.minDateFrom)))) {
+            this.readingsDateFrom = moment(subscriber.lastRecordDate).toDate();
+            this.minDateFrom = moment(subscriber.lastRecordDate).toDate();
+          }
+        }
+      });
+    }
   }
 
   addReadings() {
@@ -50,7 +62,8 @@ export class AddReadingForSwitchboardComponent implements OnInit {
     this.subscribers?.forEach((subscriber: Subscriber, index: number) => {
       body.subscribersReading.push({
         subscriberId: subscriber.id,
-        date: moment(this.readingsDate).format('YYYY-MM-DD') + 'T00:00:00.000Z',
+        dateFrom: moment(this.readingsDateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z',
+        dateTo: moment(this.readingsDateTo).format('YYYY-MM-DD') + 'T00:00:00.000Z',
         value: this.readingsValues[index] || 0
       });
     });

@@ -57,12 +57,12 @@ namespace ElectricityMeters.Services
                             MeterNumber = s.MeterNumber,
                             LastRecordDate = _dbContext.Readings
                                 .Where(r => r.Subscriber.Id == s.Id)
-                                .OrderByDescending(r => r.Date)
-                                .Select(r => r.Date)
+                                .OrderByDescending(r => r.DateTo)
+                                .Select(r => r.DateTo)
                                 .FirstOrDefault(),
                             LastReading = _dbContext.Readings
                                 .Where(r => r.Subscriber.Id == s.Id)
-                                .OrderByDescending(r => r.Date)
+                                .OrderByDescending(r => r.DateTo)
                                 .Select(r => r.Value)
                                 .FirstOrDefault(),
                             Note = s.Note
@@ -87,12 +87,12 @@ namespace ElectricityMeters.Services
                         MeterNumber = s.MeterNumber,
                         LastRecordDate = _dbContext.Readings
                             .Where(r => r.Subscriber.Id == s.Id)
-                            .OrderByDescending(r => r.Date)
-                            .Select(r => r.Date)
+                            .OrderByDescending(r => r.DateTo)
+                            .Select(r => r.DateTo)
                             .FirstOrDefault(),
                         LastReading = _dbContext.Readings
                             .Where(r => r.Subscriber.Id == s.Id)
-                            .OrderByDescending(r => r.Date)
+                            .OrderByDescending(r => r.DateTo)
                             .Select(r => r.Value)
                             .FirstOrDefault(),
                         Note = s.Note

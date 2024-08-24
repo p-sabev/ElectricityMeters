@@ -22,7 +22,8 @@
           <tr>
             <th pSortableColumn="id" translate>Id<p-sortIcon field="id" /></th>
             <th pSortableColumn="subscriber" style="min-width: 160px;" translate>Subscriber<p-sortIcon field="subscriber" /></th>
-            <th pSortableColumn="date" style="min-width: 120px;" translate>Date<p-sortIcon field="date" /></th>
+            <th pSortableColumn="date" style="min-width: 120px;" translate>DateFrom<p-sortIcon field="dateFrom" /></th>
+            <th pSortableColumn="date" style="min-width: 120px;" translate>DateTo<p-sortIcon field="dateTo" /></th>
             <th pSortableColumn="value" style="min-width: 120px;" translate>ReadingInKvh<p-sortIcon field="value" /></th>
             <th pSortableColumn="difference" style="min-width: 120px;" translate>Difference<p-sortIcon field="difference" /></th>
             <th pSortableColumn="currentPrice" style="min-width: 120px;" translate>TariffInBgn<p-sortIcon field="currentPrice" /></th>
@@ -36,7 +37,8 @@
           <tr>
             <td>{{ reading.id }}</td>
             <td class="font-weight-bold">{{ reading.subscriber?.name }}</td>
-            <td>{{ reading.date | date: 'dd.MM.yyyy' }}</td>
+            <td>{{ reading.dateFrom | date: 'dd.MM.yyyy' }}</td>
+            <td>{{ reading.dateTo | date: 'dd.MM.yyyy' }}</td>
             <td>{{ reading.value }} {{'kvh' | translate}}</td>
             <td>{{ reading.difference }} {{'kvh' | translate}}</td>
             <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>

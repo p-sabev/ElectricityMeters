@@ -4,7 +4,8 @@ import {Paging, Sorting} from "./base-models.model";
 export interface Reading {
   id: number;
   subscriber: Subscriber;
-  date: Date | string;
+  dateFrom: Date | string;
+  dateTo: Date | string;
   value: number;
   amountDue: number;
   difference: number;
@@ -13,7 +14,8 @@ export interface Reading {
 
 export interface InsertReading {
   subscriberId: number;
-  date: Date | string;
+  dateFrom: Date | string;
+  dateTo: Date | string;
   value: number;
 }
 
@@ -24,7 +26,8 @@ export interface InsertMultipleReadings {
 export interface EditReading {
   id: number;
   subscriberId: number;
-  date: Date | string;
+  dateFrom: Date | string;
+  dateTo: Date | string;
   value: number;
   currentPrice?: number;
 }

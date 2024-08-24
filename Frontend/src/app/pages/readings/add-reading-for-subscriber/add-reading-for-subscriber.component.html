@@ -27,6 +27,39 @@
           <div class="row">
 
             <div class="col-lg-6 col-md-12 mt-3">
+              <label>{{ 'DateFrom' | translate }}*</label>
+
+              <p-calendar
+                formControlName="dateFrom"
+                [firstDayOfWeek]="1"
+                [style]="{ width: '100%' }"
+                [inputStyle]="{ width: '100%' }"
+                [minDate]="lastReadingDate"
+                dateFormat="dd.mm.yy"
+                [readonlyInput]="false"
+                [appendTo]="addEditModal"
+                [showButtonBar]="true"></p-calendar>
+
+              <app-form-errors [withoutTooltip]="true" [control]="addEditReadingForm.get('dateFrom')" [max]="1000"></app-form-errors>
+            </div>
+
+            <div class="col-lg-6 col-md-12 mt-3">
+              <label>{{ 'DateTo' | translate }}*</label>
+
+              <p-calendar
+                formControlName="dateTo"
+                [firstDayOfWeek]="1"
+                [style]="{ width: '100%' }"
+                [inputStyle]="{ width: '100%' }"
+                dateFormat="dd.mm.yy"
+                [readonlyInput]="false"
+                [appendTo]="addEditModal"
+                [showButtonBar]="true"></p-calendar>
+
+              <app-form-errors [withoutTooltip]="true" [control]="addEditReadingForm.get('dateTo')" [max]="1000"></app-form-errors>
+            </div>
+
+            <div class="col-lg-6 col-md-12 mt-3">
               <label>{{ 'ReadingInKvh' | translate }}*</label>
 
               <input
@@ -41,22 +74,6 @@
               <app-form-errors [withoutTooltip]="true"
                                [control]="addEditReadingForm.get('value')"
                                [max]="2147483647"></app-form-errors>
-            </div>
-
-            <div class="col-lg-6 col-md-12 mt-3">
-              <label>{{ 'Date' | translate }}*</label>
-
-              <p-calendar
-                formControlName="date"
-                [firstDayOfWeek]="1"
-                [style]="{ width: '100%' }"
-                [inputStyle]="{ width: '100%' }"
-                dateFormat="dd.mm.yy"
-                [readonlyInput]="false"
-                [appendTo]="addEditModal"
-                [showButtonBar]="true"></p-calendar>
-
-              <app-form-errors [withoutTooltip]="true" [control]="addEditReadingForm.get('date')" [max]="1000"></app-form-errors>
             </div>
 
           </div>

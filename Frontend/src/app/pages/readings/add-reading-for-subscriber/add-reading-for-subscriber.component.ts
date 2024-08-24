@@ -12,7 +12,7 @@ import {ErrorService} from "../../../core/services/error.service";
 import {Switchboard} from "../../../core/models/switchboards.model";
 import * as moment from 'moment';
 import {ReadingsService} from "../readings.service";
-import {Reading} from "../../../core/models/readings.model";
+import {EditReading, Reading} from "../../../core/models/readings.model";
 import {CalendarModule} from "primeng/calendar";
 
 @Component({
@@ -41,6 +41,7 @@ export class AddReadingForSubscriberComponent implements OnInit {
   }
 
   addEditReadingForm!: FormGroup;
+  lastReadingDate: Date | null = null;
 
   ngOnInit() {
     if (this.readingToEdit) {
@@ -50,17 +51,20 @@ export class AddReadingForSubscriberComponent implements OnInit {
   }
 
   initAddReadingForm() {
+    this.lastReadingDate = (this.subscriber?.lastRecordDate ? moment(this.subscriber?.lastRecordDate).toDate() : null);
     this.addEditReadingForm = new FormGroup({
       id: new FormControl<number | null>(this.readingToEdit?.id || null, this.readingToEdit ? [Validators.required] : []),
       subscriberId: new FormControl<number>(this.subscriber.id, [Validators.required]),
       value: new FormControl<number | null>(this.readingToEdit ? this.readingToEdit.value : null, [Validators.required, Validators.max(2147483647)]),
-      date: new FormControl<Date>(this.readingToEdit ? moment(this.readingToEdit.date).toDate() : moment(new Date()).toDate(), [Validators.required]),
+      dateFrom: new FormControl<Date | null>(this.readingToEdit ? moment(this.readingToEdit.dateFrom).toDate() : this.lastReadingDate, [Validators.required]),
+      dateTo: new FormControl<Date>(this.readingToEdit ? moment(this.readingToEdit.dateTo).toDate() : moment(new Date()).toDate(), [Validators.required]),
     });
   }
 
   addReading() {
     const body = this.addEditReadingForm?.getRawValue() || {};
-    body.date = moment(body.date).format('YYYY-MM-DD') + 'T00:00:00.000Z';
+    body.dateFrom = moment(body.dateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z';
+    body.dateTo = moment(body.dateTo).format('YYYY-MM-DD') + 'T00:00:00.000Z';
     delete body.id;
     this.readingsService.insertReading(body).subscribe(() => {
       this.notifications.Success.emit('SuccessfullyAddedReading');
@@ -71,8 +75,9 @@ export class AddReadingForSubscriberComponent implements OnInit {
   }
 
   editReading() {
-    const body = this.addEditReadingForm?.getRawValue() || {};
-    body.date = moment(body.date).format('YYYY-MM-DD') + 'T00:00:00.000Z';
+    const body: EditReading = this.addEditReadingForm?.getRawValue() || {};
+    body.dateFrom = moment(body.dateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z';
+    body.dateTo = moment(body.dateTo).format('YYYY-MM-DD') + 'T00:00:00.000Z';
     this.readingsService.editReading(body).subscribe(() => {
       this.notifications.Success.emit('SuccessfullyEditedReading');
       this.close.emit();

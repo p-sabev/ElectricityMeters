@@ -17,12 +17,28 @@
             <ul class="list-group">
               <li class="list-group-item">
                 <div class="row">
-                  <div class="col-12">
-                    <label class="font-weight-bold">{{ 'Date' | translate }}*</label>
+                  <div class="col-6">
+                    <label class="font-weight-bold">{{ 'DateFrom' | translate }}*</label>
 
                     <p-calendar
                       #dateField="ngModel"
-                      [(ngModel)]="readingsDate"
+                      [(ngModel)]="readingsDateFrom"
+                      [firstDayOfWeek]="1"
+                      [style]="{ width: '100%' }"
+                      [inputStyle]="{ width: '100%' }"
+                      dateFormat="dd.mm.yy"
+                      [readonlyInput]="false"
+                      [appendTo]="addEditModal"
+                      [showButtonBar]="true"></p-calendar>
+
+                    <app-form-errors [withoutTooltip]="true" [control]="dateField" [max]="1000"></app-form-errors>
+                  </div>
+                  <div class="col-6">
+                    <label class="font-weight-bold">{{ 'DateTo' | translate }}*</label>
+
+                    <p-calendar
+                      #dateField="ngModel"
+                      [(ngModel)]="readingsDateTo"
                       [firstDayOfWeek]="1"
                       [style]="{ width: '100%' }"
                       [inputStyle]="{ width: '100%' }"

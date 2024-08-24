@@ -29,10 +29,6 @@ export class AuthService {
     return this.http.post(environment.url + '/api/Account/login', credentials);
   }
 
-  // login(data) {
-  //   return this.http.post('/container/Account/Login', data, { responseType: 'text' });
-  // }
-
   logout(goToLoginForm = false) {
     localStorage.removeItem('token');
     if (goToLoginForm) {

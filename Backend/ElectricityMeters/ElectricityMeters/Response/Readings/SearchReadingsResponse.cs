@@ -12,7 +12,8 @@ namespace ElectricityMeters.Response.Readings
     {
         public int Id { get; set; }
         public ReadingSubscriber? Subscriber { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
         public double Value { get; set; }
         public double AmountDue { get; set; }
         public double Difference { get; set; }

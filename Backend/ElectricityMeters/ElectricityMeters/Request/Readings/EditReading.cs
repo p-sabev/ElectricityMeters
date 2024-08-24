@@ -6,7 +6,8 @@ namespace ElectricityMeters.Request.Readings
     {
         public required int Id { get; set; }
         public required int SubscriberId { get; set; }
-        public required DateTime Date { get; set; }
+        public required DateTime DateFrom { get; set; }
+        public required DateTime DateTo { get; set; }
         public required double Value { get; set; }
         public double CurrentPrice { get; set; }
     }

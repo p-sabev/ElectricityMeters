@@ -45,7 +45,8 @@ namespace ElectricityMeters.Services
                 .Select(r => new ReadingsResponse
                 {
                     Id = r.Id,
-                    Date = r.Date,
+                    DateFrom = r.DateFrom,
+                    DateTo = r.DateTo,
                     Value = r.Value,
                     AmountDue = r.AmountDue,
                     Difference = r.Difference,
@@ -95,10 +96,10 @@ namespace ElectricityMeters.Services
 
             var lastReading = await _dbContext.Readings
                 .Where(r => r.Subscriber.Id == insertReading.SubscriberId)
-                .OrderByDescending(r => r.Date)
+                .OrderByDescending(r => r.DateTo)
                 .FirstOrDefaultAsync();
 
-            if (lastReading != null && insertReading.Date <= lastReading.Date)
+            if (lastReading != null && insertReading.DateTo <= lastReading.DateTo)
             {
                 return null;
             }
@@ -109,7 +110,7 @@ namespace ElectricityMeters.Services
             }
 
             var currentPrice = await _dbContext.Prices
-                .Where(p => p.DateFrom <= insertReading.Date && (p.DateTo == null || p.DateTo >= insertReading.Date))
+                .Where(p => p.DateFrom <= insertReading.DateTo && (p.DateTo == null || p.DateTo >= insertReading.DateTo))
                 .OrderByDescending(p => p.DateFrom)
                 .FirstOrDefaultAsync();
 
@@ -124,7 +125,8 @@ namespace ElectricityMeters.Services
             var reading = new Reading
             {
                 Subscriber = subscriber,
-                Date = insertReading.Date,
+                DateFrom = insertReading.DateFrom,
+                DateTo = insertReading.DateTo,
                 Value = insertReading.Value,
                 Difference = difference,
                 AmountDue = amountDue,
@@ -153,16 +155,16 @@ namespace ElectricityMeters.Services
 
                 var lastReading = await _dbContext.Readings
                     .Where(r => r.Subscriber.Id == insertReading.SubscriberId)
-                    .OrderByDescending(r => r.Date)
+                    .OrderByDescending(r => r.DateTo)
                     .FirstOrDefaultAsync();
 
-                if (lastReading != null && (insertReading.Date <= lastReading.Date || insertReading.Value < lastReading.Value))
+                if (lastReading != null && (insertReading.DateTo <= lastReading.DateTo || insertReading.Value < lastReading.Value))
                 {
                     continue; // Skip invalid readings
                 }
 
                 var currentPrice = await _dbContext.Prices
-                    .Where(p => p.DateFrom <= insertReading.Date && (p.DateTo == null || p.DateTo >= insertReading.Date))
+                    .Where(p => p.DateFrom <= insertReading.DateTo && (p.DateTo == null || p.DateTo >= insertReading.DateTo))
                     .OrderByDescending(p => p.DateFrom)
                     .FirstOrDefaultAsync();
 
@@ -177,7 +179,8 @@ namespace ElectricityMeters.Services
                 var reading = new Reading
                 {
                     Subscriber = subscriber,
-                    Date = insertReading.Date,
+                    DateFrom = insertReading.DateFrom,
+                    DateTo = insertReading.DateTo,
                     Value = insertReading.Value,
                     Difference = difference,
                     AmountDue = amountDue,
@@ -209,10 +212,10 @@ namespace ElectricityMeters.Services
 
             var lastReading = await _dbContext.Readings
                 .Where(r => r.Subscriber.Id == editReading.SubscriberId)
-                .OrderByDescending(r => r.Date)
+                .OrderByDescending(r => r.DateTo)
                 .FirstOrDefaultAsync();
 
-            if (reading.Id != lastReading.Id)
+            if (reading.Id != lastReading?.Id)
             {
                 return false;
             }
@@ -223,7 +226,7 @@ namespace ElectricityMeters.Services
             }
 
             var currentPrice = await _dbContext.Prices
-                .Where(p => p.DateFrom <= editReading.Date && (p.DateTo == null || p.DateTo >= editReading.Date))
+                .Where(p => p.DateFrom <= editReading.DateTo && (p.DateTo == null || p.DateTo >= editReading.DateTo))
                 .OrderByDescending(p => p.DateFrom)
                 .FirstOrDefaultAsync();
 
@@ -233,14 +236,15 @@ namespace ElectricityMeters.Services
             }
 
             var previousReading = await _dbContext.Readings
-                .Where(r => r.Subscriber.Id == editReading.SubscriberId && r.Date < editReading.Date)
-                .OrderByDescending(r => r.Date)
+                .Where(r => r.Subscriber.Id == editReading.SubscriberId && r.DateTo < editReading.DateTo)
+                .OrderByDescending(r => r.DateTo)
                 .FirstOrDefaultAsync();
 
             var difference = previousReading != null ? editReading.Value - previousReading.Value : editReading.Value;
             var amountDue = difference * currentPrice.PriceInLv;
 
-            reading.Date = editReading.Date;
+            reading.DateFrom = editReading.DateFrom;
+            reading.DateTo = editReading.DateTo;
             reading.Value = editReading.Value;
             reading.Difference = difference;
             reading.AmountDue = amountDue;
@@ -280,10 +284,10 @@ namespace ElectricityMeters.Services
 
             var lastReading = await _dbContext.Readings
                 .Where(r => r.Subscriber.Id == reading.Subscriber.Id)
-                .OrderByDescending(r => r.Date)
+                .OrderByDescending(r => r.DateTo)
                 .FirstOrDefaultAsync();
 
-            if (reading.Id != lastReading.Id)
+            if (reading.Id != lastReading?.Id)
             {
                 return false;
             }
@@ -298,7 +302,7 @@ namespace ElectricityMeters.Services
         {
             return await _dbContext.Readings
                 .Where(r => r.Subscriber.Id == subscriberId)
-                .OrderByDescendingDynamic("date")
+                .OrderByDescendingDynamic("dateTo")
                 .ToListAsync();
         }
 
