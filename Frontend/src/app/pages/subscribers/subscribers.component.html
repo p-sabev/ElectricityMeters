@@ -32,7 +32,7 @@
             <th pSortableColumn="numberPage" translate>NumberPage<p-sortIcon field="numberPage" /></th>
             <th pSortableColumn="name" style="min-width: 160px;" translate>Name<p-sortIcon field="name" /></th>
             <th pSortableColumn="switchboard" translate>Switchboard<p-sortIcon field="switchboard" /></th>
-            <th pSortableColumn="meterNumber" translate>MeterNumber<p-sortIcon field="meterNumber" /></th>
+<!--            <th pSortableColumn="meterNumber" translate>MeterNumber<p-sortIcon field="meterNumber" /></th>-->
             <th pSortableColumn="lastReading" style="min-width: 120px;" translate>LastReading<p-sortIcon field="lastReading" /></th>
             <th pSortableColumn="lastRecordDate" style="min-width: 120px;" translate>LastRecord<p-sortIcon field="lastRecordDate" /></th>
             <th alignFrozen="right" pFrozenColumn></th>
@@ -65,12 +65,12 @@
                 </option>
               </select>
             </td>
-            <td class="p-2">
-              <input type="text" class="form-control"
-                     [(ngModel)]="filtersModel.electricMeterName"
-                     title="{{'SearchBy' | translate}} {{'MeterNumber' | translate | lowercase}}"
-                     placeholder="{{'SearchBy' | translate}} {{'MeterNumber' | translate | lowercase}}">
-            </td>
+<!--            <td class="p-2">-->
+<!--              <input type="text" class="form-control"-->
+<!--                     [(ngModel)]="filtersModel.electricMeterName"-->
+<!--                     title="{{'SearchBy' | translate}} {{'MeterNumber' | translate | lowercase}}"-->
+<!--                     placeholder="{{'SearchBy' | translate}} {{'MeterNumber' | translate | lowercase}}">-->
+<!--            </td>-->
             <td class="p-2"></td>
             <td class="p-2"></td>
             <td alignFrozen="right" pFrozenColumn class="p-2" style="background: #FFFFFF;">
@@ -90,7 +90,7 @@
             <td>{{ subscriber.numberPage }}</td>
             <td class="font-weight-bold">{{ subscriber.name }}</td>
             <td>{{ subscriber.switchboard?.name }}</td>
-            <td>{{ subscriber.meterNumber }}</td>
+<!--            <td>{{ subscriber.meterNumber }}</td>-->
             <td>
               <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
               <span *ngIf="!subscriber.lastReading">-</span>

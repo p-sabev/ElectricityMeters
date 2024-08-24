@@ -29,7 +29,7 @@
             <th pSortableColumn="currentPrice" style="min-width: 120px;" translate>TariffInBgn<p-sortIcon field="currentPrice" /></th>
             <th pSortableColumn="amountDue" style="min-width: 120px;" translate>ForPaymentInBgn<p-sortIcon field="amountDue" /></th>
             <th style="min-width: 80px;" translate>Switchboard</th>
-            <th style="min-width: 80px;" translate>MeterNumber</th>
+<!--            <th style="min-width: 80px;" translate>MeterNumber</th>-->
             <th alignFrozen="right" pFrozenColumn></th>
           </tr>
         </ng-template>
@@ -44,7 +44,7 @@
             <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ reading.subscriber?.switchboardNumber }}</td>
-            <td>{{ reading.subscriber?.meterNumber }}</td>
+<!--            <td>{{ reading.subscriber?.meterNumber }}</td>-->
             <td alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
                 <a class="nav-link text-success cursor-pointer btn-action" (click)="readingToPrintReceipt = reading;">
