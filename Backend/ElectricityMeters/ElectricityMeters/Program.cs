@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Text;
 using Serilog;
 using Serilog.Events;
+using System.IdentityModel.Tokens.Jwt;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +44,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
+var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 
 builder.Services.AddAuthentication(options =>
 {
@@ -62,7 +63,31 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Issuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(key)
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        RoleClaimType = "role",
+        NameClaimType = "name"
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            context.NoResult();
+            context.Response.StatusCode = 401;
+            context.Response.ContentType = "text/plain";
+            return context.Response.WriteAsync(context.Exception.ToString());
+        },
+        OnTokenValidated = context =>
+        {
+            var userService = context.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
+            var userId = context.Principal.Identity.Name;
+            var user = userService.FindByIdAsync(userId).Result;
+            if (user == null)
+            {
+                context.Fail("Unauthorized");
+            }
+            return Task.CompletedTask;
+        }
     };
 });
 
@@ -73,7 +98,7 @@ builder.Services.AddScoped<ISubscriberService, SubscriberService>();
 builder.Services.AddScoped<ISwitchboardService, SwitchboardService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
 {
@@ -144,7 +169,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-// app.UseAuthentication();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -155,6 +180,8 @@ CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 app.Run();
 
 SeedRoles(app.Services).Wait();
+
+
 
 async Task SeedRoles(IServiceProvider serviceProvider)
 {
