@@ -41,13 +41,14 @@ export class PrintReceiptComponent {
           '  display: flex;\n' +
           '  border: 1px solid #000;\n' +
           '  width: 100%;\n' +
+          '  max-width: 700px;\n' +
           '  margin: 20px auto;\n' +
           '  padding: 10px; ' +
           '  border-radius: 5px;\n' +
           '}\n' +
           '\n' +
           '.receipt-left, .receipt-right {\n' +
-          '  width: 50%;\n' +
+          '  width: 100%;\n' +
           '  padding: 15px 30px;\n' +
           '  box-sizing: border-box;\n' +
           '}\n' +
