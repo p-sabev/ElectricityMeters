@@ -19,6 +19,7 @@ namespace ElectricityMeters.Response.Readings
         public double Difference { get; set; }
         public double CurrentPrice { get; set; }
         public Price? UsedPrice { get; set; }
+        public bool IsPaid { get; set; }
     }
 
     public class ReadingSubscriber

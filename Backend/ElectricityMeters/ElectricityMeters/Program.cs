@@ -10,7 +10,6 @@ using System.Globalization;
 using System.Text;
 using Serilog;
 using Serilog.Events;
-using System.IdentityModel.Tokens.Jwt;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -96,6 +95,8 @@ builder.Services.AddScoped<IPriceService, PriceService>();
 builder.Services.AddScoped<IReadingsService, ReadingService>();
 builder.Services.AddScoped<ISubscriberService, SubscriberService>();
 builder.Services.AddScoped<ISwitchboardService, SwitchboardService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<ISettingsService, SettingsService>();
 
 builder.Services.AddControllers();
 

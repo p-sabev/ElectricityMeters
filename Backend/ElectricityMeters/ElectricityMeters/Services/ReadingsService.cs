@@ -75,7 +75,8 @@ namespace ElectricityMeters.Services
                             MeterNumber = s.MeterNumber,
                             Note = s.Note
                         })
-                        .FirstOrDefault()
+                        .FirstOrDefault(),
+                    IsPaid = _dbContext.Payments.Any(p => p.Reading.Id == r.Id)
                 })
                 .ToListAsync();
 

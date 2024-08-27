@@ -12,8 +12,60 @@
 
       <div class="modal-body">
         <div class="row">
-          <div class="col-12" #printSection id="print-section">
-            <app-receipt [reading]="reading"></app-receipt>
+          <div class="col-lg-6 col-md-12" style="margin-top: 20px;">
+            <h3>{{'Fees' | translate}}</h3>
+
+            <div>
+              <table class="table" *ngIf="feeList?.length">
+                <thead>
+                <tr>
+                  <th scope="col">{{'Value' | translate}}</th>
+                  <th scope="col">{{'Description' | translate}}</th>
+                  <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let fee of feeList; let i = index;">
+                  <td>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="priceInLv"
+                      id="priceInLv"
+                      [(ngModel)]="fee.value"
+                      title="{{ 'PriceInBGN' | translate }}*"
+                      placeholder="{{ 'PriceInBGN' | translate }}*" />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="description"
+                      id="description"
+                      [(ngModel)]="fee.description"
+                      title="{{ 'Description' | translate }}*"
+                      placeholder="{{ 'Description' | translate }}*" />
+                  </td>
+                  <td>
+                    <fa-icon [icon]="['fas', 'trash']"
+                             [class]="'me-2 text-danger cursor-pointer'"
+                             (click)="deleteFee(i)"
+                             style="font-size: 22px;"></fa-icon>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <button class="btn btn-success mt-3" (click)="feeList.push({value: null, description: ''})">
+                <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
+                {{'Add' | translate}}
+              </button>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12" #printSection id="print-section">
+            <app-receipt [reading]="reading" [fees]="feeList"></app-receipt>
           </div>
         </div>
       </div>
@@ -22,12 +74,21 @@
         <div class="row" style="width: 100%">
           <div class="col-12 p-0">
             <button
+              *ngIf="!reading.isPaid"
               type="button"
               class="btn float-end btn-success"
+              (click)="markAsPaidAndCallPrint()">
+              <fa-icon [icon]="['fas', 'money-bill']" [class]="'me-2'"></fa-icon>
+              {{ 'PrintAndMarkAsPaid' | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn float-end btn-outline-secondary me-2"
               (click)="callPrint()">
               <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
               {{ 'Print' | translate }}
             </button>
+
             <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
               Close
             </button>

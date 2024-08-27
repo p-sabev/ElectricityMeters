@@ -10,6 +10,7 @@ export interface Reading {
   amountDue: number;
   difference: number;
   currentPrice: number;
+  isPaid?: boolean;
 }
 
 export interface InsertReading {

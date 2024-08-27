@@ -12,6 +12,9 @@ namespace ElectricityMeters.Models
         public DbSet<Subscriber> Subscribers { get; set; } = null!;
         public DbSet<Reading> Readings { get; set; } = null!;
         public DbSet<Price> Prices { get; set; } = null!;
+        public DbSet<Payment> Payments { get; set; } = null!;
+        public DbSet<PaymentFee> PaymentFees { get; set; } = null!;
+        public DbSet<StandartFee> StandartFees { get; set; } = null!;
 
     }
 }

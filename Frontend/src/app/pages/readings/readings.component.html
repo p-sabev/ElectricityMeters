@@ -28,6 +28,7 @@
             <th pSortableColumn="difference" style="min-width: 120px;" translate>Difference<p-sortIcon field="difference" /></th>
             <th pSortableColumn="currentPrice" style="min-width: 120px;" translate>TariffInBgn<p-sortIcon field="currentPrice" /></th>
             <th pSortableColumn="amountDue" style="min-width: 120px;" translate>ForPaymentInBgn<p-sortIcon field="amountDue" /></th>
+            <th style="min-width: 80px;" translate>IsPaid</th>
             <th style="min-width: 80px;" translate>Switchboard</th>
 <!--            <th style="min-width: 80px;" translate>MeterNumber</th>-->
             <th alignFrozen="right" pFrozenColumn></th>
@@ -43,6 +44,16 @@
             <td>{{ reading.difference }} {{'kvh' | translate}}</td>
             <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
+            <td>
+              <fa-icon *ngIf="reading.isPaid"
+                       title="{{'Paid' | translate}}"
+                       [icon]="['fas', 'check-circle']"
+                       [class]="'text-success'"></fa-icon>
+              <fa-icon *ngIf="!reading.isPaid"
+                       title="{{'NotPaid' | translate}}"
+                       [icon]="['fas', 'times']"
+                       [class]="'text-danger'"></fa-icon>
+            </td>
             <td>{{ reading.subscriber?.switchboardNumber }}</td>
 <!--            <td>{{ reading.subscriber?.meterNumber }}</td>-->
             <td alignFrozen="right" pFrozenColumn>
@@ -79,7 +90,7 @@
 
 <ng-container *ngIf="readingToPrintReceipt">
   <app-print-receipt [reading]="readingToPrintReceipt"
-                     (close)="readingToPrintReceipt = null;"></app-print-receipt>
+                     (close)="readingToPrintReceipt = null; fetchReadingsList();"></app-print-receipt>
 </ng-container>
 
 <p-confirmDialog

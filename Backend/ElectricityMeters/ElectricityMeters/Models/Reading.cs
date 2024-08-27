@@ -11,12 +11,12 @@
         public double Difference { get; set; }
         public double CurrentPrice { get; set; }
         public int UsedPrice { get; set; }
-        public bool Paid {  get; set; }
+        public int? Payment {  get; set; }
 
 
         public Reading() { }
 
-        public Reading(int id, DateTime dateFrom, DateTime dateTo, double value, double amountDue, double difference, double currentPrice, Subscriber subscriber, bool paid)
+        public Reading(int id, DateTime dateFrom, DateTime dateTo, double value, double amountDue, double difference, double currentPrice, Subscriber subscriber)
         {
             Id = id;
             DateFrom = dateFrom;
@@ -26,7 +26,6 @@
             Difference = difference;
             CurrentPrice = currentPrice;
             Subscriber = subscriber;
-            Paid=paid;
         }
     }
 }

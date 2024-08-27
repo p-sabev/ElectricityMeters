@@ -3,11 +3,17 @@ import {Reading} from "../../../core/models/readings.model";
 import {CalendarModule} from "primeng/calendar";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
-import {NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {PaginatorModule} from "primeng/paginator";
 import {ReactiveFormsModule} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
 import {ReceiptComponent} from "../receipt/receipt.component";
+import {Fee, InsertPayment} from "../../../core/models/payment.model";
+import {TwoAfterDotPipe} from "../../../shared/pipes/twoAfterDot.pipe";
+import * as moment from "moment/moment";
+import {PaymentsService} from "../../payments/payments.service";
+import {ErrorService} from "../../../core/services/error.service";
+import {NotificationsEmitterService} from "../../../core/services/notifications.service";
 
 @Component({
   selector: 'app-print-receipt',
@@ -20,7 +26,9 @@ import {ReceiptComponent} from "../receipt/receipt.component";
     PaginatorModule,
     ReactiveFormsModule,
     TranslateModule,
-    ReceiptComponent
+    ReceiptComponent,
+    TwoAfterDotPipe,
+    NgForOf
   ],
   templateUrl: './print-receipt.component.html',
   styleUrl: './print-receipt.component.scss'
@@ -28,6 +36,32 @@ import {ReceiptComponent} from "../receipt/receipt.component";
 export class PrintReceiptComponent {
   @Input() reading!: Reading;
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
+
+  feeList: Fee[] = [];
+
+  constructor(private paymentsService: PaymentsService,
+              private notifications: NotificationsEmitterService,
+              private errorService: ErrorService) {
+  }
+
+  deleteFee(i: number) {
+    this.feeList.splice(i, 1);
+  }
+
+  markAsPaidAndCallPrint() {
+    const body: InsertPayment = {
+      readingId: this.reading.id,
+      date: moment().toDate(),
+      feeList: this.feeList
+    };
+
+    this.paymentsService.insertPayment(body).subscribe(() => {
+      this.notifications.Success.emit('SuccessfullyMarkedAsPaid');
+      this.callPrint();
+    }, error => {
+      this.errorService.processError(error);
+    });
+  }
 
   callPrint = () => {
     setTimeout(() => {

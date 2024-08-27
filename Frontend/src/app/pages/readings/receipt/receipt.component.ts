@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {Reading} from "../../../core/models/readings.model";
 import {TwoAfterDotPipe} from "../../../shared/pipes/twoAfterDot.pipe";
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
+import {Fee} from "../../../core/models/payment.model";
 
 @Component({
   selector: 'app-receipt',
@@ -10,13 +11,16 @@ import {TranslateModule} from "@ngx-translate/core";
   imports: [
     TwoAfterDotPipe,
     DatePipe,
-    TranslateModule
+    TranslateModule,
+    NgForOf,
+    NgIf
   ],
   templateUrl: './receipt.component.html',
   styleUrl: './receipt.component.scss'
 })
 export class ReceiptComponent {
   @Input() reading!: Reading;
+  @Input() fees: Fee[] = [];
 
   today = new Date();
 
@@ -83,4 +87,13 @@ export class ReceiptComponent {
     return (levaWords + ' и ' + stotinkiWords).trim();
   }
 
+  getTotalFees(): number {
+    let total = 0;
+    this.fees?.forEach((fee: Fee) => {
+      if (fee.value && fee.value > 0) {
+        total += fee.value;
+      }
+    });
+    return total;
+  }
 }
