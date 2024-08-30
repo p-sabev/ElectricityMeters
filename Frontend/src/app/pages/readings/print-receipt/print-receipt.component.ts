@@ -62,7 +62,7 @@ export class PrintReceiptComponent implements OnInit {
     this.feeList.splice(i, 1);
   }
 
-  markAsPaidAndCallPrint() {
+  markAsPaid() {
     const body: InsertPayment = {
       readingId: this.reading.id,
       date: moment().toDate(),
@@ -71,7 +71,7 @@ export class PrintReceiptComponent implements OnInit {
 
     this.paymentsService.insertPayment(body).subscribe(() => {
       this.notifications.Success.emit('SuccessfullyMarkedAsPaid');
-      this.callPrint();
+      this.reading.isPaid = true;
     }, error => {
       this.errorService.processError(error);
     });

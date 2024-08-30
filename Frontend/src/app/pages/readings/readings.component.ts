@@ -68,7 +68,6 @@ export class ReadingsComponent {
       },
       name: ''
     }
-    console.log(body);
     this.readingsService.searchReadings(body).subscribe(resp => {
       this.readingsList = resp?.data || [];
       this.totalRecords = resp?.totalRecords || 0;

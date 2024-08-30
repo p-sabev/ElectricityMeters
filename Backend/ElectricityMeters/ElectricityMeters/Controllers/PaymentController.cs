@@ -34,20 +34,27 @@ namespace ElectricityMeters.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertPayment([FromBody] InsertPaymentRequest request)
         {
-            var payment = await _paymentService.InsertPaymentAsync(request);
-            return CreatedAtAction(nameof(GetAllPayments), new { id = payment.Id }, payment);
+            try
+            {
+                var payment = await _paymentService.InsertPaymentAsync(request);
+                return CreatedAtAction(nameof(GetAllPayments), new { id = payment.Id }, payment);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePayment(int id)
         {
-            var success = await _paymentService.DeletePaymentAsync(id);
-            if (!success)
+            try
             {
-                return NotFound();
-            }
-
-            return NoContent();
+                var success = await _paymentService.DeletePaymentAsync(id);
+                return NoContent();
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }            
         }
 
     }

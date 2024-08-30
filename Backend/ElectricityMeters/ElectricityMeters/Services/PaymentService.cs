@@ -28,6 +28,8 @@ namespace ElectricityMeters.Services
             var query = _dbContext.Payments
                 .Include(p => p.Reading)
                 .Include(p => p.FeeList)
+                .Include(p => p.Reading.Subscriber)
+                .Include(p => p.Reading.Subscriber.Switchboard)
                 .AsQueryable();
 
             // Сортиране
@@ -51,6 +53,7 @@ namespace ElectricityMeters.Services
                 {
                     Id = p.Id,
                     Reading = p.Reading,
+                    Subscriber = p.Reading.Subscriber,
                     Date = p.Date,
                     FeeList = p.FeeList
                 })
@@ -65,10 +68,21 @@ namespace ElectricityMeters.Services
 
         public async Task<Payment> InsertPaymentAsync(InsertPaymentRequest insertPayment)
         {
+            var reading = await _dbContext.Readings.FindAsync(insertPayment.ReadingId);
+            if (reading == null)
+            {
+                throw new Exception("ReadingNotFound");
+            }
+
+            var readingHasOtherPayment = await _dbContext.Payments.AnyAsync(p => p.Reading.Id == insertPayment.ReadingId);
+            if (readingHasOtherPayment)
+            {
+                throw new Exception("ReadingAlreadyHasPayment");
+            }
+
             var payment = new Payment
             {
-                Reading = await _dbContext.Readings.FindAsync(insertPayment.ReadingId)
-                          ?? throw new Exception("Reading not found"),
+                Reading = reading,
                 Date = insertPayment.Date,
                 FeeList = insertPayment.FeeList?.Select(f => new PaymentFee
                 {
@@ -85,12 +99,8 @@ namespace ElectricityMeters.Services
 
         public async Task<bool> DeletePaymentAsync(int id)
         {
-            var payment = await _dbContext.Payments.FindAsync(id);
-            if (payment == null)
-            {
-                return false;
-            }
-
+            var payment = await _dbContext.Payments.FindAsync(id) ?? throw new Exception("PaymentNotFound");
+            
             _dbContext.Payments.Remove(payment);
             await _dbContext.SaveChangesAsync();
             return true;

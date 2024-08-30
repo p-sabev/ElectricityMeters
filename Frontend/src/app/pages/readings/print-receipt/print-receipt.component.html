@@ -88,9 +88,9 @@
               *ngIf="!reading.isPaid"
               type="button"
               class="btn float-end btn-success"
-              (click)="markAsPaidAndCallPrint()">
+              (click)="markAsPaid()">
               <fa-icon [icon]="['fas', 'money-bill']" [class]="'me-2'"></fa-icon>
-              {{ 'PrintAndMarkAsPaid' | translate }}
+              {{ 'MarkAsPaid' | translate }}
             </button>
             <button
               type="button"

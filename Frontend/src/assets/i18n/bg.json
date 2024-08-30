@@ -70,6 +70,7 @@
   "SuccessfullyDeletedReading": "Успешно изтрито показание",
   "Difference": "Разлика",
   "ForPaymentInBgn": "За плащане, лв.",
+  "PaidInBgn": "Платено, лв.",
   "TariffInBgn": "Тарифа, лв.",
   "Print": "Принтирай",
   "PrintReceipt": "Принтиране на квитанция и плащане",
@@ -95,5 +96,12 @@
   "Save": "Запази",
   "DefaultFeesDescription": "Тук можете да дефинирате стандартните такси, които да се зареждат при плащане",
   "AddFee": "Добави такса",
-  "SuccessfullyUpdatedDefaultFees": "Стандартните такси са успешно запазени"
+  "SuccessfullyUpdatedDefaultFees": "Стандартните такси са успешно запазени",
+  "MarkAsPaid": "Отбележи клато платено",
+  "ReadingNotFound": "Показанието не е намерено",
+  "ReadingAlreadyHasPayment": "Показанието вече е било отбелязано като платено",
+  "Error": "Грешка",
+  "PaymentNotFound": "Плащането не е намерено",
+  "AreYouSureToDeleteThisPayment": "Сигурни ли сте, че искате да изтриете това плащане",
+  "SuccessfullyDeletedPayment": "Успешно изтрито плащане"
 }
