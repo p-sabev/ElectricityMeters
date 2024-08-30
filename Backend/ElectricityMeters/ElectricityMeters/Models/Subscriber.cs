@@ -10,11 +10,12 @@
         public string? Phone { get; set; }
         public string? MeterNumber { get; set; }
         public string Note { get; set; }
+        public double? DefaultReading { get; set; }
 
 
         public Subscriber() { }
 
-        public Subscriber(int id, int numberPage, string name, Switchboard switchboard, string? address, string? phone, string? meterNumber, string note)
+        public Subscriber(int id, int numberPage, string name, Switchboard switchboard, string? address, string? phone, string? meterNumber, string note, double? defautReading)
         {
             Id=id;
             NumberPage=numberPage;
@@ -24,7 +25,7 @@
             Phone=phone;
             MeterNumber=meterNumber;
             Note=note;
-
+            DefaultReading=defautReading;
         }
     }
 }

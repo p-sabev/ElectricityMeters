@@ -108,7 +108,12 @@ namespace ElectricityMeters.Services
 
             if (lastReading != null && insertReading.Value < lastReading.Value)
             {
-                throw new Exception("SubscriberReadingOverlapping");
+                throw new Exception("NewReadingValueShouldBeBeBiggerThanThePreviousReading");
+            }
+
+            if (lastReading == null && subscriber.DefaultReading != null && insertReading.Value < subscriber.DefaultReading)
+            {
+                throw new Exception("NewReadingValueShouldBeBeBiggerThanThePreviousReading");
             }
 
             var currentPrice = await _dbContext.Prices
@@ -121,7 +126,7 @@ namespace ElectricityMeters.Services
                 throw new Exception("CannotFindPriceForTheReading");
             }
 
-            var difference = lastReading != null ? insertReading.Value - lastReading.Value : insertReading.Value;
+            var difference = lastReading != null ? (insertReading.Value - lastReading.Value) : (subscriber.DefaultReading != null ? (insertReading.Value - subscriber.DefaultReading) : insertReading.Value);
             var amountDue = difference * currentPrice.PriceInLv;
 
             var reading = new Reading
@@ -130,8 +135,8 @@ namespace ElectricityMeters.Services
                 DateFrom = insertReading.DateFrom,
                 DateTo = insertReading.DateTo,
                 Value = insertReading.Value,
-                Difference = difference,
-                AmountDue = amountDue,
+                Difference = (double)difference,
+                AmountDue = (double)amountDue,
                 CurrentPrice = currentPrice.PriceInLv,
                 UsedPrice = currentPrice.Id
             };
@@ -165,6 +170,11 @@ namespace ElectricityMeters.Services
                     continue; // Skip invalid readings
                 }
 
+                if (lastReading == null && subscriber.DefaultReading != null && (insertReading.Value < subscriber.DefaultReading))
+                {
+                    continue; // Skip invalid readings
+                }
+
                 var currentPrice = await _dbContext.Prices
                     .Where(p => p.DateFrom <= insertReading.DateTo && (p.DateTo == null || p.DateTo >= insertReading.DateTo))
                     .OrderByDescending(p => p.DateFrom)
@@ -175,7 +185,7 @@ namespace ElectricityMeters.Services
                     continue; // Skip if no valid price is found
                 }
 
-                var difference = lastReading != null ? insertReading.Value - lastReading.Value : insertReading.Value;
+                var difference = lastReading != null ? (insertReading.Value - lastReading.Value) : (subscriber.DefaultReading != null ? (insertReading.Value - subscriber.DefaultReading) : insertReading.Value);
                 var amountDue = difference * currentPrice.PriceInLv;
 
                 var reading = new Reading
@@ -184,8 +194,8 @@ namespace ElectricityMeters.Services
                     DateFrom = insertReading.DateFrom,
                     DateTo = insertReading.DateTo,
                     Value = insertReading.Value,
-                    Difference = difference,
-                    AmountDue = amountDue,
+                    Difference = (double)difference,
+                    AmountDue = (double)amountDue,
                     CurrentPrice = currentPrice.PriceInLv,
                     UsedPrice = currentPrice.Id
                 };
@@ -227,6 +237,11 @@ namespace ElectricityMeters.Services
                 throw new Exception("NewReadingValueIsLessThanTheLastReadingValue");
             }
 
+            if (lastReading == null && reading.Subscriber.DefaultReading != null && editReading.Value < reading.Subscriber.DefaultReading)
+            {
+                throw new Exception("NewReadingValueIsLessThanTheLastReadingValue");
+            }
+
             var currentPrice = await _dbContext.Prices
                 .Where(p => p.DateFrom <= editReading.DateTo && (p.DateTo == null || p.DateTo >= editReading.DateTo))
                 .OrderByDescending(p => p.DateFrom)
@@ -242,14 +257,14 @@ namespace ElectricityMeters.Services
                 .OrderByDescending(r => r.DateTo)
                 .FirstOrDefaultAsync();
 
-            var difference = previousReading != null ? editReading.Value - previousReading.Value : editReading.Value;
+            var difference = previousReading != null ? (editReading.Value - lastReading.Value) : (reading.Subscriber.DefaultReading != null ? (editReading.Value - reading.Subscriber.DefaultReading) : editReading.Value);
             var amountDue = difference * currentPrice.PriceInLv;
 
             reading.DateFrom = editReading.DateFrom;
             reading.DateTo = editReading.DateTo;
             reading.Value = editReading.Value;
-            reading.Difference = difference;
-            reading.AmountDue = amountDue;
+            reading.Difference = (double)difference;
+            reading.AmountDue = (double)amountDue;
             reading.CurrentPrice = currentPrice.PriceInLv;
             reading.UsedPrice = currentPrice.Id;
 

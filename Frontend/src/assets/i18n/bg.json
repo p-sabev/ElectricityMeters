@@ -171,5 +171,7 @@
   "NewReadingValueIsLessThanTheLastReadingValue": "Стойността на новото показание е по-малка от стойността на предишното показание",
   "SwitchboardNotFound": "Таблото не бе намерено",
   "SubscriberHasReadingAndCannotBeDeleted": "Абоната има въведени показания и не може да бъде изтрит",
-  "SwitchboardHasSubscribersAndCannotBeDeleted": "Към таблото има обвързани абонати и не може да бъде изтрито"
+  "SwitchboardHasSubscribersAndCannotBeDeleted": "Към таблото има обвързани абонати и не може да бъде изтрито",
+  "NewReadingValueShouldBeBeBiggerThanThePreviousReading": "Стойността на новото показание трябва да е по-голяма от тази на предишното показание",
+  "DefaultReading": "Начално показание"
 }

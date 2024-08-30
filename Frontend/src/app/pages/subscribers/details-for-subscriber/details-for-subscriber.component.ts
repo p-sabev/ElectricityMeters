@@ -51,7 +51,7 @@ export class DetailsForSubscriberComponent implements OnInit {
       this.subscriberReadings = resp;
       this.searchingForReadings = false;
     }, error => {
-      this.errorService.processError(error);
+      // this.errorService.processError(error);
       this.searchingForReadings = false;
     });
   }

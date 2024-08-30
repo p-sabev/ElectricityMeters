@@ -54,7 +54,8 @@ export class AddEditSubscribersComponent implements OnInit {
       address: new FormControl<string>(this.subscriberToEdit?.address ? this.subscriberToEdit.address : '', [Validators.maxLength(250)]),
       phone: new FormControl<string>(this.subscriberToEdit?.phone ? this.subscriberToEdit.phone : '', [Validators.maxLength(250)]),
       meterNumber: new FormControl<string>(this.subscriberToEdit?.meterNumber ? this.subscriberToEdit.meterNumber : '', [Validators.maxLength(50)]),
-      note: new FormControl<string>(this.subscriberToEdit?.note ? this.subscriberToEdit.note : '', [Validators.maxLength(500)])
+      note: new FormControl<string>(this.subscriberToEdit?.note ? this.subscriberToEdit.note : '', [Validators.maxLength(500)]),
+      defaultReading: new FormControl<number | null | undefined>(this.subscriberToEdit ? this.subscriberToEdit.defaultReading : null, [Validators.min(0)]),
     });
   }
 

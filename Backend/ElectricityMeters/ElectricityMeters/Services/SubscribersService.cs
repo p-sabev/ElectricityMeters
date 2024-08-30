@@ -64,7 +64,7 @@ namespace ElectricityMeters.Services
 
             // Извличане на данни
             var subscribersData = await query
-                .Select(p => new
+                .Select(p => new SubscribersStartResponse
                 {
                     Id = p.Id,
                     NumberPage = p.NumberPage,
@@ -77,7 +77,8 @@ namespace ElectricityMeters.Services
                     LastReadingData = _dbContext.Readings
                         .Where(r => p.Id == r.Subscriber.Id)
                         .OrderByDescending(r => r.DateTo)
-                        .FirstOrDefault()
+                        .FirstOrDefault(),
+                    DefaultReading = p.DefaultReading
                 })
                 .ToListAsync();
 
@@ -93,7 +94,8 @@ namespace ElectricityMeters.Services
                     MeterNumber = p.MeterNumber,
                     Note = p.Note,
                     LastRecordDate = p.LastReadingData?.DateTo,
-                    LastReading = p.LastReadingData?.Value
+                    LastReading = p.LastReadingData?.Value,
+                    DefaultReading = p.DefaultReading
                 })
                 .ToList();
 
@@ -121,7 +123,8 @@ namespace ElectricityMeters.Services
                 Address = insertSubscriber.Address,
                 Phone = insertSubscriber.Phone,
                 MeterNumber = insertSubscriber.MeterNumber,
-                Note = insertSubscriber.Note
+                Note = insertSubscriber.Note,
+                DefaultReading = insertSubscriber.DefaultReading
             };
 
             _dbContext.Subscribers.Add(subscriber);
@@ -151,6 +154,7 @@ namespace ElectricityMeters.Services
             existingSubscriber.Phone = editSubscriber.Phone;
             existingSubscriber.MeterNumber = editSubscriber.MeterNumber;
             existingSubscriber.Note = editSubscriber.Note;
+            existingSubscriber.DefaultReading = editSubscriber.DefaultReading;
 
             try
             {

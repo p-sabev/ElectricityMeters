@@ -50,10 +50,10 @@
                 <span class="font-weight-bold">{{'Switchboard' | translate}}: </span>
                 {{subscriber.switchboard.name}}
               </li>
-              <li class="list-group-item">
-                <span class="font-weight-bold">{{'MeterNumber' | translate}}: </span>
-                {{subscriber.meterNumber}}
-              </li>
+<!--              <li class="list-group-item">-->
+<!--                <span class="font-weight-bold">{{'MeterNumber' | translate}}: </span>-->
+<!--                {{subscriber.meterNumber}}-->
+<!--              </li>-->
               <li class="list-group-item">
                 <span class="font-weight-bold">{{'LastReading' | translate}}: </span>
                 <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
@@ -91,7 +91,7 @@
                       <th style="min-width: 120px;" translate>Difference</th>
                       <th style="min-width: 100px;" translate>TariffInBgn</th>
                       <th style="min-width: 120px;" translate>ForPaymentInBgn</th>
-                      <th alignFrozen="right" pFrozenColumn></th>
+<!--                      <th alignFrozen="right" pFrozenColumn></th>-->
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-reading>
@@ -102,11 +102,11 @@
                       <td>{{ reading.difference }} {{'kvh' | translate}}</td>
                       <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
                       <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
-                      <td alignFrozen="right" pFrozenColumn>
-                        <a class="nav-link text-success cursor-pointer btn-action" (click)="openPrintReading(reading)">
-                          <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
-                        </a>
-                      </td>
+<!--                      <td alignFrozen="right" pFrozenColumn>-->
+<!--                        <a class="nav-link text-success cursor-pointer btn-action" (click)="openPrintReading(reading)">-->
+<!--                          <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>-->
+<!--                        </a>-->
+<!--                      </td>-->
                     </tr>
                   </ng-template>
                 </p-table>

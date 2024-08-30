@@ -93,7 +93,8 @@
 <!--            <td>{{ subscriber.meterNumber }}</td>-->
             <td>
               <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
-              <span *ngIf="!subscriber.lastReading">-</span>
+              <span *ngIf="!subscriber.lastReading && subscriber.defaultReading">{{ subscriber.defaultReading }} {{'kvh' | translate}}</span>
+              <span *ngIf="!subscriber.lastReading && !subscriber.defaultReading">-</span>
             </td>
             <td>
               <span *ngIf="subscriber.lastRecordDate">{{ subscriber.lastRecordDate | date: 'dd.MM.yyyy'}}</span>

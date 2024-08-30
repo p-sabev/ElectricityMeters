@@ -12,6 +12,7 @@ export interface Subscriber {
   lastRecordDate?: null | Date;
   lastReading?: number;
   note?: string;
+  defaultReading?: number;
 }
 
 export interface InsertSubscriber {
@@ -22,6 +23,7 @@ export interface InsertSubscriber {
   phone?: string;
   meterNumber?: string;
   note?: string;
+  defaultReading?: number;
 }
 
 export interface EditSubscriber {
@@ -33,17 +35,7 @@ export interface EditSubscriber {
   phone?: string;
   meterNumber?: string;
   note?: string;
-}
-
-export interface SubscriberAddEdit {
-  id?: number | null;
-  numberPage: number;
-  name: string;
-  switchboardId: number;
-  address?: string;
-  phone?: string;
-  meterNumber?: string;
-  note?: string;
+  defaultReading?: number;
 }
 
 export interface SearchSubscribersRequest {

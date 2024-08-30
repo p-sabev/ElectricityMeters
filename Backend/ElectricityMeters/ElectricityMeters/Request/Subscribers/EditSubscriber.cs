@@ -10,5 +10,6 @@
         public string? Phone { get; set; }
         public string? MeterNumber { get; set; }
         public string Note { get; set; }
+        public double? DefaultReading { get; set; }
     }
 }

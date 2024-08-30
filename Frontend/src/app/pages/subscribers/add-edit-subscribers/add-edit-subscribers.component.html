@@ -119,6 +119,23 @@
               <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('note')"></app-form-errors>
             </div>
 
+            <div *ngIf="!subscriberToEdit || (subscriberToEdit && !subscriberToEdit.lastRecordDate)" class="col-lg-6 col-md-12 mt-3">
+              <label>{{ 'DefaultReading' | translate }}</label>
+
+              <input
+                formControlName="defaultReading"
+                type="number"
+                class="form-control"
+                name="value"
+                id="value"
+                title="{{ 'DefaultReading' | translate }}"
+                placeholder="{{ 'DefaultReading' | translate }}" />
+
+              <app-form-errors [withoutTooltip]="true"
+                               [control]="addEditForm.get('defaultReading')"
+                               [min]="0"></app-form-errors>
+            </div>
+
           </div>
         </form>
       </div>
