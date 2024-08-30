@@ -37,7 +37,7 @@ export class AddReadingForSwitchboardComponent implements OnInit {
               private errorService: ErrorService) {
   }
 
-  minDateFrom: Date | null = null;
+  minDateFrom: Date | null = new Date();
   readingsDateFrom: Date | null = null;
   readingsDateTo: Date | null = moment(new Date()).toDate();
   readingsValues: number[] = new Array(this.subscribers?.length).fill(0);
