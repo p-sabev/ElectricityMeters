@@ -1,8 +1,11 @@
 ﻿using ElectricityMeters.Interfaces;
+using ElectricityMeters.Migrations;
 using ElectricityMeters.Models;
 using ElectricityMeters.Request.Payments;
 using ElectricityMeters.Response.Payments;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace ElectricityMeters.Services
 {

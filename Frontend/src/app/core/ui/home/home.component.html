@@ -5,7 +5,7 @@
 
       <div *appRoleAccess="'Administrator'"
            class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
-        <div class="mast-widget mast-red cursor-pointer"
+        <div class="mast-widget mast-gray cursor-pointer"
              (click)="openRoute('users')">
           <div class="w-info">
             <div class="icon-sec">
@@ -18,7 +18,7 @@
 
       <div *appRoleAccess="'Administrator, Moderator'"
            class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
-        <div class="mast-widget mast-blue cursor-pointer"
+        <div class="mast-widget mast-red cursor-pointer"
              (click)="openRoute('subscribers')">
           <div class="w-info">
             <div class="icon-sec">
@@ -57,13 +57,39 @@
 
       <div *appRoleAccess="'Administrator, Moderator, Basic'"
            class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
-        <div class="mast-widget mast-gray cursor-pointer"
+        <div class="mast-widget mast-blue cursor-pointer"
              (click)="openRoute('readings')">
           <div class="w-info">
             <div class="icon-sec">
               <fa-icon [icon]="['fas', 'rectangle-list']" [class]="'me-1'"></fa-icon>
             </div>
             <div class="text-sec" translate>Readings</div>
+          </div>
+        </div>
+      </div>
+
+      <div *appRoleAccess="'Administrator, Moderator'"
+           class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
+        <div class="mast-widget mast-real-green cursor-pointer"
+             (click)="openRoute('payments')">
+          <div class="w-info">
+            <div class="icon-sec">
+              <fa-icon [icon]="['fas', 'coins']" [class]="'me-1'"></fa-icon>
+            </div>
+            <div class="text-sec" translate>Payments</div>
+          </div>
+        </div>
+      </div>
+
+      <div *appRoleAccess="'Administrator, Moderator'"
+           class="col-lg-3 col-md-4 col-sm-6 text-center col-item">
+        <div class="mast-widget mast-dark cursor-pointer"
+             (click)="openRoute('settings')">
+          <div class="w-info">
+            <div class="icon-sec">
+              <fa-icon [icon]="['fas', 'cogs']" [class]="'me-1'"></fa-icon>
+            </div>
+            <div class="text-sec" translate>Settings</div>
           </div>
         </div>
       </div>
