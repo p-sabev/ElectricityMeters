@@ -48,6 +48,6 @@ export class ReadingsService {
 
   // Delete
   deleteReading(id: number) {
-    return this.http.delete(`/api/readings/${id}`);
+    return this.http.delete(environment.url + `/api/readings/${id}`);
   }
 }

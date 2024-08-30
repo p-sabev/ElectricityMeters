@@ -108,9 +108,3 @@
   <app-print-receipt [reading]="readingToPrintReceipt"
                      (close)="readingToPrintReceipt = null; fetchReadingsList();"></app-print-receipt>
 </ng-container>
-
-<p-confirmDialog
-  header="{{ 'Confirmation' | translate }}"
-  icon="pi pi-exclamation-triangle"
-  rejectLabel="{{ 'No' | translate }}"
-  acceptLabel="{{ 'Yes' | translate }}"></p-confirmDialog>

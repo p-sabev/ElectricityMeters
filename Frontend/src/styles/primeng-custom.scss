@@ -653,6 +653,10 @@ p-checkbox.checkboxWithContract {
 }
 
 .p-confirm-dialog-reject {
+  background-image: linear-gradient(to right, $btn-danger1, $btn-danger2, $btn-danger3, $btn-danger4) !important;
+}
+
+.p-confirm-dialog-reject {
   margin-right: 10px;
 }
 
