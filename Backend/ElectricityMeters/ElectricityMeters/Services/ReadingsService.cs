@@ -154,6 +154,11 @@ namespace ElectricityMeters.Services
 
             foreach (var insertReading in insertMultipleReadings.SubscribersReading)
             {
+                if (insertReading.Value == null || insertReading.Value == 0)
+                {
+                    continue; // Skip this reading if it has no value
+                }
+
                 var subscriber = await _dbContext.Subscribers.FindAsync(insertReading.SubscriberId);
                 if (subscriber == null)
                 {

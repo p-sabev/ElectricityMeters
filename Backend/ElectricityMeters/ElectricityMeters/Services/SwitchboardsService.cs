@@ -65,7 +65,8 @@ namespace ElectricityMeters.Services
                                 .OrderByDescending(r => r.DateTo)
                                 .Select(r => r.Value)
                                 .FirstOrDefault(),
-                            Note = s.Note
+                            Note = s.Note,
+                            DefaultReading = s.DefaultReading
                         })
                         .ToList()
                 })
@@ -95,7 +96,8 @@ namespace ElectricityMeters.Services
                             .OrderByDescending(r => r.DateTo)
                             .Select(r => r.Value)
                             .FirstOrDefault(),
-                        Note = s.Note
+                        Note = s.Note,
+                        DefaultReading = s.DefaultReading
                     })
                     .ToListAsync();
             }

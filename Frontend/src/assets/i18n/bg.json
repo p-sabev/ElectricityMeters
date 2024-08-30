@@ -173,5 +173,6 @@
   "SubscriberHasReadingAndCannotBeDeleted": "Абоната има въведени показания и не може да бъде изтрит",
   "SwitchboardHasSubscribersAndCannotBeDeleted": "Към таблото има обвързани абонати и не може да бъде изтрито",
   "NewReadingValueShouldBeBeBiggerThanThePreviousReading": "Стойността на новото показание трябва да е по-голяма от тази на предишното показание",
-  "DefaultReading": "Начално показание"
+  "DefaultReading": "Начално показание",
+  "NoValidReadingsWereAdded": "Не бяха добавени валидни показания"
 }

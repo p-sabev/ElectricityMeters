@@ -43,10 +43,13 @@ export class AddReadingForSwitchboardComponent implements OnInit {
   readingsValues: number[] = new Array(this.subscribers?.length).fill(0);
 
   ngOnInit() {
+    this.readingsDateFrom = moment().startOf('year').toDate();
+    this.minDateFrom = moment().startOf('year').toDate();
+
     if (this.subscribers?.length) {
       this.subscribers.forEach((subscriber: Subscriber) => {
         if (subscriber.lastRecordDate) {
-          if (!this.minDateFrom || (this.minDateFrom && moment(subscriber.lastRecordDate).isAfter(moment(this.minDateFrom)))) {
+          if (moment(subscriber.lastRecordDate).isAfter(moment(this.minDateFrom))) {
             this.readingsDateFrom = moment(subscriber.lastRecordDate).toDate();
             this.minDateFrom = moment(subscriber.lastRecordDate).toDate();
           }

@@ -26,5 +26,6 @@ namespace ElectricityMeters.Response.Switchboards
         public DateTime? LastRecordDate { get; set; }
         public double? LastReading { get; set; }
         public string Note { get; set; }
+        public double? DefaultReading { get; set; }
     }
 }

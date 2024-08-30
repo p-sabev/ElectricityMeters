@@ -18,7 +18,7 @@
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-6">
-                    <label class="font-weight-bold">{{ 'DateFrom' | translate }}*</label>
+                    <label class="font-weight-bold">{{ 'DateFrom' | translate }} *</label>
 
                     <p-calendar
                       #dateField="ngModel"
@@ -35,7 +35,7 @@
                     <app-form-errors [withoutTooltip]="true" [control]="dateField" [max]="1000"></app-form-errors>
                   </div>
                   <div class="col-6">
-                    <label class="font-weight-bold">{{ 'DateTo' | translate }}*</label>
+                    <label class="font-weight-bold">{{ 'DateTo' | translate }} *</label>
 
                     <p-calendar
                       #dateField="ngModel"
@@ -62,7 +62,8 @@
                     <h6>
                       <span class="font-weight-bold">{{'LastReading' | translate}}</span>:
                       <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
-                      <span *ngIf="!subscriber.lastReading">-</span>
+                      <span *ngIf="!subscriber.lastReading && subscriber.defaultReading">{{ subscriber.defaultReading }} {{'kvh' | translate}}</span>
+                      <span *ngIf="!subscriber.lastReading && !subscriber.defaultReading">-</span>
                     </h6>
                   </div>
 
@@ -77,7 +78,7 @@
                       #readingField="ngModel"
                       [(ngModel)]="readingsValues[i]"
                       type="number"
-                      [min]="subscriber.lastReading || 0"
+                      [min]="(subscriber.lastReading ? subscriber.lastReading : (subscriber.defaultReading ? subscriber.defaultReading : 0))"
                       class="form-control"
                       name="value"
                       id="value"
@@ -86,7 +87,7 @@
 
                     <app-form-errors [withoutTooltip]="true"
                                      [control]="readingField"
-                                     [min]="subscriber.lastReading || 0"
+                                     [min]="(subscriber.lastReading ? subscriber.lastReading : (subscriber.defaultReading ? subscriber.defaultReading : 0))"
                                      [max]="2147483647"></app-form-errors>
                   </div>
                 </div>
@@ -103,6 +104,7 @@
             <button
               type="button"
               (click)="addReadings()"
+              [disabled]="!readingsDateFrom || !readingsDateTo"
               class="btn float-end btn-success">
               <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
               {{ 'Add' | translate }}

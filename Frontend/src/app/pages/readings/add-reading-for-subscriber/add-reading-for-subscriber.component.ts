@@ -42,6 +42,7 @@ export class AddReadingForSubscriberComponent implements OnInit {
 
   addEditReadingForm!: FormGroup;
   lastReadingDate: Date | null = null;
+  minReadingValue: number = 0;
 
   ngOnInit() {
     if (this.readingToEdit) {
@@ -52,10 +53,12 @@ export class AddReadingForSubscriberComponent implements OnInit {
 
   initAddReadingForm() {
     this.lastReadingDate = (this.subscriber?.lastRecordDate ? moment(this.subscriber?.lastRecordDate).toDate() : null);
+    this.minReadingValue = (this.subscriber.lastReading || this.subscriber.defaultReading || 0);
     this.addEditReadingForm = new FormGroup({
       id: new FormControl<number | null>(this.readingToEdit?.id || null, this.readingToEdit ? [Validators.required] : []),
       subscriberId: new FormControl<number>(this.subscriber.id, [Validators.required]),
-      value: new FormControl<number | null>(this.readingToEdit ? this.readingToEdit.value : null, [Validators.required, Validators.max(2147483647)]),
+      value: new FormControl<number | null>(this.readingToEdit ? this.readingToEdit.value : null,
+        [Validators.required, Validators.min(this.minReadingValue), Validators.max(2147483647)]),
       dateFrom: new FormControl<Date | null>(this.readingToEdit ? moment(this.readingToEdit.dateFrom).toDate() : this.lastReadingDate, [Validators.required]),
       dateTo: new FormControl<Date>(this.readingToEdit ? moment(this.readingToEdit.dateTo).toDate() : moment(new Date()).toDate(), [Validators.required]),
     });

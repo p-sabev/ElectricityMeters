@@ -60,7 +60,7 @@ namespace ElectricityMeters.Controllers
             var readings = await _readingService.InsertMultipleReadingsAsync(insertMultipleReadings);
             if (readings == null || !readings.Any())
             {
-                return BadRequest("No valid readings were added.");
+                return BadRequest("NoValidReadingsWereAdded");
             }
 
             return Ok(readings);
