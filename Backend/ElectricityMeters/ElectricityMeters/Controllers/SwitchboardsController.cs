@@ -55,25 +55,38 @@ namespace ElectricityMeters.Controllers
         [HttpPut]
         public async Task<IActionResult> EditSwitchboard(EditSwitchboard editSwitchboard)
         {
-            var result = await _switchboardService.EditSwitchboardAsync(editSwitchboard);
-            if (!result)
+            try
             {
-                return BadRequest("Invalid Switchboard Id or Switchboard does not exist.");
-            }
+                var result = await _switchboardService.EditSwitchboardAsync(editSwitchboard);
+                if (!result)
+                {
+                    return BadRequest("SomethingWentWrong");
+                }
 
-            return NoContent();
+                return NoContent();
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSwitchboard(int id)
         {
-            var result = await _switchboardService.DeleteSwitchboardAsync(id);
-            if (!result)
+            try
             {
-                return BadRequest("Cannot delete the switchboard as there are subscribers connected to it.");
-            }
+                var result = await _switchboardService.DeleteSwitchboardAsync(id);
+                if (!result)
+                {
+                    return BadRequest("SomethingWentWrong");
+                }
 
-            return NoContent();
+                return NoContent();
+            } catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
     }
 }

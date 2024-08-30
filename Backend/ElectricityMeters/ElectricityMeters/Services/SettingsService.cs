@@ -29,21 +29,19 @@ namespace ElectricityMeters.Services
 
         public async Task<bool> UpdateDefaultFees(UpdateDefaultFeesRequest request)
         {
-            if (request.StandartFees == null || !request.StandartFees.Any())
-            {
-                return false;
-            }
-
             // Clear the current fees
             _dbContext.StandartFees.RemoveRange(_dbContext.StandartFees);
 
-            // Add the new fees
-            foreach (var fee in request.StandartFees)
+            if (!(request.StandartFees == null || !request.StandartFees.Any()))
             {
-                var newFee = new Models.StandartFee(0, fee.Value, fee.Description);
-                _dbContext.StandartFees.Add(newFee);
+                // Add the new fees
+                foreach (var fee in request.StandartFees)
+                {
+                    var newFee = new Models.StandartFee(0, fee.Value, fee.Description);
+                    _dbContext.StandartFees.Add(newFee);
+                }
             }
-
+            
             await _dbContext.SaveChangesAsync();
             return true;
         }

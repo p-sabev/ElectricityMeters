@@ -42,37 +42,57 @@ namespace ElectricityMeters.Controllers
         [HttpPost]
         public async Task<ActionResult<Subscriber>> InsertSubscriber(InsertSubscriber insertSubscriber)
         {
-            var subscriber = await _subscriberService.InsertSubscriberAsync(insertSubscriber);
-            if (subscriber == null)
+            try
             {
-                return BadRequest("Invalid Switchboard Id.");
-            }
+                var subscriber = await _subscriberService.InsertSubscriberAsync(insertSubscriber);
+                if (subscriber == null)
+                {
+                    return BadRequest("SomethingWentWrong");
+                }
 
-            return CreatedAtAction(nameof(GetAllSubscribers), new { id = subscriber.Id }, subscriber);
+                return CreatedAtAction(nameof(GetAllSubscribers), new { id = subscriber.Id }, subscriber);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpPut]
         public async Task<IActionResult> EditSubscriber(EditSubscriber editSubscriber)
         {
-            var result = await _subscriberService.EditSubscriberAsync(editSubscriber);
-            if (!result)
+            try
             {
-                return BadRequest("Invalid Switchboard Id or Subscriber does not exist.");
-            }
+                var result = await _subscriberService.EditSubscriberAsync(editSubscriber);
+                if (!result)
+                {
+                    return BadRequest("SomethingWentWrong");
+                }
 
-            return NoContent();
+                return NoContent();
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSubscriber(int id)
         {
-            var result = await _subscriberService.DeleteSubscriberAsync(id);
-            if (!result)
+            try
             {
-                return BadRequest("Cannot delete the subscriber as there are readings associated with them.");
-            }
+                var result = await _subscriberService.DeleteSubscriberAsync(id);
+                if (!result)
+                {
+                    return BadRequest("SomethingWentWrong");
+                }
 
-            return NoContent();
+                return NoContent();
+            } catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
     }
 }

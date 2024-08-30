@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NotificationsEmitterService} from "./core/services/notifications.service";
 import {TranslateService} from "@ngx-translate/core";
 import {NotificationAnimationType, NotificationsService, Options} from "angular2-notifications";
+import {PrimeNGConfig} from "primeng/api";
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,12 @@ export class AppComponent implements OnInit {
 
   constructor(private notificationEmitter: NotificationsEmitterService,
               private _notifications: NotificationsService,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private primeNgConfig: PrimeNGConfig) {
     translate.addLangs(['bg']);
     translate.setDefaultLang('bg');
     translate.use('bg');
+    this.translate.get('primeng').subscribe((res) => this.primeNgConfig.setTranslation(res));
   }
 
   title = 'electricity-meters';

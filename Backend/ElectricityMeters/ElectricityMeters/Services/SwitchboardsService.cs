@@ -126,7 +126,7 @@ namespace ElectricityMeters.Services
             var switchboard = await _dbContext.Switchboards.FindAsync(editSwitchboard.Id);
             if (switchboard == null)
             {
-                return false;
+                throw new Exception("SwitchboardNotFound");
             }
 
             switchboard.Name = editSwitchboard.Name;
@@ -139,11 +139,11 @@ namespace ElectricityMeters.Services
             {
                 if (!SwitchboardExists(editSwitchboard.Id))
                 {
-                    return false;
+                    throw new Exception("SwitchboardNotFound");
                 }
                 else
                 {
-                    throw;
+                    throw new Exception("SomethingWentWrong");
                 }
             }
 
@@ -155,14 +155,14 @@ namespace ElectricityMeters.Services
             var switchboard = await _dbContext.Switchboards.FindAsync(id);
             if (switchboard == null)
             {
-                return false;
+                throw new Exception("SwitchboardNotFound");
             }
 
             // Check if any subscriber is connected to the electric meter
             var hasConnectedSubscribers = await _dbContext.Subscribers.AnyAsync(s => s.Switchboard.Id == id);
             if (hasConnectedSubscribers)
             {
-                return false;
+                throw new Exception("SwitchboardHasSubscribersAndCannotBeDeleted");
             }
 
             _dbContext.Switchboards.Remove(switchboard);

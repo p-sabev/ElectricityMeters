@@ -20,13 +20,20 @@ namespace ElectricityMeters.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Price>>> GetAllPrices()
         {
-            var prices = await _priceService.GetAllPricesAsync();
-            if (prices == null)
+            try
             {
-                return NotFound();
-            }
+                var prices = await _priceService.GetAllPricesAsync();
+                if (prices == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(prices);
+                return Ok(prices);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpPost("search")]
@@ -41,26 +48,39 @@ namespace ElectricityMeters.Controllers
         {
             if (insertPrice == null)
             {
-                return BadRequest();
+                return BadRequest("PriceIsRequired");
             }
 
-            var price = await _priceService.InsertPriceAsync(insertPrice);
-            if (price == null)
+            try
             {
-                return BadRequest();
-            }
+                var price = await _priceService.InsertPriceAsync(insertPrice);
+                if (price == null)
+                {
+                    return BadRequest("PriceIsRequired");
+                }
 
-            return CreatedAtAction(nameof(GetAllPrices), new { id = price.Id }, price);
+                return CreatedAtAction(nameof(GetAllPrices), new { id = price.Id }, price);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdatePrice(EditPrice editPrice)
         {
-            var success = await _priceService.UpdatePriceAsync(editPrice);
-            if (!success)
+            try
             {
-                return BadRequest();
+                var success = await _priceService.UpdatePriceAsync(editPrice);
+                if (!success)
+                {
+                    return BadRequest();
+                }
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
+            
 
             return NoContent();
         }
@@ -68,11 +88,18 @@ namespace ElectricityMeters.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePrice(int id)
         {
-            var success = await _priceService.DeletePriceAsync(id);
-            if (!success)
+            try
             {
-                return NotFound();
+                var success = await _priceService.DeletePriceAsync(id);
+                if (!success)
+                {
+                    return NotFound();
+                }
+            } catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
+            
 
             return NoContent();
         }

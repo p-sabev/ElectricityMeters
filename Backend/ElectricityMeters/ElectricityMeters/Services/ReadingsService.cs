@@ -93,7 +93,7 @@ namespace ElectricityMeters.Services
             var subscriber = await _dbContext.Subscribers.FindAsync(insertReading.SubscriberId);
             if (subscriber == null)
             {
-                return null;
+                throw new Exception("SubscriberNotFound");
             }
 
             var lastReading = await _dbContext.Readings
@@ -103,12 +103,12 @@ namespace ElectricityMeters.Services
 
             if (lastReading != null && insertReading.DateTo <= lastReading.DateTo)
             {
-                return null;
+                throw new Exception("SubscriberReadingOverlapping");
             }
 
             if (lastReading != null && insertReading.Value < lastReading.Value)
             {
-                return null;
+                throw new Exception("SubscriberReadingOverlapping");
             }
 
             var currentPrice = await _dbContext.Prices
@@ -118,7 +118,7 @@ namespace ElectricityMeters.Services
 
             if (currentPrice == null)
             {
-                return null;
+                throw new Exception("CannotFindPriceForTheReading");
             }
 
             var difference = lastReading != null ? insertReading.Value - lastReading.Value : insertReading.Value;
@@ -209,7 +209,7 @@ namespace ElectricityMeters.Services
 
             if (reading == null)
             {
-                return false;
+                throw new Exception("ReadingNotFound");
             }
 
             var lastReading = await _dbContext.Readings
@@ -219,12 +219,12 @@ namespace ElectricityMeters.Services
 
             if (reading.Id != lastReading?.Id)
             {
-                return false;
+                throw new Exception("OnlyLastReadingCanBeEdited");
             }
 
             if (lastReading != null && editReading.Value < lastReading.Value)
             {
-                return false;
+                throw new Exception("NewReadingValueIsLessThanTheLastReadingValue");
             }
 
             var currentPrice = await _dbContext.Prices
@@ -234,7 +234,7 @@ namespace ElectricityMeters.Services
 
             if (currentPrice == null)
             {
-                return false;
+                throw new Exception("CannotFindPriceForTheReading");
             }
 
             var previousReading = await _dbContext.Readings
@@ -261,11 +261,11 @@ namespace ElectricityMeters.Services
             {
                 if (!ReadingExists(id))
                 {
-                    return false;
+                    throw new Exception("ReadingNotFound");
                 }
                 else
                 {
-                    throw;
+                    throw new Exception("SomethingWentWrong");
                 }
             }
 
@@ -281,7 +281,7 @@ namespace ElectricityMeters.Services
 
             if (reading == null)
             {
-                return false;
+                throw new Exception("ReadingNotFound");
             }
 
             var lastReading = await _dbContext.Readings
@@ -291,7 +291,7 @@ namespace ElectricityMeters.Services
 
             if (reading.Id != lastReading?.Id)
             {
-                return false;
+                throw new Exception("OnlyLastReadingCanBeDeleted");
             }
 
             _dbContext.Readings.Remove(reading);

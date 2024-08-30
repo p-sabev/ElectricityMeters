@@ -109,7 +109,7 @@ namespace ElectricityMeters.Services
             var switchboard = await _dbContext.Switchboards.FindAsync(insertSubscriber.SwitchboardId);
             if (switchboard == null)
             {
-                return null;
+                throw new Exception("SwitchboardNotFound");
             }
 
             var subscriber = new Subscriber
@@ -135,13 +135,13 @@ namespace ElectricityMeters.Services
             var existingSubscriber = await _dbContext.Subscribers.FindAsync(editSubscriber.Id);
             if (existingSubscriber == null)
             {
-                return false;
+                throw new Exception("SubscriberNotFound");
             }
 
             var switchboard = await _dbContext.Switchboards.FindAsync(editSubscriber.SwitchboardId);
             if (switchboard == null)
             {
-                return false;
+                throw new Exception("SwitchboardNotFound");
             }
 
             existingSubscriber.Name = editSubscriber.Name;
@@ -160,11 +160,11 @@ namespace ElectricityMeters.Services
             {
                 if (!SubscriberExists(editSubscriber.Id))
                 {
-                    return false;
+                    throw new Exception("SubscriberNotFound");
                 }
                 else
                 {
-                    throw;
+                    throw new Exception("SomethingWentWrong");
                 }
             }
 
@@ -176,14 +176,14 @@ namespace ElectricityMeters.Services
             var subscriber = await _dbContext.Subscribers.FindAsync(id);
             if (subscriber == null)
             {
-                return false;
+                throw new Exception("SubscriberNotFound");
             }
 
             // Check if there are any readings associated with this subscriber
             var hasReadings = await _dbContext.Readings.AnyAsync(r => r.Subscriber.Id == id);
             if (hasReadings)
             {
-                return false;
+                throw new Exception("SubscriberHasReadingAndCannotBeDeleted");
             }
 
             _dbContext.Subscribers.Remove(subscriber);

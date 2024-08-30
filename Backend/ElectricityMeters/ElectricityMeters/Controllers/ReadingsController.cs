@@ -39,13 +39,19 @@ namespace ElectricityMeters.Controllers
         [HttpPost]
         public async Task<ActionResult<Reading>> InsertReading(InsertReading insertReading)
         {
-            var reading = await _readingService.InsertReadingAsync(insertReading);
-            if (reading == null)
+            try
             {
-                return BadRequest();
-            }
+                var reading = await _readingService.InsertReadingAsync(insertReading);
+                if (reading == null)
+                {
+                    return BadRequest("SomethingWentWrong");
+                }
 
-            return CreatedAtAction(nameof(GetAllReadings), new { id = reading.Id }, reading);
+                return CreatedAtAction(nameof(GetAllReadings), new { id = reading.Id }, reading);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("add-multiple-readings")]
@@ -63,10 +69,16 @@ namespace ElectricityMeters.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditReading(int id, EditReading editReading)
         {
-            var result = await _readingService.EditReadingAsync(id, editReading);
-            if (!result)
+            try
             {
-                return BadRequest();
+                var result = await _readingService.EditReadingAsync(id, editReading);
+                if (!result)
+                {
+                    return BadRequest("SomethingWentWrong");
+                }
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
             return NoContent();
@@ -75,10 +87,16 @@ namespace ElectricityMeters.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReading(int id)
         {
-            var result = await _readingService.DeleteReadingAsync(id);
-            if (!result)
+            try
             {
-                return BadRequest();
+                var result = await _readingService.DeleteReadingAsync(id);
+                if (!result)
+                {
+                    return BadRequest();
+                }
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
             return NoContent();

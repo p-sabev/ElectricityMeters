@@ -18,7 +18,7 @@ namespace ElectricityMeters.Services
         {
             if (_dbContext == null || _dbContext.Prices == null)
             {
-                return null;
+                throw new Exception("SomethingWentWrong");
             }
 
             return await _dbContext.Prices.ToListAsync();
@@ -68,7 +68,7 @@ namespace ElectricityMeters.Services
         {
             if (insertPrice == null)
             {
-                return null;
+                throw new Exception("PriceIsRequired");
             }
 
             var previousPrice = await _dbContext.Prices
@@ -112,7 +112,7 @@ namespace ElectricityMeters.Services
             var existingPrice = await _dbContext.Prices.FindAsync(editPrice.Id);
             if (existingPrice == null)
             {
-                return false;
+                throw new Exception("PriceNotFound");
             }
 
             var previousPrice = await _dbContext.Prices
@@ -127,12 +127,12 @@ namespace ElectricityMeters.Services
 
             if (previousPrice != null && editPrice.DateFrom <= previousPrice.DateFrom)
             {
-                return false;
+                throw new Exception("PriceDateFromShouldBeSmallerThanPreviousPrice");
             }
 
             if (nextPrice != null && editPrice.DateFrom >= nextPrice.DateFrom)
             {
-                return false;
+                throw new Exception("PriceDateFromShouldBeBiggerThanNextPrice");
             }
 
             if (previousPrice != null)
@@ -161,7 +161,7 @@ namespace ElectricityMeters.Services
             var price = await _dbContext.Prices.FindAsync(id);
             if (price == null)
             {
-                return false;
+                throw new Exception("PriceNotFound");
             }
 
             var previousPrice = await _dbContext.Prices
