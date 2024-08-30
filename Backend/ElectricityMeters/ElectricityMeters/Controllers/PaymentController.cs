@@ -1,5 +1,6 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Request.Payments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectricityMeters.Controllers
@@ -16,6 +17,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> GetAllPayments()
         {
             var payments = await _paymentService.GetAllPayments();

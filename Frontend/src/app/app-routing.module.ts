@@ -9,6 +9,8 @@ import {SubscribersComponent} from "./pages/subscribers/subscribers.component";
 import {SwitchboardsComponent} from "./pages/switchboards/switchboards.component";
 import {PricesComponent} from "./pages/prices/prices.component";
 import {ReadingsComponent} from "./pages/readings/readings.component";
+import {PaymentsComponent} from "./pages/payments/payments.component";
+import {SettingsComponent} from "./pages/settings/settings.component";
 
 const routes: Routes = [
   {
@@ -45,6 +47,16 @@ const routes: Routes = [
     path: 'electric-meters',
     component: SwitchboardsComponent,
     data: { title: 'Табла' },
+  },
+  {
+    path: 'payments',
+    component: PaymentsComponent,
+    data: { title: 'Плащания' },
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    data: { title: 'Настройки' },
   },
   {
     path: 'login',

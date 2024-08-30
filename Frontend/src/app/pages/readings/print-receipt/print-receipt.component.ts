@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Reading} from "../../../core/models/readings.model";
 import {CalendarModule} from "primeng/calendar";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
@@ -14,6 +14,7 @@ import * as moment from "moment/moment";
 import {PaymentsService} from "../../payments/payments.service";
 import {ErrorService} from "../../../core/services/error.service";
 import {NotificationsEmitterService} from "../../../core/services/notifications.service";
+import {SettingsService} from "../../settings/settings.service";
 
 @Component({
   selector: 'app-print-receipt',
@@ -33,15 +34,28 @@ import {NotificationsEmitterService} from "../../../core/services/notifications.
   templateUrl: './print-receipt.component.html',
   styleUrl: './print-receipt.component.scss'
 })
-export class PrintReceiptComponent {
+export class PrintReceiptComponent implements OnInit {
   @Input() reading!: Reading;
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
 
-  feeList: Fee[] = [];
-
   constructor(private paymentsService: PaymentsService,
+              private settingsService: SettingsService,
               private notifications: NotificationsEmitterService,
               private errorService: ErrorService) {
+  }
+
+  feeList: Fee[] = [];
+
+  ngOnInit() {
+    this.fetchAllDefaultFees();
+  }
+
+  fetchAllDefaultFees() {
+    this.settingsService.getDefaultFees().subscribe((data) => {
+      this.feeList = data;
+    }, (error) => {
+      this.errorService.processError(error);
+    });
   }
 
   deleteFee(i: number) {

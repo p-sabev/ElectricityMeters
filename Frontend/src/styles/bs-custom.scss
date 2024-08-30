@@ -116,6 +116,13 @@ button.close {
   --bs-gradient: none;
 }
 
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
 @media screen and (max-width: 500px) {
   .modal-xl {
     max-width: calc(100vw - 10px) !important;

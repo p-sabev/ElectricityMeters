@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Reading} from "../../../core/models/readings.model";
 import {TwoAfterDotPipe} from "../../../shared/pipes/twoAfterDot.pipe";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
 import {Fee} from "../../../core/models/payment.model";
 
@@ -13,7 +13,8 @@ import {Fee} from "../../../core/models/payment.model";
     DatePipe,
     TranslateModule,
     NgForOf,
-    NgIf
+    NgIf,
+    NgStyle
   ],
   templateUrl: './receipt.component.html',
   styleUrl: './receipt.component.scss'

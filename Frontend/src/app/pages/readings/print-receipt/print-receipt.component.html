@@ -32,6 +32,9 @@
                       class="form-control"
                       name="priceInLv"
                       id="priceInLv"
+                      min="0.00"
+                      max="10000.00"
+                      step="1"
                       [(ngModel)]="fee.value"
                       title="{{ 'PriceInBGN' | translate }}*"
                       placeholder="{{ 'PriceInBGN' | translate }}*" />
@@ -46,21 +49,29 @@
                       title="{{ 'Description' | translate }}*"
                       placeholder="{{ 'Description' | translate }}*" />
                   </td>
-                  <td>
+                  <td class="text-center">
                     <fa-icon [icon]="['fas', 'trash']"
                              [class]="'me-2 text-danger cursor-pointer'"
                              (click)="deleteFee(i)"
                              style="font-size: 22px;"></fa-icon>
                   </td>
                 </tr>
+                <tr>
+                  <td colspan="3" class="text-center">
+                    <button class="btn btn-outline-success" (click)="feeList.push({value: null, description: ''})">
+                      <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
+                      {{'AddFee' | translate}}
+                    </button>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
 
-            <div>
-              <button class="btn btn-success mt-3" (click)="feeList.push({value: null, description: ''})">
+            <div *ngIf="!feeList?.length">
+              <button class="btn btn-outline-success mt-3" (click)="feeList.push({value: null, description: ''})">
                 <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
-                {{'Add' | translate}}
+                {{'AddFee' | translate}}
               </button>
             </div>
           </div>

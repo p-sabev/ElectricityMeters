@@ -82,6 +82,28 @@
         </a>
       </li>
 
+      <li *appRoleAccess="'Administrator, Moderator'"
+          class="nav-item"
+          routerLinkActive="active"
+          routerLink="payments"
+          (click)="collapseMenu = true;">
+        <a class="nav-link" href="javascript:void(0);">
+          <fa-icon [icon]="['fas', 'coins']" [class]="'me-1'"></fa-icon>
+          {{'Payments' | translate}}
+        </a>
+      </li>
+
+      <li *appRoleAccess="'Administrator, Moderator'"
+          class="nav-item"
+          routerLinkActive="active"
+          routerLink="settings"
+          (click)="collapseMenu = true;">
+        <a class="nav-link" href="javascript:void(0);">
+          <fa-icon [icon]="['fas', 'cogs']" [class]="'me-1'"></fa-icon>
+          {{'Settings' | translate}}
+        </a>
+      </li>
+
       <li class="nav-item"
           (click)="logOut(); collapseMenu = true;">
         <a class="nav-link text-danger" href="javascript:void(0);">

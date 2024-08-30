@@ -72,7 +72,7 @@
   "ForPaymentInBgn": "За плащане, лв.",
   "TariffInBgn": "Тарифа, лв.",
   "Print": "Принтирай",
-  "PrintReceipt": "Принтиране на касов ордер и квитанция",
+  "PrintReceipt": "Принтиране на квитанция и плащане",
   "SearchBy": "Търсене по",
   "Filtrate": "Търси",
   "SubscriberInfo": "Детайлна информация за абонат",
@@ -88,5 +88,12 @@
   "SuccessfullyMarkedAsPaid": "Успешно отбелязано като платено",
   "IsPaid": "Платено",
   "NotPaid": "Не е платено",
-  "Paid": "Платено"
+  "Paid": "Платено",
+  "Payments": "Плащания",
+  "Settings": "Настройки",
+  "DefaultFees": "Стандартни такси",
+  "Save": "Запази",
+  "DefaultFeesDescription": "Тук можете да дефинирате стандартните такси, които да се зареждат при плащане",
+  "AddFee": "Добави такса",
+  "SuccessfullyUpdatedDefaultFees": "Стандартните такси са успешно запазени"
 }
