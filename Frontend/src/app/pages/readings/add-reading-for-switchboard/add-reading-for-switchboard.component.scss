@@ -1,3 +1,7 @@
 .list-group-item:nth-child(odd) {
-  background: #f8f9fa;
+  background: #e5e9f0;
+}
+.list-group-item:first-child {
+  background: #343a40 !important;
+  color: white !important;
 }

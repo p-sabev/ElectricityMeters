@@ -20,6 +20,7 @@ namespace ElectricityMeters.Response.Readings
         public double CurrentPrice { get; set; }
         public Price? UsedPrice { get; set; }
         public bool IsPaid { get; set; }
+        public List<PaymentFee>? FeeList { get; set; }
     }
 
     public class ReadingSubscriber

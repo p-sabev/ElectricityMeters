@@ -26,6 +26,7 @@
                       [firstDayOfWeek]="1"
                       [style]="{ width: '100%' }"
                       [inputStyle]="{ width: '100%' }"
+                      [maxDate]="readingsDateTo"
                       dateFormat="dd.mm.yy"
                       [readonlyInput]="false"
                       [appendTo]="addEditModal"
@@ -42,6 +43,7 @@
                       [firstDayOfWeek]="1"
                       [style]="{ width: '100%' }"
                       [inputStyle]="{ width: '100%' }"
+                      [minDate]="readingsDateFrom"
                       dateFormat="dd.mm.yy"
                       [readonlyInput]="false"
                       [appendTo]="addEditModal"
@@ -75,6 +77,7 @@
                       #readingField="ngModel"
                       [(ngModel)]="readingsValues[i]"
                       type="number"
+                      [min]="subscriber.lastReading || 0"
                       class="form-control"
                       name="value"
                       id="value"
@@ -83,6 +86,7 @@
 
                     <app-form-errors [withoutTooltip]="true"
                                      [control]="readingField"
+                                     [min]="subscriber.lastReading || 0"
                                      [max]="2147483647"></app-form-errors>
                   </div>
                 </div>

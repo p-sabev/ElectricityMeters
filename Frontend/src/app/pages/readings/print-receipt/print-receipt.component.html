@@ -12,7 +12,9 @@
 
       <div class="modal-body">
         <div class="row">
-          <div class="col-lg-6 col-md-12" style="margin-top: 20px;">
+          <div *ngIf="!reading.isPaid"
+               class="col-lg-6 col-md-12"
+               style="margin-top: 20px;">
             <h3>{{'Fees' | translate}}</h3>
 
             <div>
@@ -75,7 +77,7 @@
               </button>
             </div>
           </div>
-          <div class="col-lg-6 col-md-12" #printSection id="print-section">
+          <div class="col-lg-6 col-md-12 mx-auto" #printSection id="print-section">
             <app-receipt [reading]="reading" [fees]="feeList"></app-receipt>
           </div>
         </div>

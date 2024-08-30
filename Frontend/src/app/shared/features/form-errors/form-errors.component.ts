@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { AbstractControl, NgModel } from '@angular/forms';
 import {TranslateModule} from "@ngx-translate/core";
 import {NgClass} from "@angular/common";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-form-errors',
@@ -10,7 +11,8 @@ import {NgClass} from "@angular/common";
   standalone: true,
   imports: [
     TranslateModule,
-    NgClass
+    NgClass,
+    FaIconComponent
   ]
 })
 export class FormErrorsComponent {
