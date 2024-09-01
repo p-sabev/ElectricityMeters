@@ -83,12 +83,6 @@
                   <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
                 </a>
               </ng-container>
-              <ng-container *appRoleAccess="'Administrator'">
-                <a *ngIf="reading.isPaid" class="nav-link text-danger cursor-pointer btn-action"
-                   (click)="askToDeleteReading(reading)">
-                  <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
-                </a>
-              </ng-container>
             </td>
           </tr>
         </ng-template>
