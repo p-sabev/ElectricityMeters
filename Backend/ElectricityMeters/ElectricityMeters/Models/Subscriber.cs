@@ -11,6 +11,7 @@
         public string? MeterNumber { get; set; }
         public string Note { get; set; }
         public double? DefaultReading { get; set; }
+        public int DataGroup { get; set; }
 
 
         public Subscriber() { }

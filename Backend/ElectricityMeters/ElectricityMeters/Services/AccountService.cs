@@ -72,7 +72,7 @@ namespace ElectricityMeters.Services
                     issuer: _configuration["Jwt:Issuer"],
                     audience: _configuration["Jwt:Issuer"],
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(30),
+                    expires: DateTime.Now.AddHours(24),
                     signingCredentials: creds);
 
                 // Използваме JwtSecurityTokenHandler за генериране на токена

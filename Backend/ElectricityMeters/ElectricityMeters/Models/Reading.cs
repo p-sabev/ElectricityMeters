@@ -12,6 +12,7 @@
         public double CurrentPrice { get; set; }
         public int UsedPrice { get; set; }
         public int? Payment {  get; set; }
+        public int DataGroup { get; set; }
 
 
         public Reading() { }

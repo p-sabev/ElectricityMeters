@@ -9,5 +9,6 @@ namespace ElectricityMeters.Models
         public required string LastName { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsSuperAdmin { get; set; }
+        public int DataGroup {  get; set; }
     }
 }

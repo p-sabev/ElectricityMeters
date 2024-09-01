@@ -89,7 +89,7 @@ export class PrintReceiptComponent implements OnInit {
           '  display: flex;\n' +
           '  border: 1px solid #000;\n' +
           '  width: 100%;\n' +
-          '  max-width: 700px;\n' +
+          '  max-width: 500px;\n' +
           '  margin: 20px auto;\n' +
           '  padding: 10px; ' +
           '  border-radius: 5px;\n' +

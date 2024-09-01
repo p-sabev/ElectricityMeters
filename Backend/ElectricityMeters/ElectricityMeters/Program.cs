@@ -98,6 +98,9 @@ builder.Services.AddScoped<ISwitchboardService, SwitchboardService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ISettingsService, SettingsService>();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<DataGroupService>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();

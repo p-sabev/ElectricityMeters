@@ -28,6 +28,7 @@ import {SimpleNotificationsModule} from "angular2-notifications";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import {HeaderComponent} from "./core/ui/header/header.component";
+import {TokenInterceptor} from "./core/interceptors/token-interceptor.interceptor";
 
 @NgModule({
   declarations: [
@@ -70,12 +71,12 @@ import {HeaderComponent} from "./core/ui/header/header.component";
       useClass: LoaderInterceptorService,
       multi: true,
     },
-    ConfirmationService
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: TokenInterceptor,
-    //   multi: true,
-    // },
+    ConfirmationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
   ],
   exports: [
   ],

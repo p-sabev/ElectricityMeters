@@ -40,7 +40,7 @@
   <div class="receipt-right">
     <div class="header">
       <h2>КВИТАНЦИЯ</h2>
-      <div class="header-info text-center" style="display: block;">Към приходен касов ордер № ______</div>
+<!--      <div class="header-info text-center" style="display: block;">Към приходен касов ордер № ______</div>-->
     </div>
     <div class="content">
       <p class="p-border first-el-border">
@@ -76,23 +76,24 @@
           С думи:
         </span>
         {{priceToWords((reading.amountDue + getTotalFees()))}}</p>
-    </div>
-    <div class="footer">
       <p class="p-border first-el-border">
         <span class="font-weight-bold">
           Дата:
         </span>
         {{today | date: 'dd.MM.yyyy'}}г.</p>
-      <p class="p-border">
-        <span class="font-weight-bold">
-          Касиер:
-        </span>
-      </p>
-      <p class="p-border last-el-border">
-        <span class="font-weight-bold">
-          Главен счетоводител:
-        </span>
-      <p>
+    </div>
+    <div class="footer">
+
+<!--      <p class="p-border">-->
+<!--        <span class="font-weight-bold">-->
+<!--          Касиер:-->
+<!--        </span>-->
+<!--      </p>-->
+<!--      <p class="p-border last-el-border">-->
+<!--        <span class="font-weight-bold">-->
+<!--          Главен счетоводител:-->
+<!--        </span>-->
+<!--      <p>-->
     </div>
   </div>
 </div>

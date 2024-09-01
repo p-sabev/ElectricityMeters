@@ -1,6 +1,8 @@
-﻿namespace ElectricityMeters.Models
+﻿using ElectricityMeters.Base;
+
+namespace ElectricityMeters.Models
 {
-    public class Switchboard
+    public class Switchboard : BaseEntity
     {
 
         public required int Id { get; set; }
