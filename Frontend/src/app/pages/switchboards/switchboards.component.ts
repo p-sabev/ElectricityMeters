@@ -62,7 +62,11 @@ export class SwitchboardsComponent implements OnInit {
       name: ''
     }
     this.switchboardsService.searchSwitchboards(body).subscribe(resp => {
-      this.switchboardsList = resp?.data || [];
+      if (resp?.data?.length) {
+        this.switchboardsList = this.sortByNumericName(resp.data);
+      } else {
+        this.switchboardsList = [];
+      }
       this.totalRecords = resp?.totalRecords || 0;
     }, (error: any) => {
       this.errorService.processError(error);
@@ -99,6 +103,15 @@ export class SwitchboardsComponent implements OnInit {
     }, error => {
       this.errorService.processError(error);
     });
+  }
+
+  sortByNumericName(arr: Switchboard[]): Switchboard[] {
+    const numericItems = arr.filter(item => !isNaN(Number(item.name)));
+    const textItems = arr.filter(item => isNaN(Number(item.name)));
+
+    numericItems.sort((a, b) => Number(a.name) - Number(b.name));
+
+    return [...numericItems, ...textItems];
   }
 
 }
