@@ -1,10 +1,10 @@
 ﻿using ElectricityMeters.Base;
-using Microsoft.AspNetCore.Http;
+using ElectricityMeters.Interfaces;
 using System.Security.Claims;
 
 namespace ElectricityMeters.Services
 {
-    public class DataGroupService
+    public class DataGroupService : IDataGroupService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -15,19 +15,24 @@ namespace ElectricityMeters.Services
 
         public int GetCurrentUserDataGroup()
         {
-            // Логика за извличане на DataGroup от текущия потребител
-            
-            /*var user = _httpContextAccessor.HttpContext.User;
-            var userId = user != null && user.Identity.IsAuthenticated ? int.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)) : 0;
-            var isAuthenticated = user != null && user.Identity.IsAuthenticated;
-
-            if (!user.Identity.IsAuthenticated)
+            var user = _httpContextAccessor.HttpContext?.User;
+            if (user == null || !user.Identity.IsAuthenticated)
             {
                 throw new UnauthorizedAccessException("UserIsNotAuthenticated");
-            }*/
-            // Предполага се, че DataGroup е записан като claim, вземете го оттук
-            return 1;
-            // return int.Parse(user.FindFirst("DataGroup").Value);
+            }
+
+            var dataGroupClaim = user.FindFirst("DataGroup");
+            if (dataGroupClaim == null)
+            {
+                throw new UnauthorizedAccessException("DataGroupClaimNotFound");
+            }
+
+            if (!int.TryParse(dataGroupClaim.Value, out int dataGroup))
+            {
+                throw new FormatException("Invalid DataGroup claim value");
+            }
+
+            return dataGroup;
         }
 
         public void SetDataGroupForEntity(BaseEntity entity)

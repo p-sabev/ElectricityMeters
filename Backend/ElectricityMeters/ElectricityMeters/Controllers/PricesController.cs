@@ -2,6 +2,7 @@
 using ElectricityMeters.Request.Prices;
 using ElectricityMeters.Response.Prices;
 using ElectricityMeters.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectricityMeters.Controllers
@@ -18,6 +19,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Price>>> GetAllPrices()
         {
             try

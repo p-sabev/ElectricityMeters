@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Text;
 using Serilog;
 using Serilog.Events;
+using System.Security.Claims;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -76,19 +77,20 @@ builder.Services.AddAuthentication(options =>
             context.Response.ContentType = "text/plain";
             return context.Response.WriteAsync(context.Exception.ToString());
         },
-        OnTokenValidated = context =>
+        OnTokenValidated = async context =>
         {
             var userService = context.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
-            var userId = context.Principal.Identity.Name;
-            var user = userService.FindByIdAsync(userId).Result;
+            var userId = context.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await userService.FindByIdAsync(userId);
             if (user == null)
             {
                 context.Fail("Unauthorized");
             }
-            return Task.CompletedTask;
         }
     };
 });
+
+
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPriceService, PriceService>();
@@ -149,7 +151,8 @@ if (!builder.Environment.IsDevelopment())
                     "http://elmeters.site:4200",
                     "http://elmeters.site")
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowAnyHeader()
+                    .AllowCredentials();
             });
     });
 
