@@ -5,7 +5,7 @@
       <app-page-heading [title]="'Switchboards'"></app-page-heading>
     </div>
 
-    <div *appRoleAccess="'Administrator'" class="col-12 mt-5">
+    <div *appRoleAccess="'Administrator, Moderator'" class="col-12 mt-5">
       <button class="btn btn-outline-success"
               (click)="initAddSwitchboard()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
@@ -36,20 +36,26 @@
 
         <div class="card-body">
           <div class="row">
-            <div class="col-12 text-right">
+            <div class="col-12 p-0 text-right">
               <ng-container *appRoleAccess="'Administrator'">
                 <button class="btn btn-outline-danger float-end ms-2"
                         *ngIf="!switchboard.subscribers?.length"
                         (click)="askToDeleteSwitchboard(switchboard)">
                   <fa-icon [icon]="['fas', 'trash']"></fa-icon>
                 </button>
-                <button class="btn btn-outline-warning float-end"
+                <button *ngIf="switchboard.subscribers?.length"
+                        class="btn btn-outline-warning float-end ms-2"
                         (click)="switchboardForEdit = switchboard;">
                   <fa-icon [icon]="['fas', 'edit']"></fa-icon>
                 </button>
               </ng-container>
               <ng-container *appRoleAccess="'Administrator, Moderator'">
-                <button class="btn btn-outline-primary float-end me-2"
+                <button *ngIf="!switchboard.subscribers?.length"
+                        class="btn btn-outline-warning float-end ms-2"
+                        (click)="switchboardForEdit = switchboard;">
+                  <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+                </button>
+                <button class="btn btn-outline-primary float-end"
                         *ngIf="switchboard.subscribers?.length"
                         (click)="subscribersToAddReadings = switchboard.subscribers;">
                   {{'EnterReadings' | translate}}
