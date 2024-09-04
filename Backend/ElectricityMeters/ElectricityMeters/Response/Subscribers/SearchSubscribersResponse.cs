@@ -11,7 +11,7 @@ namespace ElectricityMeters.Response.Subscribers
     public class SubscribersResponse
     {
         public required int Id { get; set; }
-        public required int NumberPage { get; set; }
+        public int? NumberPage { get; set; }
         public required string Name { get; set; }
         public required Switchboard Switchboard { get; set; }
         public string? Address { get; set; }
@@ -26,7 +26,7 @@ namespace ElectricityMeters.Response.Subscribers
     public class SubscribersStartResponse
     {
         public required int Id { get; set; }
-        public required int NumberPage { get; set; }
+        public int? NumberPage { get; set; }
         public required string Name { get; set; }
         public required Switchboard Switchboard { get; set; }
         public string? Address { get; set; }

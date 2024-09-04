@@ -22,7 +22,7 @@
         <ul *ngIf="switchboard.subscribers?.length"
             class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let subscriber of switchboard.subscribers">
-            {{subscriber.numberPage}}/{{subscriber.name}}
+            {{subscriber.name}}
             <span class="float-end font-weight-bold">{{subscriber.lastReading ? subscriber.lastReading : subscriber.defaultReading ? subscriber.defaultReading : 0}} {{'kvh' | translate}}</span>
           </li>
         </ul>

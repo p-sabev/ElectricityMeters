@@ -5,7 +5,7 @@ namespace ElectricityMeters.Models
     public class Subscriber : BaseEntity
     {
         public required int Id { get; set; }
-        public required int NumberPage { get; set; }
+        public int? NumberPage { get; set; }
         public required string Name { get; set; }
         public required Switchboard Switchboard { get; set; }
         public string? Address { get; set; }
@@ -17,7 +17,7 @@ namespace ElectricityMeters.Models
 
         public Subscriber() { }
 
-        public Subscriber(int id, int numberPage, string name, Switchboard switchboard, string? address, string? phone, string? meterNumber, string note, double? defautReading)
+        public Subscriber(int id, int? numberPage, string name, Switchboard switchboard, string? address, string? phone, string? meterNumber, string note, double? defautReading)
         {
             Id=id;
             NumberPage=numberPage;

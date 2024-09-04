@@ -26,7 +26,7 @@ namespace ElectricityMeters.Response.Readings
     public class ReadingSubscriber
     {
         public required int Id { get; set; }
-        public required int NumberPage { get; set; }
+        public int? NumberPage { get; set; }
         public required string Name { get; set; }
         public string? Address { get; set; }
         public string? Phone { get; set; }

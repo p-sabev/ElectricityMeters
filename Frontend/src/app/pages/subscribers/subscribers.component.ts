@@ -56,7 +56,7 @@ export class SubscribersComponent implements OnInit {
   subscribers: Subscriber[] = [];
 
   page = 0;
-  sortField = 'numberPage';
+  sortField = 'name';
   sortOrder = 1;
   totalRecords = 0;
   lastUsedSettings: any = null;

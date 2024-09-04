@@ -48,7 +48,7 @@ export class AddEditSubscribersComponent implements OnInit {
   initAddEditForm() {
     this.addEditForm = new FormGroup({
       id: new FormControl<number | null>(this.subscriberToEdit ? this.subscriberToEdit.id : null),
-      numberPage: new FormControl<number | null>(this.subscriberToEdit ? this.subscriberToEdit.numberPage : null, [Validators.required, Validators.max(500)]),
+      numberPage: new FormControl<number | null>(this.subscriberToEdit ? this.subscriberToEdit.numberPage : null, [Validators.max(500)]),
       name: new FormControl<string>(this.subscriberToEdit?.name ? this.subscriberToEdit.name : '', [Validators.required, Validators.maxLength(250)]),
       switchboardId: new FormControl<number | null>(this.subscriberToEdit?.switchboard?.id ? this.subscriberToEdit.switchboard.id : null, [Validators.required]),
       address: new FormControl<string>(this.subscriberToEdit?.address ? this.subscriberToEdit.address : '', [Validators.maxLength(250)]),

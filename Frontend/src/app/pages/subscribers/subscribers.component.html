@@ -29,7 +29,7 @@
                [scrollable]="true" scrollHeight="80vh">
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="numberPage" translate>NumberPage<p-sortIcon field="numberPage" /></th>
+<!--            <th pSortableColumn="numberPage" translate>NumberPage<p-sortIcon field="numberPage" /></th>-->
             <th pSortableColumn="name" style="min-width: 160px;" translate>Name<p-sortIcon field="name" /></th>
             <th pSortableColumn="switchboard" translate>Switchboard<p-sortIcon field="switchboard" /></th>
 <!--            <th pSortableColumn="meterNumber" translate>MeterNumber<p-sortIcon field="meterNumber" /></th>-->
@@ -40,12 +40,12 @@
         </ng-template>
         <ng-template pTemplate="colgroup">
           <tr class="search-row">
-            <td class="p-2">
-              <input type="number" class="form-control"
-                     [(ngModel)]="filtersModel.numberPage"
-                     title="{{'SearchBy' | translate}} {{'NumberPage' | translate | lowercase}}"
-                     placeholder="{{'SearchBy' | translate}} {{'NumberPage' | translate | lowercase}}">
-            </td>
+<!--            <td class="p-2">-->
+<!--              <input type="number" class="form-control"-->
+<!--                     [(ngModel)]="filtersModel.numberPage"-->
+<!--                     title="{{'SearchBy' | translate}} {{'NumberPage' | translate | lowercase}}"-->
+<!--                     placeholder="{{'SearchBy' | translate}} {{'NumberPage' | translate | lowercase}}">-->
+<!--            </td>-->
             <td class="p-2">
               <input type="text" class="form-control"
                      [(ngModel)]="filtersModel.name"
@@ -87,7 +87,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-subscriber>
           <tr>
-            <td>{{ subscriber.numberPage }}</td>
+<!--            <td>{{ subscriber.numberPage }}</td>-->
             <td class="font-weight-bold">{{ subscriber.name }}</td>
             <td>{{ subscriber.switchboard?.name }}</td>
 <!--            <td>{{ subscriber.meterNumber }}</td>-->
