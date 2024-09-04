@@ -15,6 +15,21 @@ namespace ElectricityMeters.Models
             _dataGroupService = dataGroupService;
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Apply a global filter to each entity for the DataGroup
+            modelBuilder.Entity<Switchboard>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
+            modelBuilder.Entity<Subscriber>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
+            modelBuilder.Entity<Reading>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
+            modelBuilder.Entity<Price>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
+            modelBuilder.Entity<Payment>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
+            modelBuilder.Entity<PaymentFee>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
+            modelBuilder.Entity<StandartFee>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
+
+        }
+
         public DbSet<Switchboard> Switchboards { get; set; } = null!;
         public DbSet<Subscriber> Subscribers { get; set; } = null!;
         public DbSet<Reading> Readings { get; set; } = null!;

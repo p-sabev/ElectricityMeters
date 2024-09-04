@@ -1,6 +1,5 @@
 ﻿using ElectricityMeters.Base;
 using ElectricityMeters.Interfaces;
-using System.Security.Claims;
 
 namespace ElectricityMeters.Services
 {

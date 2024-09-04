@@ -1,6 +1,8 @@
-﻿namespace ElectricityMeters.Models
+﻿using ElectricityMeters.Base;
+
+namespace ElectricityMeters.Models
 {
-    public class Subscriber
+    public class Subscriber : BaseEntity
     {
         public required int Id { get; set; }
         public required int NumberPage { get; set; }
@@ -11,7 +13,6 @@
         public string? MeterNumber { get; set; }
         public string Note { get; set; }
         public double? DefaultReading { get; set; }
-        public int DataGroup { get; set; }
 
 
         public Subscriber() { }

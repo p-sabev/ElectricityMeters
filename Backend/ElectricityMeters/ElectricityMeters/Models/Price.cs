@@ -1,6 +1,8 @@
-﻿namespace ElectricityMeters.Models
+﻿using ElectricityMeters.Base;
+
+namespace ElectricityMeters.Models
 {
-    public class Price
+    public class Price : BaseEntity
     {
 
         public int Id { get; set; }
@@ -8,7 +10,6 @@
         public DateTime DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
         public string Note { get; set; }
-        public int DataGroup { get; set; }
 
         public Price() { }
 

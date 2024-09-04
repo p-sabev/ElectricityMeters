@@ -1,6 +1,8 @@
-﻿namespace ElectricityMeters.Models
+﻿using ElectricityMeters.Base;
+
+namespace ElectricityMeters.Models
 {
-    public class Reading
+    public class Reading : BaseEntity
     {
         public int Id { get; set; }
         public Subscriber Subscriber { get; set; }
@@ -12,7 +14,6 @@
         public double CurrentPrice { get; set; }
         public int UsedPrice { get; set; }
         public int? Payment {  get; set; }
-        public int DataGroup { get; set; }
 
 
         public Reading() { }
