@@ -40,7 +40,7 @@ export class AddReadingForSwitchboardComponent implements OnInit {
   minDateFrom: Date | null = new Date();
   readingsDateFrom: Date | null = null;
   readingsDateTo: Date | null = moment(new Date()).toDate();
-  readingsValues: number[] = new Array(this.subscribers?.length).fill(0);
+  readingsValues: number[] = [];
 
   ngOnInit() {
     this.readingsDateFrom = moment().startOf('year').toDate();
@@ -56,6 +56,12 @@ export class AddReadingForSwitchboardComponent implements OnInit {
         }
       });
     }
+
+    this.readingsValues = new Array(this.subscribers?.length).fill(null);
+    setTimeout(() => {
+      const inputs = document.querySelectorAll('#readingField');
+      (inputs[0] as HTMLElement)?.focus();
+    }, 200);
   }
 
   addReadings() {
