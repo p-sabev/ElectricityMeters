@@ -45,8 +45,8 @@ export class AddEditPricesComponent implements OnInit {
     this.addEditForm = new FormGroup({
       id: new FormControl<number | null>(this.priceToEdit ? this.priceToEdit.id : null),
       priceInLv: new FormControl<number | null>({ value: this.priceToEdit?.priceInLv ? this.priceToEdit.priceInLv : null, disabled: this.priceToEdit?.isUsed === true }, [Validators.required, Validators.max(1000)]),
-      dateFrom: new FormControl<any>(this.priceToEdit?.dateFrom ? moment(this.priceToEdit.dateFrom).toDate() : moment(new Date()), [Validators.required]),
-      note: new FormControl<string>(this.priceToEdit?.note ? this.priceToEdit.note : '', [Validators.required, Validators.maxLength(250)]),
+      dateFrom: new FormControl<any>(this.priceToEdit?.dateFrom ? moment(this.priceToEdit.dateFrom).toDate() : moment().toDate(), [Validators.required]),
+      note: new FormControl<string>(this.priceToEdit?.note ? this.priceToEdit.note : '', [Validators.maxLength(250)]),
     });
   }
 
