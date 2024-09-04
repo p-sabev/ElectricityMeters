@@ -35,6 +35,12 @@ namespace ElectricityMeters.Services
                 .Include(p => p.Reading.Subscriber.Switchboard)
                 .AsQueryable();
 
+            // Филтриране
+            if (request.Name?.Length > 0)
+            {
+                query = query.Where(s => s.Reading.Subscriber.Name.Contains(request.Name));
+            }
+
             // Сортиране
             if (!string.IsNullOrEmpty(request.Sorting.SortProp))
             {

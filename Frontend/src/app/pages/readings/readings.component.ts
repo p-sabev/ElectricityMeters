@@ -5,7 +5,7 @@ import {ConfirmationService, SharedModule} from "primeng/api";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ReadingsService} from "./readings.service";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {DatePipe, NgIf} from "@angular/common";
+import {DatePipe, LowerCasePipe, NgForOf, NgIf} from "@angular/common";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {TableModule} from "primeng/table";
 import {Reading} from "../../core/models/readings.model";
@@ -15,6 +15,7 @@ import {ReceiptComponent} from "./receipt/receipt.component";
 import {PrintReceiptComponent} from "./print-receipt/print-receipt.component";
 import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
 import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
+import {PaginatorModule} from "primeng/paginator";
 
 @Component({
   selector: 'app-readings',
@@ -32,7 +33,10 @@ import {RoleAccessDirective} from "../../shared/directives/role-access.directive
     ReceiptComponent,
     PrintReceiptComponent,
     PageHeadingComponent,
-    RoleAccessDirective
+    RoleAccessDirective,
+    LowerCasePipe,
+    NgForOf,
+    PaginatorModule
   ],
   templateUrl: './readings.component.html',
   styleUrl: './readings.component.scss'
@@ -49,8 +53,10 @@ export class ReadingsComponent {
 
   sortField = 'id';
   sortOrder = -1;
+  page = 0;
   totalRecords = 0;
   lastUsedSettings: any = null;
+  searchSubscriberName: string = '';
 
   readingForEdit: Reading | null = null;
   readingToPrintReceipt!: Reading | null;
@@ -66,7 +72,7 @@ export class ReadingsComponent {
         sortProp: settings.sortField,
         sortDirection: settings.sortOrder
       },
-      name: ''
+      name: this.searchSubscriberName
     }
     this.readingsService.searchReadings(body).subscribe(resp => {
       this.readingsList = resp?.data || [];

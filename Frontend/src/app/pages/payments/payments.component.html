@@ -15,6 +15,7 @@
                [sortField]="sortField" [sortOrder]="sortOrder"
                [totalRecords]="totalRecords"
                [paginator]="true"
+               [first]="page"
                [rows]="10"
                [rowsPerPageOptions]="[5, 10, 20, 50]"
                [scrollable]="true" scrollHeight="80vh">
@@ -31,6 +32,24 @@
             <th style="min-width: 120px;" translate>PaidInBgn</th>
             <th style="min-width: 80px;" translate>Switchboard</th>
             <th alignFrozen="right" pFrozenColumn></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="colgroup">
+          <tr class="search-row">
+            <td class="p-2" colspan="4">
+              <input type="text" class="form-control"
+                     [(ngModel)]="searchSubscriberName"
+                     title="{{'SearchBy' | translate}} {{'Name' | translate | lowercase}}"
+                     placeholder="{{'SearchBy' | translate}} {{'Name' | translate | lowercase}}">
+            </td>
+            <td class="p-2" colspan="6"></td>
+            <td alignFrozen="right" pFrozenColumn class="p-2" style="background: #FFFFFF;">
+              <button type="button" class="btn btn-outline-secondary float-end"
+                      (click)="page = 0; fetchPaymentsList();" translate>
+                <fa-icon [icon]="['fas', 'search']" [class]="'me-2'"></fa-icon>
+                {{ 'Filtrate' | translate }}
+              </button>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-payment>

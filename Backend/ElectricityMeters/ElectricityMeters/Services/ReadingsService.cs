@@ -24,6 +24,12 @@ namespace ElectricityMeters.Services
         {
             var query = _dbContext.Readings.AsQueryable();
 
+            // Филтриране
+            if (request.Name?.Length > 0)
+            {
+                query = query.Where(s => s.Subscriber.Name.Contains(request.Name));
+            }
+
             // Сортиране
             if (!string.IsNullOrEmpty(request.Sorting.SortProp))
             {

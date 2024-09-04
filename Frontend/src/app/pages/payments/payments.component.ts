@@ -6,7 +6,7 @@ import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {NotificationsEmitterService} from "../../core/services/notifications.service";
 import {Fee, Payment} from "../../core/models/payment.model";
 import {PaymentsService} from "./payments.service";
-import {DatePipe, NgIf} from "@angular/common";
+import {DatePipe, LowerCasePipe, NgIf} from "@angular/common";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
 import {TableModule} from "primeng/table";
@@ -14,6 +14,7 @@ import {TwoAfterDotPipe} from "../../shared/pipes/twoAfterDot.pipe";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {Reading} from "../../core/models/readings.model";
 import {PrintReceiptComponent} from "../readings/print-receipt/print-receipt.component";
+import {PaginatorModule} from "primeng/paginator";
 
 @Component({
   selector: 'app-payments',
@@ -29,7 +30,9 @@ import {PrintReceiptComponent} from "../readings/print-receipt/print-receipt.com
     TranslateModule,
     TwoAfterDotPipe,
     ConfirmDialogModule,
-    PrintReceiptComponent
+    PrintReceiptComponent,
+    LowerCasePipe,
+    PaginatorModule
   ],
   templateUrl: './payments.component.html',
   styleUrl: './payments.component.scss'
@@ -44,10 +47,12 @@ export class PaymentsComponent {
 
   paymentsList: Payment[] = [];
 
+  page = 0;
   sortField = 'id';
   sortOrder = -1;
   totalRecords = 0;
   lastUsedSettings: any = null;
+  searchSubscriberName: string = '';
 
   readingToPrintReceipt!: Reading | null;
 
@@ -62,7 +67,7 @@ export class PaymentsComponent {
         sortProp: settings.sortField,
         sortDirection: settings.sortOrder
       },
-      name: ''
+      name: this.searchSubscriberName
     }
     this.paymentsService.searchPayments(body).subscribe(resp => {
       this.paymentsList = resp?.data || [];
