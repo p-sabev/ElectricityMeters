@@ -110,9 +110,18 @@ namespace ElectricityMeters.Services
         {
             var payment = await _dbContext.Payments.FindAsync(id) ?? throw new Exception("PaymentNotFound");
             
-            _dbContext.Payments.Remove(payment);
-            await _dbContext.SaveChangesAsync();
-            return true;
+            try
+            {
+                _dbContext.Payments.Remove(payment);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            } catch (Exception ex)
+            {
+                var exx = ex;
+                return false;
+            }
+            
+            
         }
     }
 }

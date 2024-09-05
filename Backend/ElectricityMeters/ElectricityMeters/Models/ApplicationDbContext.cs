@@ -17,7 +17,12 @@ namespace ElectricityMeters.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            // Relationship between Payment and PaymentFee
+            modelBuilder.Entity<Payment>()
+                .HasMany(p => p.FeeList)
+                .WithOne(f => f.Payment)
+                .HasForeignKey(f => f.PaymentId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Apply a global filter to each entity for the DataGroup
             modelBuilder.Entity<Switchboard>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
@@ -28,6 +33,7 @@ namespace ElectricityMeters.Models
             modelBuilder.Entity<PaymentFee>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
             modelBuilder.Entity<StandartFee>().HasQueryFilter(e => e.DataGroup == _dataGroupService.GetCurrentUserDataGroup());
 
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Switchboard> Switchboards { get; set; } = null!;
