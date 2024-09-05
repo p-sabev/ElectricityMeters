@@ -30,7 +30,6 @@ export class RoleAccessDirective {
   }
 
   private checkRoles(): boolean {
-    console.log(this.permission, this.roles);
     let hasRights = false;
     if (typeof this.permission === 'string') {
       this.permission?.split(', ').forEach((searchedRole) => {

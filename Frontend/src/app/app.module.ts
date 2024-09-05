@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +29,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import {HeaderComponent} from "./core/ui/header/header.component";
 import {TokenInterceptor} from "./core/interceptors/token-interceptor.interceptor";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,13 @@ import {TokenInterceptor} from "./core/interceptors/token-interceptor.intercepto
     ButtonModule,
     TreeModule,
     ConfirmDialogModule,
-    HeaderComponent
+    HeaderComponent,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     provideClientHydration(),
