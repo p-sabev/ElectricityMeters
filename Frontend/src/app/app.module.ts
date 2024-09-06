@@ -30,6 +30,7 @@ import {ConfirmationService} from "primeng/api";
 import {HeaderComponent} from "./core/ui/header/header.component";
 import {TokenInterceptor} from "./core/interceptors/token-interceptor.interceptor";
 import { ServiceWorkerModule } from '@angular/service-worker';
+import {AuthGuard} from "./core/guards/auth.guard";
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       useClass: TokenInterceptor,
       multi: true,
     },
+    AuthGuard
   ],
   exports: [
   ],
