@@ -1,5 +1,6 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Request.Settings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectricityMeters.Controllers
@@ -16,6 +17,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpGet("default-fees")]
+        [Authorize]
         public async Task<IActionResult> GetAllDefaultFees()
         {
             var fees = await _settingsService.GetAllDefaultFees();
@@ -23,6 +25,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost("default-fees")]
+        [Authorize]
         public async Task<IActionResult> UpdateDefaultFees([FromBody] UpdateDefaultFeesRequest request)
         {
             var result = await _settingsService.UpdateDefaultFees(request);

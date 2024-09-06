@@ -25,6 +25,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost("search")]
+        [Authorize]
         public async Task<IActionResult> SearchPaymentsList([FromBody] SearchPaymentsRequest request)
         {
             var response = await _paymentService.SearchPaymentsList(request);
@@ -32,6 +33,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> InsertPayment([FromBody] InsertPaymentRequest request)
         {
             try
@@ -45,6 +47,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeletePayment(int id)
         {
             try

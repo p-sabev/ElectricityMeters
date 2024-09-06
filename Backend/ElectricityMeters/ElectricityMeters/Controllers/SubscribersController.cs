@@ -4,6 +4,7 @@ using ElectricityMeters.Request.Prices;
 using ElectricityMeters.Request.Subscribers;
 using ElectricityMeters.Response.Prices;
 using ElectricityMeters.Response.Subscribers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Subscriber>>> GetAllSubscribers()
         {
             var subscribers = await _subscriberService.GetAllSubscribersAsync();
@@ -33,6 +35,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost("search")]
+        [Authorize]
         public async Task<ActionResult<SearchSubscribersResponse>> SearchSubscribers([FromBody] SearchSubscribersRequest request)
         {
             var result = await _subscriberService.SearchSubscribersList(request);
@@ -40,6 +43,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Subscriber>> InsertSubscriber(InsertSubscriber insertSubscriber)
         {
             try
@@ -59,6 +63,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> EditSubscriber(EditSubscriber editSubscriber)
         {
             try
@@ -77,6 +82,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteSubscriber(int id)
         {
             try

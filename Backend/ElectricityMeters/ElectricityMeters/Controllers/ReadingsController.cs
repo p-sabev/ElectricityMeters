@@ -2,6 +2,7 @@
 using ElectricityMeters.Models;
 using ElectricityMeters.Request.Readings;
 using ElectricityMeters.Response.Readings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectricityMeters.Controllers
@@ -18,6 +19,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Reading>>> GetAllReadings()
         {
             var readings = await _readingService.GetAllReadingsAsync();
@@ -30,6 +32,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost("search")]
+        [Authorize]
         public async Task<ActionResult<SearchReadingsResponse>> SearchReadingsList([FromBody] SearchReadingsRequest request)
         {
             var result = await _readingService.SearchReadingsList(request);
@@ -37,6 +40,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Reading>> InsertReading(InsertReading insertReading)
         {
             try
@@ -55,6 +59,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost("add-multiple-readings")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Reading>>> InsertMultipleReadings(InsertMultipleReadings insertMultipleReadings)
         {
             var readings = await _readingService.InsertMultipleReadingsAsync(insertMultipleReadings);
@@ -67,6 +72,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> EditReading(int id, EditReading editReading)
         {
             try
@@ -85,6 +91,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteReading(int id)
         {
             try
@@ -103,6 +110,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpGet("by-subscriber/{subscriberId}")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Reading>>> GetAllReadingsBySubscriberId(int subscriberId)
         {
             var readings = await _readingService.GetAllReadingsBySubscriberIdAsync(subscriberId);

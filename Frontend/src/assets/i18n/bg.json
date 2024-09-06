@@ -174,5 +174,16 @@
   "SwitchboardHasSubscribersAndCannotBeDeleted": "Към таблото има обвързани абонати и не може да бъде изтрито",
   "NewReadingValueShouldBeBeBiggerThanThePreviousReading": "Стойността на новото показание трябва да е по-голяма от тази на предишното показание",
   "DefaultReading": "Начално показание",
-  "NoValidReadingsWereAdded": "Не бяха добавени валидни показания"
+  "NoValidReadingsWereAdded": "Не бяха добавени валидни показания",
+  "FailedToUpdateUser": "Неуспешна редакция на потребител",
+  "UserNotFound": "Потребителя не е намерен",
+  "AreYouSureToDeleteThisUser": "Сигурни ли сте, че искате да изтриете потребител",
+  "SuccessfullyDeletedUser": "Успешно изтрит потребител",
+  "Email": "Имейл",
+  "UserName": "Потребителско име",
+  "SuccessfullyEditedUser": "Успешна редакция",
+  "MiddleName": "Презиме",
+  "LastName": "Фамилия",
+  "EditUser": "Редакция на потребител",
+  "Roles": "Роли"
 }

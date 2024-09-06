@@ -40,6 +40,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost("search")]
+        [Authorize]
         public async Task<ActionResult<SearchPricesResponse>> SearchPrices([FromBody] SearchPriceRequest request)
         {
             var result = await _priceService.SearchPricesList(request);
@@ -47,6 +48,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Price>> InsertPrice(InsertPrice insertPrice)
         {
             if (insertPrice == null)
@@ -70,6 +72,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> UpdatePrice(EditPrice editPrice)
         {
             try
@@ -89,6 +92,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeletePrice(int id)
         {
             try

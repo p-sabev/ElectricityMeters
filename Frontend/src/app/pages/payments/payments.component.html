@@ -64,7 +64,7 @@
             <td>{{ sumFees(payment.feeList) | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ (sumFees(payment.feeList) + payment.reading?.amountDue) | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ payment.subscriber?.switchboard?.name }}</td>
-            <td alignFrozen="right" pFrozenColumn>
+            <td class="py-1" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
                 <a class="nav-link text-success cursor-pointer btn-action"
                    (click)="openReadingToPrint(payment.reading);">

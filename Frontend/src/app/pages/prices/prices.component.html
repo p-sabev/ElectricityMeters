@@ -45,7 +45,7 @@
               <span *ngIf="!price.dateTo">-</span>
             </td>
             <td>{{ price.note }}</td>
-            <td *appRoleAccess="'Administrator'" alignFrozen="right" pFrozenColumn>
+            <td *appRoleAccess="'Administrator'" class="py-1" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator'">
                 <a class="nav-link text-warning cursor-pointer btn-action"
                    (click)="openPriceForEdit(price)">

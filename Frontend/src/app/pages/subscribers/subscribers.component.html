@@ -100,7 +100,7 @@
               <span *ngIf="subscriber.lastRecordDate">{{ subscriber.lastRecordDate | date: 'dd.MM.yyyy'}}</span>
               <span *ngIf="!subscriber.lastRecordDate">-</span>
             </td>
-            <td alignFrozen="right" pFrozenColumn>
+            <td class="py-1" alignFrozen="right" pFrozenColumn>
 
               <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
                 <a class="nav-link text-primary cursor-pointer btn-action" (click)="subscriberToShowDetailedInfo = subscriber">

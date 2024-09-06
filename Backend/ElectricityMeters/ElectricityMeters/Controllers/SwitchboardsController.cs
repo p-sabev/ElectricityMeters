@@ -5,6 +5,7 @@ using ElectricityMeters.Request.Switchboards;
 using ElectricityMeters.Response.Subscribers;
 using ElectricityMeters.Response.Switchboards;
 using ElectricityMeters.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Switchboard>>> GetAllSwitchboards()
         {
             var switchboards = await _switchboardService.GetAllSwitchboardsAsync();
@@ -34,6 +36,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost("search")]
+        [Authorize]
         public async Task<ActionResult<SearchSwitchboardsResponse>> SearchSwitchboards([FromBody] SearchSwitchboardRequest request)
         {
             var result = await _switchboardService.SearchSwitchboardsList(request);
@@ -41,6 +44,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Switchboard>> InsertSwitchboard(InsertSwitchboard insertSwitchboard)
         {
             var switchboard = await _switchboardService.InsertSwitchboardAsync(insertSwitchboard);
@@ -53,6 +57,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> EditSwitchboard(EditSwitchboard editSwitchboard)
         {
             try
@@ -71,6 +76,7 @@ namespace ElectricityMeters.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteSwitchboard(int id)
         {
             try
