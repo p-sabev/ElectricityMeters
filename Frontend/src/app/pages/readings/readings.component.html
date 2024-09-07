@@ -5,7 +5,11 @@
       <app-page-heading [title]="'Readings'"></app-page-heading>
     </div>
 
-    <div class="col-12 mt-3">
+    <div *ngIf="noRecords" class="alert alert-info col-12 mt-3">
+      {{'NoResultsFound' | translate}}
+    </div>
+
+    <div *ngIf="!noRecords" class="col-12 mt-3">
 
       <p-table [value]="readingsList"
                styleClass="p-datatable-gridlines"

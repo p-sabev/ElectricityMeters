@@ -61,6 +61,9 @@ export class ReadingsComponent {
   readingForEdit: Reading | null = null;
   readingToPrintReceipt!: Reading | null;
 
+  firstInit: boolean = true;
+  noRecords: boolean = false;
+
   fetchReadingsList(settings: any = this.lastUsedSettings) {
     this.lastUsedSettings = settings;
     const body = {
@@ -77,8 +80,16 @@ export class ReadingsComponent {
     this.readingsService.searchReadings(body).subscribe(resp => {
       this.readingsList = resp?.data || [];
       this.totalRecords = resp?.totalRecords || 0;
+
+      if (this.firstInit && this.totalRecords === 0) {
+        this.noRecords = true;
+      } else {
+        this.noRecords = false;
+      }
     }, error => {
       this.errorService.processError(error);
+    }, () => {
+      this.firstInit = false;
     });
   }
 
