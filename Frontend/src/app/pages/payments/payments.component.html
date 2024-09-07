@@ -67,7 +67,7 @@
             <td class="py-1" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
                 <a class="nav-link text-success cursor-pointer btn-action"
-                   (click)="openReadingToPrint(payment.reading);">
+                   (click)="openReadingToPrint(payment.reading, payment.feeList);">
                   <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
                 </a>
               </ng-container>

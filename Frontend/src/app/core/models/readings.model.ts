@@ -11,6 +11,15 @@ export interface Reading {
   difference: number;
   currentPrice: number;
   isPaid?: boolean;
+  feeList?: PaymentFee[];
+}
+
+export interface PaymentFee {
+  id: number;
+  value: number;
+  description: string;
+  paymentId: number;
+  dataGroup: number;
 }
 
 export interface InsertReading {

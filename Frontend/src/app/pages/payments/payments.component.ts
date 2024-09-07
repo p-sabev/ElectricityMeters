@@ -12,7 +12,7 @@ import {RoleAccessDirective} from "../../shared/directives/role-access.directive
 import {TableModule} from "primeng/table";
 import {TwoAfterDotPipe} from "../../shared/pipes/twoAfterDot.pipe";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {Reading} from "../../core/models/readings.model";
+import {PaymentFee, Reading} from "../../core/models/readings.model";
 import {PrintReceiptComponent} from "../readings/print-receipt/print-receipt.component";
 import {PaginatorModule} from "primeng/paginator";
 
@@ -77,8 +77,9 @@ export class PaymentsComponent {
     });
   }
 
-  openReadingToPrint(reading: Reading) {
+  openReadingToPrint(reading: Reading, feeList: PaymentFee[]) {
     reading.isPaid = true;
+    reading.feeList = feeList;
     this.readingToPrintReceipt = reading;
   }
 

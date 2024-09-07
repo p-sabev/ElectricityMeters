@@ -47,7 +47,11 @@ export class PrintReceiptComponent implements OnInit {
   feeList: Fee[] = [];
 
   ngOnInit() {
-    this.fetchAllDefaultFees();
+    if (!this.reading?.feeList) {
+      this.fetchAllDefaultFees();
+    } else {
+      this.feeList = this.reading.feeList;
+    }
   }
 
   fetchAllDefaultFees() {
