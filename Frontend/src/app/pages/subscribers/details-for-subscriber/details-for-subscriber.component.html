@@ -57,7 +57,8 @@
               <li class="list-group-item">
                 <span class="font-weight-bold">{{'LastReading' | translate}}: </span>
                 <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
-                <span *ngIf="!subscriber.lastReading">-</span>
+                <span *ngIf="!subscriber.lastReading && subscriber.defaultReading">{{ subscriber.defaultReading }} {{'kvh' | translate}}</span>
+                <span *ngIf="!subscriber.lastReading && !subscriber.defaultReading">-</span>
               </li>
               <li class="list-group-item">
                 <span class="font-weight-bold">{{'LastRecord' | translate}}: </span>

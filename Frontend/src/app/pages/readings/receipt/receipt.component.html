@@ -71,18 +71,18 @@
           Сумата:
         </span>
         {{(reading.amountDue + getTotalFees()) | twoAfterDot}} лв.</p>
-      <p class="p-border last-el-border">
+      <p class="p-border">
         <span class="font-weight-bold">
           С думи:
         </span>
         {{priceToWords((reading.amountDue + getTotalFees()))}}</p>
-      <p class="p-border first-el-border">
+      <p class="p-border last-el-border">
         <span class="font-weight-bold">
           Дата:
         </span>
         {{today | date: 'dd.MM.yyyy'}}г.</p>
     </div>
-    <div class="footer">
+<!--    <div class="footer">-->
 
 <!--      <p class="p-border">-->
 <!--        <span class="font-weight-bold">-->
@@ -94,6 +94,6 @@
 <!--          Главен счетоводител:-->
 <!--        </span>-->
 <!--      <p>-->
-    </div>
+<!--    </div>-->
   </div>
 </div>

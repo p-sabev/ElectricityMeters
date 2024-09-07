@@ -80,6 +80,39 @@
           <div class="col-lg-6 col-md-12 mx-auto" #printSection id="print-section">
             <app-receipt [reading]="reading" [fees]="feeList"></app-receipt>
           </div>
+          <div class="col-lg-6 col-md-12 mx-auto" id="print-section-simple" style="display: none;">
+            <h6>
+              <span style="font-weight: bold;">
+                Получена от:
+              </span>
+              {{reading.subscriber.name}}
+            </h6>
+            <h6>
+              <span style="font-weight: bold;">
+                За/срещу:
+              </span>
+              н:{{reading.value}} - с:{{reading.value - reading.difference}} = {{reading.difference}}{{'kvh' | translate}} * {{reading.currentPrice | twoAfterDot}}{{'BgnVaultSmall' | translate}} = {{reading.amountDue | twoAfterDot}}{{'BgnVaultSmall' | translate}}
+            </h6>
+<!--            <h6>-->
+<!--              <span style="font-weight: bold;">-->
+<!--                Получена от:-->
+<!--              </span>-->
+<!--              {{reading.subscriber.name}}-->
+<!--            </h6>-->
+<!--            <h6>-->
+<!--              <span style="font-weight: bold;">-->
+<!--                Получена от:-->
+<!--              </span>-->
+<!--              {{reading.subscriber.name}}-->
+<!--            </h6>-->
+<!--            <h6>-->
+<!--              <span style="font-weight: bold;">-->
+<!--                Получена от:-->
+<!--              </span>-->
+<!--              {{reading.subscriber.name}}-->
+<!--            </h6>-->
+          </div>
+
         </div>
       </div>
 
@@ -100,6 +133,12 @@
               (click)="callPrint()">
               <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
               {{ 'Print' | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn float-end btn-outline-secondary me-2"
+              (click)="callSimplePrint()">
+              <fa-icon [icon]="['fas', 'print']"></fa-icon>
             </button>
 
             <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>

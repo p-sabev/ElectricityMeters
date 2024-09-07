@@ -127,6 +127,9 @@ button.close {
   .modal-xl {
     max-width: calc(100% - 20px) !important;
   }
+  .container {
+    padding: 5px 5px 50px 5px !important;
+  }
 }
 @media screen and (max-width: 900px) {
   .modal-lgg {

@@ -1,4 +1,5 @@
 ﻿using ElectricityMeters.Base;
+using System.Text.Json.Serialization;
 
 namespace ElectricityMeters.Models
 {
@@ -11,6 +12,7 @@ namespace ElectricityMeters.Models
         public int PaymentId { get; set; }
 
         // Navigation property to the Payment entity
+        [JsonIgnore]
         public Payment Payment { get; set; }
     }
 }

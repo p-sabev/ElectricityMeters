@@ -5,14 +5,14 @@
       <app-page-heading [title]="'Prices'"></app-page-heading>
     </div>
 
-    <div class="col-12 mt-5" *appRoleAccess="'Administrator'">
+    <div class="col-12 mt-2" *appRoleAccess="'Administrator'">
       <button class="btn btn-outline-success" (click)="initAddPrice()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
         {{'AddPrice' | translate}}
       </button>
     </div>
 
-    <div class="col-12 mt-5">
+    <div class="col-12 mt-3">
 
       <p-table [value]="pricesList"
                styleClass="p-datatable-gridlines"
