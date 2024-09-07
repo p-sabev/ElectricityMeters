@@ -5,7 +5,7 @@
       <app-page-heading [title]="'Subscribers'"></app-page-heading>
     </div>
 
-    <div *appRoleAccess="'Administrator'" class="col-12 mt-2">
+    <div *appRoleAccess="'Administrator, Moderator'" class="col-12 mt-2">
       <button class="btn btn-outline-success"
               (click)="initAddSubscriber()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
