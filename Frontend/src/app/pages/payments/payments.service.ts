@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
-import {InsertPayment, SearchPaymentsListRequest} from "../../core/models/payment.model";
+import {InsertPayment, SearchPaymentsListRequest, SearchPaymentsReport} from "../../core/models/payment.model";
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,10 @@ export class PaymentsService {
   // Delete
   deletePayment(id: number) {
     return this.http.delete(environment.url + `/api/payments/${id}`);
+  }
+
+  // Search payments report
+  searchPaymentsReport(body: SearchPaymentsReport): Observable<any> {
+    return this.http.post(environment.url + '/api/payments/payment-report', body);
   }
 }

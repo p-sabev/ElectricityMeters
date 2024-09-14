@@ -37,3 +37,21 @@ export interface SearchPaymentsListResponseData {
   date: Date,
   feeList: Fee[]
 }
+
+export interface SearchPaymentsReport {
+  dateFrom: string;
+  dateTo: string;
+}
+
+export interface PaymentsReportResponse {
+  dateFrom: string;
+  dateTo: string;
+  paidTotalElectricity: number;
+  paidTotalFees: number;
+  fees: PaidFees[];
+}
+
+export interface PaidFees {
+  description: string;
+  totalValue: number;
+}

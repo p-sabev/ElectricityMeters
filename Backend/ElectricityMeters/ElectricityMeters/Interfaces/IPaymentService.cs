@@ -10,5 +10,6 @@ namespace ElectricityMeters.Interfaces
         Task<SearchPaymentResponse> SearchPaymentsList(SearchPaymentsRequest request);
         Task<Payment> InsertPaymentAsync(InsertPaymentRequest insertPayment);
         Task<bool> DeletePaymentAsync(int id);
+        Task<PaymentReportResponse> GetPaymentReportAsync(PaymentReportRequest request);
     }
 }

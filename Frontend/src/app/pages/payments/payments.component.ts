@@ -15,6 +15,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {PaymentFee, Reading} from "../../core/models/readings.model";
 import {PrintReceiptComponent} from "../readings/print-receipt/print-receipt.component";
 import {PaginatorModule} from "primeng/paginator";
+import {PaymentReportComponent} from "./payment-report/payment-report.component";
 
 @Component({
   selector: 'app-payments',
@@ -32,7 +33,8 @@ import {PaginatorModule} from "primeng/paginator";
     ConfirmDialogModule,
     PrintReceiptComponent,
     LowerCasePipe,
-    PaginatorModule
+    PaginatorModule,
+    PaymentReportComponent
   ],
   templateUrl: './payments.component.html',
   styleUrl: './payments.component.scss'
@@ -59,6 +61,8 @@ export class PaymentsComponent {
   firstInit: boolean = true;
   noRecords: boolean = false;
   noResults: boolean = false;
+
+  showPaymentReport: boolean = false;
 
   fetchPaymentsList(settings: any = this.lastUsedSettings) {
     this.lastUsedSettings = settings;

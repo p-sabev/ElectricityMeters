@@ -190,5 +190,11 @@
   "IncorrectUserNameOrPassword": "Некоректен потребител или парола",
   "NoResultsWereFound": "Не бяха намерени резултати",
   "NoDefaultFeesAdded": "Няма добавени стандартни такси",
-  "Cancel": "Отказ"
+  "Cancel": "Отказ",
+  "PaymentReport": "Справка плащания",
+  "TotalForElectricity": "Общо за ел. енергия",
+  "TotalForTaxes": "Общо за такси",
+  "Total": "Общо",
+  "ReportPaymentForDates": "Справка за периода",
+  "FeesDistribution": "Разбивка на таксите"
 }

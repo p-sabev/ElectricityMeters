@@ -60,5 +60,13 @@ namespace ElectricityMeters.Controllers
             }            
         }
 
+        [HttpPost("payment-report")]
+        [Authorize]
+        public async Task<IActionResult> GetPaymentReportAsync([FromBody] PaymentReportRequest request)
+        {
+            var response = await _paymentService.GetPaymentReportAsync(request);
+            return Ok(response);
+        }
+
     }
 }

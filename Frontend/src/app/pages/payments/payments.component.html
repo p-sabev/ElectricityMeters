@@ -5,6 +5,16 @@
       <app-page-heading [title]="'Payments'"></app-page-heading>
     </div>
 
+    <ng-container *appRoleAccess="'Administrator, Moderator'">
+      <div *ngIf="!noRecords" class="col-12 mt-2">
+        <button class="btn btn-outline-success"
+                (click)="showPaymentReport = true;">
+          <fa-icon [icon]="['fas', 'file-invoice']" [class]="'me-2'"></fa-icon>
+          {{'PaymentReport' | translate}}
+        </button>
+      </div>
+    </ng-container>
+
     <div *ngIf="noRecords" class="alert alert-info col-12 mt-3">
       {{'NoResultsFound' | translate}}
     </div>
@@ -100,4 +110,8 @@
 <ng-container *ngIf="readingToPrintReceipt">
   <app-print-receipt [reading]="readingToPrintReceipt"
                      (close)="readingToPrintReceipt = null; fetchPaymentsList();"></app-print-receipt>
+</ng-container>
+
+<ng-container>
+  <app-payment-report></app-payment-report>
 </ng-container>

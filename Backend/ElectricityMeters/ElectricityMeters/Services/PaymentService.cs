@@ -123,5 +123,47 @@ namespace ElectricityMeters.Services
             
             
         }
+
+        public async Task<PaymentReportResponse> GetPaymentReportAsync(PaymentReportRequest request)
+        {
+            // Step 1: Filter payments within the specified date range
+            var paymentsInRange = await _dbContext.Payments
+                .Include(p => p.FeeList)
+                .Include(p => p.Reading)
+                .Where(p => p.Reading != null && p.Date >= request.DateFrom && p.Date <= request.DateTo)
+                .ToListAsync();
+
+            // Step 2: Calculate the total amounts for electricity and fees
+            double totalElectricity = paymentsInRange
+                .Where(p => p.Reading != null)
+                .Sum(p => p.Reading.AmountDue);
+            double totalFees = paymentsInRange
+                .SelectMany(p => p.FeeList ?? new List<PaymentFee>())
+                .Sum(f => f.Value);
+
+            // Step 3: Group the fees by description to calculate the total value for each fee type
+            var feeDetails = paymentsInRange
+                .SelectMany(p => p.FeeList ?? new List<PaymentFee>())
+                .GroupBy(f => f.Description)
+                .Select(g => new PaidFees
+                {
+                    Description = g.Key ?? "No Description",
+                    TotalValue = g.Sum(f => f.Value).ToString("F2")
+                })
+                .ToList();
+
+            // Step 4: Create and return the response
+            var response = new PaymentReportResponse
+            {
+                DateFrom = request.DateFrom,
+                DateTo = request.DateTo,
+                PaidTotalElectricity = totalElectricity,
+                PaidTotalFees = totalFees,
+                Fees = feeDetails
+            };
+
+            return response;
+        }
+
     }
 }
