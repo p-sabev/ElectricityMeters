@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   title = 'electricity-meters';
   notificationOptions: Options = {
     position: ['bottom', 'right'],
-    timeOut: 3000,
+    timeOut: 5000,
     showProgressBar: true,
     pauseOnHover: true,
     clickToClose: true,

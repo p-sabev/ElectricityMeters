@@ -186,5 +186,6 @@
   "LastName": "Фамилия",
   "EditUser": "Редакция на потребител",
   "Roles": "Роли",
-  "NoResultsFound": "Няма намерени резултати"
+  "NoResultsFound": "Няма намерени резултати",
+  "IncorrectUserNameOrPassword": "Некоректен потребител или парола"
 }

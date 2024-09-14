@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { LogInCredentials, UserSuccessfullLogInCredentials } from "./login.model";
 import { StorageService } from "../../services/storage.service";
+import {NotificationsEmitterService} from "../../services/notifications.service";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent {
 
   constructor(private authService: AuthService,
               private storageService: StorageService,
-              private router: Router) { }
+              private router: Router,
+              private notifications: NotificationsEmitterService) { }
 
   isSignUp = false;
 
@@ -27,6 +29,8 @@ export class LoginComponent {
     const data = Object.assign({}, this.loginModel);
     this.authService.login(data).subscribe(resp => {
       this.logUserIntoTheSystem(resp);
+    }, () => {
+      this.notifications.Error.emit('IncorrectUserNameOrPassword');
     });
   }
 
