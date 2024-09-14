@@ -56,6 +56,10 @@ export class PaymentsComponent {
 
   readingToPrintReceipt!: Reading | null;
 
+  firstInit: boolean = true;
+  noRecords: boolean = false;
+  noResults: boolean = false;
+
   fetchPaymentsList(settings: any = this.lastUsedSettings) {
     this.lastUsedSettings = settings;
     const body = {
@@ -72,8 +76,19 @@ export class PaymentsComponent {
     this.paymentsService.searchPayments(body).subscribe(resp => {
       this.paymentsList = resp?.data || [];
       this.totalRecords = resp?.totalRecords || 0;
+
+      if (this.firstInit && this.totalRecords === 0) {
+        this.noRecords = true;
+      } else if (!this.firstInit && this.totalRecords === 0) {
+        this.noResults = true;
+      } else {
+        this.noRecords = false;
+        this.noResults = false;
+      }
     }, error => {
       this.errorService.processError(error);
+    }, () => {
+      this.firstInit = false;
     });
   }
 

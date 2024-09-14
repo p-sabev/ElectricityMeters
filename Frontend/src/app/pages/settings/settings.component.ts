@@ -34,6 +34,8 @@ export class SettingsComponent implements OnInit {
   loadedFees: boolean = false;
   feesChanged: boolean = false;
 
+  noFeesAdded: boolean = false;
+
   ngOnInit() {
     this.fetchAllDefaultFees();
   }
@@ -42,6 +44,12 @@ export class SettingsComponent implements OnInit {
     this.settingsService.getDefaultFees().subscribe((data) => {
       this.feeList = data;
       this.loadedFees = true;
+      this.feesChanged = false;
+      if (!data?.length) {
+        this.noFeesAdded = true;
+      } else {
+        this.noFeesAdded = false;
+      }
     }, (error) => {
       this.errorService.processError(error);
     });
@@ -68,5 +76,8 @@ export class SettingsComponent implements OnInit {
   deleteFee(i: number) {
     this.feeList.splice(i, 1);
     this.feesChanged = true;
+    if (!this.feeList?.length) {
+      this.noFeesAdded = true;
+    }
   }
 }

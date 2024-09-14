@@ -75,6 +75,10 @@ export class SubscribersComponent implements OnInit {
 
   switchboardsList: Switchboard[] = [];
 
+  firstInit: boolean = true;
+  noRecords: boolean = false;
+  noResults: boolean = false;
+
   ngOnInit() {
     this.getAllSwitchboards();
   }
@@ -107,8 +111,19 @@ export class SubscribersComponent implements OnInit {
     this.subscribersService.searchSubscribers(body).subscribe(resp => {
       this.subscribers = resp?.data || [];
       this.totalRecords = resp?.totalRecords || 0;
+
+      if (this.firstInit && this.totalRecords === 0) {
+        this.noRecords = true;
+      } else if (!this.firstInit && this.totalRecords === 0) {
+        this.noResults = true;
+      } else {
+        this.noRecords = false;
+        this.noResults = false;
+      }
     }, error => {
       this.errorService.processError(error);
+    }, () => {
+      this.firstInit = false;
     });
   }
 

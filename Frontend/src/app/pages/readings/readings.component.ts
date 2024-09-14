@@ -63,6 +63,7 @@ export class ReadingsComponent {
 
   firstInit: boolean = true;
   noRecords: boolean = false;
+  noResults: boolean = false;
 
   fetchReadingsList(settings: any = this.lastUsedSettings) {
     this.lastUsedSettings = settings;
@@ -83,8 +84,11 @@ export class ReadingsComponent {
 
       if (this.firstInit && this.totalRecords === 0) {
         this.noRecords = true;
+      } else if (!this.firstInit && this.totalRecords === 0) {
+        this.noResults = true;
       } else {
         this.noRecords = false;
+        this.noResults = false;
       }
     }, error => {
       this.errorService.processError(error);

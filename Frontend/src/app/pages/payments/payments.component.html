@@ -5,8 +5,12 @@
       <app-page-heading [title]="'Payments'"></app-page-heading>
     </div>
 
+    <div *ngIf="noRecords" class="alert alert-info col-12 mt-3">
+      {{'NoResultsFound' | translate}}
+    </div>
+
     <!--  Payments list  -->
-    <div class="col-12 mt-3">
+    <div *ngIf="!noRecords" class="col-12 mt-3">
       <p-table [value]="paymentsList"
                styleClass="p-datatable-gridlines"
                [tableStyle]="{ 'width': '100%' }"
@@ -49,6 +53,13 @@
                 <fa-icon [icon]="['fas', 'search']" [class]="'me-2'"></fa-icon>
                 {{ 'Filtrate' | translate }}
               </button>
+            </td>
+          </tr>
+          <tr *ngIf="noResults">
+            <td colspan="11">
+              <div class="alert alert-info mt-2 mx-2">
+                {{'NoResultsWereFound' | translate}}
+              </div>
             </td>
           </tr>
         </ng-template>

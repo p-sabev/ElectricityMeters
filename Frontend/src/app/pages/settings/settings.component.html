@@ -23,6 +23,13 @@
             </tr>
             </thead>
             <tbody>
+            <tr *ngIf="noFeesAdded">
+              <td colspan="3">
+                <div class="alert alert-info mb-1">
+                  {{'NoDefaultFeesAdded' | translate}}
+                </div>
+              </td>
+            </tr>
             <tr *ngFor="let fee of feeList; let i = index;">
               <td>
                 <input
@@ -58,7 +65,8 @@
             </tr>
             <tr>
               <td colspan="3" class="text-center">
-                <button class="btn btn-outline-success" (click)="feeList.push({value: null, description: ''})">
+                <button class="btn btn-outline-success"
+                        (click)="feeList.push({value: null, description: ''}); noFeesAdded = false;">
                   <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
                   {{'AddFee' | translate}}
                 </button>
@@ -69,6 +77,11 @@
         </div>
 
         <div class="card-body text-right">
+          <button class="btn btn-danger me-3"
+                  [disabled]="!feesChanged"
+                  (click)="fetchAllDefaultFees()">
+            {{'Cancel' | translate}}
+          </button>
           <button class="btn btn-success"
                   [disabled]="!feesChanged"
                   (click)="updateFees()">

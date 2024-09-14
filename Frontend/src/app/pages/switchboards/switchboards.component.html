@@ -13,59 +13,69 @@
       </button>
     </div>
 
-    <div class="col-lg-3 col-md-4 col-sm-12 mt-4" *ngFor="let switchboard of switchboardsList">
-      <div class="card" style="width: 100%;">
-        <div class="card-body bg-primary font-weight-bold text-light">
-          <h5 class="card-title">{{'Switchboard' | translate}} - {{switchboard.name}}</h5>
-        </div>
+    <div *ngIf="noRecords" class="alert alert-info col-12 mt-3">
+      {{'NoResultsFound' | translate}}
+    </div>
 
-        <ul *ngIf="switchboard.subscribers?.length"
-            class="list-group list-group-flush">
-          <li class="list-group-item" *ngFor="let subscriber of switchboard.subscribers">
-            {{subscriber.name}}
-            <span class="float-end font-weight-bold">{{subscriber.lastReading ? subscriber.lastReading : subscriber.defaultReading ? subscriber.defaultReading : 0}} {{'kvh' | translate}}</span>
-          </li>
-        </ul>
+    <div *ngIf="noResults" class="alert alert-info col-12 mt-3">
+      {{'NoResultsFound' | translate}}
+    </div>
 
-        <ul *ngIf="!switchboard.subscribers?.length"
-            class="list-group list-group-flush">
-          <li class="list-group-item">
-            {{'ThereAreNoSubscribersForThisSwitchboard' | translate}}
-          </li>
-        </ul>
+    <ng-container *ngIf="!noRecords && !noResults">
+      <div class="col-lg-3 col-md-4 col-sm-12 mt-4" *ngFor="let switchboard of switchboardsList">
+        <div class="card" style="width: 100%;">
+          <div class="card-body bg-primary font-weight-bold text-light">
+            <h5 class="card-title">{{'Switchboard' | translate}} - {{switchboard.name}}</h5>
+          </div>
 
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12 p-0 text-right">
-              <ng-container *appRoleAccess="'Administrator'">
-                <button class="btn btn-outline-danger float-end ms-2"
-                        *ngIf="!switchboard.subscribers?.length"
-                        (click)="askToDeleteSwitchboard(switchboard)">
-                  <fa-icon [icon]="['fas', 'trash']"></fa-icon>
-                </button>
-                <button *ngIf="switchboard.subscribers?.length"
-                        class="btn btn-outline-warning float-end ms-2"
-                        (click)="switchboardForEdit = switchboard;">
-                  <fa-icon [icon]="['fas', 'edit']"></fa-icon>
-                </button>
-              </ng-container>
-              <ng-container *appRoleAccess="'Administrator, Moderator'">
-                <button *ngIf="!switchboard.subscribers?.length"
-                        class="btn btn-outline-warning float-end ms-2"
-                        (click)="switchboardForEdit = switchboard;">
-                  <fa-icon [icon]="['fas', 'edit']"></fa-icon>
-                </button>
-                <button class="btn btn-outline-primary float-end"
-                        *ngIf="switchboard.subscribers?.length"
-                        (click)="subscribersToAddReadings = switchboard.subscribers;">
-                  {{'EnterReadings' | translate}}
-                </button>
-              </ng-container>
+          <ul *ngIf="switchboard.subscribers?.length"
+              class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let subscriber of switchboard.subscribers">
+              {{subscriber.name}}
+              <span class="float-end font-weight-bold">{{subscriber.lastReading ? subscriber.lastReading : subscriber.defaultReading ? subscriber.defaultReading : 0}} {{'kvh' | translate}}</span>
+            </li>
+          </ul>
+
+          <ul *ngIf="!switchboard.subscribers?.length"
+              class="list-group list-group-flush">
+            <li class="list-group-item">
+              {{'ThereAreNoSubscribersForThisSwitchboard' | translate}}
+            </li>
+          </ul>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 p-0 text-right">
+                <ng-container *appRoleAccess="'Administrator'">
+                  <button class="btn btn-outline-danger float-end ms-2"
+                          *ngIf="!switchboard.subscribers?.length"
+                          (click)="askToDeleteSwitchboard(switchboard)">
+                    <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+                  </button>
+                  <button *ngIf="switchboard.subscribers?.length"
+                          class="btn btn-outline-warning float-end ms-2"
+                          (click)="switchboardForEdit = switchboard;">
+                    <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+                  </button>
+                </ng-container>
+                <ng-container *appRoleAccess="'Administrator, Moderator'">
+                  <button *ngIf="!switchboard.subscribers?.length"
+                          class="btn btn-outline-warning float-end ms-2"
+                          (click)="switchboardForEdit = switchboard;">
+                    <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+                  </button>
+                  <button class="btn btn-outline-primary float-end"
+                          *ngIf="switchboard.subscribers?.length"
+                          (click)="subscribersToAddReadings = switchboard.subscribers;">
+                    {{'EnterReadings' | translate}}
+                  </button>
+                </ng-container>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
 
   </div>
 </div>

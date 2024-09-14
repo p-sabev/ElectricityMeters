@@ -187,5 +187,8 @@
   "EditUser": "Редакция на потребител",
   "Roles": "Роли",
   "NoResultsFound": "Няма намерени резултати",
-  "IncorrectUserNameOrPassword": "Некоректен потребител или парола"
+  "IncorrectUserNameOrPassword": "Некоректен потребител или парола",
+  "NoResultsWereFound": "Не бяха намерени резултати",
+  "NoDefaultFeesAdded": "Няма добавени стандартни такси",
+  "Cancel": "Отказ"
 }

@@ -45,6 +45,10 @@ export class SwitchboardsComponent implements OnInit {
   switchboardForEdit: Switchboard | null = null;
   subscribersToAddReadings: Subscriber[] | null | undefined = null;
 
+  firstInit: boolean = true;
+  noRecords: boolean = false;
+  noResults: boolean = false;
+
   ngOnInit() {
     this.fetchSwitchboardsList();
   }
@@ -68,8 +72,19 @@ export class SwitchboardsComponent implements OnInit {
         this.switchboardsList = [];
       }
       this.totalRecords = resp?.totalRecords || 0;
+
+      if (this.firstInit && this.totalRecords === 0) {
+        this.noRecords = true;
+      } else if (!this.firstInit && this.totalRecords === 0) {
+        this.noResults = true;
+      } else {
+        this.noRecords = false;
+        this.noResults = false;
+      }
     }, (error: any) => {
       this.errorService.processError(error);
+    }, () => {
+      this.firstInit = false;
     });
   }
 

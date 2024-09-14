@@ -40,6 +40,10 @@ export class PricesComponent implements OnInit {
   addPrice: boolean = false;
   priceForEdit: Price | null = null;
 
+  firstInit: boolean = true;
+  noRecords: boolean = false;
+  noResults: boolean = false;
+
   ngOnInit() {
     // this.fetchPricesList();
   }
@@ -60,8 +64,19 @@ export class PricesComponent implements OnInit {
     this.pricesService.searchPrices(body).subscribe(resp => {
       this.pricesList = resp?.data || [];
       this.totalRecords = resp?.totalRecords || 0;
+
+      if (this.firstInit && this.totalRecords === 0) {
+        this.noRecords = true;
+      } else if (!this.firstInit && this.totalRecords === 0) {
+        this.noResults = true;
+      } else {
+        this.noRecords = false;
+        this.noResults = false;
+      }
     }, (error: any) => {
       this.errorService.processError(error);
+    }, () => {
+      this.firstInit = false;
     });
   }
 

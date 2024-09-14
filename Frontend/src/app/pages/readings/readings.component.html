@@ -56,6 +56,13 @@
               </button>
             </td>
           </tr>
+          <tr *ngIf="noResults">
+            <td colspan="11">
+              <div class="alert alert-info mt-2 mx-2">
+                {{'NoResultsWereFound' | translate}}
+              </div>
+            </td>
+          </tr>
         </ng-template>
         <ng-template pTemplate="body" let-reading>
           <tr>

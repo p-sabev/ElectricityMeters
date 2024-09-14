@@ -13,7 +13,11 @@
       </button>
     </div>
 
-    <div class="col-12 mt-3">
+    <div *ngIf="noRecords" class="alert alert-info col-12 mt-3">
+      {{'NoResultsFound' | translate}}
+    </div>
+
+    <div *ngIf="!noRecords" class="col-12 mt-3">
 
       <p-table [value]="subscribers"
                styleClass="p-datatable-gridlines"
@@ -79,6 +83,14 @@
                 <fa-icon [icon]="['fas', 'search']" [class]="'me-2'"></fa-icon>
                 {{ 'Filtrate' | translate }}
               </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="noResults">
+            <td colspan="5">
+              <div class="alert alert-info mt-2 mx-2">
+                {{'NoResultsWereFound' | translate}}
+              </div>
             </td>
           </tr>
         </ng-template>
