@@ -46,6 +46,8 @@ export class PrintReceiptComponent implements OnInit {
 
   feeList: Fee[] = [];
 
+  encoding: string = '';
+
   ngOnInit() {
     if (!this.reading?.feeList) {
       this.fetchAllDefaultFees();
@@ -90,7 +92,8 @@ export class PrintReceiptComponent implements OnInit {
         '  max-width: 500px;\n' +
         '  margin: 20px auto;\n' +
         '  padding: 10px; ' +
-        '  border-radius: 5px;\n' +
+        '  border-radius: 5px; ' +
+        '  zoom: 1.8;\n' +
         '}\n' +
         '\n' +
         '.receipt-left, .receipt-right {\n' +
@@ -119,7 +122,7 @@ export class PrintReceiptComponent implements OnInit {
         '}\n' +
         '\n' +
         'p {\n' +
-        '  padding: 10px;\n' +
+        '  padding: 2px 5px;\n' +
         '  margin: 0;\n' +
         '}\n' +
         '\n' +
@@ -165,6 +168,7 @@ export class PrintReceiptComponent implements OnInit {
       const contents = styles + document.getElementById('print-section').innerHTML;
 
       document.body.innerHTML = contents;
+
       setTimeout(() => {
         window.print();
         setTimeout(() => {
@@ -174,7 +178,7 @@ export class PrintReceiptComponent implements OnInit {
 
     }, 100);
   }
-  //
+
   // callPrint = () => {
   //   setTimeout(() => {
   //     const mywindow = window.open('', '_blank', 'width=1080,height=1920,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
@@ -290,17 +294,27 @@ export class PrintReceiptComponent implements OnInit {
     return str.split('').map((char: string) => cyrillicMap[char] || char).join('');
   }
 
-  callSimplePrint = () => {
-    // @ts-ignore
-    const printContent = document.getElementById('print-section-simple').innerHTML;
-
-    document.body.innerHTML = this.cyrillicToLatin(printContent);
-    setTimeout(() => {
-      window.print();
-      setTimeout(() => {
-        location.reload();
-      }, 5000);
-    }, 1000);
+  // callSimplePrint = () => {
+  //   // @ts-ignore
+  //   const printContent = document.getElementById('print-section-simple').innerHTML;
+  //
+  //   let meta = document.querySelector('meta[charset]');
+  //   if (meta) {
+  //     meta.setAttribute('charset', this.encoding);
+  //   } else {
+  //     meta = document.createElement('meta');
+  //     meta.setAttribute('charset', this.encoding);
+  //     document.head.appendChild(meta);
+  //   }
+  //
+  //   document.body.innerHTML = this.cyrillicToLatin(printContent);
+  //
+  //   setTimeout(() => {
+  //     window.print();
+  //     setTimeout(() => {
+  //       location.reload();
+  //     }, 5000);
+  //   }, 1000);
 
     // setTimeout(() => {
     //   const mywindow = window.open('', '_blank', 'width=1080,height=1920,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
@@ -321,5 +335,5 @@ export class PrintReceiptComponent implements OnInit {
     //     }, 1500);
     //   }
     // }, 100);
-  }
+  // }
 }

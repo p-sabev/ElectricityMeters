@@ -7,7 +7,7 @@
 
     <ng-container *appRoleAccess="'Administrator, Moderator'">
       <div *ngIf="!noRecords" class="col-12 mt-2">
-        <button class="btn btn-outline-success"
+        <button class="btn btn-outline-secondary"
                 (click)="showPaymentReport = true;">
           <fa-icon [icon]="['fas', 'file-invoice']" [class]="'me-2'"></fa-icon>
           {{'PaymentReport' | translate}}
@@ -112,6 +112,6 @@
                      (close)="readingToPrintReceipt = null; fetchPaymentsList();"></app-print-receipt>
 </ng-container>
 
-<ng-container>
-  <app-payment-report></app-payment-report>
+<ng-container *ngIf="showPaymentReport">
+  <app-payment-report (close)="showPaymentReport = false;"></app-payment-report>
 </ng-container>
