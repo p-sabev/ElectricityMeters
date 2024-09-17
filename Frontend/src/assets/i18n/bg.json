@@ -196,5 +196,8 @@
   "TotalForTaxes": "Общо за такси",
   "Total": "Общо",
   "ReportPaymentForDates": "Справка за периода",
-  "FeesDistribution": "Разбивка на таксите"
+  "FeesDistribution": "Разбивка на таксите",
+  "PendingPaymentsReport": "Справка предстоящи плащания",
+  "SubscribersAwaitingPayment": "Абонати с предстоящо плащане",
+  "PaymentsCount": "Бр. сметки"
 }

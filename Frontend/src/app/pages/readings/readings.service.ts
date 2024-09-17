@@ -50,4 +50,9 @@ export class ReadingsService {
   deleteReading(id: number) {
     return this.http.delete(environment.url + `/api/readings/${id}`);
   }
+
+  // Get all pending payments
+  fetchAllPendingPayments() {
+    return this.http.post(environment.url + '/api/readings/pending-payments', {});
+  }
 }

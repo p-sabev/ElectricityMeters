@@ -1,0 +1,80 @@
+<div #pendingPaymentsReportModal class="modal show-modal">
+  <div class="modal-dialog modal-xl animate__animated animate__fadeIn">
+    <div class="modal-content">
+      <div class="modal-header">
+        <fa-icon [icon]="['fas', 'file-invoice']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <h3 translate>PendingPaymentsReport</h3>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close.emit()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-12 mt-3" *ngIf="pendingPaymentsReportData">
+            <div class="card">
+<!--              <div class="card-header">-->
+<!--                <h4 class="mt-2 text-center">{{'ReportPaymentForDates' | translate}}: {{paymentReportData.dateFrom | date: 'dd.MM.yyyy'}} - {{paymentReportData.dateTo | date: 'dd.MM.yyyy'}}</h4>-->
+<!--              </div>-->
+              <div class="card-header">
+                <h6 class="ms-2">
+                  {{'TotalForElectricity' | translate}}: {{pendingPaymentsReportData.pendingTotalElectricity | twoAfterDot}} {{'BgnVaultSmall' | translate}}
+                </h6>
+                <h6 class="ms-2">
+                  {{'TotalForTaxes' | translate}}: {{pendingPaymentsReportData.pendingTotalFees | twoAfterDot}} {{'BgnVaultSmall' | translate}}
+                </h6>
+                <h6 class="ms-2">
+                  {{'Total' | translate}}: <span class="font-weight-bold">{{(pendingPaymentsReportData.pendingTotalElectricity + pendingPaymentsReportData.pendingTotalFees) | twoAfterDot}} {{'BgnVaultSmall' | translate}}</span>
+                </h6>
+
+              </div>
+              <div class="card-body" *ngIf="pendingPaymentsReportData.subscribersPendindPayments?.length">
+                <h3 class="mt-2 text-center">{{'SubscribersAwaitingPayment' | translate}}</h3>
+
+                <p-table [value]="pendingPaymentsReportData.subscribersPendindPayments"
+                         styleClass="p-datatable-gridlines"
+                         sortField="subscriber.name"
+                         [sortOrder]="1"
+                         [tableStyle]="{ 'width': '100%' }"
+                         [scrollable]="true" scrollHeight="80vh">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th scope="col" pSortableColumn="subscriber.name">{{'Subscriber' | translate}}<p-sortIcon field="subscriber.name" /></th>
+                      <th scope="col" pSortableColumn="paymentsCount" *ngIf="hasSomeWithMoreThanOnePayment">{{'PaymentsCount' | translate}}<p-sortIcon field="paymentsCount" /></th>
+                      <th scope="col" pSortableColumn="totalAmountDue">{{'TotalForElectricity' | translate}}<p-sortIcon field="totalAmountDue" /></th>
+                      <th scope="col">{{'TotalForTaxes' | translate}}</th>
+                      <th scope="col">{{'Total' | translate}}</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-subscriber>
+                    <tr>
+                      <td class="font-weight-bold">{{subscriber.subscriber.name}}</td>
+                      <td *ngIf="hasSomeWithMoreThanOnePayment">{{subscriber.paymentsCount}}</td>
+                      <td>{{subscriber.totalAmountDue | twoAfterDot}} {{'BgnVaultSmall' | translate}}</td>
+                      <td>{{(subscriber.paymentsCount * pendingPaymentsReportData.standardFeesSum) | twoAfterDot}} {{'BgnVaultSmall' | translate}}</td>
+                      <td class="font-weight-bold">{{(subscriber.totalAmountDue + (subscriber.paymentsCount * pendingPaymentsReportData.standardFeesSum)) | twoAfterDot}} {{'BgnVaultSmall' | translate}}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="row" style="width: 100%">
+          <div class="col-12 p-0">
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

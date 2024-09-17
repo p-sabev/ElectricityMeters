@@ -1,7 +1,9 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
+using ElectricityMeters.Request.Payments;
 using ElectricityMeters.Request.Readings;
 using ElectricityMeters.Response.Readings;
+using ElectricityMeters.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -119,6 +121,14 @@ namespace ElectricityMeters.Controllers
                 return NotFound("No readings found for the specified subscriber.");
             }
             return Ok(readings);
+        }
+
+        [HttpPost("pending-payments")]
+        [Authorize]
+        public async Task<IActionResult> GetAllPendingPayments()
+        {
+            var response = await _readingService.GetAllPendingPayments();
+            return Ok(response);
         }
     }
 }

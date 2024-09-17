@@ -1,6 +1,7 @@
 ﻿using ElectricityMeters.Interfaces;
 using ElectricityMeters.Models;
 using ElectricityMeters.Request.Readings;
+using ElectricityMeters.Response.Payments;
 using ElectricityMeters.Response.Readings;
 using Microsoft.EntityFrameworkCore;
 
@@ -333,6 +334,45 @@ namespace ElectricityMeters.Services
                 .OrderByDescendingDynamic("dateTo")
                 .ToListAsync();
         }
+
+        public async Task<PendingPaymentsResponse> GetAllPendingPayments()
+        {
+            // Step 1: Get all readings that do not have a payment (i.e., Payment is null)
+            var pendingReadings = await _dbContext.Readings
+                .Include(r => r.Subscriber)
+                .Where(r => r.Payment == null)
+                .ToListAsync();
+
+            // Step 2: Calculate PendingTotalElectricity (sum of AmountDue for all readings without a payment)
+            double pendingTotalElectricity = pendingReadings.Sum(r => r.AmountDue);
+
+            // Step 3: Calculate PendingTotalFees (number of readings without payment * sum of all StandartFees)
+            var standardFeesSum = await _dbContext.StandartFees.SumAsync(f => f.Value);
+            double pendingTotalFees = pendingReadings.Count * standardFeesSum;
+
+            // Step 4: Group the readings by Subscriber and calculate PaymentsCount and TotalAmountDue for each subscriber
+            var subscribersPendingPayments = pendingReadings
+                .GroupBy(r => r.Subscriber)
+                .Select(g => new SubscibersPndingPayments
+                {
+                    Subscriber = g.Key,
+                    PaymentsCount = g.Count(),
+                    TotalAmountDue = g.Sum(r => r.AmountDue)
+                })
+                .ToList();
+
+            // Step 5: Create and return the response
+            var response = new PendingPaymentsResponse
+            {
+                PendingTotalElectricity = pendingTotalElectricity,
+                PendingTotalFees = pendingTotalFees,
+                StandardFeesSum = standardFeesSum,
+                SubscribersPendindPayments = subscribersPendingPayments
+            };
+
+            return response;
+        }
+
 
         private bool ReadingExists(int id)
         {

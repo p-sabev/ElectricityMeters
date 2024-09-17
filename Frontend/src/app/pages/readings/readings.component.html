@@ -9,6 +9,16 @@
       {{'NoResultsFound' | translate}}
     </div>
 
+    <ng-container *appRoleAccess="'Administrator, Moderator'">
+      <div *ngIf="!noRecords" class="col-12 mt-2">
+        <button class="btn btn-outline-secondary"
+                (click)="showPendingPaymentsReport = true;">
+          <fa-icon [icon]="['fas', 'file-invoice']" [class]="'me-2'"></fa-icon>
+          {{'PendingPaymentsReport' | translate}}
+        </button>
+      </div>
+    </ng-container>
+
     <div *ngIf="!noRecords" class="col-12 mt-3">
 
       <p-table [value]="readingsList"
@@ -131,4 +141,8 @@
 <ng-container *ngIf="readingToPrintReceipt">
   <app-print-receipt [reading]="readingToPrintReceipt"
                      (close)="readingToPrintReceipt = null; fetchReadingsList();"></app-print-receipt>
+</ng-container>
+
+<ng-container *ngIf="showPendingPaymentsReport">
+  <app-pending-payments (close)="showPendingPaymentsReport = false;"></app-pending-payments>
 </ng-container>

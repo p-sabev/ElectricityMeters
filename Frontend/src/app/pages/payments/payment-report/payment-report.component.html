@@ -21,6 +21,7 @@
                 <p-calendar
                   #dateFromField="ngModel"
                   [(ngModel)]="dateFrom"
+                  (ngModelChange)="paymentReportData = null;"
                   [firstDayOfWeek]="1"
                   [style]="{ width: '100%' }"
                   [inputStyle]="{ width: '100%' }"
@@ -38,6 +39,7 @@
                 <p-calendar
                   #dateToField="ngModel"
                   [(ngModel)]="dateTo"
+                  (ngModelChange)="paymentReportData = null;"
                   [firstDayOfWeek]="1"
                   [style]="{ width: '100%' }"
                   [inputStyle]="{ width: '100%' }"
@@ -62,10 +64,10 @@
 
           <div class="col-12 mt-3" *ngIf="paymentReportData">
             <div class="card">
+<!--              <div class="card-header">-->
+<!--                <h4 class="mt-2 text-center">{{'ReportPaymentForDates' | translate}}: {{paymentReportData.dateFrom | date: 'dd.MM.yyyy'}} - {{paymentReportData.dateTo | date: 'dd.MM.yyyy'}}</h4>-->
+<!--              </div>-->
               <div class="card-header">
-                <h4 class="mt-2 text-center">{{'ReportPaymentForDates' | translate}}: {{paymentReportData.dateFrom | date: 'dd.MM.yyyy'}} - {{paymentReportData.dateTo | date: 'dd.MM.yyyy'}}</h4>
-              </div>
-              <div class="card-body">
                 <h6 class="ms-2">
                   {{'TotalForElectricity' | translate}}: {{paymentReportData.paidTotalElectricity | twoAfterDot}} {{'BgnVaultSmall' | translate}}
                 </h6>

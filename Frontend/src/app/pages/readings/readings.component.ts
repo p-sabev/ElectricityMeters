@@ -16,6 +16,7 @@ import {PrintReceiptComponent} from "./print-receipt/print-receipt.component";
 import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
 import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
 import {PaginatorModule} from "primeng/paginator";
+import {PendingPaymentsComponent} from "./pending-payments/pending-payments.component";
 
 @Component({
   selector: 'app-readings',
@@ -36,7 +37,8 @@ import {PaginatorModule} from "primeng/paginator";
     RoleAccessDirective,
     LowerCasePipe,
     NgForOf,
-    PaginatorModule
+    PaginatorModule,
+    PendingPaymentsComponent
   ],
   templateUrl: './readings.component.html',
   styleUrl: './readings.component.scss'
@@ -64,6 +66,8 @@ export class ReadingsComponent {
   firstInit: boolean = true;
   noRecords: boolean = false;
   noResults: boolean = false;
+
+  showPendingPaymentsReport: boolean = false;
 
   fetchReadingsList(settings: any = this.lastUsedSettings) {
     this.lastUsedSettings = settings;

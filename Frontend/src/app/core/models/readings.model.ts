@@ -47,3 +47,16 @@ export interface SearchReadingsRequest {
   sorting: Sorting;
   name: string;
 }
+
+export interface PendingPaymentsReportResponse {
+  pendingTotalElectricity: number;
+  pendingTotalFees: number;
+  standardFeesSum: number;
+  subscribersPendindPayments: SubscibersPendingPayments[];
+}
+
+export interface SubscibersPendingPayments {
+  subscriber: Subscriber;
+  paymentsCount: number;
+  totalAmountDue: number;
+}

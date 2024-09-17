@@ -1,5 +1,6 @@
 ﻿using ElectricityMeters.Models;
 using ElectricityMeters.Request.Readings;
+using ElectricityMeters.Response.Payments;
 using ElectricityMeters.Response.Readings;
 
 namespace ElectricityMeters.Interfaces
@@ -13,5 +14,6 @@ namespace ElectricityMeters.Interfaces
         Task<bool> DeleteReadingAsync(int id);
         Task<IEnumerable<Reading>> InsertMultipleReadingsAsync(InsertMultipleReadings insertMultipleReadings);
         Task<IEnumerable<Reading>> GetAllReadingsBySubscriberIdAsync(int subscriberId);
+        Task<PendingPaymentsResponse> GetAllPendingPayments();
     }
 }
