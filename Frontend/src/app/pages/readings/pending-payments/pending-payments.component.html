@@ -38,7 +38,7 @@
                          sortField="subscriber.name"
                          [sortOrder]="1"
                          [tableStyle]="{ 'width': '100%' }"
-                         [scrollable]="true" scrollHeight="80vh">
+                         [scrollable]="true" scrollHeight="calc(100vh - 400px)">
                   <ng-template pTemplate="header">
                     <tr>
                       <th scope="col" pSortableColumn="subscriber.name">{{'Subscriber' | translate}}<p-sortIcon field="subscriber.name" /></th>
