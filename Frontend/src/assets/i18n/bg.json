@@ -199,5 +199,7 @@
   "FeesDistribution": "Разбивка на таксите",
   "PendingPaymentsReport": "Справка предстоящи плащания",
   "SubscribersAwaitingPayment": "Абонати с предстоящо плащане",
-  "PaymentsCount": "Бр. сметки"
+  "PaymentsCount": "Бр. сметки",
+  "YouHaveToLogInToProceed": "Трябва да влезнете в акаунта си, за да продължите.",
+  "Info": "Информация"
 }

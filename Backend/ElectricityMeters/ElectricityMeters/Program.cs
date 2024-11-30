@@ -70,23 +70,30 @@ builder.Services.AddAuthentication(options =>
 
     options.Events = new JwtBearerEvents
     {
-        OnAuthenticationFailed = context =>
+        OnAuthenticationFailed = async context =>
         {
-            context.NoResult();
             context.Response.StatusCode = 401;
             context.Response.ContentType = "text/plain";
-            return context.Response.WriteAsync(context.Exception.ToString());
+
+            await context.Response.CompleteAsync();
+
+            // Return to prevent further processing
+            return;
         },
         OnTokenValidated = async context =>
         {
             var userService = context.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
             var userId = context.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await userService.FindByIdAsync(userId);
+
             if (user == null)
             {
                 context.Fail("Unauthorized");
+                return; // Ensure the event stops processing
             }
-        }
+
+            await Task.CompletedTask;
+        },
     };
 });
 

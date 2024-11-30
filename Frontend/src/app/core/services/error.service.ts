@@ -38,6 +38,7 @@ export class ErrorService {
         this.router.navigate(['/home']);
         this.removeFlagWithoutLogout();
       } else {
+        this.notification.Info.emit("YouHaveToLogInToProceed");
         this.route.data.subscribe((data) => {
           if (data['title'] !== 'LogIn') {
             this.notification.InfoDebounce.emit({ key: 'Unauthorized', message: 'Error' });
