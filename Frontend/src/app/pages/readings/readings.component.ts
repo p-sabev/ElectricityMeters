@@ -17,6 +17,10 @@ import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.comp
 import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
 import {PaginatorModule} from "primeng/paginator";
 import {PendingPaymentsComponent} from "./pending-payments/pending-payments.component";
+import {TooltipModule} from "primeng/tooltip";
+import {
+  DisplayTwoThreePhaseReadingComponent
+} from "./display-two-three-phase-reading/display-two-three-phase-reading.component";
 
 @Component({
   selector: 'app-readings',
@@ -38,7 +42,9 @@ import {PendingPaymentsComponent} from "./pending-payments/pending-payments.comp
     LowerCasePipe,
     NgForOf,
     PaginatorModule,
-    PendingPaymentsComponent
+    PendingPaymentsComponent,
+    TooltipModule,
+    DisplayTwoThreePhaseReadingComponent
   ],
   templateUrl: './readings.component.html',
   styleUrl: './readings.component.scss'

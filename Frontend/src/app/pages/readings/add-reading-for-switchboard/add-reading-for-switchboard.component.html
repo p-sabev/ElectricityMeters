@@ -74,21 +74,77 @@
                   <div class="col-12">
                     <label class="font-weight-bold">{{ 'ReadingInKvh' | translate }}*</label>
 
-                    <input
-                      #readingField="ngModel"
-                      [(ngModel)]="readingsValues[i]"
-                      type="number"
-                      [min]="(subscriber.lastReading ? subscriber.lastReading : (subscriber.defaultReading ? subscriber.defaultReading : 0))"
-                      class="form-control"
-                      name="value"
-                      id="readingField"
-                      title="{{ 'ReadingInKvh' | translate }}*"
-                      placeholder="{{ 'ReadingInKvh' | translate }}*" />
+                    @if (!subscriber.phaseCount || subscriber.phaseCount !== 1) {
+                      <div class="row phases-row">
+                        <div [ngClass]="{'col-6': subscriber.phaseCount !== 3, 'col-4': subscriber.phaseCount === 3}">
+                          <input
+                            #firstPhaseControl="ngModel"
+                            [(ngModel)]="firstPhaseValues[i]"
+                            type="number"
+                            class="form-control"
+                            name="firstPhaseValue"
+                            id="firstPhaseValue"
+                            title="{{ 'FirstPhaseReadingInKvh' | translate }}*"
+                            placeholder="{{ 'FirstPhaseReadingInKvh' | translate }}*" />
 
-                    <app-form-errors [withoutTooltip]="true"
-                                     [control]="readingField"
-                                     [min]="(subscriber.lastReading ? subscriber.lastReading : (subscriber.defaultReading ? subscriber.defaultReading : 0))"
-                                     [max]="2147483647"></app-form-errors>
+                          <app-form-errors [withoutTooltip]="true"
+                                           [control]="firstPhaseControl"
+                                           [max]="MAX_INT"></app-form-errors>
+                        </div>
+                        <div [ngClass]="{'col-6': subscriber.phaseCount !== 3, 'col-4': subscriber.phaseCount === 3}">
+                          <input
+                            #secondPhaseControl="ngModel"
+                            [(ngModel)]="secondPhaseValues[i]"
+                            type="number"
+                            class="form-control"
+                            name="secondPhaseValue"
+                            id="secondPhaseValue"
+                            title="{{ 'SecondPhaseReadingInKvh' | translate }}*"
+                            placeholder="{{ 'SecondPhaseReadingInKvh' | translate }}*" />
+
+                          <app-form-errors [withoutTooltip]="true"
+                                           [control]="secondPhaseControl"
+                                           [max]="MAX_INT"></app-form-errors>
+                        </div>
+                        @if (subscriber.phaseCount === 3) {
+                          <div class="col-4">
+                            <input
+                              #thirdPhaseControl="ngModel"
+                              [(ngModel)]="thirdPhaseValues[i]"
+                              type="number"
+                              class="form-control"
+                              name="thirdPhaseValue"
+                              id="thirdPhaseValue"
+                              title="{{ 'ThirdPhaseReadingInKvh' | translate }}*"
+                              placeholder="{{ 'ThirdPhaseReadingInKvh' | translate }}*" />
+
+                            <app-form-errors [withoutTooltip]="true"
+                                             [control]="thirdPhaseControl"
+                                             [max]="MAX_INT"></app-form-errors>
+                          </div>
+                        }
+
+                      </div>
+                    } @else {
+                      <input
+                        #readingField="ngModel"
+                        [(ngModel)]="readingsValues[i]"
+                        type="number"
+                        [min]="(subscriber.lastReading ? subscriber.lastReading : (subscriber.defaultReading ? subscriber.defaultReading : 0))"
+                        class="form-control"
+                        name="value"
+                        id="readingField"
+                        title="{{ 'ReadingInKvh' | translate }}*"
+                        placeholder="{{ 'ReadingInKvh' | translate }}*" />
+
+                      <app-form-errors [withoutTooltip]="true"
+                                       [control]="readingField"
+                                       [min]="(subscriber.lastReading ? subscriber.lastReading :
+                                              (subscriber.defaultReading ? subscriber.defaultReading : 0))"
+                                       [max]="MAX_INT"></app-form-errors>
+                    }
+
+
                   </div>
                 </div>
               </li>

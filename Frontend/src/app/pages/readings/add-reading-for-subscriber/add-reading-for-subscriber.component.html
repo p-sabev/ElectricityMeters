@@ -63,19 +63,72 @@
             <div class="col-lg-6 col-md-12 mt-3">
               <label>{{ 'ReadingInKvh' | translate }}*</label>
 
-              <input
-                type="number"
-                class="form-control"
-                name="value"
-                id="value"
-                formControlName="value"
-                title="{{ 'ReadingInKvh' | translate }}*"
-                placeholder="{{ 'ReadingInKvh' | translate }}*" />
+              @if (!subscriber.phaseCount || subscriber.phaseCount !== 1) {
+                <div class="row phases-row">
+                  <div [ngClass]="{'col-6': subscriber.phaseCount !== 3, 'col-4': subscriber.phaseCount === 3}">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="firstPhaseValue"
+                      id="firstPhaseValue"
+                      formControlName="firstPhaseValue"
+                      title="{{ 'FirstPhaseReadingInKvh' | translate }}*"
+                      placeholder="{{ 'FirstPhaseReadingInKvh' | translate }}*" />
 
-              <app-form-errors [withoutTooltip]="true"
-                               [control]="addEditReadingForm.get('value')"
-                               [min]="minReadingValue"
-                               [max]="2147483647"></app-form-errors>
+                    <app-form-errors [withoutTooltip]="true"
+                                     [control]="addEditReadingForm.get('firstPhaseValue')"
+                                     [min]="minReadingValue"
+                                     [max]="MAX_INT"></app-form-errors>
+                  </div>
+                  <div [ngClass]="{'col-6': subscriber.phaseCount !== 3, 'col-4': subscriber.phaseCount === 3}">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="secondPhaseValue"
+                      id="secondPhaseValue"
+                      formControlName="secondPhaseValue"
+                      title="{{ 'SecondPhaseReadingInKvh' | translate }}*"
+                      placeholder="{{ 'SecondPhaseReadingInKvh' | translate }}*" />
+
+                    <app-form-errors [withoutTooltip]="true"
+                                     [control]="addEditReadingForm.get('secondPhaseValue')"
+                                     [min]="minReadingValue"
+                                     [max]="MAX_INT"></app-form-errors>
+                  </div>
+                  @if (subscriber.phaseCount === 3) {
+                    <div class="col-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        name="thirdPhaseValue"
+                        id="thirdPhaseValue"
+                        formControlName="thirdPhaseValue"
+                        title="{{ 'ThirdPhaseReadingInKvh' | translate }}*"
+                        placeholder="{{ 'ThirdPhaseReadingInKvh' | translate }}*" />
+
+                      <app-form-errors [withoutTooltip]="true"
+                                       [control]="addEditReadingForm.get('thirdPhaseValue')"
+                                       [min]="minReadingValue"
+                                       [max]="MAX_INT"></app-form-errors>
+                    </div>
+                  }
+
+                </div>
+              } @else {
+                <input
+                  type="number"
+                  class="form-control"
+                  name="value"
+                  id="value"
+                  formControlName="value"
+                  title="{{ 'ReadingInKvh' | translate }}*"
+                  placeholder="{{ 'ReadingInKvh' | translate }}*" />
+
+                <app-form-errors [withoutTooltip]="true"
+                                 [control]="addEditReadingForm.get('value')"
+                                 [min]="minReadingValue"
+                                 [max]="MAX_INT"></app-form-errors>
+              }
             </div>
 
           </div>

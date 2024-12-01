@@ -8,9 +8,9 @@ import * as moment from "moment/moment";
 import {CalendarModule} from "primeng/calendar";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-add-reading-for-switchboard',
@@ -23,7 +23,8 @@ import {TranslateModule} from "@ngx-translate/core";
     ReactiveFormsModule,
     TranslateModule,
     FormsModule,
-    NgForOf
+    NgForOf,
+    NgClass
   ],
   templateUrl: './add-reading-for-switchboard.component.html',
   styleUrl: './add-reading-for-switchboard.component.scss'
@@ -34,13 +35,19 @@ export class AddReadingForSwitchboardComponent implements OnInit {
 
   constructor(private readingsService: ReadingsService,
               private notifications: NotificationsEmitterService,
-              private errorService: ErrorService) {
+              private errorService: ErrorService,
+              private translate: TranslateService) {
   }
+
+  MAX_INT = 2147483647;
 
   minDateFrom: Date | null = new Date();
   readingsDateFrom: Date | null = null;
   readingsDateTo: Date | null = moment(new Date()).toDate();
   readingsValues: number[] = [];
+  firstPhaseValues: number[] = [];
+  secondPhaseValues: number[] = [];
+  thirdPhaseValues: number[] = [];
 
   ngOnInit() {
     this.readingsDateFrom = moment().startOf('year').toDate();
@@ -64,18 +71,69 @@ export class AddReadingForSwitchboardComponent implements OnInit {
     }, 200);
   }
 
-  addReadings() {
+  getBodyToInsertReadings(): InsertMultipleReadings | null {
     const body: InsertMultipleReadings = {
       subscribersReading: []
     };
+    let hasInvalidValues = false;
+
     this.subscribers?.forEach((subscriber: Subscriber, index: number) => {
-      body.subscribersReading.push({
-        subscriberId: subscriber.id,
-        dateFrom: moment(this.readingsDateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z',
-        dateTo: moment(this.readingsDateTo).format('YYYY-MM-DD') + 'T00:00:00.000Z',
-        value: this.readingsValues[index] || 0
-      });
+      const onePhaseHasValue = (subscriber.phaseCount === 1 && this.readingsValues[index]);
+      const twoPhaseHasValue = (subscriber.phaseCount === 2 && this.firstPhaseValues[index] && this.secondPhaseValues[index]);
+      const threePhaseHasValue = (subscriber.phaseCount === 3 && this.firstPhaseValues[index] && this.secondPhaseValues[index] && this.thirdPhaseValues[index]);
+
+      if (onePhaseHasValue || twoPhaseHasValue || threePhaseHasValue) {
+        const value = this.calculateReadingValue(subscriber, index);
+
+        if (value !== null) {
+          if (subscriber.lastReading && value < subscriber.lastReading) {
+            hasInvalidValues = true;
+            this.notifications.Info.emit(this.translate.instant('SubscriberReadingValueIsLowerThanLastReading', {subscriberName: subscriber.name}));
+          }
+
+          body.subscribersReading.push(this.createReadingEntry(subscriber, value, index));
+        }
+      }
     });
+
+    if (hasInvalidValues) {
+      return null;
+    }
+
+    return body;
+  }
+
+  calculateReadingValue(subscriber: Subscriber, index: number): number | null {
+    if (subscriber.phaseCount === 1 && this.readingsValues[index]) {
+      return this.readingsValues[index] || 0;
+    } else if (subscriber.phaseCount === 2 && this.firstPhaseValues[index] && this.secondPhaseValues[index]) {
+      return (this.firstPhaseValues[index] || 0) + (this.secondPhaseValues[index] || 0);
+    } else if (subscriber.phaseCount === 3 && this.firstPhaseValues[index] && this.secondPhaseValues[index] && this.thirdPhaseValues[index]) {
+      return (this.firstPhaseValues[index] || 0) + (this.secondPhaseValues[index] || 0) + (this.thirdPhaseValues[index] || 0);
+    }
+    return null;
+  }
+
+  createReadingEntry(subscriber: Subscriber, value: number, index: number): any {
+    return {
+      subscriberId: subscriber.id,
+      dateFrom: moment(this.readingsDateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z',
+      dateTo: moment(this.readingsDateTo).format('YYYY-MM-DD') + 'T00:00:00.000Z',
+      value: value,
+      firstPhaseValue: this.firstPhaseValues[index] || 0,
+      secondPhaseValue: this.secondPhaseValues[index] || 0,
+      thirdPhaseValue: this.thirdPhaseValues[index] || 0,
+    };
+  }
+
+  addReadings() {
+    const body = this.getBodyToInsertReadings();
+    if (!body) {
+      return;
+    } else if (!body.subscribersReading.length) {
+      return this.notifications.Info.emit('NoReadingsToInsert');
+    }
+
     this.readingsService.insertReadingsForSubscribers(body).subscribe(() => {
       this.notifications.Success.emit('SuccessfullyAddedReadings');
       this.close.emit();

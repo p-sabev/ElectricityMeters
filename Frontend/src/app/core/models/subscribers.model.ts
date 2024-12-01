@@ -13,6 +13,10 @@ export interface Subscriber {
   lastReading?: number;
   note?: string;
   defaultReading?: number;
+  phaseCount: 1 | 2 | 3;
+  lastFirstPhaseValue?: number;
+  lastSecondPhaseValue?: number;
+  lastThirdPhaseValue?: number;
 }
 
 export interface InsertSubscriber {
@@ -24,6 +28,7 @@ export interface InsertSubscriber {
   meterNumber?: string;
   note?: string;
   defaultReading?: number;
+  phaseCount: 1 | 2 | 3;
 }
 
 export interface EditSubscriber {
@@ -36,6 +41,7 @@ export interface EditSubscriber {
   meterNumber?: string;
   note?: string;
   defaultReading?: number;
+  phaseCount: 1 | 2 | 3;
 }
 
 export interface SearchSubscribersRequest {

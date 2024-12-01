@@ -55,6 +55,9 @@ namespace ElectricityMeters.Services
                     DateFrom = r.DateFrom,
                     DateTo = r.DateTo,
                     Value = r.Value,
+                    FirstPhaseValue = r.FirstPhaseValue,
+                    SecondPhaseValue = r.SecondPhaseValue,
+                    ThirdPhaseValue = r.ThirdPhaseValue,
                     AmountDue = r.AmountDue,
                     Difference = r.Difference,
                     CurrentPrice = r.CurrentPrice,
@@ -80,7 +83,8 @@ namespace ElectricityMeters.Services
                             Phone = s.Phone,
                             SwitchboardNumber = s.Switchboard.Name,
                             MeterNumber = s.MeterNumber,
-                            Note = s.Note
+                            Note = s.Note,
+                            PhaseCount = s.PhaseCount
                         })
                         .FirstOrDefault(),
                     IsPaid = _dbContext.Payments.Any(p => p.Reading.Id == r.Id),
@@ -142,6 +146,9 @@ namespace ElectricityMeters.Services
                 DateFrom = insertReading.DateFrom,
                 DateTo = insertReading.DateTo,
                 Value = insertReading.Value,
+                FirstPhaseValue = insertReading.FirstPhaseValue,
+                SecondPhaseValue = insertReading.SecondPhaseValue,
+                ThirdPhaseValue = insertReading.ThirdPhaseValue,
                 Difference = (double)difference,
                 AmountDue = (double)amountDue,
                 CurrentPrice = currentPrice.PriceInLv,
@@ -206,6 +213,9 @@ namespace ElectricityMeters.Services
                     DateFrom = insertReading.DateFrom,
                     DateTo = insertReading.DateTo,
                     Value = insertReading.Value,
+                    FirstPhaseValue = insertReading.FirstPhaseValue,
+                    SecondPhaseValue = insertReading.SecondPhaseValue,
+                    ThirdPhaseValue = insertReading.ThirdPhaseValue,
                     Difference = (double)difference,
                     AmountDue = (double)amountDue,
                     CurrentPrice = currentPrice.PriceInLv,
@@ -275,6 +285,9 @@ namespace ElectricityMeters.Services
             reading.DateFrom = editReading.DateFrom;
             reading.DateTo = editReading.DateTo;
             reading.Value = editReading.Value;
+            reading.FirstPhaseValue = editReading.FirstPhaseValue;
+            reading.SecondPhaseValue = editReading.SecondPhaseValue;
+            reading.ThirdPhaseValue = editReading.ThirdPhaseValue;
             reading.Difference = (double)difference;
             reading.AmountDue = (double)amountDue;
             reading.CurrentPrice = currentPrice.PriceInLv;

@@ -78,7 +78,8 @@ namespace ElectricityMeters.Services
                         .Where(r => p.Id == r.Subscriber.Id)
                         .OrderByDescending(r => r.DateTo)
                         .FirstOrDefault(),
-                    DefaultReading = p.DefaultReading
+                    DefaultReading = p.DefaultReading,
+                    PhaseCount = p.PhaseCount,
                 })
                 .ToListAsync();
 
@@ -95,7 +96,8 @@ namespace ElectricityMeters.Services
                     Note = p.Note,
                     LastRecordDate = p.LastReadingData?.DateTo,
                     LastReading = p.LastReadingData?.Value,
-                    DefaultReading = p.DefaultReading
+                    DefaultReading = p.DefaultReading,
+                    PhaseCount = p.PhaseCount,
                 })
                 .ToList();
 
@@ -124,7 +126,8 @@ namespace ElectricityMeters.Services
                 Phone = insertSubscriber.Phone,
                 MeterNumber = insertSubscriber.MeterNumber,
                 Note = insertSubscriber.Note,
-                DefaultReading = insertSubscriber.DefaultReading
+                DefaultReading = insertSubscriber.DefaultReading,
+                PhaseCount = insertSubscriber.PhaseCount,
             };
 
             _dbContext.Subscribers.Add(subscriber);
@@ -155,6 +158,7 @@ namespace ElectricityMeters.Services
             existingSubscriber.MeterNumber = editSubscriber.MeterNumber;
             existingSubscriber.Note = editSubscriber.Note;
             existingSubscriber.DefaultReading = editSubscriber.DefaultReading;
+            existingSubscriber.PhaseCount = editSubscriber.PhaseCount;
 
             try
             {

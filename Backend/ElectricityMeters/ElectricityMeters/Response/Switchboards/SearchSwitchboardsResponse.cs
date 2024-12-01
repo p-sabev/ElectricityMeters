@@ -25,7 +25,11 @@ namespace ElectricityMeters.Response.Switchboards
         public string? MeterNumber { get; set; }
         public DateTime? LastRecordDate { get; set; }
         public double? LastReading { get; set; }
+        public double? LastFirstPhaseValue { get; set; }
+        public double? LastSecondPhaseValue { get; set; }
+        public double? LastThirdPhaseValue { get; set; }
         public string Note { get; set; }
         public double? DefaultReading { get; set; }
+        public required int PhaseCount { get; set; }
     }
 }

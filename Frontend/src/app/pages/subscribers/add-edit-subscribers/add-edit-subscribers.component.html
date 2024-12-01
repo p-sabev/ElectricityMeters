@@ -136,6 +136,43 @@
                                [min]="0"></app-form-errors>
             </div>
 
+            <div class="col-lg-6 col-md-12 mt-3">
+              <label class="mb-1">{{ 'PhaseCount' | translate }}</label>
+
+              <div class="flex flex-wrap gap-3">
+                <div class="flex align-items-center phase-radio">
+                  <p-radioButton
+                    [value]="1"
+                    formControlName="phaseCount"
+                    [inputId]="'1'" />
+                  <label [for]="'1'" class="phase-label ml-2">
+                    1
+                  </label>
+                </div>
+                <div class="flex align-items-center phase-radio">
+                  <p-radioButton
+                    [value]="2"
+                    formControlName="phaseCount"
+                    [inputId]="'2'" />
+                  <label [for]="'2'" class="phase-label ml-2">
+                    2
+                  </label>
+                </div>
+                <div class="flex align-items-center phase-radio">
+                  <p-radioButton
+                    [value]="3"
+                    formControlName="phaseCount"
+                    [inputId]="'3'" />
+                  <label [for]="'3'" class="phase-label ml-2">
+                    3
+                  </label>
+                </div>
+              </div>
+
+              <app-form-errors [withoutTooltip]="true"
+                               [control]="addEditForm.get('phaseCount')"></app-form-errors>
+            </div>
+
           </div>
         </form>
       </div>

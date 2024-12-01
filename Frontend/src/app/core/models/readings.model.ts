@@ -7,6 +7,9 @@ export interface Reading {
   dateFrom: Date | string;
   dateTo: Date | string;
   value: number;
+  firstPhaseValue: number;
+  secondPhaseValue: number;
+  thirdPhaseValue: number;
   amountDue: number;
   difference: number;
   currentPrice: number;
@@ -27,6 +30,9 @@ export interface InsertReading {
   dateFrom: Date | string;
   dateTo: Date | string;
   value: number;
+  firstPhaseValue: number;
+  secondPhaseValue: number;
+  thirdPhaseValue: number;
 }
 
 export interface InsertMultipleReadings {
@@ -39,6 +45,9 @@ export interface EditReading {
   dateFrom: Date | string;
   dateTo: Date | string;
   value: number;
+  firstPhaseValue: number;
+  secondPhaseValue: number;
+  thirdPhaseValue: number;
   currentPrice?: number;
 }
 

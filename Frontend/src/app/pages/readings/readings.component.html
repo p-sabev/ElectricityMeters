@@ -77,10 +77,19 @@
         <ng-template pTemplate="body" let-reading>
           <tr>
             <td>{{ reading.id }}</td>
-            <td class="font-weight-bold">{{ reading.subscriber?.name }}</td>
+            <td class="font-weight-bold">
+              {{ reading.subscriber?.name }}
+              {{reading.subscriber?.phaseCount === 2 ? ('TwoPhaseText' | translate) : (reading.subscriber?.phaseCount === 3 ? ('ThreePhaseText' | translate) : '')}}
+            </td>
             <td>{{ reading.dateFrom | date: 'dd.MM.yyyy' }}</td>
             <td>{{ reading.dateTo | date: 'dd.MM.yyyy' }}</td>
-            <td>{{ reading.value }} {{'kvh' | translate}}</td>
+            <td>
+              {{ reading.value }} {{'kvh' | translate}}
+              <app-display-two-three-phase-reading [phaseCount]="reading.subscriber?.phaseCount"
+                                                   [firstPhaseValue]="reading.firstPhaseValue || 0"
+                                                   [secondPhaseValue]="reading.secondPhaseValue || 0"
+                                                   [thirdPhaseValue]="reading.thirdPhaseValue || 0"></app-display-two-three-phase-reading>
+            </td>
             <td>{{ reading.difference }} {{'kvh' | translate}}</td>
             <td>{{ reading.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ reading.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>

@@ -76,9 +76,18 @@
         <ng-template pTemplate="body" let-payment>
           <tr>
             <td>{{ payment.id }}</td>
-            <td class="font-weight-bold">{{ payment.subscriber?.name }}</td>
+            <td class="font-weight-bold">
+              {{ payment.subscriber?.name }}
+              {{ payment.subscriber?.phaseCount === 2 ? ('TwoPhaseText' | translate) : (payment.subscriber?.phaseCount === 3 ? ('ThreePhaseText' | translate) : '')}}
+            </td>
             <td>{{ payment.date | date: 'dd.MM.yyyy' }}</td>
-            <td>{{ payment.reading?.value }} {{'kvh' | translate}}</td>
+            <td>
+              {{ payment.reading?.value }} {{'kvh' | translate}}
+              <app-display-two-three-phase-reading [phaseCount]="payment.subscriber?.phaseCount"
+                                                   [firstPhaseValue]="payment?.reading?.firstPhaseValue || 0"
+                                                   [secondPhaseValue]="payment?.reading?.secondPhaseValue || 0"
+                                                   [thirdPhaseValue]="payment?.reading?.thirdPhaseValue || 0"></app-display-two-three-phase-reading>
+            </td>
             <td>{{ payment.reading?.difference }} {{'kvh' | translate}}</td>
             <td>{{ payment.reading?.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
             <td>{{ payment.reading?.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>

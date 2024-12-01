@@ -17,11 +17,15 @@ import {
 } from "../readings/add-reading-for-switchboard/add-reading-for-switchboard.component";
 import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
 import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
+import {TooltipModule} from "primeng/tooltip";
+import {
+  DisplayTwoThreePhaseReadingComponent
+} from "../readings/display-two-three-phase-reading/display-two-three-phase-reading.component";
 
 @Component({
   selector: 'app-switchboards',
   standalone: true,
-  imports: [FormsModule, CommonModule, TranslateModule, FaIconComponent, AddEditSubscribersComponent, ConfirmDialogModule, AddEditSwitchboardComponent, AddReadingForSwitchboardComponent, PageHeadingComponent, RoleAccessDirective],
+  imports: [FormsModule, CommonModule, TranslateModule, FaIconComponent, AddEditSubscribersComponent, ConfirmDialogModule, AddEditSwitchboardComponent, AddReadingForSwitchboardComponent, PageHeadingComponent, RoleAccessDirective, TooltipModule, DisplayTwoThreePhaseReadingComponent],
   providers: [ConfirmationService],
   templateUrl: './switchboards.component.html',
   styleUrl: './switchboards.component.scss'

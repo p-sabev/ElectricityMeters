@@ -13,5 +13,6 @@ namespace ElectricityMeters.Request.Subscribers
         public string? MeterNumber { get; set; }
         public string Note { get; set; }
         public double? DefaultReading { get; set; }
+        public required int PhaseCount { get; set; }
     }
 }

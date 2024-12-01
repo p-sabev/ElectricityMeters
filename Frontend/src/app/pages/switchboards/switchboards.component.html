@@ -32,7 +32,14 @@
               class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let subscriber of switchboard.subscribers">
               {{subscriber.name}}
-              <span class="float-end font-weight-bold">{{subscriber.lastReading ? subscriber.lastReading : subscriber.defaultReading ? subscriber.defaultReading : 0}} {{'kvh' | translate}}</span>
+              {{subscriber.phaseCount === 2 ? ('TwoPhaseText' | translate) : (subscriber.phaseCount === 3 ? ('ThreePhaseText' | translate) : '')}}
+              <span class="float-end font-weight-bold">
+                <app-display-two-three-phase-reading [phaseCount]="subscriber.phaseCount"
+                                                     [firstPhaseValue]="subscriber.lastFirstPhaseValue || 0"
+                                                     [secondPhaseValue]="subscriber.lastSecondPhaseValue || 0"
+                                                     [thirdPhaseValue]="subscriber.lastThirdPhaseValue || 0"></app-display-two-three-phase-reading>
+                {{subscriber.lastReading ? subscriber.lastReading : subscriber.defaultReading ? subscriber.defaultReading : 0}} {{'kvh' | translate}}
+              </span>
             </li>
           </ul>
 

@@ -21,6 +21,7 @@ namespace ElectricityMeters.Response.Subscribers
         public double? LastReading { get; set; }
         public double? DefaultReading { get; set; }
         public string Note { get; set; }
+        public required int PhaseCount { get; set; }
     }
 
     public class SubscribersStartResponse
@@ -36,5 +37,6 @@ namespace ElectricityMeters.Response.Subscribers
         public Reading? LastReadingData {  get; set; }
         public string Note { get; set; }
         public double? DefaultReading { get; set; }
+        public required int PhaseCount { get; set; }
     }
 }

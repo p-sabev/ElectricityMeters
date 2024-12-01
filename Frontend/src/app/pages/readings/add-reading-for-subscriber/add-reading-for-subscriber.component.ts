@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
 import {Subscriber} from "../../../core/models/subscribers.model";
@@ -25,7 +25,8 @@ import {CalendarModule} from "primeng/calendar";
     NgIf,
     ReactiveFormsModule,
     TranslateModule,
-    CalendarModule
+    CalendarModule,
+    NgClass
   ],
   templateUrl: './add-reading-for-subscriber.component.html',
   styleUrl: './add-reading-for-subscriber.component.scss'
@@ -39,6 +40,8 @@ export class AddReadingForSubscriberComponent implements OnInit {
               private notifications: NotificationsEmitterService,
               private errorService: ErrorService) {
   }
+
+  MAX_INT = 2147483647;
 
   addEditReadingForm!: FormGroup;
   lastReadingDate: Date | null = null;
@@ -58,7 +61,13 @@ export class AddReadingForSubscriberComponent implements OnInit {
       id: new FormControl<number | null>(this.readingToEdit?.id || null, this.readingToEdit ? [Validators.required] : []),
       subscriberId: new FormControl<number>(this.subscriber.id, [Validators.required]),
       value: new FormControl<number | null>(this.readingToEdit ? this.readingToEdit.value : null,
-        [Validators.required, Validators.min(this.minReadingValue), Validators.max(2147483647)]),
+        this.subscriber.phaseCount === 1 ? [Validators.required, Validators.min(this.minReadingValue), Validators.max(this.MAX_INT)] : []),
+      firstPhaseValue: new FormControl<number | null>(this.readingToEdit ? this.readingToEdit.value : null,
+        this.subscriber.phaseCount > 1 ? [Validators.required, Validators.min(this.minReadingValue), Validators.max(this.MAX_INT)] : []),
+      secondPhaseValue: new FormControl<number | null>(this.readingToEdit ? this.readingToEdit.value : null,
+        this.subscriber.phaseCount > 1 ? [Validators.required, Validators.min(this.minReadingValue), Validators.max(this.MAX_INT)] : []),
+      thirdPhaseValue: new FormControl<number | null>(this.readingToEdit ? this.readingToEdit.value : null,
+        this.subscriber.phaseCount > 2 ? [Validators.required, Validators.min(this.minReadingValue), Validators.max(this.MAX_INT)] : []),
       dateFrom: new FormControl<Date | null>(this.readingToEdit ? moment(this.readingToEdit.dateFrom).toDate() : this.lastReadingDate, [Validators.required]),
       dateTo: new FormControl<Date>(this.readingToEdit ? moment(this.readingToEdit.dateTo).toDate() : moment(new Date()).toDate(), [Validators.required]),
     });
@@ -66,9 +75,20 @@ export class AddReadingForSubscriberComponent implements OnInit {
 
   addReading() {
     const body = this.addEditReadingForm?.getRawValue() || {};
+
+    body.firstPhaseValue = body.firstPhaseValue || 0;
+    body.secondPhaseValue = body.secondPhaseValue || 0;
+    body.thirdPhaseValue = body.thirdPhaseValue || 0;
+
+    if (this.subscriber.phaseCount === 2) {
+      body.value = (body.firstPhaseValue + body.secondPhaseValue);
+    } else if (this.subscriber.phaseCount === 3) {
+      body.value = (body.firstPhaseValue + body.secondPhaseValue + body.thirdPhaseValue);
+    }
     body.dateFrom = moment(body.dateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z';
     body.dateTo = moment(body.dateTo).format('YYYY-MM-DD') + 'T00:00:00.000Z';
     delete body.id;
+
     this.readingsService.insertReading(body).subscribe(() => {
       this.notifications.Success.emit('SuccessfullyAddedReading');
       this.close.emit();

@@ -16,6 +16,10 @@ import {PaymentFee, Reading} from "../../core/models/readings.model";
 import {PrintReceiptComponent} from "../readings/print-receipt/print-receipt.component";
 import {PaginatorModule} from "primeng/paginator";
 import {PaymentReportComponent} from "./payment-report/payment-report.component";
+import {TooltipModule} from "primeng/tooltip";
+import {
+  DisplayTwoThreePhaseReadingComponent
+} from "../readings/display-two-three-phase-reading/display-two-three-phase-reading.component";
 
 @Component({
   selector: 'app-payments',
@@ -34,7 +38,9 @@ import {PaymentReportComponent} from "./payment-report/payment-report.component"
     PrintReceiptComponent,
     LowerCasePipe,
     PaginatorModule,
-    PaymentReportComponent
+    PaymentReportComponent,
+    TooltipModule,
+    DisplayTwoThreePhaseReadingComponent
   ],
   templateUrl: './payments.component.html',
   styleUrl: './payments.component.scss'

@@ -9,6 +9,9 @@ namespace ElectricityMeters.Models
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public double Value { get; set; }
+        public double FirstPhaseValue { get; set; }
+        public double SecondPhaseValue { get; set; }
+        public double ThirdPhaseValue { get; set; }
         public double AmountDue { get; set; }
         public double Difference { get; set; }
         public double CurrentPrice { get; set; }
@@ -18,12 +21,15 @@ namespace ElectricityMeters.Models
 
         public Reading() { }
 
-        public Reading(int id, DateTime dateFrom, DateTime dateTo, double value, double amountDue, double difference, double currentPrice, Subscriber subscriber)
+        public Reading(int id, DateTime dateFrom, DateTime dateTo, double value, double firstPhaseValue, double secondPhaseValue, double thirdPhaseValue, double amountDue, double difference, double currentPrice, Subscriber subscriber)
         {
             Id = id;
             DateFrom = dateFrom;
             DateTo = dateTo;
             Value = value;
+            FirstPhaseValue = firstPhaseValue; 
+            SecondPhaseValue = secondPhaseValue; 
+            ThirdPhaseValue = thirdPhaseValue;
             AmountDue = amountDue;
             Difference = difference;
             CurrentPrice = currentPrice;

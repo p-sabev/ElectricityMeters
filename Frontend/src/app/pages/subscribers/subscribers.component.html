@@ -100,7 +100,10 @@
         <ng-template pTemplate="body" let-subscriber>
           <tr>
 <!--            <td>{{ subscriber.numberPage }}</td>-->
-            <td class="font-weight-bold">{{ subscriber.name }}</td>
+            <td class="font-weight-bold">
+              {{ subscriber.name }}
+              {{subscriber.phaseCount === 2 ? ('TwoPhaseText' | translate) : (subscriber.phaseCount === 3 ? ('ThreePhaseText' | translate) : '')}}
+            </td>
             <td>{{ subscriber.switchboard?.name }}</td>
 <!--            <td>{{ subscriber.meterNumber }}</td>-->
             <td>
@@ -124,11 +127,11 @@
                 <a class="nav-link text-success cursor-pointer btn-action" (click)="subscriberToAddRecord = subscriber">
                   <fa-icon [icon]="['fas', 'plus-square']" [class]="'me-2'"></fa-icon>
                 </a>
-              </ng-container>
-              <ng-container *appRoleAccess="'Administrator'">
                 <a class="nav-link text-warning cursor-pointer btn-action" (click)="openSubscriberForEdit(subscriber)">
                   <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
                 </a>
+              </ng-container>
+              <ng-container *appRoleAccess="'Administrator'">
                 <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeleteSubscriber(subscriber)">
                   <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
                 </a>

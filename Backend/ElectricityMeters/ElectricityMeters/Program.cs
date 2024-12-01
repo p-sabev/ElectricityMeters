@@ -77,7 +77,6 @@ builder.Services.AddAuthentication(options =>
 
             await context.Response.CompleteAsync();
 
-            // Return to prevent further processing
             return;
         },
         OnTokenValidated = async context =>

@@ -10,6 +10,7 @@ import {SwitchboardsService} from "../../switchboards/switchboards.service";
 import {Switchboard} from "../../../core/models/switchboards.model";
 import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {RadioButtonModule} from "primeng/radiobutton";
 
 @Component({
   selector: 'app-add-edit-subscribers',
@@ -21,7 +22,8 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
     FormErrorsComponent,
     NgIf,
     NgForOf,
-    FaIconComponent
+    FaIconComponent,
+    RadioButtonModule
   ],
   templateUrl: './add-edit-subscribers.component.html',
   styleUrl: './add-edit-subscribers.component.scss'
@@ -56,6 +58,7 @@ export class AddEditSubscribersComponent implements OnInit {
       meterNumber: new FormControl<string>(this.subscriberToEdit?.meterNumber ? this.subscriberToEdit.meterNumber : '', [Validators.maxLength(50)]),
       note: new FormControl<string>(this.subscriberToEdit?.note ? this.subscriberToEdit.note : '', [Validators.maxLength(500)]),
       defaultReading: new FormControl<number | null | undefined>(this.subscriberToEdit ? this.subscriberToEdit.defaultReading : null, [Validators.min(0)]),
+      phaseCount: new FormControl<1 | 2 | 3>(this.subscriberToEdit ? this.subscriberToEdit.phaseCount : 1, [Validators.required]),
     });
   }
 

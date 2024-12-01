@@ -65,8 +65,24 @@ namespace ElectricityMeters.Services
                                 .OrderByDescending(r => r.DateTo)
                                 .Select(r => r.Value)
                                 .FirstOrDefault(),
+                            LastFirstPhaseValue = _dbContext.Readings
+                                .Where(r => r.Subscriber.Id == s.Id)
+                                .OrderByDescending(r => r.DateTo)
+                                .Select(r => r.FirstPhaseValue)
+                                .FirstOrDefault(),
+                            LastSecondPhaseValue = _dbContext.Readings
+                                .Where(r => r.Subscriber.Id == s.Id)
+                                .OrderByDescending(r => r.DateTo)
+                                .Select(r => r.SecondPhaseValue)
+                                .FirstOrDefault(),
+                            LastThirdPhaseValue = _dbContext.Readings
+                                .Where(r => r.Subscriber.Id == s.Id)
+                                .OrderByDescending(r => r.DateTo)
+                                .Select(r => r.ThirdPhaseValue)
+                                .FirstOrDefault(),
                             Note = s.Note,
-                            DefaultReading = s.DefaultReading
+                            DefaultReading = s.DefaultReading,
+                            PhaseCount = s.PhaseCount,
                         })
                         .ToList()
                 })
@@ -96,8 +112,24 @@ namespace ElectricityMeters.Services
                             .OrderByDescending(r => r.DateTo)
                             .Select(r => r.Value)
                             .FirstOrDefault(),
+                        LastFirstPhaseValue = _dbContext.Readings
+                            .Where(r => r.Subscriber.Id == s.Id)
+                            .OrderByDescending(r => r.DateTo)
+                            .Select(r => r.FirstPhaseValue)
+                            .FirstOrDefault(),
+                        LastSecondPhaseValue = _dbContext.Readings
+                            .Where(r => r.Subscriber.Id == s.Id)
+                            .OrderByDescending(r => r.DateTo)
+                            .Select(r => r.SecondPhaseValue)
+                            .FirstOrDefault(),
+                        LastThirdPhaseValue = _dbContext.Readings
+                            .Where(r => r.Subscriber.Id == s.Id)
+                            .OrderByDescending(r => r.DateTo)
+                            .Select(r => r.ThirdPhaseValue)
+                            .FirstOrDefault(),
                         Note = s.Note,
-                        DefaultReading = s.DefaultReading
+                        DefaultReading = s.DefaultReading,
+                        PhaseCount = s.PhaseCount,
                     })
                     .ToListAsync();
             }

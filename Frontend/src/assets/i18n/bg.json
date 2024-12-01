@@ -118,6 +118,9 @@
   "AddReadings": "Добавяне на показания",
   "EditReading": "Редакция на показание",
   "ReadingInKvh": "Показание, квч.",
+  "FirstPhaseReadingInKvh": "Фаза 1, квч.",
+  "SecondPhaseReadingInKvh": "Фаза 2, квч.",
+  "ThirdPhaseReadingInKvh": "Фаза 3, квч.",
   "Date": "Дата",
   "Subscriber": "Абонат",
   "AreYouSureToDeleteThisReading": "Сигурни ли сте, че искате да изтриете това показание",
@@ -201,5 +204,10 @@
   "SubscribersAwaitingPayment": "Абонати с предстоящо плащане",
   "PaymentsCount": "Бр. сметки",
   "YouHaveToLogInToProceed": "Трябва да влезнете в акаунта си, за да продължите.",
-  "Info": "Информация"
+  "Info": "Информация",
+  "PhaseCount": "Брой фази",
+  "TwoPhaseText": "(2-фазен)",
+  "ThreePhaseText": "(3-фазен)",
+  "SubscriberReadingValueIsLowerThanLastReading": "Стойността на показанието за абонат - '{{subscriberName}}' е по-ниска от последното показание",
+  "NoReadingsToInsert": "Липсват коректни показания които да бъдат въведени"
 }

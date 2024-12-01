@@ -15,6 +15,9 @@ namespace ElectricityMeters.Response.Readings
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public double Value { get; set; }
+        public double FirstPhaseValue { get; set; }
+        public double SecondPhaseValue { get; set; }
+        public double ThirdPhaseValue { get; set; }
         public double AmountDue { get; set; }
         public double Difference { get; set; }
         public double CurrentPrice { get; set; }
@@ -35,5 +38,6 @@ namespace ElectricityMeters.Response.Readings
         public DateTime? LastRecordDate { get; set; }
         public double? LastReading { get; set; }
         public string? Note { get; set; }
+        public required int PhaseCount { get; set; }
     }
 }
