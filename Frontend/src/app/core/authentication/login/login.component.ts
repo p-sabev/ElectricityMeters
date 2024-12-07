@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import { Router } from "@angular/router";
-import { AuthService } from "../../services/auth.service";
-import { LogInCredentials, UserSuccessfullLogInCredentials } from "./login.model";
-import { StorageService } from "../../services/storage.service";
+import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
+import {LogInCredentials, UserSuccessfullLogInCredentials} from "./login.model";
+import {StorageService} from "../../services/storage.service";
 import {NotificationsEmitterService} from "../../services/notifications.service";
 
 @Component({
@@ -16,7 +16,8 @@ export class LoginComponent {
   constructor(private authService: AuthService,
               private storageService: StorageService,
               private router: Router,
-              private notifications: NotificationsEmitterService) { }
+              private notifications: NotificationsEmitterService) {
+  }
 
   isSignUp = false;
 
@@ -27,10 +28,13 @@ export class LoginComponent {
 
   logIn() {
     const data = Object.assign({}, this.loginModel);
-    this.authService.login(data).subscribe(resp => {
-      this.logUserIntoTheSystem(resp);
-    }, () => {
-      this.notifications.Error.emit('IncorrectUserNameOrPassword');
+    this.authService.login(data).subscribe({
+      next: (resp) => {
+        this.logUserIntoTheSystem(resp);
+      },
+      error: () => {
+        this.notifications.Error.emit('IncorrectUserNameOrPassword');
+      }
     });
   }
 
@@ -38,7 +42,6 @@ export class LoginComponent {
     localStorage.setItem('userId', (userData.userId || ''));
     this.setToken(userData.token);
     this.setRoles(userData.roles);
-    // this.setRefreshToken(userData.refresh_token);
     this.router.navigate(['']);
   }
 
@@ -49,10 +52,6 @@ export class LoginComponent {
 
   setRoles(roles: string[]) {
     localStorage.setItem('roles', JSON.stringify(roles));
-  }
-
-  setRefreshToken(refreshToken: string) {
-    console.log('RefreshToken', refreshToken);
   }
 
 }

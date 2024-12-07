@@ -15,7 +15,7 @@ export class ErrorService {
   ) {}
 
   processError(error: any) {
-    console.log(error);
+    console.error(error);
     if (error.status === 504) {
       this.notification.Error.emit(error.statusText);
     } else if (error.status === 502) {

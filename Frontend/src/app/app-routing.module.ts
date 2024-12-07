@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./core/ui/home/home.component";
 import {NotFoundComponent} from "./core/ui/not-found/not-found.component";
 import {LoginComponent} from "./core/authentication/login/login.component";
-import {SignupComponent} from "./core/authentication/signup/signup.component";
 import {UsersComponent} from "./pages/users/users.component";
 import {SubscribersComponent} from "./pages/subscribers/subscribers.component";
 import {SwitchboardsComponent} from "./pages/switchboards/switchboards.component";
@@ -11,7 +10,7 @@ import {PricesComponent} from "./pages/prices/prices.component";
 import {ReadingsComponent} from "./pages/readings/readings.component";
 import {PaymentsComponent} from "./pages/payments/payments.component";
 import {SettingsComponent} from "./pages/settings/settings.component";
-import {AuthGuard} from "./core/guards/auth.guard";
+import {AuthGuard} from "./core/guards/auth/auth.guard";
 
 const routes: Routes = [
   {
@@ -70,11 +69,6 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     data: { title: 'Вход' },
-  },
-  {
-    path: 'register',
-    component: SignupComponent,
-    data: { title: 'Регистрация' },
   },
   {
     path: 'not-found',

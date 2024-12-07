@@ -15,10 +15,7 @@ export class AppComponent implements OnInit {
               private _notifications: NotificationsService,
               private translate: TranslateService,
               private primeNgConfig: PrimeNGConfig) {
-    translate.addLangs(['bg']);
-    translate.setDefaultLang('bg');
-    translate.use('bg');
-    this.translate.get('primeng').subscribe((res) => this.primeNgConfig.setTranslation(res));
+    this.setTranslateProps();
   }
 
   title = 'electricity-meters';
@@ -37,32 +34,41 @@ export class AppComponent implements OnInit {
     this.subscribeForMessageNotifications();
   }
 
+  setTranslateProps() {
+    this.translate.addLangs(['bg']);
+    this.translate.setDefaultLang('bg');
+    this.translate.use('bg');
+    this.translate.get('primeng').subscribe((res) => this.primeNgConfig.setTranslation(res));
+  }
+
   subscribeForMessageNotifications() {
     this.notificationEmitter.Success.subscribe((msg) => {
       this.showNotification(msg, 'Success');
     });
-    this.notificationEmitter.Error.subscribe((error: { key: any; message: any }) => {
-      if (error.key && error.message) {
-        if (this.hasTranslation(`${error.key}${error.message}`)) {
-          this.showNotificationError(`${error.key}${error.message}`, 'Error');
-        } else {
-          this.translate.get('UnhandledKeyMessageError', { error: `${error.key}${error.message}` }).subscribe((msg) => {
-            this.showNotificationError(msg, 'Error');
-          });
-        }
-      } else {
-        if (this.hasTranslation(`${error.toString()}`)) {
-          this.showNotificationError(`${error.toString()}`, 'Error');
-        } else {
-          this.translate.get('UnhandledKeyMessageError', { error: `${error.toString()}` }).subscribe((msg) => {
-            this.showNotificationError(msg, 'Error');
-          });
-        }
-      }
+    this.notificationEmitter.Error.subscribe((error: { key: string; message: string }) => {
+      this.handleErrorNotification(error);
     });
     this.notificationEmitter.Info.subscribe((msg) => {
       this.showNotification(msg, 'Info');
     });
+  }
+
+  handleErrorNotification(error: { key: string; message: string }) {
+    if (error.key && error.message) {
+      this.tryToTranslateAndShowErrorMessage(`${error.key}${error.message}`);
+    } else {
+      this.tryToTranslateAndShowErrorMessage(`${error.toString()}`);
+    }
+  }
+
+  tryToTranslateAndShowErrorMessage(errorText: string) {
+    if (this.hasTranslation(errorText)) {
+      this.showNotificationError(errorText, 'Error');
+    } else {
+      this.translate.get('UnhandledKeyMessageError', { error: errorText }).subscribe((msg) => {
+        this.showNotificationError(msg, 'Error');
+      });
+    }
   }
 
   hasTranslation(key: string): boolean {

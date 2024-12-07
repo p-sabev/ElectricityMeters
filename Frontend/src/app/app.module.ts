@@ -4,12 +4,7 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './core/authentication/login/login.component';
-import { SignupComponent } from './core/authentication/signup/signup.component';
-import { RestorePasswordComponent } from './core/authentication/restore-password/restore-password.component';
-import { FooterComponent } from './core/ui/footer/footer.component';
 import { LoaderComponent } from './core/ui/loader/loader.component';
-import { MenuComponent } from './core/ui/menu/menu.component';
-import { NotFoundComponent } from './core/ui/not-found/not-found.component';
 import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
@@ -21,27 +16,21 @@ import {ButtonModule} from "primeng/button";
 import { TreeModule } from 'primeng/tree';
 import {ComingSoonComponent} from "./pages/coming-soon/coming-soon.component";
 import {SharedModule} from "./shared/shared/shared.module";
-import {LoaderInterceptorService} from "./core/interceptors/loader-interceptor.service";
+import {LoaderInterceptorService} from "./core/interceptors/loader/loader-interceptor.service";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {SimpleNotificationsModule} from "angular2-notifications";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import {HeaderComponent} from "./core/ui/header/header.component";
-import {TokenInterceptor} from "./core/interceptors/token-interceptor.interceptor";
+import {TokenInterceptor} from "./core/interceptors/token/token-interceptor.interceptor";
 import { ServiceWorkerModule } from '@angular/service-worker';
-import {AuthGuard} from "./core/guards/auth.guard";
+import {AuthGuard} from "./core/guards/auth/auth.guard";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent,
-    RestorePasswordComponent,
-    FooterComponent,
-    LoaderComponent,
-    MenuComponent,
-    NotFoundComponent,
     ComingSoonComponent,
   ],
   imports: [
@@ -64,13 +53,14 @@ import {AuthGuard} from "./core/guards/auth.guard";
     ButtonModule,
     TreeModule,
     ConfirmDialogModule,
-    HeaderComponent,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    LoaderComponent,
+    HeaderComponent
   ],
   providers: [
     provideClientHydration(),

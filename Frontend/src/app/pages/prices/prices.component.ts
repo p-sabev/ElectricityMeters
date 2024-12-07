@@ -60,7 +60,7 @@ export class PricesComponent implements OnInit {
         sortDirection: settings.sortOrder
       }
     }
-    console.log(body);
+
     this.pricesService.searchPrices(body).subscribe(resp => {
       this.pricesList = resp?.data || [];
       this.totalRecords = resp?.totalRecords || 0;
