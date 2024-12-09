@@ -1,5 +1,5 @@
-import {InsertSubscriber, Subscriber} from "./subscribers.model";
-import {Paging, Sorting} from "./base-models.model";
+import { InsertSubscriber, Subscriber } from './subscribers.model';
+import { Paging, Sorting } from './base-models.model';
 
 export interface Reading {
   id: number;

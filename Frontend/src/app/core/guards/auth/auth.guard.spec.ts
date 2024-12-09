@@ -12,19 +12,19 @@ describe('AuthGuard', () => {
   beforeEach(() => {
     const authServiceMock = {
       isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true),
-      logout: jasmine.createSpy('logout')
+      logout: jasmine.createSpy('logout'),
     };
 
     const routerMock = {
-      navigate: jasmine.createSpy('navigate')
+      navigate: jasmine.createSpy('navigate'),
     };
 
     TestBed.configureTestingModule({
       providers: [
         AuthGuard,
         { provide: AuthService, useValue: authServiceMock },
-        { provide: Router, useValue: routerMock }
-      ]
+        { provide: Router, useValue: routerMock },
+      ],
     });
 
     authGuard = TestBed.inject(AuthGuard);

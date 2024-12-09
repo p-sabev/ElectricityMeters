@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg animate__animated animate__fadeIn">
     <div class="modal-content">
       <div class="modal-header">
-        <fa-icon [icon]="['fas', 'bolt']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <fa-icon [icon]="['fas', 'bolt']" [class]="'me-2'" style="font-size: 22px"></fa-icon>
         <h3 *ngIf="!switchboardToEdit" translate>AddSwitchboard</h3>
         <h3 *ngIf="switchboardToEdit" translate>EditSwitchboard</h3>
 
@@ -14,7 +14,6 @@
       <div class="modal-body">
         <form [formGroup]="addEditForm" class="pb-5">
           <div class="row">
-
             <div class="col-lg-6 col-md-12 mt-3">
               <label>{{ 'Name' | translate }}*</label>
 
@@ -29,7 +28,6 @@
 
               <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('name')"></app-form-errors>
             </div>
-
           </div>
         </form>
       </div>
@@ -40,14 +38,12 @@
             <button
               type="button"
               (click)="switchboardToEdit ? editSwitchboard() : addSwitchboard()"
-              class="btn float-end {{(switchboardToEdit ? 'btn-warning' : 'btn-success')}}"
+              class="btn float-end {{ switchboardToEdit ? 'btn-warning' : 'btn-success' }}"
               [disabled]="!addEditForm.valid">
-              <fa-icon [icon]="['fas', (switchboardToEdit ? 'edit' : 'plus')]" [class]="'me-2'"></fa-icon>
+              <fa-icon [icon]="['fas', switchboardToEdit ? 'edit' : 'plus']" [class]="'me-2'"></fa-icon>
               {{ (switchboardToEdit ? 'Edit' : 'Add') | translate }}
             </button>
-            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
-              Close
-            </button>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>Close</button>
           </div>
         </div>
       </div>

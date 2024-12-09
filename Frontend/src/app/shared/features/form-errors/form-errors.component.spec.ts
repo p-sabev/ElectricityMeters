@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormErrorsComponent } from './form-errors.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormControl, Validators } from '@angular/forms';
-import {FaIconLibrary} from "@fortawesome/angular-fontawesome";
-import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 describe('FormErrorsComponent', () => {
   let component: FormErrorsComponent;

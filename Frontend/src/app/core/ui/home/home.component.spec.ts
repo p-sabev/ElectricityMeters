@@ -16,9 +16,12 @@ describe('HomeComponent', () => {
       declarations: [],
       providers: [
         provideRouter([], withRouterConfig({})),
-        { provide: AuthService, useValue: { isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true) } },
-        { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } }
-      ]
+        {
+          provide: AuthService,
+          useValue: { isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true) },
+        },
+        { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);

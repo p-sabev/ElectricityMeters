@@ -1,9 +1,9 @@
 export interface UpdateFeesRequest {
-  standartFees: DefaultFee[]
+  standartFees: DefaultFee[];
 }
 
 export interface DefaultFee {
-  id?: number,
-  value: number | null,
-  description: string
+  id?: number;
+  value: number | null;
+  description: string;
 }

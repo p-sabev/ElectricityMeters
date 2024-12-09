@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg animate__animated animate__fadeIn">
     <div class="modal-content">
       <div class="modal-header">
-        <fa-icon [icon]="['fas', 'person-shelter']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <fa-icon [icon]="['fas', 'person-shelter']" [class]="'me-2'" style="font-size: 22px"></fa-icon>
         <h3 *ngIf="!subscriberToEdit" translate>AddSubscriber</h3>
         <h3 *ngIf="subscriberToEdit" translate>EditSubscriber</h3>
 
@@ -14,21 +14,20 @@
       <div class="modal-body">
         <form [formGroup]="addEditForm" class="pb-5">
           <div class="row">
+            <!--            <div class="col-lg-6 col-md-12 mt-3">-->
+            <!--              <label>{{ 'NumberPage' | translate }}</label>-->
 
-<!--            <div class="col-lg-6 col-md-12 mt-3">-->
-<!--              <label>{{ 'NumberPage' | translate }}</label>-->
+            <!--              <input-->
+            <!--                type="number"-->
+            <!--                class="form-control"-->
+            <!--                name="numberPage"-->
+            <!--                id="numberPage"-->
+            <!--                formControlName="numberPage"-->
+            <!--                title="{{ 'NumberPage' | translate }}"-->
+            <!--                placeholder="{{ 'NumberPage' | translate }}" />-->
 
-<!--              <input-->
-<!--                type="number"-->
-<!--                class="form-control"-->
-<!--                name="numberPage"-->
-<!--                id="numberPage"-->
-<!--                formControlName="numberPage"-->
-<!--                title="{{ 'NumberPage' | translate }}"-->
-<!--                placeholder="{{ 'NumberPage' | translate }}" />-->
-
-<!--              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('numberPage')"></app-form-errors>-->
-<!--            </div>-->
+            <!--              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('numberPage')"></app-form-errors>-->
+            <!--            </div>-->
 
             <div class="col-lg-6 col-md-12 mt-3">
               <label>{{ 'Name' | translate }}*</label>
@@ -48,11 +47,9 @@
             <div class="col-lg-6 col-md-12 mt-3">
               <label>{{ 'Switchboard' | translate }}*</label>
 
-              <select name="switchboard" id="switchboard"
-                      class="form-control"
-                      formControlName="switchboardId">
+              <select name="switchboard" id="switchboard" class="form-control" formControlName="switchboardId">
                 <option *ngFor="let switchboard of switchBoardsList" [ngValue]="switchboard.id">
-                  {{switchboard.name}}
+                  {{ switchboard.name }}
                 </option>
               </select>
 
@@ -89,20 +86,20 @@
               <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('phone')"></app-form-errors>
             </div>
 
-<!--            <div class="col-lg-6 col-md-12 mt-3">-->
-<!--              <label>{{ 'MeterNumber' | translate }}</label>-->
+            <!--            <div class="col-lg-6 col-md-12 mt-3">-->
+            <!--              <label>{{ 'MeterNumber' | translate }}</label>-->
 
-<!--              <input-->
-<!--                type="text"-->
-<!--                class="form-control"-->
-<!--                name="meterNumber"-->
-<!--                id="meterNumber"-->
-<!--                formControlName="meterNumber"-->
-<!--                title="{{ 'MeterNumber' | translate }}"-->
-<!--                placeholder="{{ 'MeterNumber' | translate }}" />-->
+            <!--              <input-->
+            <!--                type="text"-->
+            <!--                class="form-control"-->
+            <!--                name="meterNumber"-->
+            <!--                id="meterNumber"-->
+            <!--                formControlName="meterNumber"-->
+            <!--                title="{{ 'MeterNumber' | translate }}"-->
+            <!--                placeholder="{{ 'MeterNumber' | translate }}" />-->
 
-<!--              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('meterNumber')"></app-form-errors>-->
-<!--            </div>-->
+            <!--              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('meterNumber')"></app-form-errors>-->
+            <!--            </div>-->
 
             <div class="col-lg-6 col-md-12 mt-3">
               <label>{{ 'Note' | translate }}</label>
@@ -119,7 +116,9 @@
               <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('note')"></app-form-errors>
             </div>
 
-            <div *ngIf="!subscriberToEdit || (subscriberToEdit && !subscriberToEdit.lastRecordDate)" class="col-lg-6 col-md-12 mt-3">
+            <div
+              *ngIf="!subscriberToEdit || (subscriberToEdit && !subscriberToEdit.lastRecordDate)"
+              class="col-lg-6 col-md-12 mt-3">
               <label>{{ 'DefaultReading' | translate }}</label>
 
               <input
@@ -131,9 +130,10 @@
                 title="{{ 'DefaultReading' | translate }}"
                 placeholder="{{ 'DefaultReading' | translate }}" />
 
-              <app-form-errors [withoutTooltip]="true"
-                               [control]="addEditForm.get('defaultReading')"
-                               [min]="0"></app-form-errors>
+              <app-form-errors
+                [withoutTooltip]="true"
+                [control]="addEditForm.get('defaultReading')"
+                [min]="0"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -141,38 +141,21 @@
 
               <div class="flex flex-wrap gap-3">
                 <div class="flex align-items-center phase-radio">
-                  <p-radioButton
-                    [value]="1"
-                    formControlName="phaseCount"
-                    [inputId]="'1'" />
-                  <label [for]="'1'" class="phase-label ml-2">
-                    1
-                  </label>
+                  <p-radioButton [value]="1" formControlName="phaseCount" [inputId]="'1'" />
+                  <label [for]="'1'" class="phase-label ml-2"> 1 </label>
                 </div>
                 <div class="flex align-items-center phase-radio">
-                  <p-radioButton
-                    [value]="2"
-                    formControlName="phaseCount"
-                    [inputId]="'2'" />
-                  <label [for]="'2'" class="phase-label ml-2">
-                    2
-                  </label>
+                  <p-radioButton [value]="2" formControlName="phaseCount" [inputId]="'2'" />
+                  <label [for]="'2'" class="phase-label ml-2"> 2 </label>
                 </div>
                 <div class="flex align-items-center phase-radio">
-                  <p-radioButton
-                    [value]="3"
-                    formControlName="phaseCount"
-                    [inputId]="'3'" />
-                  <label [for]="'3'" class="phase-label ml-2">
-                    3
-                  </label>
+                  <p-radioButton [value]="3" formControlName="phaseCount" [inputId]="'3'" />
+                  <label [for]="'3'" class="phase-label ml-2"> 3 </label>
                 </div>
               </div>
 
-              <app-form-errors [withoutTooltip]="true"
-                               [control]="addEditForm.get('phaseCount')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('phaseCount')"></app-form-errors>
             </div>
-
           </div>
         </form>
       </div>
@@ -183,14 +166,12 @@
             <button
               type="button"
               (click)="subscriberToEdit ? editSubscriber() : addSubscriber()"
-              class="btn float-end {{(subscriberToEdit ? 'btn-warning' : 'btn-success')}}"
+              class="btn float-end {{ subscriberToEdit ? 'btn-warning' : 'btn-success' }}"
               [disabled]="!addEditForm.valid">
-              <fa-icon [icon]="['fas', (subscriberToEdit ? 'edit' : 'plus')]" [class]="'me-2'"></fa-icon>
+              <fa-icon [icon]="['fas', subscriberToEdit ? 'edit' : 'plus']" [class]="'me-2'"></fa-icon>
               {{ (subscriberToEdit ? 'Edit' : 'Add') | translate }}
             </button>
-            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
-              Close
-            </button>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>Close</button>
           </div>
         </div>
       </div>

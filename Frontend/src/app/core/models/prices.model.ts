@@ -1,4 +1,4 @@
-import {Paging, Sorting} from "./base-models.model";
+import { Paging, Sorting } from './base-models.model';
 
 export interface Price {
   id: number;

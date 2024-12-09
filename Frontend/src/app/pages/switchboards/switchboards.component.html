@@ -1,52 +1,62 @@
 <div class="container">
   <div class="row my-4">
-
     <div class="col-12">
       <app-page-heading [title]="'Switchboards'"></app-page-heading>
     </div>
 
     <div *appRoleAccess="'Administrator, Moderator'" class="col-12 mt-5">
-      <button class="btn btn-outline-success"
-              (click)="initAddSwitchboard()">
+      <button class="btn btn-outline-success" (click)="initAddSwitchboard()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
-        {{'AddSwitchboard' | translate}}
+        {{ 'AddSwitchboard' | translate }}
       </button>
     </div>
 
     <div *ngIf="noRecords" class="alert alert-info col-12 mt-3">
-      {{'NoResultsFound' | translate}}
+      {{ 'NoResultsFound' | translate }}
     </div>
 
     <div *ngIf="noResults" class="alert alert-info col-12 mt-3">
-      {{'NoResultsFound' | translate}}
+      {{ 'NoResultsFound' | translate }}
     </div>
 
     <ng-container *ngIf="!noRecords && !noResults">
       <div class="col-lg-3 col-md-4 col-sm-12 mt-4" *ngFor="let switchboard of switchboardsList">
-        <div class="card" style="width: 100%;">
+        <div class="card" style="width: 100%">
           <div class="card-body bg-primary font-weight-bold text-light">
-            <h5 class="card-title">{{'Switchboard' | translate}} - {{switchboard.name}}</h5>
+            <h5 class="card-title">{{ 'Switchboard' | translate }} - {{ switchboard.name }}</h5>
           </div>
 
-          <ul *ngIf="switchboard.subscribers?.length"
-              class="list-group list-group-flush">
+          <ul *ngIf="switchboard.subscribers?.length" class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let subscriber of switchboard.subscribers">
-              {{subscriber.name}}
-              {{subscriber.phaseCount === 2 ? ('TwoPhaseText' | translate) : (subscriber.phaseCount === 3 ? ('ThreePhaseText' | translate) : '')}}
+              {{ subscriber.name }}
+              {{
+                subscriber.phaseCount === 2
+                  ? ('TwoPhaseText' | translate)
+                  : subscriber.phaseCount === 3
+                    ? ('ThreePhaseText' | translate)
+                    : ''
+              }}
               <span class="float-end font-weight-bold">
-                <app-display-two-three-phase-reading [phaseCount]="subscriber.phaseCount"
-                                                     [firstPhaseValue]="subscriber.lastFirstPhaseValue || 0"
-                                                     [secondPhaseValue]="subscriber.lastSecondPhaseValue || 0"
-                                                     [thirdPhaseValue]="subscriber.lastThirdPhaseValue || 0"></app-display-two-three-phase-reading>
-                {{subscriber.lastReading ? subscriber.lastReading : subscriber.defaultReading ? subscriber.defaultReading : 0}} {{'kvh' | translate}}
+                <app-display-two-three-phase-reading
+                  [phaseCount]="subscriber.phaseCount"
+                  [firstPhaseValue]="subscriber.lastFirstPhaseValue || 0"
+                  [secondPhaseValue]="subscriber.lastSecondPhaseValue || 0"
+                  [thirdPhaseValue]="subscriber.lastThirdPhaseValue || 0"></app-display-two-three-phase-reading>
+                {{
+                  subscriber.lastReading
+                    ? subscriber.lastReading
+                    : subscriber.defaultReading
+                      ? subscriber.defaultReading
+                      : 0
+                }}
+                {{ 'kvh' | translate }}
               </span>
             </li>
           </ul>
 
-          <ul *ngIf="!switchboard.subscribers?.length"
-              class="list-group list-group-flush">
+          <ul *ngIf="!switchboard.subscribers?.length" class="list-group list-group-flush">
             <li class="list-group-item">
-              {{'ThereAreNoSubscribersForThisSwitchboard' | translate}}
+              {{ 'ThereAreNoSubscribersForThisSwitchboard' | translate }}
             </li>
           </ul>
 
@@ -54,27 +64,31 @@
             <div class="row">
               <div class="col-12 p-0 text-right">
                 <ng-container *appRoleAccess="'Administrator'">
-                  <button class="btn btn-outline-danger float-end ms-2"
-                          *ngIf="!switchboard.subscribers?.length"
-                          (click)="askToDeleteSwitchboard(switchboard)">
+                  <button
+                    class="btn btn-outline-danger float-end ms-2"
+                    *ngIf="!switchboard.subscribers?.length"
+                    (click)="askToDeleteSwitchboard(switchboard)">
                     <fa-icon [icon]="['fas', 'trash']"></fa-icon>
                   </button>
-                  <button *ngIf="switchboard.subscribers?.length"
-                          class="btn btn-outline-warning float-end ms-2"
-                          (click)="switchboardForEdit = switchboard;">
+                  <button
+                    *ngIf="switchboard.subscribers?.length"
+                    class="btn btn-outline-warning float-end ms-2"
+                    (click)="switchboardForEdit = switchboard">
                     <fa-icon [icon]="['fas', 'edit']"></fa-icon>
                   </button>
                 </ng-container>
                 <ng-container *appRoleAccess="'Administrator, Moderator'">
-                  <button *ngIf="!switchboard.subscribers?.length"
-                          class="btn btn-outline-warning float-end ms-2"
-                          (click)="switchboardForEdit = switchboard;">
+                  <button
+                    *ngIf="!switchboard.subscribers?.length"
+                    class="btn btn-outline-warning float-end ms-2"
+                    (click)="switchboardForEdit = switchboard">
                     <fa-icon [icon]="['fas', 'edit']"></fa-icon>
                   </button>
-                  <button class="btn btn-outline-primary float-end"
-                          *ngIf="switchboard.subscribers?.length"
-                          (click)="subscribersToAddReadings = switchboard.subscribers;">
-                    {{'EnterReadings' | translate}}
+                  <button
+                    class="btn btn-outline-primary float-end"
+                    *ngIf="switchboard.subscribers?.length"
+                    (click)="subscribersToAddReadings = switchboard.subscribers">
+                    {{ 'EnterReadings' | translate }}
                   </button>
                 </ng-container>
               </div>
@@ -83,18 +97,19 @@
         </div>
       </div>
     </ng-container>
-
   </div>
 </div>
 
 <ng-container *ngIf="addSwitchboard || switchboardForEdit">
-  <app-add-edit-switchboard [switchboardToEdit]="switchboardForEdit"
-                            (close)="addSwitchboard = false; switchboardForEdit = null; fetchSwitchboardsList();"></app-add-edit-switchboard>
+  <app-add-edit-switchboard
+    [switchboardToEdit]="switchboardForEdit"
+    (close)="addSwitchboard = false; switchboardForEdit = null; fetchSwitchboardsList()"></app-add-edit-switchboard>
 </ng-container>
 
 <ng-container *ngIf="subscribersToAddReadings?.length">
-  <app-add-reading-for-switchboard [subscribers]="subscribersToAddReadings"
-                                   (close)="subscribersToAddReadings = null; fetchSwitchboardsList();"></app-add-reading-for-switchboard>
+  <app-add-reading-for-switchboard
+    [subscribers]="subscribersToAddReadings"
+    (close)="subscribersToAddReadings = null; fetchSwitchboardsList()"></app-add-reading-for-switchboard>
 </ng-container>
 
 <p-confirmDialog

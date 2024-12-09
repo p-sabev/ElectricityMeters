@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {EditSubscriber, InsertSubscriber, SearchSubscribersRequest} from "../../core/models/subscribers.model";
-import {Observable} from "rxjs";
-import {environment} from "../../../environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { EditSubscriber, InsertSubscriber, SearchSubscribersRequest } from '../../core/models/subscribers.model';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SubscribersService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // Get all
   getAllSubscribers(): Observable<any> {

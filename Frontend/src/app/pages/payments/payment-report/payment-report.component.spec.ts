@@ -3,9 +3,9 @@ import { PaymentReportComponent } from './payment-report.component';
 import { PaymentsService } from '../payments.service';
 import { ErrorService } from '../../../core/services/error.service';
 import { of, throwError } from 'rxjs';
-import {PaymentsReportResponse} from "../../../core/models/payment.model";
-import {TranslateModule} from "@ngx-translate/core";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { PaymentsReportResponse } from '../../../core/models/payment.model';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('PaymentReportComponent', () => {
   let component: PaymentReportComponent;
@@ -13,19 +13,16 @@ describe('PaymentReportComponent', () => {
   let paymentsService: PaymentsService;
   let errorService: ErrorService;
   let paymentServiceMock = {
-    searchPaymentsReport: jasmine.createSpy('searchPaymentsReport').and.returnValue(of({}))
+    searchPaymentsReport: jasmine.createSpy('searchPaymentsReport').and.returnValue(of({})),
   };
 
   beforeEach(async () => {
-
     await TestBed.configureTestingModule({
-      imports: [PaymentReportComponent,
-        HttpClientTestingModule,
-        TranslateModule.forRoot()],
+      imports: [PaymentReportComponent, HttpClientTestingModule, TranslateModule.forRoot()],
       providers: [
-        { provide: PaymentsService, useValue: paymentServiceMock},
+        { provide: PaymentsService, useValue: paymentServiceMock },
         { provide: ErrorService, useValue: { processError: jasmine.createSpy('processError') } },
-      ]
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PaymentReportComponent);
@@ -53,9 +50,9 @@ describe('PaymentReportComponent', () => {
       fees: [
         {
           description: 'Fee 1',
-          totalValue: 100
+          totalValue: 100,
         },
-      ]
+      ],
     };
     (paymentsService.searchPaymentsReport as jasmine.Spy).and.returnValue(of(mockResponse));
     component.fetchPaymentReport();

@@ -1,25 +1,26 @@
 <div class="container">
   <div class="row">
-
     <div class="col-12">
       <app-page-heading [title]="'Users'"></app-page-heading>
     </div>
 
     <!--  Users list  -->
     <div class="col-12 mt-3">
-      <p-table [value]="usersList"
-               styleClass="p-datatable-gridlines"
-               [tableStyle]="{ 'width': '100%' }"
-               [lazy]="true"
-               (onLazyLoad)="fetchUsersList($event)"
-               [sortField]="sortField"
-               [sortOrder]="sortOrder"
-               [totalRecords]="totalRecords"
-               [paginator]="true"
-               [first]="page"
-               [rows]="10"
-               [rowsPerPageOptions]="[5, 10, 20, 50]"
-               [scrollable]="true" scrollHeight="80vh">
+      <p-table
+        [value]="usersList"
+        styleClass="p-datatable-gridlines"
+        [tableStyle]="{ width: '100%' }"
+        [lazy]="true"
+        (onLazyLoad)="fetchUsersList($event)"
+        [sortField]="sortField"
+        [sortOrder]="sortOrder"
+        [totalRecords]="totalRecords"
+        [paginator]="true"
+        [first]="page"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20, 50]"
+        [scrollable]="true"
+        scrollHeight="80vh">
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="name" translate>Name<p-sortIcon field="name" /></th>
@@ -31,14 +32,19 @@
         <ng-template pTemplate="colgroup">
           <tr class="search-row">
             <td class="p-2" colspan="3">
-              <input type="text" class="form-control"
-                     [(ngModel)]="searchUserByName"
-                     title="{{'SearchBy' | translate}} {{'Name' | translate | lowercase}}"
-                     placeholder="{{'SearchBy' | translate}} {{'Name' | translate | lowercase}}">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="searchUserByName"
+                title="{{ 'SearchBy' | translate }} {{ 'Name' | translate | lowercase }}"
+                placeholder="{{ 'SearchBy' | translate }} {{ 'Name' | translate | lowercase }}" />
             </td>
-            <td alignFrozen="right" pFrozenColumn class="p-2" style="background: #FFFFFF;">
-              <button type="button" class="btn btn-outline-secondary float-end"
-                      (click)="page = 0; fetchUsersList();" translate>
+            <td alignFrozen="right" pFrozenColumn class="p-2" style="background: #ffffff">
+              <button
+                type="button"
+                class="btn btn-outline-secondary float-end"
+                (click)="page = 0; fetchUsersList()"
+                translate>
                 <fa-icon [icon]="['fas', 'search']" [class]="'me-2'"></fa-icon>
                 {{ 'Filtrate' | translate }}
               </button>
@@ -53,12 +59,10 @@
 
             <td class="py-1" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator'">
-                <a class="nav-link text-danger cursor-pointer btn-action"
-                   (click)="askToDeleteUser(user)">
+                <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeleteUser(user)">
                   <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
                 </a>
-                <a class="nav-link text-warning cursor-pointer btn-action"
-                   (click)="userToEdit = user">
+                <a class="nav-link text-warning cursor-pointer btn-action" (click)="userToEdit = user">
                   <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
                 </a>
               </ng-container>
@@ -71,6 +75,5 @@
 </div>
 
 <ng-container *ngIf="userToEdit">
-  <app-edit-user [userToEdit]="userToEdit"
-                 (close)="userToEdit = null; fetchUsersList();"></app-edit-user>
+  <app-edit-user [userToEdit]="userToEdit" (close)="userToEdit = null; fetchUsersList()"></app-edit-user>
 </ng-container>

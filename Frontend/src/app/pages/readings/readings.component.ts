@@ -1,29 +1,27 @@
-import {Component} from '@angular/core';
-import {NotificationsEmitterService} from "../../core/services/notifications.service";
-import {ErrorService} from "../../core/services/error.service";
-import {ConfirmationService, SharedModule} from "primeng/api";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {ReadingsService} from "./readings.service";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {DatePipe, LowerCasePipe, NgForOf, NgIf} from "@angular/common";
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {TableModule} from "primeng/table";
-import {Reading} from "../../core/models/readings.model";
-import {AddReadingForSubscriberComponent} from "./add-reading-for-subscriber/add-reading-for-subscriber.component";
-import {TwoAfterDotPipe} from "../../shared/pipes/two-after-dot/two-after-dot.pipe";
-import {ReceiptComponent} from "./receipt/receipt.component";
-import {PrintReceiptComponent} from "./print-receipt/print-receipt.component";
-import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
-import {RoleAccessDirective} from "../../shared/directives/role-access/role-access.directive";
-import {PaginatorModule} from "primeng/paginator";
-import {PendingPaymentsComponent} from "./pending-payments/pending-payments.component";
-import {TooltipModule} from "primeng/tooltip";
-import {
-  DisplayTwoThreePhaseReadingComponent
-} from "./display-two-three-phase-reading/display-two-three-phase-reading.component";
-import {TableHelperService} from "../../core/helpers/table-helper.service";
-import {catchError, EMPTY, tap} from "rxjs";
-import {finalize} from "rxjs/operators";
+import { Component } from '@angular/core';
+import { NotificationsEmitterService } from '../../core/services/notifications.service';
+import { ErrorService } from '../../core/services/error.service';
+import { ConfirmationService, SharedModule } from 'primeng/api';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ReadingsService } from './readings.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DatePipe, LowerCasePipe, NgForOf, NgIf } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TableModule } from 'primeng/table';
+import { Reading } from '../../core/models/readings.model';
+import { AddReadingForSubscriberComponent } from './add-reading-for-subscriber/add-reading-for-subscriber.component';
+import { TwoAfterDotPipe } from '../../shared/pipes/two-after-dot/two-after-dot.pipe';
+import { ReceiptComponent } from './receipt/receipt.component';
+import { PrintReceiptComponent } from './print-receipt/print-receipt.component';
+import { PageHeadingComponent } from '../../core/ui/page-heading/page-heading.component';
+import { RoleAccessDirective } from '../../shared/directives/role-access/role-access.directive';
+import { PaginatorModule } from 'primeng/paginator';
+import { PendingPaymentsComponent } from './pending-payments/pending-payments.component';
+import { TooltipModule } from 'primeng/tooltip';
+import { DisplayTwoThreePhaseReadingComponent } from './display-two-three-phase-reading/display-two-three-phase-reading.component';
+import { TableHelperService } from '../../core/helpers/table-helper.service';
+import { catchError, EMPTY, tap } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-readings',
@@ -47,20 +45,20 @@ import {finalize} from "rxjs/operators";
     PaginatorModule,
     PendingPaymentsComponent,
     TooltipModule,
-    DisplayTwoThreePhaseReadingComponent
+    DisplayTwoThreePhaseReadingComponent,
   ],
   templateUrl: './readings.component.html',
-  styleUrl: './readings.component.scss'
+  styleUrl: './readings.component.scss',
 })
 export class ReadingsComponent {
-
-  constructor(private readingsService: ReadingsService,
-              private errorService: ErrorService,
-              private confirmService: ConfirmationService,
-              private translate: TranslateService,
-              private notifications: NotificationsEmitterService,
-              private tableHelper: TableHelperService) {
-  }
+  constructor(
+    private readingsService: ReadingsService,
+    private errorService: ErrorService,
+    private confirmService: ConfirmationService,
+    private translate: TranslateService,
+    private notifications: NotificationsEmitterService,
+    private tableHelper: TableHelperService
+  ) {}
 
   readingsList: Reading[] = [];
 
@@ -85,25 +83,28 @@ export class ReadingsComponent {
     const body = {
       paging: this.tableHelper.getPagingSettings(settings),
       sorting: this.tableHelper.getSortingSettings(settings),
-      name: this.searchSubscriberName
-    }
-    this.readingsService.searchReadings(body).pipe(
-      tap((resp) => {
-        this.readingsList = resp?.data || [];
-        this.totalRecords = resp?.totalRecords || 0;
-        ({
-          noRecords: this.noRecords,
-          noResults: this.noResults
-        } = this.tableHelper.isNoResultsOrNoRecords(this.firstInit, this.totalRecords));
-      }),
-      catchError((error) => {
-        this.errorService.processError(error);
-        return EMPTY;
-      }),
-      finalize(() => {
-        this.firstInit = false;
-      })
-    ).subscribe();
+      name: this.searchSubscriberName,
+    };
+    this.readingsService
+      .searchReadings(body)
+      .pipe(
+        tap((resp) => {
+          this.readingsList = resp?.data || [];
+          this.totalRecords = resp?.totalRecords || 0;
+          ({ noRecords: this.noRecords, noResults: this.noResults } = this.tableHelper.isNoResultsOrNoRecords(
+            this.firstInit,
+            this.totalRecords
+          ));
+        }),
+        catchError((error) => {
+          this.errorService.processError(error);
+          return EMPTY;
+        }),
+        finalize(() => {
+          this.firstInit = false;
+        })
+      )
+      .subscribe();
   }
 
   openReadingForEdit(reading: Reading) {
@@ -126,16 +127,18 @@ export class ReadingsComponent {
   }
 
   deleteReading(reading: Reading) {
-    this.readingsService.deleteReading(reading.id).pipe(
-      tap(() => {
-        this.notifications.Success.emit("SuccessfullyDeletedReading");
-        this.fetchReadingsList();
-      }),
-      catchError((error) => {
-        this.errorService.processError(error);
-        return EMPTY;
-      })
-    ).subscribe();
+    this.readingsService
+      .deleteReading(reading.id)
+      .pipe(
+        tap(() => {
+          this.notifications.Success.emit('SuccessfullyDeletedReading');
+          this.fetchReadingsList();
+        }),
+        catchError((error) => {
+          this.errorService.processError(error);
+          return EMPTY;
+        })
+      )
+      .subscribe();
   }
-
 }

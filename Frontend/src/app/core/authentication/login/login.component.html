@@ -1,27 +1,30 @@
 <div class="container">
   <div class="row">
     <div class="col-12 text-center my-5">
-      <div class="cont s--signup" [ngClass]="{'s--signup': isSignUp}">
+      <div class="cont s--signup" [ngClass]="{ 's--signup': isSignUp }">
         <form (ngSubmit)="logIn()">
           <div class="form sign-in">
-            <h2 style="color: white;">Добре дошли,</h2>
+            <h2 style="color: white">Добре дошли,</h2>
             <label>
               <span>Имейл</span>
-              <input class="form-control"
-                     [(ngModel)]="loginModel.email"
-                     [ngModelOptions]="{standalone: true}"
-                     type="email" />
+              <input
+                class="form-control"
+                [(ngModel)]="loginModel.email"
+                [ngModelOptions]="{ standalone: true }"
+                type="email" />
             </label>
             <label>
               <span>Парола</span>
-              <input class="form-control"
-                     [(ngModel)]="loginModel.password"
-                     [ngModelOptions]="{standalone: true}"
-                     type="password" />
+              <input
+                class="form-control"
+                [(ngModel)]="loginModel.password"
+                [ngModelOptions]="{ standalone: true }"
+                type="password" />
             </label>
-<!--            <p class="forgot-pass">Забравена парола?</p>-->
-            <button type="submit" class="submit"
-                    [disabled]="!loginModel.email?.length || !loginModel.password?.length">Вход</button>
+            <!--            <p class="forgot-pass">Забравена парола?</p>-->
+            <button type="submit" class="submit" [disabled]="!loginModel.email?.length || !loginModel.password?.length">
+              Вход
+            </button>
           </div>
         </form>
 
@@ -32,11 +35,11 @@
               <p class="mt-4">Направете си регистрация!</p>
             </div>
             <div class="img__text m--in">
-<!--              <h2>One of us?</h2>-->
-<!--              <p>If you already has an account, just sign in. We've missed you!</p>-->
+              <!--              <h2>One of us?</h2>-->
+              <!--              <p>If you already has an account, just sign in. We've missed you!</p>-->
             </div>
             <div class="img__btn">
-              <span class="m--up" (click)="isSignUp = true;">Регистрация</span>
+              <span class="m--up" (click)="isSignUp = true">Регистрация</span>
               <span class="m--in">Sign In</span>
             </div>
           </div>
@@ -58,8 +61,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
-

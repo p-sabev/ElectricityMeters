@@ -1,23 +1,16 @@
-import {Component, Input} from '@angular/core';
-import {Reading} from "../../../core/models/readings.model";
-import {TwoAfterDotPipe} from "../../../shared/pipes/two-after-dot/two-after-dot.pipe";
-import {DatePipe, NgForOf, NgIf, NgStyle} from "@angular/common";
-import {TranslateModule} from "@ngx-translate/core";
-import {Fee} from "../../../core/models/payment.model";
+import { Component, Input } from '@angular/core';
+import { Reading } from '../../../core/models/readings.model';
+import { TwoAfterDotPipe } from '../../../shared/pipes/two-after-dot/two-after-dot.pipe';
+import { DatePipe, NgForOf, NgIf, NgStyle } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { Fee } from '../../../core/models/payment.model';
 
 @Component({
   selector: 'app-receipt',
   standalone: true,
-  imports: [
-    TwoAfterDotPipe,
-    DatePipe,
-    TranslateModule,
-    NgForOf,
-    NgIf,
-    NgStyle
-  ],
+  imports: [TwoAfterDotPipe, DatePipe, TranslateModule, NgForOf, NgIf, NgStyle],
   templateUrl: './receipt.component.html',
-  styleUrl: './receipt.component.scss'
+  styleUrl: './receipt.component.scss',
 })
 export class ReceiptComponent {
   @Input() reading!: Reading;
@@ -26,17 +19,42 @@ export class ReceiptComponent {
   today = new Date();
 
   priceToWords(price: number): string {
-    const singleDigits = [
-      '', 'едно', 'две', 'три', 'четири', 'пет', 'шест', 'седем', 'осем', 'девет'
-    ];
+    const singleDigits = ['', 'едно', 'две', 'три', 'четири', 'пет', 'шест', 'седем', 'осем', 'девет'];
     const teens = [
-      'десет', 'единадесет', 'дванадесет', 'тринадесет', 'четиринадесет', 'петнадесет', 'шестнадесет', 'седемнадесет', 'осемнадесет', 'деветнадесет'
+      'десет',
+      'единадесет',
+      'дванадесет',
+      'тринадесет',
+      'четиринадесет',
+      'петнадесет',
+      'шестнадесет',
+      'седемнадесет',
+      'осемнадесет',
+      'деветнадесет',
     ];
     const tens = [
-      '', '', 'двадесет', 'тридесет', 'четиридесет', 'петдесет', 'шестдесет', 'седемдесет', 'осемдесет', 'деветдесет'
+      '',
+      '',
+      'двадесет',
+      'тридесет',
+      'четиридесет',
+      'петдесет',
+      'шестдесет',
+      'седемдесет',
+      'осемдесет',
+      'деветдесет',
     ];
     const hundreds = [
-      '', 'сто', 'двеста', 'триста', 'четиристотин', 'петстотин', 'шестстотин', 'седемстотин', 'осемстотин', 'деветстотин'
+      '',
+      'сто',
+      'двеста',
+      'триста',
+      'четиристотин',
+      'петстотин',
+      'шестстотин',
+      'седемстотин',
+      'осемстотин',
+      'деветстотин',
     ];
 
     function getHundreds(n: number): string {
@@ -60,8 +78,8 @@ export class ReceiptComponent {
     function getThousands(n: number): string {
       let result = '';
       if (n > 999) {
-        const hundrets = getHundreds(Math.floor(n / 1000))
-        result += (hundrets === 'едно' || hundrets.trim() === 'и едно' ? ' хиляда ' : (hundrets + ' хиляди '));
+        const hundrets = getHundreds(Math.floor(n / 1000));
+        result += hundrets === 'едно' || hundrets.trim() === 'и едно' ? ' хиляда ' : hundrets + ' хиляди ';
         n %= 1000;
       }
       result += getHundreds(n);
@@ -85,7 +103,11 @@ export class ReceiptComponent {
       stotinkiWords = 'нула стотинки';
     }
 
-    return (levaWords + ' и ' + stotinkiWords).replace(/^\s*и\s*/, '').replace(/\s+/g, ' ').replace(' и и ', ' и ').trim();
+    return (levaWords + ' и ' + stotinkiWords)
+      .replace(/^\s*и\s*/, '')
+      .replace(/\s+/g, ' ')
+      .replace(' и и ', ' и ')
+      .trim();
   }
 
   getTotalFees(): number {

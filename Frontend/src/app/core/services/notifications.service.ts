@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationsEmitterService {
   public Success: EventEmitter<any> = new EventEmitter();

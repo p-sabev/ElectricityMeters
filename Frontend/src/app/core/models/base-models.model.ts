@@ -9,8 +9,8 @@ export interface Sorting {
 }
 
 export interface TableSearchSettings {
-  first: number,
-  rows: number,
-  sortField: string,
-  sortOrder: number
+  first: number;
+  rows: number;
+  sortField: string;
+  sortOrder: number;
 }

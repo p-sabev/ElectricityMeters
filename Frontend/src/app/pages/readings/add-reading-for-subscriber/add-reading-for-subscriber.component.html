@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg animate__animated animate__fadeIn">
     <div class="modal-content">
       <div class="modal-header">
-        <fa-icon [icon]="['fas', 'rectangle-list']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <fa-icon [icon]="['fas', 'rectangle-list']" [class]="'me-2'" style="font-size: 22px"></fa-icon>
         <h3 *ngIf="!readingToEdit" translate>AddReading</h3>
         <h3 *ngIf="readingToEdit" translate>EditReading</h3>
 
@@ -15,18 +15,21 @@
         <form [formGroup]="addEditReadingForm" class="pb-5">
           <div class="row">
             <h6>
-              <span class="font-weight-bold">{{'Subscriber' | translate}}</span>: {{subscriber.name}}
+              <span class="font-weight-bold">{{ 'Subscriber' | translate }}</span
+              >: {{ subscriber.name }}
             </h6>
             <h6>
-              <span class="font-weight-bold">{{'LastReading' | translate}}</span>:
-              <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
-              <span *ngIf="!subscriber.lastReading && subscriber.defaultReading">{{ subscriber.defaultReading }} {{'kvh' | translate}}</span>
+              <span class="font-weight-bold">{{ 'LastReading' | translate }}</span
+              >:
+              <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{ 'kvh' | translate }}</span>
+              <span *ngIf="!subscriber.lastReading && subscriber.defaultReading"
+                >{{ subscriber.defaultReading }} {{ 'kvh' | translate }}</span
+              >
               <span *ngIf="!subscriber.lastReading && !subscriber.defaultReading">-</span>
             </h6>
           </div>
 
           <div class="row">
-
             <div class="col-lg-6 col-md-12 mt-3">
               <label>{{ 'DateFrom' | translate }}*</label>
 
@@ -41,7 +44,10 @@
                 [appendTo]="addEditModal"
                 [showButtonBar]="true"></p-calendar>
 
-              <app-form-errors [withoutTooltip]="true" [control]="addEditReadingForm.get('dateFrom')" [max]="1000"></app-form-errors>
+              <app-form-errors
+                [withoutTooltip]="true"
+                [control]="addEditReadingForm.get('dateFrom')"
+                [max]="1000"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -57,7 +63,10 @@
                 [appendTo]="addEditModal"
                 [showButtonBar]="true"></p-calendar>
 
-              <app-form-errors [withoutTooltip]="true" [control]="addEditReadingForm.get('dateTo')" [max]="1000"></app-form-errors>
+              <app-form-errors
+                [withoutTooltip]="true"
+                [control]="addEditReadingForm.get('dateTo')"
+                [max]="1000"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -65,7 +74,7 @@
 
               @if (!subscriber.phaseCount || subscriber.phaseCount !== 1) {
                 <div class="row phases-row">
-                  <div [ngClass]="{'col-6': subscriber.phaseCount !== 3, 'col-4': subscriber.phaseCount === 3}">
+                  <div [ngClass]="{ 'col-6': subscriber.phaseCount !== 3, 'col-4': subscriber.phaseCount === 3 }">
                     <input
                       type="number"
                       class="form-control"
@@ -75,12 +84,13 @@
                       title="{{ 'FirstPhaseReadingInKvh' | translate }}*"
                       placeholder="{{ 'FirstPhaseReadingInKvh' | translate }}*" />
 
-                    <app-form-errors [withoutTooltip]="true"
-                                     [control]="addEditReadingForm.get('firstPhaseValue')"
-                                     [min]="minReadingValue"
-                                     [max]="MAX_INT"></app-form-errors>
+                    <app-form-errors
+                      [withoutTooltip]="true"
+                      [control]="addEditReadingForm.get('firstPhaseValue')"
+                      [min]="minReadingValue"
+                      [max]="MAX_INT"></app-form-errors>
                   </div>
-                  <div [ngClass]="{'col-6': subscriber.phaseCount !== 3, 'col-4': subscriber.phaseCount === 3}">
+                  <div [ngClass]="{ 'col-6': subscriber.phaseCount !== 3, 'col-4': subscriber.phaseCount === 3 }">
                     <input
                       type="number"
                       class="form-control"
@@ -90,10 +100,11 @@
                       title="{{ 'SecondPhaseReadingInKvh' | translate }}*"
                       placeholder="{{ 'SecondPhaseReadingInKvh' | translate }}*" />
 
-                    <app-form-errors [withoutTooltip]="true"
-                                     [control]="addEditReadingForm.get('secondPhaseValue')"
-                                     [min]="minReadingValue"
-                                     [max]="MAX_INT"></app-form-errors>
+                    <app-form-errors
+                      [withoutTooltip]="true"
+                      [control]="addEditReadingForm.get('secondPhaseValue')"
+                      [min]="minReadingValue"
+                      [max]="MAX_INT"></app-form-errors>
                   </div>
                   @if (subscriber.phaseCount === 3) {
                     <div class="col-4">
@@ -106,13 +117,13 @@
                         title="{{ 'ThirdPhaseReadingInKvh' | translate }}*"
                         placeholder="{{ 'ThirdPhaseReadingInKvh' | translate }}*" />
 
-                      <app-form-errors [withoutTooltip]="true"
-                                       [control]="addEditReadingForm.get('thirdPhaseValue')"
-                                       [min]="minReadingValue"
-                                       [max]="MAX_INT"></app-form-errors>
+                      <app-form-errors
+                        [withoutTooltip]="true"
+                        [control]="addEditReadingForm.get('thirdPhaseValue')"
+                        [min]="minReadingValue"
+                        [max]="MAX_INT"></app-form-errors>
                     </div>
                   }
-
                 </div>
               } @else {
                 <input
@@ -124,13 +135,13 @@
                   title="{{ 'ReadingInKvh' | translate }}*"
                   placeholder="{{ 'ReadingInKvh' | translate }}*" />
 
-                <app-form-errors [withoutTooltip]="true"
-                                 [control]="addEditReadingForm.get('value')"
-                                 [min]="minReadingValue"
-                                 [max]="MAX_INT"></app-form-errors>
+                <app-form-errors
+                  [withoutTooltip]="true"
+                  [control]="addEditReadingForm.get('value')"
+                  [min]="minReadingValue"
+                  [max]="MAX_INT"></app-form-errors>
               }
             </div>
-
           </div>
         </form>
       </div>
@@ -141,14 +152,12 @@
             <button
               type="button"
               (click)="readingToEdit ? editReading() : addReading()"
-              class="btn float-end {{(readingToEdit ? 'btn-warning' : 'btn-success')}}"
+              class="btn float-end {{ readingToEdit ? 'btn-warning' : 'btn-success' }}"
               [disabled]="!addEditReadingForm.valid">
-              <fa-icon [icon]="['fas', (readingToEdit ? 'edit' : 'plus')]" [class]="'me-2'"></fa-icon>
+              <fa-icon [icon]="['fas', readingToEdit ? 'edit' : 'plus']" [class]="'me-2'"></fa-icon>
               {{ (readingToEdit ? 'Edit' : 'Add') | translate }}
             </button>
-            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
-              Close
-            </button>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>Close</button>
           </div>
         </div>
       </div>

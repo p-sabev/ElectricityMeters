@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import {
   EditReading,
   InsertMultipleReadings,
-  InsertReading, Reading,
-  SearchReadingsRequest
-} from "../../core/models/readings.model";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {environment} from "../../../environments/environment";
+  InsertReading,
+  Reading,
+  SearchReadingsRequest,
+} from '../../core/models/readings.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReadingsService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // Get all
   getAllReadings(): Observable<Reading[]> {

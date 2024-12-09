@@ -79,7 +79,7 @@ describe('EditUserComponent', () => {
         lastName: mockUser.lastName,
         email: mockUser.email,
         userName: mockUser.userName,
-        roleIds: mockRoles.filter(role => mockUser.roleIds.includes(role.name)),
+        roleIds: mockRoles.filter((role) => mockUser.roleIds.includes(role.name)),
       });
     });
 

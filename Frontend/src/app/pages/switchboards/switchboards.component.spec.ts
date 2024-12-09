@@ -26,16 +26,11 @@ describe('SwitchboardsComponent', () => {
   ];
 
   beforeEach(async () => {
-    const switchboardsSpy = jasmine.createSpyObj('SwitchboardsService', [
-      'searchSwitchboards',
-      'deleteSwitchboard',
-    ]);
+    const switchboardsSpy = jasmine.createSpyObj('SwitchboardsService', ['searchSwitchboards', 'deleteSwitchboard']);
     const errorSpy = jasmine.createSpyObj('ErrorService', ['processError']);
     const confirmSpy = jasmine.createSpyObj('ConfirmationService', ['confirm']);
     const notificationsSpy = jasmine.createSpyObj('NotificationsEmitterService', ['Success']);
-    const tableHelperSpy = jasmine.createSpyObj('TableHelperService', [
-      'isNoResultsOrNoRecords',
-    ]);
+    const tableHelperSpy = jasmine.createSpyObj('TableHelperService', ['isNoResultsOrNoRecords']);
 
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']);
 
@@ -56,9 +51,7 @@ describe('SwitchboardsComponent', () => {
     switchboardsService = TestBed.inject(SwitchboardsService) as jasmine.SpyObj<SwitchboardsService>;
     errorService = TestBed.inject(ErrorService) as jasmine.SpyObj<ErrorService>;
     confirmService = TestBed.inject(ConfirmationService) as jasmine.SpyObj<ConfirmationService>;
-    notificationsService = TestBed.inject(
-      NotificationsEmitterService
-    ) as jasmine.SpyObj<NotificationsEmitterService>;
+    notificationsService = TestBed.inject(NotificationsEmitterService) as jasmine.SpyObj<NotificationsEmitterService>;
     tableHelper = TestBed.inject(TableHelperService) as jasmine.SpyObj<TableHelperService>;
   });
 
@@ -68,9 +61,7 @@ describe('SwitchboardsComponent', () => {
 
   describe('ngOnInit', () => {
     it('should fetch the switchboards list on initialization', () => {
-      switchboardsService.searchSwitchboards.and.returnValue(
-        of({ data: mockSwitchboards, totalRecords: 3 })
-      );
+      switchboardsService.searchSwitchboards.and.returnValue(of({ data: mockSwitchboards, totalRecords: 3 }));
       tableHelper.isNoResultsOrNoRecords.and.returnValue({ noRecords: false, noResults: false });
 
       component.ngOnInit();

@@ -1,15 +1,17 @@
-@if(phaseCount === 2 && firstPhaseValue && secondPhaseValue) {
-  <fa-icon [icon]="['fas', 'circle-info']"
-           pTooltip="Ф1: {{ firstPhaseValue }} {{'kvh' | translate}}
-                                    Ф2: {{ secondPhaseValue }} {{'kvh' | translate}}"
-           tooltipPosition="top"
-           [class]="'ml-2 text-primary'"></fa-icon>
+@if (phaseCount === 2 && firstPhaseValue && secondPhaseValue) {
+  <fa-icon
+    [icon]="['fas', 'circle-info']"
+    pTooltip="Ф1: {{ firstPhaseValue }} {{ 'kvh' | translate }}
+                                    Ф2: {{ secondPhaseValue }} {{ 'kvh' | translate }}"
+    tooltipPosition="top"
+    [class]="'ml-2 text-primary'"></fa-icon>
 }
-@if(phaseCount === 3 && firstPhaseValue && secondPhaseValue && thirdPhaseValue) {
-  <fa-icon [icon]="['fas', 'circle-info']"
-           pTooltip="Ф1: {{ firstPhaseValue }} {{'kvh' | translate}}
-                                    Ф2: {{ secondPhaseValue }} {{'kvh' | translate}}
-                                    Ф3: {{ thirdPhaseValue }} {{'kvh' | translate}}"
-           tooltipPosition="top"
-           [class]="'ml-2 text-primary'"></fa-icon>
+@if (phaseCount === 3 && firstPhaseValue && secondPhaseValue && thirdPhaseValue) {
+  <fa-icon
+    [icon]="['fas', 'circle-info']"
+    pTooltip="Ф1: {{ firstPhaseValue }} {{ 'kvh' | translate }}
+                                    Ф2: {{ secondPhaseValue }} {{ 'kvh' | translate }}
+                                    Ф3: {{ thirdPhaseValue }} {{ 'kvh' | translate }}"
+    tooltipPosition="top"
+    [class]="'ml-2 text-primary'"></fa-icon>
 }

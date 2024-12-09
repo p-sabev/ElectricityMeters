@@ -5,7 +5,7 @@ import { ReadingsService } from '../../readings/readings.service';
 import { of, throwError } from 'rxjs';
 import { Subscriber } from '../../../core/models/subscribers.model';
 import { Reading } from '../../../core/models/readings.model';
-import {TranslateModule} from "@ngx-translate/core";
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DetailsForSubscriberComponent', () => {
   let component: DetailsForSubscriberComponent;
@@ -62,14 +62,8 @@ describe('DetailsForSubscriberComponent', () => {
     const readingsSpy = jasmine.createSpyObj('ReadingsService', ['getAllReadingsBySubscriberId']);
 
     await TestBed.configureTestingModule({
-      imports: [
-        DetailsForSubscriberComponent,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(),
-      ],
-      providers: [
-        { provide: ReadingsService, useValue: readingsSpy },
-      ],
+      imports: [DetailsForSubscriberComponent, HttpClientTestingModule, TranslateModule.forRoot()],
+      providers: [{ provide: ReadingsService, useValue: readingsSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DetailsForSubscriberComponent);

@@ -15,8 +15,8 @@ describe('TokenInterceptor', () => {
       providers: [
         TokenInterceptor,
         AuthService,
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
-      ]
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+      ],
     });
 
     httpMock = TestBed.inject(HttpTestingController);
@@ -53,7 +53,7 @@ describe('TokenInterceptor', () => {
 
   it('should call logout on 401 error', () => {
     httpClient.get('/test').subscribe({
-      error: () => {}
+      error: () => {},
     });
 
     const req = httpMock.expectOne('/test');
@@ -64,7 +64,7 @@ describe('TokenInterceptor', () => {
 
   it('should not call logout on non-401 error', () => {
     httpClient.get('/test').subscribe({
-      error: () => {}
+      error: () => {},
     });
 
     const req = httpMock.expectOne('/test');

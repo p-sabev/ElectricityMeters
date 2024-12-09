@@ -15,8 +15,8 @@ describe('LoaderInterceptorService', () => {
       providers: [
         LoaderInterceptorService,
         LoaderService,
-        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true }
-      ]
+        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },
+      ],
     });
 
     httpMock = TestBed.inject(HttpTestingController);

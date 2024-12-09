@@ -1,9 +1,9 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { HeaderComponent } from './header.component';
 import { of } from 'rxjs';
-import {NavigationEnd, provideRouter, Router, withRouterConfig} from '@angular/router';
+import { NavigationEnd, provideRouter, Router, withRouterConfig } from '@angular/router';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -19,8 +19,8 @@ describe('HeaderComponent', () => {
       providers: [
         provideRouter([], withRouterConfig({})),
         { provide: AuthService, useValue: { logout: jasmine.createSpy('logout') } },
-        { provide: Title, useValue: { setTitle: jasmine.createSpy('setTitle') } }
-      ]
+        { provide: Title, useValue: { setTitle: jasmine.createSpy('setTitle') } },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);

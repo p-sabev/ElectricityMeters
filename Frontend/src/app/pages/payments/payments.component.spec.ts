@@ -8,7 +8,7 @@ import { NotificationsEmitterService } from '../../core/services/notifications.s
 import { TableHelperService } from '../../core/helpers/table-helper.service';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {Payment} from "../../core/models/payment.model";
+import { Payment } from '../../core/models/payment.model';
 
 describe('PaymentsComponent', () => {
   let component: PaymentsComponent;
@@ -24,13 +24,28 @@ describe('PaymentsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PaymentsComponent, HttpClientTestingModule],
       providers: [
-        { provide: PaymentsService, useValue: { searchPayments: jasmine.createSpy('searchPayments').and.returnValue(of({ data: [], totalRecords: 0 })), deletePayment: jasmine.createSpy('deletePayment').and.returnValue(of({})) } },
+        {
+          provide: PaymentsService,
+          useValue: {
+            searchPayments: jasmine.createSpy('searchPayments').and.returnValue(of({ data: [], totalRecords: 0 })),
+            deletePayment: jasmine.createSpy('deletePayment').and.returnValue(of({})),
+          },
+        },
         { provide: ErrorService, useValue: { processError: jasmine.createSpy('processError') } },
         { provide: ConfirmationService, useValue: { confirm: jasmine.createSpy('confirm') } },
         { provide: TranslateService, useValue: { get: jasmine.createSpy('get').and.returnValue(of({})) } },
         { provide: NotificationsEmitterService, useValue: { Success: { emit: jasmine.createSpy('emit') } } },
-        { provide: TableHelperService, useValue: { isNoResultsOrNoRecords: jasmine.createSpy('isNoResultsOrNoRecords').and.returnValue({ noRecords: false, noResults: false }), getPagingSettings: jasmine.createSpy('getPagingSettings').and.returnValue({}), getSortingSettings: jasmine.createSpy('getSortingSettings').and.returnValue({}) } }
-      ]
+        {
+          provide: TableHelperService,
+          useValue: {
+            isNoResultsOrNoRecords: jasmine
+              .createSpy('isNoResultsOrNoRecords')
+              .and.returnValue({ noRecords: false, noResults: false }),
+            getPagingSettings: jasmine.createSpy('getPagingSettings').and.returnValue({}),
+            getSortingSettings: jasmine.createSpy('getSortingSettings').and.returnValue({}),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PaymentsComponent);
@@ -80,7 +95,7 @@ describe('PaymentsComponent', () => {
     const payment = { id: 1 } as Payment;
     component.deletePayment(payment);
     expect(paymentsService.deletePayment).toHaveBeenCalledWith(1);
-    expect(notifications.Success.emit).toHaveBeenCalledWith("SuccessfullyDeletedPayment");
+    expect(notifications.Success.emit).toHaveBeenCalledWith('SuccessfullyDeletedPayment');
     expect(paymentsService.searchPayments).toHaveBeenCalled();
   });
 
@@ -91,12 +106,18 @@ describe('PaymentsComponent', () => {
   });
 
   it('should sum fees correctly', () => {
-    const fees = [{ value: 10, description: '' }, { value: 20, description: '' }];
+    const fees = [
+      { value: 10, description: '' },
+      { value: 20, description: '' },
+    ];
     expect(component.sumFees(fees)).toBe(30);
   });
 
   it('should sum 0.1 + 0.2 correctly', () => {
-    const fees = [{ value: 0.1, description: '' }, { value: 0.2, description: '' }];
+    const fees = [
+      { value: 0.1, description: '' },
+      { value: 0.2, description: '' },
+    ];
     expect(component.sumFees(fees)).toBe(0.3);
   });
 

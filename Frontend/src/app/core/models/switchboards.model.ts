@@ -1,5 +1,5 @@
-import {Paging, Sorting} from "./base-models.model";
-import {Subscriber} from "./subscribers.model";
+import { Paging, Sorting } from './base-models.model';
+import { Subscriber } from './subscribers.model';
 
 export interface Switchboard {
   id: number;

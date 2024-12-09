@@ -1,65 +1,71 @@
 <div class="container">
   <div class="row">
-
     <div class="col-12">
       <app-page-heading [title]="'Payments'"></app-page-heading>
     </div>
 
     <ng-container *appRoleAccess="'Administrator, Moderator'">
       <div *ngIf="!noRecords" class="col-12 mt-2">
-        <button class="btn btn-outline-secondary"
-                (click)="showPaymentReport = true;">
+        <button class="btn btn-outline-secondary" (click)="showPaymentReport = true">
           <fa-icon [icon]="['fas', 'file-invoice']" [class]="'me-2'"></fa-icon>
-          {{'PaymentReport' | translate}}
+          {{ 'PaymentReport' | translate }}
         </button>
       </div>
     </ng-container>
 
     <div *ngIf="noRecords" class="alert alert-info col-12 mt-3">
-      {{'NoResultsFound' | translate}}
+      {{ 'NoResultsFound' | translate }}
     </div>
 
     <!--  Payments list  -->
     <div *ngIf="!noRecords" class="col-12 mt-3">
-      <p-table [value]="paymentsList"
-               styleClass="p-datatable-gridlines"
-               [tableStyle]="{ 'width': '100%' }"
-               [lazy]="true"
-               (onLazyLoad)="fetchPaymentsList($event)"
-               [sortField]="sortField" [sortOrder]="sortOrder"
-               [totalRecords]="totalRecords"
-               [paginator]="true"
-               [first]="page"
-               [rows]="10"
-               [rowsPerPageOptions]="[5, 10, 20, 50]"
-               [scrollable]="true" scrollHeight="80vh">
+      <p-table
+        [value]="paymentsList"
+        styleClass="p-datatable-gridlines"
+        [tableStyle]="{ width: '100%' }"
+        [lazy]="true"
+        (onLazyLoad)="fetchPaymentsList($event)"
+        [sortField]="sortField"
+        [sortOrder]="sortOrder"
+        [totalRecords]="totalRecords"
+        [paginator]="true"
+        [first]="page"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20, 50]"
+        [scrollable]="true"
+        scrollHeight="80vh">
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="id" translate>Id<p-sortIcon field="id" /></th>
-            <th style="min-width: 160px;" translate>Subscriber</th>
-            <th pSortableColumn="date" style="min-width: 120px;" translate>Date<p-sortIcon field="date" /></th>
-            <th style="min-width: 120px;" translate>ReadingInKvh</th>
-            <th style="min-width: 120px;" translate>Difference</th>
-            <th style="min-width: 120px;" translate>TariffInBgn</th>
-            <th style="min-width: 120px;" translate>ForPaymentInBgn</th>
-            <th style="min-width: 120px;" translate>Fees</th>
-            <th style="min-width: 120px;" translate>PaidInBgn</th>
-            <th style="min-width: 80px;" translate>Switchboard</th>
+            <th style="min-width: 160px" translate>Subscriber</th>
+            <th pSortableColumn="date" style="min-width: 120px" translate>Date<p-sortIcon field="date" /></th>
+            <th style="min-width: 120px" translate>ReadingInKvh</th>
+            <th style="min-width: 120px" translate>Difference</th>
+            <th style="min-width: 120px" translate>TariffInBgn</th>
+            <th style="min-width: 120px" translate>ForPaymentInBgn</th>
+            <th style="min-width: 120px" translate>Fees</th>
+            <th style="min-width: 120px" translate>PaidInBgn</th>
+            <th style="min-width: 80px" translate>Switchboard</th>
             <th alignFrozen="right" pFrozenColumn></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="colgroup">
           <tr class="search-row">
             <td class="p-2" colspan="4">
-              <input type="text" class="form-control"
-                     [(ngModel)]="searchSubscriberName"
-                     title="{{'SearchBy' | translate}} {{'Name' | translate | lowercase}}"
-                     placeholder="{{'SearchBy' | translate}} {{'Name' | translate | lowercase}}">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="searchSubscriberName"
+                title="{{ 'SearchBy' | translate }} {{ 'Name' | translate | lowercase }}"
+                placeholder="{{ 'SearchBy' | translate }} {{ 'Name' | translate | lowercase }}" />
             </td>
             <td class="p-2" colspan="6"></td>
-            <td alignFrozen="right" pFrozenColumn class="p-2" style="background: #FFFFFF;">
-              <button type="button" class="btn btn-outline-secondary float-end"
-                      (click)="page = 0; fetchPaymentsList();" translate>
+            <td alignFrozen="right" pFrozenColumn class="p-2" style="background: #ffffff">
+              <button
+                type="button"
+                class="btn btn-outline-secondary float-end"
+                (click)="page = 0; fetchPaymentsList()"
+                translate>
                 <fa-icon [icon]="['fas', 'search']" [class]="'me-2'"></fa-icon>
                 {{ 'Filtrate' | translate }}
               </button>
@@ -68,7 +74,7 @@
           <tr *ngIf="noResults">
             <td colspan="11">
               <div class="alert alert-info mt-2 mx-2">
-                {{'NoResultsWereFound' | translate}}
+                {{ 'NoResultsWereFound' | translate }}
               </div>
             </td>
           </tr>
@@ -78,33 +84,43 @@
             <td>{{ payment.id }}</td>
             <td class="font-weight-bold">
               {{ payment.subscriber?.name }}
-              {{ payment.subscriber?.phaseCount === 2 ? ('TwoPhaseText' | translate) : (payment.subscriber?.phaseCount === 3 ? ('ThreePhaseText' | translate) : '')}}
+              {{
+                payment.subscriber?.phaseCount === 2
+                  ? ('TwoPhaseText' | translate)
+                  : payment.subscriber?.phaseCount === 3
+                    ? ('ThreePhaseText' | translate)
+                    : ''
+              }}
             </td>
             <td>{{ payment.date | date: 'dd.MM.yyyy' }}</td>
             <td>
-              {{ payment.reading?.value }} {{'kvh' | translate}}
-              <app-display-two-three-phase-reading [phaseCount]="payment.subscriber?.phaseCount"
-                                                   [firstPhaseValue]="payment?.reading?.firstPhaseValue || 0"
-                                                   [secondPhaseValue]="payment?.reading?.secondPhaseValue || 0"
-                                                   [thirdPhaseValue]="payment?.reading?.thirdPhaseValue || 0"></app-display-two-three-phase-reading>
+              {{ payment.reading?.value }} {{ 'kvh' | translate }}
+              <app-display-two-three-phase-reading
+                [phaseCount]="payment.subscriber?.phaseCount"
+                [firstPhaseValue]="payment?.reading?.firstPhaseValue || 0"
+                [secondPhaseValue]="payment?.reading?.secondPhaseValue || 0"
+                [thirdPhaseValue]="payment?.reading?.thirdPhaseValue || 0"></app-display-two-three-phase-reading>
             </td>
-            <td>{{ payment.reading?.difference }} {{'kvh' | translate}}</td>
-            <td>{{ payment.reading?.currentPrice | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
-            <td>{{ payment.reading?.amountDue | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
-            <td>{{ sumFees(payment.feeList) | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
-            <td>{{ (sumFees(payment.feeList) + payment.reading?.amountDue) | twoAfterDot }} {{'BgnVaultSmall' | translate}}</td>
+            <td>{{ payment.reading?.difference }} {{ 'kvh' | translate }}</td>
+            <td>{{ payment.reading?.currentPrice | twoAfterDot }} {{ 'BgnVaultSmall' | translate }}</td>
+            <td>{{ payment.reading?.amountDue | twoAfterDot }} {{ 'BgnVaultSmall' | translate }}</td>
+            <td>{{ sumFees(payment.feeList) | twoAfterDot }} {{ 'BgnVaultSmall' | translate }}</td>
+            <td>
+              {{ sumFees(payment.feeList) + payment.reading?.amountDue | twoAfterDot }}
+              {{ 'BgnVaultSmall' | translate }}
+            </td>
             <td>{{ payment.subscriber?.switchboard?.name }}</td>
             <td class="py-1" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
-                <a class="nav-link text-success cursor-pointer btn-action"
-                   (click)="openReadingToPrint(payment.reading, payment.feeList);">
+                <a
+                  class="nav-link text-success cursor-pointer btn-action"
+                  (click)="openReadingToPrint(payment.reading, payment.feeList)">
                   <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
                 </a>
               </ng-container>
 
               <ng-container *appRoleAccess="'Administrator'">
-                <a class="nav-link text-danger cursor-pointer btn-action"
-                   (click)="askToDeletePayment(payment)">
+                <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeletePayment(payment)">
                   <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
                 </a>
               </ng-container>
@@ -117,10 +133,11 @@
 </div>
 
 <ng-container *ngIf="readingToPrintReceipt">
-  <app-print-receipt [reading]="readingToPrintReceipt"
-                     (close)="readingToPrintReceipt = null; fetchPaymentsList();"></app-print-receipt>
+  <app-print-receipt
+    [reading]="readingToPrintReceipt"
+    (close)="readingToPrintReceipt = null; fetchPaymentsList()"></app-print-receipt>
 </ng-container>
 
 <ng-container *ngIf="showPaymentReport">
-  <app-payment-report (close)="showPaymentReport = false;"></app-payment-report>
+  <app-payment-report (close)="showPaymentReport = false"></app-payment-report>
 </ng-container>

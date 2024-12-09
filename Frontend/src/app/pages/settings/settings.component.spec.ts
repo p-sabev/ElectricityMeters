@@ -6,11 +6,11 @@ import { NotificationsEmitterService } from '../../core/services/notifications.s
 import { of, throwError } from 'rxjs';
 import { DefaultFee } from '../../core/models/settings.model';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import {faTrash, faPlus} from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import {EventEmitter} from "@angular/core";
+import { EventEmitter } from '@angular/core';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;

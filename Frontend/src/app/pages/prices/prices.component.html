@@ -1,6 +1,5 @@
 <div class="container">
   <div class="row">
-
     <div class="col-12">
       <app-page-heading [title]="'Prices'"></app-page-heading>
     </div>
@@ -8,64 +7,70 @@
     <div class="col-12 mt-2" *appRoleAccess="'Administrator'">
       <button class="btn btn-outline-success" (click)="initAddPrice()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
-        {{'AddPrice' | translate}}
+        {{ 'AddPrice' | translate }}
       </button>
     </div>
 
     <div *ngIf="noRecords" class="alert alert-info col-12 mt-3">
-      {{'NoResultsFound' | translate}}
+      {{ 'NoResultsFound' | translate }}
     </div>
 
     <div *ngIf="!noRecords" class="col-12 mt-3">
-
-      <p-table [value]="pricesList"
-               styleClass="p-datatable-gridlines"
-               [tableStyle]="{ 'width': '100%' }"
-               [lazy]="true"
-               (onLazyLoad)="fetchPricesList($event)"
-               [sortField]="sortField" [sortOrder]="sortOrder"
-               [totalRecords]="totalRecords"
-               [paginator]="true"
-               [rows]="10"
-               [rowsPerPageOptions]="[5, 10, 20, 50]"
-               [scrollable]="true" scrollHeight="80vh">
+      <p-table
+        [value]="pricesList"
+        styleClass="p-datatable-gridlines"
+        [tableStyle]="{ width: '100%' }"
+        [lazy]="true"
+        (onLazyLoad)="fetchPricesList($event)"
+        [sortField]="sortField"
+        [sortOrder]="sortOrder"
+        [totalRecords]="totalRecords"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20, 50]"
+        [scrollable]="true"
+        scrollHeight="80vh">
         <ng-template pTemplate="header">
           <tr>
-<!--            <th pSortableColumn="id" translate>Number<p-sortIcon field="id" /></th>-->
-            <th pSortableColumn="priceInLv" style="min-width: 100px;" translate>PriceInBGN<p-sortIcon field="priceInLv" /></th>
-            <th pSortableColumn="dateFrom" style="min-width: 120px;" translate>DateFrom<p-sortIcon field="dateFrom" /></th>
-            <th pSortableColumn="dateTo" style="min-width: 120px;" translate>DateTo<p-sortIcon field="dateTo" /></th>
-            <th style="min-width: 120px;" translate>Note</th>
+            <!--            <th pSortableColumn="id" translate>Number<p-sortIcon field="id" /></th>-->
+            <th pSortableColumn="priceInLv" style="min-width: 100px" translate>
+              PriceInBGN<p-sortIcon field="priceInLv" />
+            </th>
+            <th pSortableColumn="dateFrom" style="min-width: 120px" translate>
+              DateFrom<p-sortIcon field="dateFrom" />
+            </th>
+            <th pSortableColumn="dateTo" style="min-width: 120px" translate>DateTo<p-sortIcon field="dateTo" /></th>
+            <th style="min-width: 120px" translate>Note</th>
             <th *appRoleAccess="'Administrator'" alignFrozen="right" pFrozenColumn></th>
           </tr>
 
           <tr *ngIf="noResults">
             <td colspan="5">
               <div class="alert alert-info mt-2 mx-2">
-                {{'NoResultsWereFound' | translate}}
+                {{ 'NoResultsWereFound' | translate }}
               </div>
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-price>
           <tr>
-<!--            <td>{{ price.id }}</td>-->
+            <!--            <td>{{ price.id }}</td>-->
             <td class="font-weight-bold">{{ price.priceInLv | twoAfterDot }}лв.</td>
-            <td>{{ price.dateFrom | date: 'dd.MM.yyyy'}}</td>
+            <td>{{ price.dateFrom | date: 'dd.MM.yyyy' }}</td>
             <td>
-              <span *ngIf="price.dateTo">{{ price.dateTo | date: 'dd.MM.yyyy'}}</span>
+              <span *ngIf="price.dateTo">{{ price.dateTo | date: 'dd.MM.yyyy' }}</span>
               <span *ngIf="!price.dateTo">-</span>
             </td>
             <td>{{ price.note }}</td>
             <td *appRoleAccess="'Administrator'" class="py-1" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator'">
-                <a class="nav-link text-warning cursor-pointer btn-action"
-                   (click)="openPriceForEdit(price)">
+                <a class="nav-link text-warning cursor-pointer btn-action" (click)="openPriceForEdit(price)">
                   <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
                 </a>
-                <a *ngIf="!price.isUsed"
-                   class="nav-link text-danger cursor-pointer btn-action"
-                   (click)="askToDeletePrice(price)">
+                <a
+                  *ngIf="!price.isUsed"
+                  class="nav-link text-danger cursor-pointer btn-action"
+                  (click)="askToDeletePrice(price)">
                   <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
                 </a>
               </ng-container>
@@ -73,13 +78,12 @@
           </tr>
         </ng-template>
       </p-table>
-
-
     </div>
   </div>
 </div>
 
 <ng-container *ngIf="addPrice || priceForEdit">
-  <app-add-edit-prices [priceToEdit]="priceForEdit"
-                       (close)="addPrice = false; priceForEdit = null; fetchPricesList();"></app-add-edit-prices>
+  <app-add-edit-prices
+    [priceToEdit]="priceForEdit"
+    (close)="addPrice = false; priceForEdit = null; fetchPricesList()"></app-add-edit-prices>
 </ng-container>

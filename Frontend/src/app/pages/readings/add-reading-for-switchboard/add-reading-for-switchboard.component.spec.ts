@@ -19,8 +19,26 @@ describe('AddReadingForSwitchboardComponent', () => {
   let translateService: jasmine.SpyObj<TranslateService>;
 
   const mockSubscribers: Subscriber[] = [
-    { id: 1, name: 'Subscriber 1', phaseCount: 1, lastRecordDate: new Date('2023-01-01T00:00:00.000Z'), lastReading: 100, defaultReading: 50, numberPage: 0, switchboard: {id: 1, name: '1'} },
-    { id: 2, name: 'Subscriber 2', phaseCount: 3, lastRecordDate: new Date('2023-02-01T00:00:00.000Z'), lastReading: 200, defaultReading: 150, numberPage: 0, switchboard: {id: 1, name: '1'} },
+    {
+      id: 1,
+      name: 'Subscriber 1',
+      phaseCount: 1,
+      lastRecordDate: new Date('2023-01-01T00:00:00.000Z'),
+      lastReading: 100,
+      defaultReading: 50,
+      numberPage: 0,
+      switchboard: { id: 1, name: '1' },
+    },
+    {
+      id: 2,
+      name: 'Subscriber 2',
+      phaseCount: 3,
+      lastRecordDate: new Date('2023-02-01T00:00:00.000Z'),
+      lastReading: 200,
+      defaultReading: 150,
+      numberPage: 0,
+      switchboard: { id: 1, name: '1' },
+    },
   ];
 
   beforeEach(() => {

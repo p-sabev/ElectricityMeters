@@ -61,7 +61,7 @@ describe('AddEditSubscribersComponent', () => {
         meterNumber: '123456',
         note: 'Note',
         defaultReading: 100,
-        phaseCount: 1
+        phaseCount: 1,
       };
 
       component.addEditForm.setValue(mockFormValue);
@@ -98,7 +98,7 @@ describe('AddEditSubscribersComponent', () => {
         meterNumber: '123456',
         note: 'Note',
         defaultReading: 100,
-        phaseCount: 1
+        phaseCount: 1,
       };
 
       component.addEditForm.setValue(mockFormValue);

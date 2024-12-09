@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-xl animate__animated animate__fadeIn">
     <div class="modal-content">
       <div class="modal-header">
-        <fa-icon [icon]="['fas', 'print']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <fa-icon [icon]="['fas', 'print']" [class]="'me-2'" style="font-size: 22px"></fa-icon>
         <h3 translate>PrintReceipt</h3>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close.emit()">
@@ -12,142 +12,131 @@
 
       <div class="modal-body">
         <div class="row">
-          <div *ngIf="!reading.isPaid"
-               class="col-lg-6 col-md-12"
-               style="margin-top: 20px;">
-            <h3>{{'Fees' | translate}}</h3>
+          <div *ngIf="!reading.isPaid" class="col-lg-6 col-md-12" style="margin-top: 20px">
+            <h3>{{ 'Fees' | translate }}</h3>
 
             <div>
               <table class="table" *ngIf="feeList?.length">
                 <thead>
-                <tr>
-                  <th scope="col">{{'Value' | translate}}</th>
-                  <th scope="col">{{'Description' | translate}}</th>
-                  <th scope="col"></th>
-                </tr>
+                  <tr>
+                    <th scope="col">{{ 'Value' | translate }}</th>
+                    <th scope="col">{{ 'Description' | translate }}</th>
+                    <th scope="col"></th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let fee of feeList; let i = index;">
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="priceInLv"
-                      id="priceInLv"
-                      min="0.00"
-                      max="10000.00"
-                      step="1"
-                      [(ngModel)]="fee.value"
-                      title="{{ 'PriceInBGN' | translate }}*"
-                      placeholder="{{ 'PriceInBGN' | translate }}*" />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="description"
-                      id="description"
-                      [(ngModel)]="fee.description"
-                      title="{{ 'Description' | translate }}*"
-                      placeholder="{{ 'Description' | translate }}*" />
-                  </td>
-                  <td class="text-center">
-                    <fa-icon [icon]="['fas', 'trash']"
-                             [class]="'me-2 text-danger cursor-pointer'"
-                             (click)="deleteFee(i)"
-                             style="font-size: 22px;"></fa-icon>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="3" class="text-center">
-                    <button class="btn btn-outline-success" (click)="feeList.push({value: null, description: ''})">
-                      <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
-                      {{'AddFee' | translate}}
-                    </button>
-                  </td>
-                </tr>
+                  <tr *ngFor="let fee of feeList; let i = index">
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control"
+                        name="priceInLv"
+                        id="priceInLv"
+                        min="0.00"
+                        max="10000.00"
+                        step="1"
+                        [(ngModel)]="fee.value"
+                        title="{{ 'PriceInBGN' | translate }}*"
+                        placeholder="{{ 'PriceInBGN' | translate }}*" />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="description"
+                        id="description"
+                        [(ngModel)]="fee.description"
+                        title="{{ 'Description' | translate }}*"
+                        placeholder="{{ 'Description' | translate }}*" />
+                    </td>
+                    <td class="text-center">
+                      <fa-icon
+                        [icon]="['fas', 'trash']"
+                        [class]="'me-2 text-danger cursor-pointer'"
+                        (click)="deleteFee(i)"
+                        style="font-size: 22px"></fa-icon>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" class="text-center">
+                      <button class="btn btn-outline-success" (click)="feeList.push({ value: null, description: '' })">
+                        <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
+                        {{ 'AddFee' | translate }}
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
 
             <div *ngIf="!feeList?.length">
-              <button class="btn btn-outline-success mt-3" (click)="feeList.push({value: null, description: ''})">
+              <button class="btn btn-outline-success mt-3" (click)="feeList.push({ value: null, description: '' })">
                 <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
-                {{'AddFee' | translate}}
+                {{ 'AddFee' | translate }}
               </button>
             </div>
           </div>
           <div class="col-lg-6 col-md-12 mx-auto" #printSection id="print-section">
             <app-receipt [reading]="reading" [fees]="feeList"></app-receipt>
           </div>
-<!--          <div class="col-lg-6 col-md-12 mx-auto" id="print-section-simple" style="display: none;">-->
-<!--            <h6>-->
-<!--              <span style="font-weight: bold;">-->
-<!--                Получена от:-->
-<!--              </span>-->
-<!--              {{reading.subscriber.name}}-->
-<!--            </h6>-->
-<!--            <h6>-->
-<!--              <span style="font-weight: bold;">-->
-<!--                За/срещу:-->
-<!--              </span>-->
-<!--              н:{{reading.value}} - с:{{reading.value - reading.difference}} = {{reading.difference}}{{'kvh' | translate}} * {{reading.currentPrice | twoAfterDot}}{{'BgnVaultSmall' | translate}} = {{reading.amountDue | twoAfterDot}}{{'BgnVaultSmall' | translate}}-->
-<!--            </h6>-->
-<!--            <h6>-->
-<!--              <span style="font-weight: bold;">-->
-<!--                Получена от:-->
-<!--              </span>-->
-<!--              {{reading.subscriber.name}}-->
-<!--            </h6>-->
-<!--            <h6>-->
-<!--              <span style="font-weight: bold;">-->
-<!--                Получена от:-->
-<!--              </span>-->
-<!--              {{reading.subscriber.name}}-->
-<!--            </h6>-->
-<!--            <h6>-->
-<!--              <span style="font-weight: bold;">-->
-<!--                Получена от:-->
-<!--              </span>-->
-<!--              {{reading.subscriber.name}}-->
-<!--            </h6>-->
-<!--          </div>-->
+          <!--          <div class="col-lg-6 col-md-12 mx-auto" id="print-section-simple" style="display: none;">-->
+          <!--            <h6>-->
+          <!--              <span style="font-weight: bold;">-->
+          <!--                Получена от:-->
+          <!--              </span>-->
+          <!--              {{reading.subscriber.name}}-->
+          <!--            </h6>-->
+          <!--            <h6>-->
+          <!--              <span style="font-weight: bold;">-->
+          <!--                За/срещу:-->
+          <!--              </span>-->
+          <!--              н:{{reading.value}} - с:{{reading.value - reading.difference}} = {{reading.difference}}{{'kvh' | translate}} * {{reading.currentPrice | twoAfterDot}}{{'BgnVaultSmall' | translate}} = {{reading.amountDue | twoAfterDot}}{{'BgnVaultSmall' | translate}}-->
+          <!--            </h6>-->
+          <!--            <h6>-->
+          <!--              <span style="font-weight: bold;">-->
+          <!--                Получена от:-->
+          <!--              </span>-->
+          <!--              {{reading.subscriber.name}}-->
+          <!--            </h6>-->
+          <!--            <h6>-->
+          <!--              <span style="font-weight: bold;">-->
+          <!--                Получена от:-->
+          <!--              </span>-->
+          <!--              {{reading.subscriber.name}}-->
+          <!--            </h6>-->
+          <!--            <h6>-->
+          <!--              <span style="font-weight: bold;">-->
+          <!--                Получена от:-->
+          <!--              </span>-->
+          <!--              {{reading.subscriber.name}}-->
+          <!--            </h6>-->
+          <!--          </div>-->
 
-<!--          <div class="col-12">-->
-<!--            <input type="text" [(ngModel)]="encoding" class="form-control">-->
-<!--          </div>-->
-
+          <!--          <div class="col-12">-->
+          <!--            <input type="text" [(ngModel)]="encoding" class="form-control">-->
+          <!--          </div>-->
         </div>
       </div>
 
       <div class="modal-footer">
         <div class="row" style="width: 100%">
           <div class="col-12 p-0">
-            <button
-              *ngIf="!reading.isPaid"
-              type="button"
-              class="btn float-end btn-success"
-              (click)="markAsPaid()">
+            <button *ngIf="!reading.isPaid" type="button" class="btn float-end btn-success" (click)="markAsPaid()">
               <fa-icon [icon]="['fas', 'money-bill']" [class]="'me-2'"></fa-icon>
               {{ 'MarkAsPaid' | translate }}
             </button>
-            <button
-              type="button"
-              class="btn float-end btn-outline-secondary me-2"
-              (click)="callPrint()">
+            <button type="button" class="btn float-end btn-outline-secondary me-2" (click)="callPrint()">
               <fa-icon [icon]="['fas', 'print']" [class]="'me-2'"></fa-icon>
               {{ 'Print' | translate }}
             </button>
-<!--            <button-->
-<!--              type="button"-->
-<!--              class="btn float-end btn-outline-secondary me-2"-->
-<!--              (click)="callSimplePrint()">-->
-<!--              <fa-icon [icon]="['fas', 'print']"></fa-icon>-->
-<!--            </button>-->
+            <!--            <button-->
+            <!--              type="button"-->
+            <!--              class="btn float-end btn-outline-secondary me-2"-->
+            <!--              (click)="callSimplePrint()">-->
+            <!--              <fa-icon [icon]="['fas', 'print']"></fa-icon>-->
+            <!--            </button>-->
 
-            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
-              Close
-            </button>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>Close</button>
           </div>
         </div>
       </div>

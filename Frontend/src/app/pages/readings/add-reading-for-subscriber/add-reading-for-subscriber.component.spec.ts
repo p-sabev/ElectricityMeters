@@ -18,14 +18,14 @@ describe('AddReadingForSubscriberComponent', () => {
   let errorService: jasmine.SpyObj<ErrorService>;
 
   const mockSubscriber: Subscriber = {
-    switchboard: {id: 1, name: '1', subscribers: []},
+    switchboard: { id: 1, name: '1', subscribers: [] },
     id: 1,
     name: 'Test Subscriber',
     lastRecordDate: new Date('2023-01-01T00:00:00.000Z'),
     lastReading: 100,
     defaultReading: 50,
     phaseCount: 1,
-    numberPage: 1
+    numberPage: 1,
   };
 
   const mockReading: Reading = {
@@ -39,7 +39,7 @@ describe('AddReadingForSubscriberComponent', () => {
     thirdPhaseValue: 0,
     amountDue: 0,
     difference: 0,
-    currentPrice: 0
+    currentPrice: 0,
   };
 
   beforeEach(() => {

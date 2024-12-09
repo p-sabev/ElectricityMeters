@@ -18,9 +18,12 @@ describe('LoaderComponent', () => {
       imports: [LoaderComponent, HttpClientTestingModule],
       providers: [
         { provide: LoaderService, useValue: { loaderState: of({ show: true }) } },
-        { provide: AuthService, useValue: { isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true) } },
-        { provide: ChangeDetectorRef, useValue: { detectChanges: jasmine.createSpy('detectChanges') } }
-      ]
+        {
+          provide: AuthService,
+          useValue: { isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true) },
+        },
+        { provide: ChangeDetectorRef, useValue: { detectChanges: jasmine.createSpy('detectChanges') } },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoaderComponent);
@@ -52,5 +55,4 @@ describe('LoaderComponent', () => {
     component.ngOnDestroy();
     expect(subscription.unsubscribe).toHaveBeenCalled();
   });
-
 });

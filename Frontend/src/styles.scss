@@ -1,13 +1,13 @@
 @layer bootstrap-reboot, bootstrap-grid, bootsrap, primeng, primeng-theme;
 
-@import "../node_modules/bootstrap/dist/css/bootstrap-reboot" layer(bootstrap-rebooot);
-@import "../node_modules/bootstrap/dist/css/bootstrap-grid" layer(bootstrap-grid);
-@import "../node_modules/bootstrap/dist/css/bootstrap" layer(bootstrap);
-@import "primeng/resources/themes/mira/theme.css" layer(primeng-theme);
-@import "primeng/resources/primeng.min.css" layer(primeng);
+@import '../node_modules/bootstrap/dist/css/bootstrap-reboot' layer(bootstrap-rebooot);
+@import '../node_modules/bootstrap/dist/css/bootstrap-grid' layer(bootstrap-grid);
+@import '../node_modules/bootstrap/dist/css/bootstrap' layer(bootstrap);
+@import 'primeng/resources/themes/mira/theme.css' layer(primeng-theme);
+@import 'primeng/resources/primeng.min.css' layer(primeng);
 
 @import 'styles/variables';
-@import "primeicons/primeicons.css";
+@import 'primeicons/primeicons.css';
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import 'styles/big-buttons';
 @import 'styles/tooltip-errors';
@@ -96,7 +96,7 @@ i {
   background: $warning-darker !important;
 }
 .simple-notification.info {
-  background: #0A9396 !important;
+  background: #0a9396 !important;
 }
 .simple-notification.info .sn-progress-loader span {
   background: $info-darker !important;

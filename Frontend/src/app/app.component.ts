@@ -1,20 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {NotificationsEmitterService} from "./core/services/notifications.service";
-import {TranslateService} from "@ngx-translate/core";
-import {NotificationAnimationType, NotificationsService, Options} from "angular2-notifications";
-import {PrimeNGConfig} from "primeng/api";
+import { Component, OnInit } from '@angular/core';
+import { NotificationsEmitterService } from './core/services/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationAnimationType, NotificationsService, Options } from 'angular2-notifications';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
-  constructor(private notificationEmitter: NotificationsEmitterService,
-              private _notifications: NotificationsService,
-              private translate: TranslateService,
-              private primeNgConfig: PrimeNGConfig) {
+  constructor(
+    private notificationEmitter: NotificationsEmitterService,
+    private _notifications: NotificationsService,
+    private translate: TranslateService,
+    private primeNgConfig: PrimeNGConfig
+  ) {
     this.setTranslateProps();
   }
 

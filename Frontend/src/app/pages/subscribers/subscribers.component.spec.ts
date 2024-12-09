@@ -28,7 +28,11 @@ describe('SubscribersComponent', () => {
     const errorSpy = jasmine.createSpyObj('ErrorService', ['processError']);
     const confirmSpy = jasmine.createSpyObj('ConfirmationService', ['confirm']);
     const translateSpy = jasmine.createSpyObj('TranslateService', ['get']);
-    const tableHelperSpy = jasmine.createSpyObj('TableHelperService', ['getPagingSettings', 'getSortingSettings', 'isNoResultsOrNoRecords']);
+    const tableHelperSpy = jasmine.createSpyObj('TableHelperService', [
+      'getPagingSettings',
+      'getSortingSettings',
+      'isNoResultsOrNoRecords',
+    ]);
 
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']); // Mock EventEmitter
 
@@ -82,19 +86,24 @@ describe('SubscribersComponent', () => {
 
   describe('fetchSubscribersList', () => {
     it('should fetch the list of subscribers and update component state', () => {
-      const mockResponse = { data: [{
-          id: 1,
-          numberPage: 1,
-          name: 'Ivan Ivanov',
-          switchboardId: 1,
-          address: 'Sofia',
-          phone: '0888888888',
-          meterNumber: '123456',
-          note: 'Note',
-          defaultReading: 100,
-          phaseCount: 1,
-          switchboard: { id: 1, name: 'Switchboard 1' },
-        }], totalRecords: 1 };
+      const mockResponse = {
+        data: [
+          {
+            id: 1,
+            numberPage: 1,
+            name: 'Ivan Ivanov',
+            switchboardId: 1,
+            address: 'Sofia',
+            phone: '0888888888',
+            meterNumber: '123456',
+            note: 'Note',
+            defaultReading: 100,
+            phaseCount: 1,
+            switchboard: { id: 1, name: 'Switchboard 1' },
+          },
+        ],
+        totalRecords: 1,
+      };
       subscribersService.searchSubscribers.and.returnValue(of(mockResponse));
       tableHelper.isNoResultsOrNoRecords.and.returnValue({ noRecords: false, noResults: false });
 
@@ -181,10 +190,12 @@ describe('SubscribersComponent', () => {
         switchboard: { id: 1, name: 'Switchboard 1' },
       };
 
-      translateService.get.and.returnValue(of({
-        AreYouSureToDeleteThisSubscriber: 'Are you sure?',
-        AreYouSure: 'Confirmation',
-      }));
+      translateService.get.and.returnValue(
+        of({
+          AreYouSureToDeleteThisSubscriber: 'Are you sure?',
+          AreYouSure: 'Confirmation',
+        })
+      );
 
       confirmService.confirm.and.callFake(({ accept }: any) => accept());
 

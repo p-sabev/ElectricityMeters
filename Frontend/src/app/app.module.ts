@@ -5,32 +5,29 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './core/authentication/login/login.component';
 import { LoaderComponent } from './core/ui/loader/loader.component';
-import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { far } from "@fortawesome/free-regular-svg-icons";
-import {FormsModule} from "@angular/forms";
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {TabViewModule} from "primeng/tabview";
-import {ButtonModule} from "primeng/button";
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TabViewModule } from 'primeng/tabview';
+import { ButtonModule } from 'primeng/button';
 import { TreeModule } from 'primeng/tree';
-import {SharedModule} from "./shared/shared/shared.module";
-import {LoaderInterceptorService} from "./core/interceptors/loader/loader-interceptor.service";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {SimpleNotificationsModule} from "angular2-notifications";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {ConfirmationService} from "primeng/api";
-import {HeaderComponent} from "./core/ui/header/header.component";
-import {TokenInterceptor} from "./core/interceptors/token/token-interceptor.interceptor";
+import { SharedModule } from './shared/shared/shared.module';
+import { LoaderInterceptorService } from './core/interceptors/loader/loader-interceptor.service';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { HeaderComponent } from './core/ui/header/header.component';
+import { TokenInterceptor } from './core/interceptors/token/token-interceptor.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import {AuthGuard} from "./core/guards/auth/auth.guard";
+import { AuthGuard } from './core/guards/auth/auth.guard';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent
-  ],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -55,10 +52,10 @@ import {AuthGuard} from "./core/guards/auth/auth.guard";
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
     LoaderComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   providers: [
     provideClientHydration(),
@@ -73,13 +70,11 @@ import {AuthGuard} from "./core/guards/auth/auth.guard";
       useClass: TokenInterceptor,
       multi: true,
     },
-    AuthGuard
+    AuthGuard,
   ],
-  exports: [
-  ],
-  bootstrap: [AppComponent]
+  exports: [],
+  bootstrap: [AppComponent],
 })
-
 export class AppModule {
   constructor(fasLibrary: FaIconLibrary) {
     fasLibrary.addIconPacks(fas, far);

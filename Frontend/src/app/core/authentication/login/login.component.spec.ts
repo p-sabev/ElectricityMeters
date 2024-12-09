@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import {of, throwError} from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { StorageService } from '../../services/storage.service';
 import { NotificationsEmitterService } from '../../services/notifications.service';
 import { LoginComponent } from './login.component';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -17,16 +17,16 @@ describe('LoginComponent', () => {
 
   beforeEach(() => {
     authServiceMock = {
-      login: jasmine.createSpy('login').and.returnValue(of({ userId: '123', token: 'token', roles: ['user'] }))
+      login: jasmine.createSpy('login').and.returnValue(of({ userId: '123', token: 'token', roles: ['user'] })),
     };
     storageServiceMock = {
-      Token: { emit: jasmine.createSpy('emit') }
+      Token: { emit: jasmine.createSpy('emit') },
     };
     routerMock = {
-      navigate: jasmine.createSpy('navigate')
+      navigate: jasmine.createSpy('navigate'),
     };
     notificationsMock = {
-      Error: { emit: jasmine.createSpy('emit') }
+      Error: { emit: jasmine.createSpy('emit') },
     };
 
     TestBed.configureTestingModule({
@@ -36,8 +36,8 @@ describe('LoginComponent', () => {
         { provide: AuthService, useValue: authServiceMock },
         { provide: StorageService, useValue: storageServiceMock },
         { provide: Router, useValue: routerMock },
-        { provide: NotificationsEmitterService, useValue: notificationsMock }
-      ]
+        { provide: NotificationsEmitterService, useValue: notificationsMock },
+      ],
     });
 
     fixture = TestBed.createComponent(LoginComponent);
@@ -73,5 +73,4 @@ describe('LoginComponent', () => {
     expect(localStorage.getItem('token')).toBe('token');
     expect(localStorage.getItem('roles')).toBe(JSON.stringify(['user']));
   });
-
 });

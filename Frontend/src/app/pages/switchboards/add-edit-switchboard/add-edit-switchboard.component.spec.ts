@@ -18,10 +18,7 @@ describe('AddEditSwitchboardComponent', () => {
   const mockSwitchboard = { id: 1, name: 'Main Switchboard' };
 
   beforeEach(async () => {
-    const switchboardsSpy = jasmine.createSpyObj('SwitchboardsService', [
-      'insertSwitchboard',
-      'editSwitchboard',
-    ]);
+    const switchboardsSpy = jasmine.createSpyObj('SwitchboardsService', ['insertSwitchboard', 'editSwitchboard']);
     const notificationsSpy = jasmine.createSpyObj('NotificationsEmitterService', ['Success']);
     const errorSpy = jasmine.createSpyObj('ErrorService', ['processError']);
 

@@ -1,16 +1,16 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { NotificationsEmitterService } from './core/services/notifications.service';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
-import {NotificationsService, SimpleNotificationsModule} from 'angular2-notifications';
-import {ConfirmationService, PrimeNGConfig} from 'primeng/api';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifications';
+import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { of } from 'rxjs';
-import {LoaderComponent} from "./core/ui/loader/loader.component";
-import {HttpClient} from "@angular/common/http";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {HeaderComponent} from "./core/ui/header/header.component";
-import {ActivatedRoute, RouterOutlet} from "@angular/router";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
+import { LoaderComponent } from './core/ui/loader/loader.component';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HeaderComponent } from './core/ui/header/header.component';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -24,30 +24,40 @@ describe('AppComponent', () => {
     const notificationsEmitterServiceMock = {
       Success: of('Success message'),
       Error: of({ key: 'ErrorKey', message: 'ErrorMessage' }),
-      Info: of('Info message')
+      Info: of('Info message'),
     };
 
     const translateServiceMock = {
       addLangs: jasmine.createSpy('addLangs'),
       setDefaultLang: jasmine.createSpy('setDefaultLang'),
       use: jasmine.createSpy('use'),
-      get: jasmine.createSpy('get').and.returnValue(of({ MessageKey: 'TranslatedMessage', Success: 'SuccessTranslated' })),
-      instant: jasmine.createSpy('instant').and.returnValue('translated')
+      get: jasmine
+        .createSpy('get')
+        .and.returnValue(of({ MessageKey: 'TranslatedMessage', Success: 'SuccessTranslated' })),
+      instant: jasmine.createSpy('instant').and.returnValue('translated'),
     };
 
     const notificationsServiceMock = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error'),
-      info: jasmine.createSpy('info')
+      info: jasmine.createSpy('info'),
     };
 
     const primeNgConfigMock = {
-      setTranslation: jasmine.createSpy('setTranslation')
+      setTranslation: jasmine.createSpy('setTranslation'),
     };
 
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [LoaderComponent, HeaderComponent, HttpClientTestingModule, RouterOutlet, SimpleNotificationsModule.forRoot(), ConfirmDialogModule, TranslateModule.forRoot()],
+      imports: [
+        LoaderComponent,
+        HeaderComponent,
+        HttpClientTestingModule,
+        RouterOutlet,
+        SimpleNotificationsModule.forRoot(),
+        ConfirmDialogModule,
+        TranslateModule.forRoot(),
+      ],
       providers: [
         { provide: NotificationsEmitterService, useValue: notificationsEmitterServiceMock },
         { provide: NotificationsService, useValue: notificationsServiceMock },
@@ -55,7 +65,7 @@ describe('AppComponent', () => {
         { provide: PrimeNGConfig, useValue: primeNgConfigMock },
         { provide: ActivatedRoute, useValue: { snapshot: { params: {} } } },
         { provide: ConfirmationService, useClass: ConfirmationService },
-      ]
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -106,5 +116,4 @@ describe('AppComponent', () => {
     const result = component.hasTranslation('key with space');
     expect(result).toBeTrue();
   });
-
 });

@@ -1,17 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Subscriber} from "../../../core/models/subscribers.model";
-import {InsertMultipleReadings} from "../../../core/models/readings.model";
-import {ReadingsService} from "../readings.service";
-import {NotificationsEmitterService} from "../../../core/services/notifications.service";
-import {ErrorService} from "../../../core/services/error.service";
-import * as moment from "moment/moment";
-import {CalendarModule} from "primeng/calendar";
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {catchError, EMPTY, tap} from "rxjs";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subscriber } from '../../../core/models/subscribers.model';
+import { InsertMultipleReadings } from '../../../core/models/readings.model';
+import { ReadingsService } from '../readings.service';
+import { NotificationsEmitterService } from '../../../core/services/notifications.service';
+import { ErrorService } from '../../../core/services/error.service';
+import * as moment from 'moment/moment';
+import { CalendarModule } from 'primeng/calendar';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FormErrorsComponent } from '../../../shared/features/form-errors/form-errors.component';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { catchError, EMPTY, tap } from 'rxjs';
 
 @Component({
   selector: 'app-add-reading-for-switchboard',
@@ -25,20 +25,21 @@ import {catchError, EMPTY, tap} from "rxjs";
     TranslateModule,
     FormsModule,
     NgForOf,
-    NgClass
+    NgClass,
   ],
   templateUrl: './add-reading-for-switchboard.component.html',
-  styleUrl: './add-reading-for-switchboard.component.scss'
+  styleUrl: './add-reading-for-switchboard.component.scss',
 })
 export class AddReadingForSwitchboardComponent implements OnInit {
   @Input() subscribers!: Subscriber[] | null | undefined;
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private readingsService: ReadingsService,
-              private notifications: NotificationsEmitterService,
-              private errorService: ErrorService,
-              private translate: TranslateService) {
-  }
+  constructor(
+    private readingsService: ReadingsService,
+    private notifications: NotificationsEmitterService,
+    private errorService: ErrorService,
+    private translate: TranslateService
+  ) {}
 
   MAX_INT = 2147483647;
 
@@ -78,14 +79,19 @@ export class AddReadingForSwitchboardComponent implements OnInit {
 
   getBodyToInsertReadings(): InsertMultipleReadings | null {
     const body: InsertMultipleReadings = {
-      subscribersReading: []
+      subscribersReading: [],
     };
     let hasInvalidValues = false;
 
     this.subscribers?.forEach((subscriber: Subscriber, index: number) => {
-      const onePhaseHasValue = (subscriber.phaseCount === 1 && this.readingsValues[index]);
-      const twoPhaseHasValue = (subscriber.phaseCount === 2 && this.firstPhaseValues[index] && this.secondPhaseValues[index]);
-      const threePhaseHasValue = (subscriber.phaseCount === 3 && this.firstPhaseValues[index] && this.secondPhaseValues[index] && this.thirdPhaseValues[index]);
+      const onePhaseHasValue = subscriber.phaseCount === 1 && this.readingsValues[index];
+      const twoPhaseHasValue =
+        subscriber.phaseCount === 2 && this.firstPhaseValues[index] && this.secondPhaseValues[index];
+      const threePhaseHasValue =
+        subscriber.phaseCount === 3 &&
+        this.firstPhaseValues[index] &&
+        this.secondPhaseValues[index] &&
+        this.thirdPhaseValues[index];
 
       if (onePhaseHasValue || twoPhaseHasValue || threePhaseHasValue) {
         const value = this.calculateReadingValue(subscriber, index);
@@ -93,7 +99,11 @@ export class AddReadingForSwitchboardComponent implements OnInit {
         if (value !== null) {
           if (subscriber.lastReading && value < subscriber.lastReading) {
             hasInvalidValues = true;
-            this.notifications.Info.emit(this.translate.instant('SubscriberReadingValueIsLowerThanLastReading', {subscriberName: subscriber.name}));
+            this.notifications.Info.emit(
+              this.translate.instant('SubscriberReadingValueIsLowerThanLastReading', {
+                subscriberName: subscriber.name,
+              })
+            );
           }
 
           body.subscribersReading.push(this.createReadingEntry(subscriber, value, index));
@@ -113,8 +123,15 @@ export class AddReadingForSwitchboardComponent implements OnInit {
       return this.readingsValues[index] || 0;
     } else if (subscriber.phaseCount === 2 && this.firstPhaseValues[index] && this.secondPhaseValues[index]) {
       return (this.firstPhaseValues[index] || 0) + (this.secondPhaseValues[index] || 0);
-    } else if (subscriber.phaseCount === 3 && this.firstPhaseValues[index] && this.secondPhaseValues[index] && this.thirdPhaseValues[index]) {
-      return (this.firstPhaseValues[index] || 0) + (this.secondPhaseValues[index] || 0) + (this.thirdPhaseValues[index] || 0);
+    } else if (
+      subscriber.phaseCount === 3 &&
+      this.firstPhaseValues[index] &&
+      this.secondPhaseValues[index] &&
+      this.thirdPhaseValues[index]
+    ) {
+      return (
+        (this.firstPhaseValues[index] || 0) + (this.secondPhaseValues[index] || 0) + (this.thirdPhaseValues[index] || 0)
+      );
     }
     return null;
   }
@@ -139,16 +156,18 @@ export class AddReadingForSwitchboardComponent implements OnInit {
       return this.notifications.Info.emit('NoReadingsToInsert');
     }
 
-    this.readingsService.insertReadingsForSubscribers(body).pipe(
-      tap(() => {
-        this.notifications.Success.emit('SuccessfullyAddedReadings');
-        this.close.emit();
-      }),
-      catchError((error) => {
-        this.errorService.processError(error);
-        return EMPTY;
-      })
-    ).subscribe();
+    this.readingsService
+      .insertReadingsForSubscribers(body)
+      .pipe(
+        tap(() => {
+          this.notifications.Success.emit('SuccessfullyAddedReadings');
+          this.close.emit();
+        }),
+        catchError((error) => {
+          this.errorService.processError(error);
+          return EMPTY;
+        })
+      )
+      .subscribe();
   }
-
 }

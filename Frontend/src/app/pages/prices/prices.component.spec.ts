@@ -36,7 +36,11 @@ describe('PricesComponent', () => {
     const errorServiceMock = jasmine.createSpyObj('ErrorService', ['processError']);
     const confirmServiceMock = jasmine.createSpyObj('ConfirmationService', ['confirm']);
     const notificationsMock = jasmine.createSpyObj('NotificationsEmitterService', ['Success']);
-    const tableHelperMock = jasmine.createSpyObj('TableHelperService', ['getPagingSettings', 'getSortingSettings', 'isNoResultsOrNoRecords']);
+    const tableHelperMock = jasmine.createSpyObj('TableHelperService', [
+      'getPagingSettings',
+      'getSortingSettings',
+      'isNoResultsOrNoRecords',
+    ]);
     const translateMock = jasmine.createSpyObj('TranslateService', ['get']);
 
     await TestBed.configureTestingModule({
@@ -68,7 +72,12 @@ describe('PricesComponent', () => {
   });
 
   it('should ask to delete price', () => {
-    translate.get.and.returnValue(of({ AreYouSureToDeleteThisPrice: 'Сигурни ли сте, че искате да изтриете тази цена', AreYouSure: 'Сигурни ли сте?' }));
+    translate.get.and.returnValue(
+      of({
+        AreYouSureToDeleteThisPrice: 'Сигурни ли сте, че искате да изтриете тази цена',
+        AreYouSure: 'Сигурни ли сте?',
+      })
+    );
 
     component.askToDeletePrice(mockPrice);
 

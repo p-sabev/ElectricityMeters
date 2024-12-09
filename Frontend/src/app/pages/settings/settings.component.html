@@ -1,6 +1,5 @@
 <div class="container">
   <div class="row">
-
     <div class="col-12">
       <app-page-heading [title]="'Settings'"></app-page-heading>
     </div>
@@ -9,88 +8,84 @@
     <div class="col-lg-6 col-md-12 mx-auto mt-3">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title font-weight-bold">{{'DefaultFees' | translate}}</h4>
-          <p class="card-text">{{'DefaultFeesDescription' | translate}}</p>
+          <h4 class="card-title font-weight-bold">{{ 'DefaultFees' | translate }}</h4>
+          <p class="card-text">{{ 'DefaultFeesDescription' | translate }}</p>
         </div>
 
         <div class="card-body">
           <table class="table">
             <thead>
-            <tr>
-              <th scope="col">{{'Value' | translate}}</th>
-              <th scope="col">{{'Description' | translate}}</th>
-              <th scope="col"></th>
-            </tr>
+              <tr>
+                <th scope="col">{{ 'Value' | translate }}</th>
+                <th scope="col">{{ 'Description' | translate }}</th>
+                <th scope="col"></th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngIf="noFeesAdded">
-              <td colspan="3">
-                <div class="alert alert-info mb-1">
-                  {{'NoDefaultFeesAdded' | translate}}
-                </div>
-              </td>
-            </tr>
-            <tr *ngFor="let fee of feeList; let i = index;">
-              <td>
-                <input
-                  type="number"
-                  class="form-control"
-                  name="priceInLv"
-                  id="priceInLv"
-                  min="0.00"
-                  max="10000.00"
-                  step="1"
-                  [(ngModel)]="fee.value"
-                  (ngModelChange)="feesChanged = true"
-                  title="{{ 'PriceInBGN' | translate }}*"
-                  placeholder="{{ 'PriceInBGN' | translate }}*" />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="description"
-                  id="description"
-                  [(ngModel)]="fee.description"
-                  (ngModelChange)="feesChanged = true"
-                  title="{{ 'Description' | translate }}*"
-                  placeholder="{{ 'Description' | translate }}*" />
-              </td>
-              <td class="text-center">
-                <fa-icon [icon]="['fas', 'trash']"
-                         [class]="'me-2 text-danger cursor-pointer'"
-                         (click)="deleteFee(i)"
-                         style="font-size: 22px;"></fa-icon>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="3" class="text-center">
-                <button class="btn btn-outline-success"
-                        (click)="feeList.push({value: null, description: ''}); noFeesAdded = false;">
-                  <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
-                  {{'AddFee' | translate}}
-                </button>
-              </td>
-            </tr>
+              <tr *ngIf="noFeesAdded">
+                <td colspan="3">
+                  <div class="alert alert-info mb-1">
+                    {{ 'NoDefaultFeesAdded' | translate }}
+                  </div>
+                </td>
+              </tr>
+              <tr *ngFor="let fee of feeList; let i = index">
+                <td>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="priceInLv"
+                    id="priceInLv"
+                    min="0.00"
+                    max="10000.00"
+                    step="1"
+                    [(ngModel)]="fee.value"
+                    (ngModelChange)="feesChanged = true"
+                    title="{{ 'PriceInBGN' | translate }}*"
+                    placeholder="{{ 'PriceInBGN' | translate }}*" />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="description"
+                    id="description"
+                    [(ngModel)]="fee.description"
+                    (ngModelChange)="feesChanged = true"
+                    title="{{ 'Description' | translate }}*"
+                    placeholder="{{ 'Description' | translate }}*" />
+                </td>
+                <td class="text-center">
+                  <fa-icon
+                    [icon]="['fas', 'trash']"
+                    [class]="'me-2 text-danger cursor-pointer'"
+                    (click)="deleteFee(i)"
+                    style="font-size: 22px"></fa-icon>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3" class="text-center">
+                  <button
+                    class="btn btn-outline-success"
+                    (click)="feeList.push({ value: null, description: '' }); noFeesAdded = false">
+                    <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
+                    {{ 'AddFee' | translate }}
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
 
         <div class="card-body text-right">
-          <button class="btn btn-danger me-3"
-                  [disabled]="!feesChanged"
-                  (click)="fetchAllDefaultFees()">
-            {{'Cancel' | translate}}
+          <button class="btn btn-danger me-3" [disabled]="!feesChanged" (click)="fetchAllDefaultFees()">
+            {{ 'Cancel' | translate }}
           </button>
-          <button class="btn btn-success"
-                  [disabled]="!feesChanged"
-                  (click)="updateFees()">
-            {{'Save' | translate}}
+          <button class="btn btn-success" [disabled]="!feesChanged" (click)="updateFees()">
+            {{ 'Save' | translate }}
           </button>
         </div>
       </div>
-
     </div>
-
   </div>
 </div>

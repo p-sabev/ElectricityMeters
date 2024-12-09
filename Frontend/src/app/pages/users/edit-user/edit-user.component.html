@@ -2,12 +2,10 @@
   <div class="modal-dialog modal-lg animate__animated animate__fadeIn">
     <div class="modal-content">
       <div class="modal-header">
-        <fa-icon [icon]="['fas', 'user']" [class]="'me-2'" style="font-size: 22px;"></fa-icon>
+        <fa-icon [icon]="['fas', 'user']" [class]="'me-2'" style="font-size: 22px"></fa-icon>
         <h3 translate>EditUser</h3>
 
-        <button type="button" class="close"
-                data-dismiss="modal" aria-label="Close"
-                (click)="close.emit()">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close.emit()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -15,7 +13,6 @@
       <div class="modal-body">
         <form [formGroup]="editForm" class="pb-5">
           <div class="row">
-
             <div class="col-lg-6 col-md-12 mt-3">
               <label>{{ 'UserName' | translate }}*</label>
 
@@ -28,9 +25,10 @@
                 title="{{ 'UserName' | translate }}*"
                 placeholder="{{ 'UserName' | translate }}*" />
 
-              <app-form-errors [withoutTooltip]="true"
-                               [control]="editForm.get('userName')"
-                               [max]="250"></app-form-errors>
+              <app-form-errors
+                [withoutTooltip]="true"
+                [control]="editForm.get('userName')"
+                [max]="250"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -45,9 +43,7 @@
                 title="{{ 'Name' | translate }}*"
                 placeholder="{{ 'Name' | translate }}*" />
 
-              <app-form-errors [withoutTooltip]="true"
-                               [control]="editForm.get('name')"
-                               [max]="250"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="editForm.get('name')" [max]="250"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -62,9 +58,10 @@
                 title="{{ 'MiddleName' | translate }}"
                 placeholder="{{ 'MiddleName' | translate }}" />
 
-              <app-form-errors [withoutTooltip]="true"
-                               [control]="editForm.get('middleName')"
-                               [max]="250"></app-form-errors>
+              <app-form-errors
+                [withoutTooltip]="true"
+                [control]="editForm.get('middleName')"
+                [max]="250"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -79,9 +76,10 @@
                 title="{{ 'LastName' | translate }}"
                 placeholder="{{ 'LastName' | translate }}" />
 
-              <app-form-errors [withoutTooltip]="true"
-                               [control]="editForm.get('lastName')"
-                               [max]="250"></app-form-errors>
+              <app-form-errors
+                [withoutTooltip]="true"
+                [control]="editForm.get('lastName')"
+                [max]="250"></app-form-errors>
             </div>
 
             <div class="col-lg-6 col-md-12 mt-3">
@@ -96,37 +94,35 @@
                 title="{{ 'Email' | translate }}*"
                 placeholder="{{ 'Email' | translate }}*" />
 
-              <app-form-errors [withoutTooltip]="true"
-                               [control]="editForm.get('email')"
-                               [max]="250"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="editForm.get('email')" [max]="250"></app-form-errors>
             </div>
 
             <div class="col-12 mt-3">
               <label>{{ 'Roles' | translate }}*</label>
 
-              <p-multiSelect [options]="rolesList"
-                             [resetFilterOnHide]="true"
-                             placeholder="{{'Roles' | translate}}*"
-                             formControlName="roleIds"
-                             dataKey="name"
-                             optionLabel="name" appendTo="body">
+              <p-multiSelect
+                [options]="rolesList"
+                [resetFilterOnHide]="true"
+                placeholder="{{ 'Roles' | translate }}*"
+                formControlName="roleIds"
+                dataKey="name"
+                optionLabel="name"
+                appendTo="body">
                 <ng-template let-role pTemplate="item">
-                  {{ role.name | translate}}
+                  {{ role.name | translate }}
                 </ng-template>
                 <ng-template let-roles pTemplate="selectedItems">
                   <span *ngIf="roles?.length">
                     <ng-container *ngFor="let role of roles; let last = last">
-                      {{ role.name | translate}}{{ last ? '' : ',' }}
+                      {{ role.name | translate }}{{ last ? '' : ',' }}
                     </ng-container>
                   </span>
-                  <span *ngIf="!roles?.length">{{ 'Roles' | translate}}*</span>
+                  <span *ngIf="!roles?.length">{{ 'Roles' | translate }}*</span>
                 </ng-template>
               </p-multiSelect>
 
-              <app-form-errors [withoutTooltip]="true"
-                               [control]="editForm.get('roleIds')"></app-form-errors>
+              <app-form-errors [withoutTooltip]="true" [control]="editForm.get('roleIds')"></app-form-errors>
             </div>
-
           </div>
         </form>
       </div>
@@ -134,17 +130,11 @@
       <div class="modal-footer">
         <div class="row" style="width: 100%">
           <div class="col-12 p-0">
-            <button
-              type="button"
-              (click)="editUser()"
-              class="btn float-end btn-warning"
-              [disabled]="!editForm.valid">
+            <button type="button" (click)="editUser()" class="btn float-end btn-warning" [disabled]="!editForm.valid">
               <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>
               {{ 'Edit' | translate }}
             </button>
-            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>
-              Close
-            </button>
+            <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>Close</button>
           </div>
         </div>
       </div>

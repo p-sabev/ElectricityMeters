@@ -20,8 +20,24 @@ describe('UsersComponent', () => {
   let tableHelper: jasmine.SpyObj<TableHelperService>;
 
   const mockUsers: User[] = [
-    { id: '1', name: 'John', middleName: 'A.', lastName: 'Doe', email: 'john.doe@example.com', userName: 'johndoe', roleIds: ['Admin'] },
-    { id: '2', name: 'Jane', middleName: 'B.', lastName: 'Smith', email: 'jane.smith@example.com', userName: 'janesmith', roleIds: ['Editor'] },
+    {
+      id: '1',
+      name: 'John',
+      middleName: 'A.',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      userName: 'johndoe',
+      roleIds: ['Admin'],
+    },
+    {
+      id: '2',
+      name: 'Jane',
+      middleName: 'B.',
+      lastName: 'Smith',
+      email: 'jane.smith@example.com',
+      userName: 'janesmith',
+      roleIds: ['Editor'],
+    },
   ];
   const mockSearchSettings = { first: 0, rows: 10, sortField: 'id', sortOrder: -1 };
 
@@ -90,7 +106,15 @@ describe('UsersComponent', () => {
 
   describe('askToDeleteUser', () => {
     it('should show confirmation dialog and call deleteUser on acceptance', () => {
-      const mockUser: User = { id: '1', name: 'John', middleName: 'A.', lastName: 'Doe', email: '', userName: '', roleIds: [] };
+      const mockUser: User = {
+        id: '1',
+        name: 'John',
+        middleName: 'A.',
+        lastName: 'Doe',
+        email: '',
+        userName: '',
+        roleIds: [],
+      };
       spyOn(component, 'deleteUser');
 
       confirmService.confirm.and.callFake(({ accept }: any) => accept());
@@ -103,7 +127,15 @@ describe('UsersComponent', () => {
 
   describe('deleteUser', () => {
     it('should delete the user and refresh the user list', () => {
-      const mockUser: User = { id: '1', name: 'John', middleName: 'A.', lastName: 'Doe', email: '', userName: '', roleIds: [] };
+      const mockUser: User = {
+        id: '1',
+        name: 'John',
+        middleName: 'A.',
+        lastName: 'Doe',
+        email: '',
+        userName: '',
+        roleIds: [],
+      };
       usersService.deleteUser.and.returnValue(of({}));
       spyOn(component, 'fetchUsersList');
 
@@ -115,7 +147,15 @@ describe('UsersComponent', () => {
     });
 
     it('should handle errors when deleting a user', () => {
-      const mockUser: User = { id: '1', name: 'John', middleName: 'A.', lastName: 'Doe', email: '', userName: '', roleIds: [] };
+      const mockUser: User = {
+        id: '1',
+        name: 'John',
+        middleName: 'A.',
+        lastName: 'Doe',
+        email: '',
+        userName: '',
+        roleIds: [],
+      };
       const error = new Error('Failed to delete user');
       usersService.deleteUser.and.returnValue(throwError(() => error));
 

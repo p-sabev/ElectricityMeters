@@ -2,7 +2,7 @@ import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
   standalone: true,
-  selector: '[appRoleAccess]'
+  selector: '[appRoleAccess]',
 })
 export class RoleAccessDirective {
   private roles = JSON.parse(localStorage.getItem('roles') || '[]');

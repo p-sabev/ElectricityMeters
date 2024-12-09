@@ -1,85 +1,97 @@
 <div class="container">
   <div class="row">
-
     <div class="col-12">
       <app-page-heading [title]="'Subscribers'"></app-page-heading>
     </div>
 
     <div *appRoleAccess="'Administrator, Moderator'" class="col-12 mt-2">
-      <button class="btn btn-outline-success"
-              (click)="initAddSubscriber()">
+      <button class="btn btn-outline-success" (click)="initAddSubscriber()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
-        {{'AddSubscriber' | translate}}
+        {{ 'AddSubscriber' | translate }}
       </button>
     </div>
 
     <div *ngIf="noRecords" class="alert alert-info col-12 mt-3">
-      {{'NoResultsFound' | translate}}
+      {{ 'NoResultsFound' | translate }}
     </div>
 
     <div *ngIf="!noRecords" class="col-12 mt-3">
-
-      <p-table [value]="subscribers"
-               styleClass="p-datatable-gridlines"
-               [tableStyle]="{ 'width': '100%' }"
-               [lazy]="true"
-               (onLazyLoad)="fetchSubscribersList($event)"
-               [first]="page"
-               [sortField]="sortField" [sortOrder]="sortOrder"
-               [totalRecords]="totalRecords"
-               [paginator]="true"
-               [rows]="10"
-               [rowsPerPageOptions]="[5, 10, 20, 50]"
-               [scrollable]="true" scrollHeight="80vh">
+      <p-table
+        [value]="subscribers"
+        styleClass="p-datatable-gridlines"
+        [tableStyle]="{ width: '100%' }"
+        [lazy]="true"
+        (onLazyLoad)="fetchSubscribersList($event)"
+        [first]="page"
+        [sortField]="sortField"
+        [sortOrder]="sortOrder"
+        [totalRecords]="totalRecords"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20, 50]"
+        [scrollable]="true"
+        scrollHeight="80vh">
         <ng-template pTemplate="header">
           <tr>
-<!--            <th pSortableColumn="numberPage" translate>NumberPage<p-sortIcon field="numberPage" /></th>-->
-            <th pSortableColumn="name" style="min-width: 160px;" translate>Name<p-sortIcon field="name" /></th>
+            <!--            <th pSortableColumn="numberPage" translate>NumberPage<p-sortIcon field="numberPage" /></th>-->
+            <th pSortableColumn="name" style="min-width: 160px" translate>Name<p-sortIcon field="name" /></th>
             <th pSortableColumn="switchboard" translate>Switchboard<p-sortIcon field="switchboard" /></th>
-<!--            <th pSortableColumn="meterNumber" translate>MeterNumber<p-sortIcon field="meterNumber" /></th>-->
-            <th pSortableColumn="lastReading" style="min-width: 120px;" translate>LastReading<p-sortIcon field="lastReading" /></th>
-            <th pSortableColumn="lastRecordDate" style="min-width: 120px;" translate>LastRecord<p-sortIcon field="lastRecordDate" /></th>
+            <!--            <th pSortableColumn="meterNumber" translate>MeterNumber<p-sortIcon field="meterNumber" /></th>-->
+            <th pSortableColumn="lastReading" style="min-width: 120px" translate>
+              LastReading<p-sortIcon field="lastReading" />
+            </th>
+            <th pSortableColumn="lastRecordDate" style="min-width: 120px" translate>
+              LastRecord<p-sortIcon field="lastRecordDate" />
+            </th>
             <th alignFrozen="right" pFrozenColumn></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="colgroup">
           <tr class="search-row">
-<!--            <td class="p-2">-->
-<!--              <input type="number" class="form-control"-->
-<!--                     [(ngModel)]="filtersModel.numberPage"-->
-<!--                     title="{{'SearchBy' | translate}} {{'NumberPage' | translate | lowercase}}"-->
-<!--                     placeholder="{{'SearchBy' | translate}} {{'NumberPage' | translate | lowercase}}">-->
-<!--            </td>-->
+            <!--            <td class="p-2">-->
+            <!--              <input type="number" class="form-control"-->
+            <!--                     [(ngModel)]="filtersModel.numberPage"-->
+            <!--                     title="{{'SearchBy' | translate}} {{'NumberPage' | translate | lowercase}}"-->
+            <!--                     placeholder="{{'SearchBy' | translate}} {{'NumberPage' | translate | lowercase}}">-->
+            <!--            </td>-->
             <td class="p-2">
-              <input type="text" class="form-control"
-                     [(ngModel)]="filtersModel.name"
-                     title="{{'SearchBy' | translate}} {{'Name' | translate | lowercase}}"
-                     placeholder="{{'SearchBy' | translate}} {{'Name' | translate | lowercase}}">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="filtersModel.name"
+                title="{{ 'SearchBy' | translate }} {{ 'Name' | translate | lowercase }}"
+                placeholder="{{ 'SearchBy' | translate }} {{ 'Name' | translate | lowercase }}" />
             </td>
             <td class="p-2">
-              <select name="switchboard" id="switchboard"
-                      [(ngModel)]="filtersModel.switchboard"
-                      class="form-control"
-                      title="{{'SearchBy' | translate}} {{'Switchboard' | translate | lowercase}}">
-                <option [ngValue]="null" hidden>{{'SearchBy' | translate}} {{'Switchboard' | translate | lowercase}}</option>
+              <select
+                name="switchboard"
+                id="switchboard"
+                [(ngModel)]="filtersModel.switchboard"
+                class="form-control"
+                title="{{ 'SearchBy' | translate }} {{ 'Switchboard' | translate | lowercase }}">
+                <option [ngValue]="null" hidden>
+                  {{ 'SearchBy' | translate }} {{ 'Switchboard' | translate | lowercase }}
+                </option>
                 <option [ngValue]="0"></option>
-                <option *ngFor="let switchboard of switchboardsList"
-                        [ngValue]="switchboard.id">
-                  {{switchboard.name}}
+                <option *ngFor="let switchboard of switchboardsList" [ngValue]="switchboard.id">
+                  {{ switchboard.name }}
                 </option>
               </select>
             </td>
-<!--            <td class="p-2">-->
-<!--              <input type="text" class="form-control"-->
-<!--                     [(ngModel)]="filtersModel.electricMeterName"-->
-<!--                     title="{{'SearchBy' | translate}} {{'MeterNumber' | translate | lowercase}}"-->
-<!--                     placeholder="{{'SearchBy' | translate}} {{'MeterNumber' | translate | lowercase}}">-->
-<!--            </td>-->
+            <!--            <td class="p-2">-->
+            <!--              <input type="text" class="form-control"-->
+            <!--                     [(ngModel)]="filtersModel.electricMeterName"-->
+            <!--                     title="{{'SearchBy' | translate}} {{'MeterNumber' | translate | lowercase}}"-->
+            <!--                     placeholder="{{'SearchBy' | translate}} {{'MeterNumber' | translate | lowercase}}">-->
+            <!--            </td>-->
             <td class="p-2"></td>
             <td class="p-2"></td>
-            <td alignFrozen="right" pFrozenColumn class="p-2" style="background: #FFFFFF;">
-              <button type="button" class="btn btn-outline-secondary float-end"
-                      (click)="page = 0; fetchSubscribersList()" translate>
+            <td alignFrozen="right" pFrozenColumn class="p-2" style="background: #ffffff">
+              <button
+                type="button"
+                class="btn btn-outline-secondary float-end"
+                (click)="page = 0; fetchSubscribersList()"
+                translate>
                 <fa-icon [icon]="['fas', 'search']" [class]="'me-2'"></fa-icon>
                 {{ 'Filtrate' | translate }}
               </button>
@@ -89,36 +101,43 @@
           <tr *ngIf="noResults">
             <td colspan="5">
               <div class="alert alert-info mt-2 mx-2">
-                {{'NoResultsWereFound' | translate}}
+                {{ 'NoResultsWereFound' | translate }}
               </div>
             </td>
           </tr>
         </ng-template>
-        <ng-template pTemplate="loadingbody">
-          LOADING....
-        </ng-template>
+        <ng-template pTemplate="loadingbody"> LOADING.... </ng-template>
         <ng-template pTemplate="body" let-subscriber>
           <tr>
-<!--            <td>{{ subscriber.numberPage }}</td>-->
+            <!--            <td>{{ subscriber.numberPage }}</td>-->
             <td class="font-weight-bold">
               {{ subscriber.name }}
-              {{subscriber.phaseCount === 2 ? ('TwoPhaseText' | translate) : (subscriber.phaseCount === 3 ? ('ThreePhaseText' | translate) : '')}}
+              {{
+                subscriber.phaseCount === 2
+                  ? ('TwoPhaseText' | translate)
+                  : subscriber.phaseCount === 3
+                    ? ('ThreePhaseText' | translate)
+                    : ''
+              }}
             </td>
             <td>{{ subscriber.switchboard?.name }}</td>
-<!--            <td>{{ subscriber.meterNumber }}</td>-->
+            <!--            <td>{{ subscriber.meterNumber }}</td>-->
             <td>
-              <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{'kvh' | translate}}</span>
-              <span *ngIf="!subscriber.lastReading && subscriber.defaultReading">{{ subscriber.defaultReading }} {{'kvh' | translate}}</span>
+              <span *ngIf="subscriber.lastReading">{{ subscriber.lastReading }} {{ 'kvh' | translate }}</span>
+              <span *ngIf="!subscriber.lastReading && subscriber.defaultReading"
+                >{{ subscriber.defaultReading }} {{ 'kvh' | translate }}</span
+              >
               <span *ngIf="!subscriber.lastReading && !subscriber.defaultReading">-</span>
             </td>
             <td>
-              <span *ngIf="subscriber.lastRecordDate">{{ subscriber.lastRecordDate | date: 'dd.MM.yyyy'}}</span>
+              <span *ngIf="subscriber.lastRecordDate">{{ subscriber.lastRecordDate | date: 'dd.MM.yyyy' }}</span>
               <span *ngIf="!subscriber.lastRecordDate">-</span>
             </td>
             <td class="py-1" alignFrozen="right" pFrozenColumn>
-
               <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
-                <a class="nav-link text-primary cursor-pointer btn-action" (click)="subscriberToShowDetailedInfo = subscriber">
+                <a
+                  class="nav-link text-primary cursor-pointer btn-action"
+                  (click)="subscriberToShowDetailedInfo = subscriber">
                   <fa-icon [icon]="['fas', 'circle-info']" [class]="'me-2'"></fa-icon>
                 </a>
               </ng-container>
@@ -136,30 +155,30 @@
                   <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
                 </a>
               </ng-container>
-
             </td>
           </tr>
         </ng-template>
       </p-table>
-
-
     </div>
   </div>
 </div>
 
 <ng-container *ngIf="subscriberToAddRecord">
-  <app-add-reading-for-subscriber [subscriber]="subscriberToAddRecord"
-                                  (close)="subscriberToAddRecord = null; fetchSubscribersList();"></app-add-reading-for-subscriber>
+  <app-add-reading-for-subscriber
+    [subscriber]="subscriberToAddRecord"
+    (close)="subscriberToAddRecord = null; fetchSubscribersList()"></app-add-reading-for-subscriber>
 </ng-container>
 
 <ng-container *ngIf="addSubscriber || subscriberForEdit">
-  <app-add-edit-subscribers [subscriberToEdit]="subscriberForEdit"
-                            (close)="addSubscriber = false; subscriberForEdit = null; fetchSubscribersList();"></app-add-edit-subscribers>
+  <app-add-edit-subscribers
+    [subscriberToEdit]="subscriberForEdit"
+    (close)="addSubscriber = false; subscriberForEdit = null; fetchSubscribersList()"></app-add-edit-subscribers>
 </ng-container>
 
 <ng-container *ngIf="subscriberToShowDetailedInfo">
-  <app-details-for-subscriber [subscriber]="subscriberToShowDetailedInfo"
-                            (close)="subscriberToShowDetailedInfo = null;"></app-details-for-subscriber>
+  <app-details-for-subscriber
+    [subscriber]="subscriberToShowDetailedInfo"
+    (close)="subscriberToShowDetailedInfo = null"></app-details-for-subscriber>
 </ng-container>
 
 <p-confirmDialog

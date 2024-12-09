@@ -1,21 +1,21 @@
-import {Component} from '@angular/core';
-import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
-import {ErrorService} from "../../core/services/error.service";
-import {ConfirmationService, SharedModule} from "primeng/api";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {NotificationsEmitterService} from "../../core/services/notifications.service";
-import {UsersService} from "./users.service";
-import {User} from "../../core/models/users.model";
-import {DatePipe, LowerCasePipe, NgIf} from "@angular/common";
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RoleAccessDirective} from "../../shared/directives/role-access/role-access.directive";
-import {TableModule} from "primeng/table";
-import {TwoAfterDotPipe} from "../../shared/pipes/two-after-dot/two-after-dot.pipe";
-import {EditUserComponent} from "./edit-user/edit-user.component";
-import {TableHelperService} from "../../core/helpers/table-helper.service";
-import {catchError, EMPTY, tap} from "rxjs";
-import {finalize} from "rxjs/operators";
+import { Component } from '@angular/core';
+import { PageHeadingComponent } from '../../core/ui/page-heading/page-heading.component';
+import { ErrorService } from '../../core/services/error.service';
+import { ConfirmationService, SharedModule } from 'primeng/api';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NotificationsEmitterService } from '../../core/services/notifications.service';
+import { UsersService } from './users.service';
+import { User } from '../../core/models/users.model';
+import { DatePipe, LowerCasePipe, NgIf } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RoleAccessDirective } from '../../shared/directives/role-access/role-access.directive';
+import { TableModule } from 'primeng/table';
+import { TwoAfterDotPipe } from '../../shared/pipes/two-after-dot/two-after-dot.pipe';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { TableHelperService } from '../../core/helpers/table-helper.service';
+import { catchError, EMPTY, tap } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -33,20 +33,20 @@ import {finalize} from "rxjs/operators";
     TwoAfterDotPipe,
     FormsModule,
     EditUserComponent,
-    NgIf
+    NgIf,
   ],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.scss'
+  styleUrl: './users.component.scss',
 })
 export class UsersComponent {
-
-  constructor(private usersService: UsersService,
-              private errorService: ErrorService,
-              private confirmService: ConfirmationService,
-              private translate: TranslateService,
-              private notifications: NotificationsEmitterService,
-              private tableHelper: TableHelperService) {
-  }
+  constructor(
+    private usersService: UsersService,
+    private errorService: ErrorService,
+    private confirmService: ConfirmationService,
+    private translate: TranslateService,
+    private notifications: NotificationsEmitterService,
+    private tableHelper: TableHelperService
+  ) {}
 
   usersList: User[] = [];
 
@@ -67,31 +67,34 @@ export class UsersComponent {
     const body = {
       paging: {
         page: settings.first / settings.rows,
-        pageSize: settings.rows
+        pageSize: settings.rows,
       },
       sorting: {
         sortProp: settings.sortField,
-        sortDirection: settings.sortOrder
+        sortDirection: settings.sortOrder,
       },
-      name: this.searchUserByName
-    }
-    this.usersService.searchUsers(body).pipe(
-      tap(resp => {
-        this.usersList = resp?.data || [];
-        this.totalRecords = resp?.totalRecords || 0;
-        ({
-          noRecords: this.noRecords,
-          noResults: this.noResults
-        } = this.tableHelper.isNoResultsOrNoRecords(this.firstInit, this.totalRecords));
-      }),
-      catchError(error => {
-        this.errorService.processError(error);
-        return EMPTY;
-      }),
-      finalize(() => {
-        this.firstInit = false;
-      })
-    ).subscribe();
+      name: this.searchUserByName,
+    };
+    this.usersService
+      .searchUsers(body)
+      .pipe(
+        tap((resp) => {
+          this.usersList = resp?.data || [];
+          this.totalRecords = resp?.totalRecords || 0;
+          ({ noRecords: this.noRecords, noResults: this.noResults } = this.tableHelper.isNoResultsOrNoRecords(
+            this.firstInit,
+            this.totalRecords
+          ));
+        }),
+        catchError((error) => {
+          this.errorService.processError(error);
+          return EMPTY;
+        }),
+        finalize(() => {
+          this.firstInit = false;
+        })
+      )
+      .subscribe();
   }
 
   askToDeleteUser(user: User) {
@@ -110,16 +113,18 @@ export class UsersComponent {
   }
 
   deleteUser(user: User) {
-    this.usersService.deleteUser(user.id).pipe(
-      tap(() => {
-        this.notifications.Success.emit("SuccessfullyDeletedUser");
-        this.fetchUsersList();
-      }),
-      catchError((error) => {
-        this.errorService.processError(error);
-        return EMPTY;
-      })
-    ).subscribe();
+    this.usersService
+      .deleteUser(user.id)
+      .pipe(
+        tap(() => {
+          this.notifications.Success.emit('SuccessfullyDeletedUser');
+          this.fetchUsersList();
+        }),
+        catchError((error) => {
+          this.errorService.processError(error);
+          return EMPTY;
+        })
+      )
+      .subscribe();
   }
-
 }

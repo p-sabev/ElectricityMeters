@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
-import {LogInCredentials} from "../authentication/login/login.model";
-import {environment} from "../../../environments/environment";
+import { LogInCredentials } from '../authentication/login/login.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   constructor(
@@ -88,7 +88,9 @@ export class AuthService {
   }
 
   getExpirationMinutes() {
-    return this.http.get(environment.url + '/container/Account/JwtExpireMinutes', { params: { dontShowLoader: 'true' } });
+    return this.http.get(environment.url + '/container/Account/JwtExpireMinutes', {
+      params: { dontShowLoader: 'true' },
+    });
   }
 
   refreshToken() {
@@ -97,5 +99,4 @@ export class AuthService {
       params: { dontShowLoader: 'true' },
     });
   }
-
 }

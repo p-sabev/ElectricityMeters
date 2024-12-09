@@ -1,8 +1,8 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   standalone: true,
-  name: 'twoAfterDot'
+  name: 'twoAfterDot',
 })
 export class TwoAfterDotPipe implements PipeTransform {
   transform(value: any): string {

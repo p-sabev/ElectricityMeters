@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { Price } from '../../../core/models/prices.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {EventEmitter} from "@angular/core";
+import { EventEmitter } from '@angular/core';
 
 describe('AddEditPricesComponent', () => {
   let component: AddEditPricesComponent;

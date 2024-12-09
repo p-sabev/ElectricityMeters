@@ -81,16 +81,12 @@ describe('ReceiptComponent', () => {
 
   it('should handle large numbers correctly in priceToWords', () => {
     const words = component.priceToWords(123456.78);
-    expect(words).toBe(
-      'сто двадесет и три хиляди четиристотин петдесет и шест лева и седемдесет и осем стотинки'
-    );
+    expect(words).toBe('сто двадесет и три хиляди четиристотин петдесет и шест лева и седемдесет и осем стотинки');
   });
 
   it('should handle small numbers correctly in priceToWords', () => {
     const words = component.priceToWords(0.78);
-    expect(words).toBe(
-      'седемдесет и осем стотинки'
-    );
+    expect(words).toBe('седемдесет и осем стотинки');
   });
 
   it('should handle single-digit prices correctly in priceToWords', () => {
