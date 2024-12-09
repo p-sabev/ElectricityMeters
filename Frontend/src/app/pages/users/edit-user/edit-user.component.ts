@@ -3,13 +3,13 @@ import {Role, User} from "../../../core/models/users.model";
 import {NotificationsEmitterService} from "../../../core/services/notifications.service";
 import {ErrorService} from "../../../core/services/error.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Switchboard} from "../../../core/models/switchboards.model";
 import {UsersService} from "../users.service";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
 import {MultiSelectModule} from "primeng/multiselect";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Component({
   selector: 'app-edit-user',
@@ -56,22 +56,30 @@ export class EditUserComponent {
   }
 
   getAllRoles() {
-    this.usersService.getAllRoles().subscribe((roles: any) => {
-      this.rolesList = roles;
-      this.initEditForm();
-    }, error => {
-      this.errorService.processError(error);
-    })
+    this.usersService.getAllRoles().pipe(
+      tap((roles: any) => {
+        this.rolesList = roles;
+        this.initEditForm();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
   editUser() {
     const body = this.editForm?.getRawValue() || {};
     body.roleIds = body.roleIds?.map((role: Role) => role.name);
-    this.usersService.editUser(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyEditedUser');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    })
+    this.usersService.editUser(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyEditedUser');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 }

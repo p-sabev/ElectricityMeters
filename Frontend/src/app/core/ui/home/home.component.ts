@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {TranslateModule} from "@ngx-translate/core";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {RoleAccessDirective} from "../../../shared/directives/role-access.directive";
+import {RoleAccessDirective} from "../../../shared/directives/role-access/role-access.directive";
 
 @Component({
   selector: 'app-home',

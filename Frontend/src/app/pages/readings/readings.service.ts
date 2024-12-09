@@ -32,27 +32,27 @@ export class ReadingsService {
   }
 
   // Add
-  insertReading(body: InsertReading) {
+  insertReading(body: InsertReading): Observable<any> {
     return this.http.post(environment.url + '/api/readings', body);
   }
 
   // Add multiple readings
-  insertReadingsForSubscribers(body: InsertMultipleReadings) {
+  insertReadingsForSubscribers(body: InsertMultipleReadings): Observable<any> {
     return this.http.post(environment.url + '/api/readings/add-multiple-readings', body);
   }
 
   // Edit
-  editReading(body: EditReading) {
+  editReading(body: EditReading): Observable<any> {
     return this.http.put(environment.url + `/api/readings/${body.id}`, body);
   }
 
   // Delete
-  deleteReading(id: number) {
+  deleteReading(id: number): Observable<any> {
     return this.http.delete(environment.url + `/api/readings/${id}`);
   }
 
   // Get all pending payments
-  fetchAllPendingPayments() {
+  fetchAllPendingPayments(): Observable<any> {
     return this.http.post(environment.url + '/api/readings/pending-payments', {});
   }
 }

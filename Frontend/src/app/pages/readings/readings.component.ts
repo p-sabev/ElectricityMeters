@@ -10,17 +10,20 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {TableModule} from "primeng/table";
 import {Reading} from "../../core/models/readings.model";
 import {AddReadingForSubscriberComponent} from "./add-reading-for-subscriber/add-reading-for-subscriber.component";
-import {TwoAfterDotPipe} from "../../shared/pipes/twoAfterDot.pipe";
+import {TwoAfterDotPipe} from "../../shared/pipes/two-after-dot/two-after-dot.pipe";
 import {ReceiptComponent} from "./receipt/receipt.component";
 import {PrintReceiptComponent} from "./print-receipt/print-receipt.component";
 import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
-import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
+import {RoleAccessDirective} from "../../shared/directives/role-access/role-access.directive";
 import {PaginatorModule} from "primeng/paginator";
 import {PendingPaymentsComponent} from "./pending-payments/pending-payments.component";
 import {TooltipModule} from "primeng/tooltip";
 import {
   DisplayTwoThreePhaseReadingComponent
 } from "./display-two-three-phase-reading/display-two-three-phase-reading.component";
+import {TableHelperService} from "../../core/helpers/table-helper.service";
+import {catchError, EMPTY, tap} from "rxjs";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-readings',
@@ -55,7 +58,9 @@ export class ReadingsComponent {
               private errorService: ErrorService,
               private confirmService: ConfirmationService,
               private translate: TranslateService,
-              private notifications: NotificationsEmitterService) {}
+              private notifications: NotificationsEmitterService,
+              private tableHelper: TableHelperService) {
+  }
 
   readingsList: Reading[] = [];
 
@@ -78,33 +83,27 @@ export class ReadingsComponent {
   fetchReadingsList(settings: any = this.lastUsedSettings) {
     this.lastUsedSettings = settings;
     const body = {
-      paging: {
-        page: settings.first / settings.rows,
-        pageSize: settings.rows
-      },
-      sorting: {
-        sortProp: settings.sortField,
-        sortDirection: settings.sortOrder
-      },
+      paging: this.tableHelper.getPagingSettings(settings),
+      sorting: this.tableHelper.getSortingSettings(settings),
       name: this.searchSubscriberName
     }
-    this.readingsService.searchReadings(body).subscribe(resp => {
-      this.readingsList = resp?.data || [];
-      this.totalRecords = resp?.totalRecords || 0;
-
-      if (this.firstInit && this.totalRecords === 0) {
-        this.noRecords = true;
-      } else if (!this.firstInit && this.totalRecords === 0) {
-        this.noResults = true;
-      } else {
-        this.noRecords = false;
-        this.noResults = false;
-      }
-    }, error => {
-      this.errorService.processError(error);
-    }, () => {
-      this.firstInit = false;
-    });
+    this.readingsService.searchReadings(body).pipe(
+      tap((resp) => {
+        this.readingsList = resp?.data || [];
+        this.totalRecords = resp?.totalRecords || 0;
+        ({
+          noRecords: this.noRecords,
+          noResults: this.noResults
+        } = this.tableHelper.isNoResultsOrNoRecords(this.firstInit, this.totalRecords));
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      }),
+      finalize(() => {
+        this.firstInit = false;
+      })
+    ).subscribe();
   }
 
   openReadingForEdit(reading: Reading) {
@@ -127,12 +126,16 @@ export class ReadingsComponent {
   }
 
   deleteReading(reading: Reading) {
-    this.readingsService.deleteReading(reading.id).subscribe(() => {
-      this.notifications.Success.emit("SuccessfullyDeletedReading");
-      this.fetchReadingsList();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    this.readingsService.deleteReading(reading.id).pipe(
+      tap(() => {
+        this.notifications.Success.emit("SuccessfullyDeletedReading");
+        this.fetchReadingsList();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
 }

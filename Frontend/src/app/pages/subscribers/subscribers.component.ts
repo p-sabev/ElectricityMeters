@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {DatePipe, LowerCasePipe, NgForOf, NgIf} from "@angular/common";
 import {ConfirmationService, SharedModule} from "primeng/api";
-import {TableModule} from "primeng/table";
+import {TableLazyLoadEvent, TableModule} from "primeng/table";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {Subscriber} from "../../core/models/subscribers.model";
+import {SearchSubscribersRequest, Subscriber} from "../../core/models/subscribers.model";
 import {NotificationsEmitterService} from "../../core/services/notifications.service";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {AddEditSubscribersComponent} from "./add-edit-subscribers/add-edit-subscribers.component";
@@ -18,7 +18,10 @@ import {FormsModule} from "@angular/forms";
 import {Switchboard} from "../../core/models/switchboards.model";
 import {SwitchboardsService} from "../switchboards/switchboards.service";
 import {DetailsForSubscriberComponent} from "./details-for-subscriber/details-for-subscriber.component";
-import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
+import {RoleAccessDirective} from "../../shared/directives/role-access/role-access.directive";
+import {TableHelperService} from "../../core/helpers/table-helper.service";
+import {catchError, EMPTY, tap} from "rxjs";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-subscribers',
@@ -51,7 +54,9 @@ export class SubscribersComponent implements OnInit {
               private errorService: ErrorService,
               private confirmService: ConfirmationService,
               private translate: TranslateService,
-              private switchBoardsService: SwitchboardsService) {}
+              private switchBoardsService: SwitchboardsService,
+              private tableHelper: TableHelperService) {
+  }
 
   subscribers: Subscriber[] = [];
 
@@ -84,47 +89,49 @@ export class SubscribersComponent implements OnInit {
   }
 
   getAllSwitchboards() {
-    this.switchBoardsService.getAllSwitchboards().subscribe(resp => {
-      this.switchboardsList = resp || [];
-    }, (error: any) => {
-      this.errorService.processError(error);
-    });
+    this.switchBoardsService.getAllSwitchboards().pipe(
+      tap((resp) => {
+        this.switchboardsList = resp || [];
+      }),
+      catchError((error: any) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
   fetchSubscribersList(settings: any = this.lastUsedSettings) {
     this.lastUsedSettings = settings;
-    const body = {
-      paging: {
-        page: settings.first / settings.rows,
-        pageSize: settings.rows
-      },
-      sorting: {
-        sortProp: settings.sortField,
-        sortDirection: settings.sortOrder
-      },
+    const body = this.getBodyToDetchSubscribers(settings);
+
+    this.subscribersService.searchSubscribers(body).pipe(
+      tap(resp => {
+        this.subscribers = resp?.data || [];
+        this.totalRecords = resp?.totalRecords || 0;
+        ({
+          noRecords: this.noRecords,
+          noResults: this.noResults
+        } = this.tableHelper.isNoResultsOrNoRecords(this.firstInit, this.totalRecords));
+      }),
+      catchError(error => {
+        this.errorService.processError(error);
+        return EMPTY;
+      }),
+      finalize(() => {
+        this.firstInit = false;
+      })
+    ).subscribe();
+  }
+
+  getBodyToDetchSubscribers(settings: TableLazyLoadEvent): SearchSubscribersRequest {
+    return {
+      paging: this.tableHelper.getPagingSettings(settings),
+      sorting: this.tableHelper.getSortingSettings(settings),
       numberPage: this.filtersModel.numberPage || null,
       name: this.filtersModel.name || null,
       switchboardId: this.filtersModel.switchboard || null,
       electricMeterName: this.filtersModel.electricMeterName || null,
-    }
-
-    this.subscribersService.searchSubscribers(body).subscribe(resp => {
-      this.subscribers = resp?.data || [];
-      this.totalRecords = resp?.totalRecords || 0;
-
-      if (this.firstInit && this.totalRecords === 0) {
-        this.noRecords = true;
-      } else if (!this.firstInit && this.totalRecords === 0) {
-        this.noResults = true;
-      } else {
-        this.noRecords = false;
-        this.noResults = false;
-      }
-    }, error => {
-      this.errorService.processError(error);
-    }, () => {
-      this.firstInit = false;
-    });
+    };
   }
 
   initAddSubscriber() {
@@ -151,12 +158,16 @@ export class SubscribersComponent implements OnInit {
   }
 
   deleteSubscriber(subscriber: Subscriber) {
-    this.subscribersService.deleteSubscriber(subscriber.id).subscribe(() => {
-      this.notifications.Success.emit("SuccessfullyDeletedSubscriber");
-      this.fetchSubscribersList();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    this.subscribersService.deleteSubscriber(subscriber.id).pipe(
+      tap(() => {
+        this.notifications.Success.emit("SuccessfullyDeletedSubscriber");
+        this.fetchSubscribersList();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
 }

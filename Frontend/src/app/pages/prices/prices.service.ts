@@ -22,17 +22,17 @@ export class PricesService {
   }
 
   // Add
-  insertPrice(body: InsertPrice) {
+  insertPrice(body: InsertPrice): Observable<any> {
     return this.http.post(environment.url + '/api/prices', body);
   }
 
   // Edit
-  editPrice(body: EditPrice) {
+  editPrice(body: EditPrice): Observable<any> {
     return this.http.put(environment.url + '/api/prices', body);
   }
 
   // Delete
-  deletePrice(id: number) {
+  deletePrice(id: number): Observable<any> {
     return this.http.delete(environment.url + `/api/prices/${id}`);
   }
 }

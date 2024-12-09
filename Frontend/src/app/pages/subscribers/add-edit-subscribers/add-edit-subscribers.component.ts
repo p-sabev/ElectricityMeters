@@ -11,6 +11,7 @@ import {Switchboard} from "../../../core/models/switchboards.model";
 import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {RadioButtonModule} from "primeng/radiobutton";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Component({
   selector: 'app-add-edit-subscribers',
@@ -58,36 +59,48 @@ export class AddEditSubscribersComponent implements OnInit {
       meterNumber: new FormControl<string>(this.subscriberToEdit?.meterNumber ? this.subscriberToEdit.meterNumber : '', [Validators.maxLength(50)]),
       note: new FormControl<string>(this.subscriberToEdit?.note ? this.subscriberToEdit.note : '', [Validators.maxLength(500)]),
       defaultReading: new FormControl<number | null | undefined>(this.subscriberToEdit ? this.subscriberToEdit.defaultReading : null, [Validators.min(0)]),
-      phaseCount: new FormControl<1 | 2 | 3>(this.subscriberToEdit ? this.subscriberToEdit.phaseCount : 1, [Validators.required]),
+      phaseCount: new FormControl<number>(this.subscriberToEdit ? this.subscriberToEdit.phaseCount : 1, [Validators.required]),
     });
   }
 
   getAllSwitchboards() {
-    this.switchBoardsService.getAllSwitchboards().subscribe(resp => {
-      this.switchBoardsList = resp || [];
-    }, (error: any) => {
-      this.errorService.processError(error);
-    });
+    this.switchBoardsService.getAllSwitchboards().pipe(
+      tap((resp) => {
+        this.switchBoardsList = resp || [];
+      }),
+      catchError((error: any) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
   addSubscriber() {
     const body = this.addEditForm?.getRawValue() || {};
-    this.subscribersService.insertSubscriber(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyAddedSubscriber');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    })
+    this.subscribersService.insertSubscriber(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyAddedSubscriber');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
   editSubscriber() {
     const body = this.addEditForm?.getRawValue() || {};
-    this.subscribersService.editSubscriber(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyEditedSubscriber');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    })
+    this.subscribersService.editSubscriber(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyEditedSubscriber');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
 }

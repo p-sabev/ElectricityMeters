@@ -9,7 +9,8 @@ import * as moment from 'moment';
 import {PaymentsService} from "../payments.service";
 import {ErrorService} from "../../../core/services/error.service";
 import {PaymentsReportResponse, SearchPaymentsReport} from "../../../core/models/payment.model";
-import {TwoAfterDotPipe} from "../../../shared/pipes/twoAfterDot.pipe";
+import {TwoAfterDotPipe} from "../../../shared/pipes/two-after-dot/two-after-dot.pipe";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Component({
   selector: 'app-payment-report',
@@ -33,7 +34,8 @@ export class PaymentReportComponent {
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private paymentsService: PaymentsService,
-              private errorService: ErrorService) { }
+              private errorService: ErrorService) {
+  }
 
   dateFrom: Date = moment().startOf('month').toDate();
   dateTo: Date = moment().endOf('month').toDate();
@@ -45,10 +47,14 @@ export class PaymentReportComponent {
       dateFrom: moment(this.dateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z',
       dateTo: moment(this.dateTo).format('YYYY-MM-DD') + 'T23:59:59.999Z',
     }
-    this.paymentsService.searchPaymentsReport(body).subscribe((resp) => {
-      this.paymentReportData = resp;
-    }, (error) => {
-      this.errorService.processError(error);
-    });
+    this.paymentsService.searchPaymentsReport(body).pipe(
+      tap((resp) => {
+        this.paymentReportData = resp;
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 }

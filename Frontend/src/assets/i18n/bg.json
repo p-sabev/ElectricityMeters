@@ -209,5 +209,6 @@
   "TwoPhaseText": "(2-фазен)",
   "ThreePhaseText": "(3-фазен)",
   "SubscriberReadingValueIsLowerThanLastReading": "Стойността на показанието за абонат - '{{subscriberName}}' е по-ниска от последното показание",
-  "NoReadingsToInsert": "Липсват коректни показания които да бъдат въведени"
+  "NoReadingsToInsert": "Липсват коректни показания които да бъдат въведени",
+  "NameSmall": "име"
 }

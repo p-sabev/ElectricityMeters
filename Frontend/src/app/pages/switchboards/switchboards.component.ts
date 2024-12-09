@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {Switchboard} from "../../core/models/switchboards.model";
+import {SearchSwitchboardsRequest, Switchboard} from "../../core/models/switchboards.model";
 import {SwitchboardsService} from "./switchboards.service";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {ErrorService} from "../../core/services/error.service";
@@ -16,11 +16,14 @@ import {
   AddReadingForSwitchboardComponent
 } from "../readings/add-reading-for-switchboard/add-reading-for-switchboard.component";
 import {PageHeadingComponent} from "../../core/ui/page-heading/page-heading.component";
-import {RoleAccessDirective} from "../../shared/directives/role-access.directive";
+import {RoleAccessDirective} from "../../shared/directives/role-access/role-access.directive";
 import {TooltipModule} from "primeng/tooltip";
 import {
   DisplayTwoThreePhaseReadingComponent
 } from "../readings/display-two-three-phase-reading/display-two-three-phase-reading.component";
+import {TableHelperService} from "../../core/helpers/table-helper.service";
+import {catchError, EMPTY, tap} from "rxjs";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-switchboards',
@@ -36,7 +39,8 @@ export class SwitchboardsComponent implements OnInit {
               private translate: TranslateService,
               private errorService: ErrorService,
               private confirmService: ConfirmationService,
-              private notifications: NotificationsEmitterService) {
+              private notifications: NotificationsEmitterService,
+              private tableHelper: TableHelperService) {
   }
 
   switchboardsList: Switchboard[] = [];
@@ -58,7 +62,28 @@ export class SwitchboardsComponent implements OnInit {
   }
 
   fetchSwitchboardsList() {
-    const body = {
+    const body: SearchSwitchboardsRequest = this.getBodyToSearchSwitchboards();
+    this.switchboardsService.searchSwitchboards(body).pipe(
+      tap(resp => {
+        this.switchboardsList = resp?.data || [];
+        this.totalRecords = resp?.totalRecords || 0;
+        ({
+          noRecords: this.noRecords,
+          noResults: this.noResults
+        } = this.tableHelper.isNoResultsOrNoRecords(this.firstInit, this.totalRecords));
+      }),
+      catchError(error => {
+        this.errorService.processError(error);
+        return EMPTY;
+      }),
+      finalize(() => {
+        this.firstInit = false;
+      })
+    ).subscribe();
+  }
+
+  getBodyToSearchSwitchboards(): SearchSwitchboardsRequest {
+    return {
       paging: {
         page: 0,
         pageSize: 2147483647
@@ -68,36 +93,11 @@ export class SwitchboardsComponent implements OnInit {
         sortDirection: this.sortOrder
       },
       name: ''
-    }
-    this.switchboardsService.searchSwitchboards(body).subscribe(resp => {
-      if (resp?.data?.length) {
-        this.switchboardsList = this.sortByNumericName(resp.data);
-      } else {
-        this.switchboardsList = [];
-      }
-      this.totalRecords = resp?.totalRecords || 0;
-
-      if (this.firstInit && this.totalRecords === 0) {
-        this.noRecords = true;
-      } else if (!this.firstInit && this.totalRecords === 0) {
-        this.noResults = true;
-      } else {
-        this.noRecords = false;
-        this.noResults = false;
-      }
-    }, (error: any) => {
-      this.errorService.processError(error);
-    }, () => {
-      this.firstInit = false;
-    });
+    };
   }
 
   initAddSwitchboard() {
     this.addSwitchboard = true;
-  }
-
-  openSwitchboardForEdit(switchboard: Switchboard) {
-    this.switchboardForEdit = switchboard;
   }
 
   askToDeleteSwitchboard(switchboard: Switchboard) {
@@ -116,12 +116,16 @@ export class SwitchboardsComponent implements OnInit {
   }
 
   deleteSwitchboard(switchboard: Switchboard) {
-    this.switchboardsService.deleteSwitchboard(switchboard.id).subscribe(() => {
-      this.notifications.Success.emit("SuccessfullyDeletedSwitchboard");
-      this.fetchSwitchboardsList();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    this.switchboardsService.deleteSwitchboard(switchboard.id).pipe(
+      tap(() => {
+        this.notifications.Success.emit("SuccessfullyDeletedSwitchboard");
+        this.fetchSwitchboardsList();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
   sortByNumericName(arr: Switchboard[]): Switchboard[] {

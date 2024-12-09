@@ -14,7 +14,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TabViewModule} from "primeng/tabview";
 import {ButtonModule} from "primeng/button";
 import { TreeModule } from 'primeng/tree';
-import {ComingSoonComponent} from "./pages/coming-soon/coming-soon.component";
 import {SharedModule} from "./shared/shared/shared.module";
 import {LoaderInterceptorService} from "./core/interceptors/loader/loader-interceptor.service";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
@@ -30,8 +29,7 @@ import {AuthGuard} from "./core/guards/auth/auth.guard";
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    ComingSoonComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

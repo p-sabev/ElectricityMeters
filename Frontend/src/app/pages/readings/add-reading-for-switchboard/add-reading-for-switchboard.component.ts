@@ -11,6 +11,7 @@ import {FormErrorsComponent} from "../../../shared/features/form-errors/form-err
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Component({
   selector: 'app-add-reading-for-switchboard',
@@ -50,6 +51,10 @@ export class AddReadingForSwitchboardComponent implements OnInit {
   thirdPhaseValues: number[] = [];
 
   ngOnInit() {
+    this.setInitialValues();
+  }
+
+  setInitialValues() {
     this.readingsDateFrom = moment().startOf('year').toDate();
     this.minDateFrom = moment().startOf('year').toDate();
 
@@ -134,12 +139,16 @@ export class AddReadingForSwitchboardComponent implements OnInit {
       return this.notifications.Info.emit('NoReadingsToInsert');
     }
 
-    this.readingsService.insertReadingsForSubscribers(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyAddedReadings');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    this.readingsService.insertReadingsForSubscribers(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyAddedReadings');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
 }

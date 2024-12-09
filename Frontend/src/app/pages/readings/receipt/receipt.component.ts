@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Reading} from "../../../core/models/readings.model";
-import {TwoAfterDotPipe} from "../../../shared/pipes/twoAfterDot.pipe";
+import {TwoAfterDotPipe} from "../../../shared/pipes/two-after-dot/two-after-dot.pipe";
 import {DatePipe, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
 import {Fee} from "../../../core/models/payment.model";
@@ -85,7 +85,7 @@ export class ReceiptComponent {
       stotinkiWords = 'нула стотинки';
     }
 
-    return (levaWords + ' и ' + stotinkiWords).trim();
+    return (levaWords + ' и ' + stotinkiWords).replace(/^\s*и\s*/, '').replace(/\s+/g, ' ').replace(' и и ', ' и ').trim();
   }
 
   getTotalFees(): number {

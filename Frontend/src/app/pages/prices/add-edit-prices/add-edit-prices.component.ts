@@ -10,6 +10,7 @@ import {FormErrorsComponent} from "../../../shared/features/form-errors/form-err
 import {NgIf} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
 import {CalendarModule} from "primeng/calendar";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Component({
   selector: 'app-add-edit-prices',
@@ -44,32 +45,45 @@ export class AddEditPricesComponent implements OnInit {
   initAddEditForm() {
     this.addEditForm = new FormGroup({
       id: new FormControl<number | null>(this.priceToEdit ? this.priceToEdit.id : null),
-      priceInLv: new FormControl<number | null>({ value: this.priceToEdit?.priceInLv ? this.priceToEdit.priceInLv : null, disabled: this.priceToEdit?.isUsed === true }, [Validators.required, Validators.max(1000)]),
-      dateFrom: new FormControl<any>(this.priceToEdit?.dateFrom ? moment(this.priceToEdit.dateFrom).toDate() : moment().toDate(), [Validators.required]),
-      note: new FormControl<string>(this.priceToEdit?.note ? this.priceToEdit.note : '', [Validators.maxLength(250)]),
+      priceInLv: new FormControl<number | null>({
+        value: this.priceToEdit?.priceInLv ? this.priceToEdit.priceInLv : null,
+        disabled: this.priceToEdit?.isUsed === true
+      }, [Validators.required, Validators.max(1000)]),
+      dateFrom: new FormControl<any>(this.priceToEdit?.dateFrom ? moment(this.priceToEdit.dateFrom).toDate() : moment().toDate(),
+        [Validators.required]),
+      note: new FormControl<string>(this.priceToEdit?.note ? this.priceToEdit.note : '',
+        [Validators.maxLength(250)]),
     });
   }
 
   addPrice() {
     const body = this.addEditForm?.getRawValue() || {};
     body.dateFrom = moment(body.dateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z';
-    this.pricesService.insertPrice(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyAddedPrice');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    this.pricesService.insertPrice(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyAddedPrice');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
   editPrice() {
     const body = this.addEditForm?.getRawValue() || {};
     body.dateFrom = moment(body.dateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z';
-    this.pricesService.editPrice(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyEditedPrice');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    this.pricesService.editPrice(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyEditedPrice');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
 }

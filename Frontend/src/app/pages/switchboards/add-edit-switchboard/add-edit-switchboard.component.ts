@@ -8,6 +8,7 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {FormErrorsComponent} from "../../../shared/features/form-errors/form-errors.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Component({
   selector: 'app-add-edit-switchboard',
@@ -47,22 +48,30 @@ export class AddEditSwitchboardComponent implements OnInit {
 
   addSwitchboard() {
     const body = this.addEditForm?.getRawValue() || {};
-    this.switchboardsService.insertSwitchboard(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyAddedSwitchboard');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    this.switchboardsService.insertSwitchboard(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyAddedSwitchboard');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
   editSwitchboard() {
     const body = this.addEditForm?.getRawValue() || {};
-    this.switchboardsService.editSwitchboard(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyEditedSwitchboard');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    this.switchboardsService.editSwitchboard(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyEditedSwitchboard');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
 }

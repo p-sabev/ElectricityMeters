@@ -5,15 +5,13 @@ import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
 import {Subscriber} from "../../../core/models/subscribers.model";
-import {SubscribersService} from "../../subscribers/subscribers.service";
-import {SwitchboardsService} from "../../switchboards/switchboards.service";
 import {NotificationsEmitterService} from "../../../core/services/notifications.service";
 import {ErrorService} from "../../../core/services/error.service";
-import {Switchboard} from "../../../core/models/switchboards.model";
 import * as moment from 'moment';
 import {ReadingsService} from "../readings.service";
-import {EditReading, Reading} from "../../../core/models/readings.model";
+import {EditReading, InsertReading, Reading} from "../../../core/models/readings.model";
 import {CalendarModule} from "primeng/calendar";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Component({
   selector: 'app-add-reading-for-subscriber',
@@ -74,6 +72,20 @@ export class AddReadingForSubscriberComponent implements OnInit {
   }
 
   addReading() {
+    const body: InsertReading = this.getBodyToAddReading();
+    this.readingsService.insertReading(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyAddedReading');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
+  }
+
+  getBodyToAddReading(): InsertReading {
     const body = this.addEditReadingForm?.getRawValue() || {};
 
     body.firstPhaseValue = body.firstPhaseValue || 0;
@@ -89,24 +101,28 @@ export class AddReadingForSubscriberComponent implements OnInit {
     body.dateTo = moment(body.dateTo).format('YYYY-MM-DD') + 'T00:00:00.000Z';
     delete body.id;
 
-    this.readingsService.insertReading(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyAddedReading');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    return body;
   }
 
   editReading() {
+    const body: EditReading = this.getBodyForEditReading();
+    this.readingsService.editReading(body).pipe(
+      tap(() => {
+        this.notifications.Success.emit('SuccessfullyEditedReading');
+        this.close.emit();
+      }),
+      catchError((error) => {
+        this.errorService.processError(error);
+        return EMPTY;
+      })
+    ).subscribe();
+  }
+
+  getBodyForEditReading(): EditReading {
     const body: EditReading = this.addEditReadingForm?.getRawValue() || {};
     body.dateFrom = moment(body.dateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z';
     body.dateTo = moment(body.dateTo).format('YYYY-MM-DD') + 'T00:00:00.000Z';
-    this.readingsService.editReading(body).subscribe(() => {
-      this.notifications.Success.emit('SuccessfullyEditedReading');
-      this.close.emit();
-    }, error => {
-      this.errorService.processError(error);
-    });
+    return body;
   }
 
 }

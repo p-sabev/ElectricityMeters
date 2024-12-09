@@ -10,6 +10,7 @@ export interface Price {
 }
 
 export interface InsertPrice {
+  id?: number | null;
   priceInLv: number;
   dateFrom: Date | string;
   note: string;

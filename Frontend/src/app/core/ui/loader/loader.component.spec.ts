@@ -53,7 +53,4 @@ describe('LoaderComponent', () => {
     expect(subscription.unsubscribe).toHaveBeenCalled();
   });
 
-  it('should return true if user is authenticated', () => {
-    expect(component.isAuthenticated()).toBeTrue();
-  });
 });

@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subscriber} from "../../../core/models/subscribers.model";
-import {ErrorService} from "../../../core/services/error.service";
 import {Reading} from "../../../core/models/readings.model";
 import {ReadingsService} from "../../readings/readings.service";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
@@ -8,8 +7,9 @@ import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
 import {SharedModule} from "primeng/api";
 import {TableModule} from "primeng/table";
-import {TwoAfterDotPipe} from "../../../shared/pipes/twoAfterDot.pipe";
+import {TwoAfterDotPipe} from "../../../shared/pipes/two-after-dot/two-after-dot.pipe";
 import {PrintReceiptComponent} from "../../readings/print-receipt/print-receipt.component";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Component({
   selector: 'app-details-for-subscriber',
@@ -32,8 +32,7 @@ export class DetailsForSubscriberComponent implements OnInit {
   @Input() subscriber!: Subscriber;
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private readingsService: ReadingsService,
-              private errorService: ErrorService) {
+  constructor(private readingsService: ReadingsService) {
   }
 
   subscriberReadings: Reading[] = [];
@@ -47,18 +46,23 @@ export class DetailsForSubscriberComponent implements OnInit {
 
   getReadingsForSubscriber() {
     this.searchingForReadings = true;
-    this.readingsService.getAllReadingsBySubscriberId(this.subscriber.id).subscribe(resp => {
-      this.subscriberReadings = resp;
-      this.searchingForReadings = false;
-    }, error => {
-      // this.errorService.processError(error);
-      this.searchingForReadings = false;
-    });
+    this.readingsService.getAllReadingsBySubscriberId(this.subscriber.id).pipe(
+      tap((resp) => {
+        this.subscriberReadings = resp;
+        this.searchingForReadings = false;
+      }),
+      catchError((error) => {
+        console.error(error);
+        // this.errorService.processError(error);
+        this.searchingForReadings = false;
+        return EMPTY;
+      })
+    ).subscribe();
   }
 
-  openPrintReading(reading: Reading) {
-    let readingAndSubscriber = reading;
-    readingAndSubscriber.subscriber = this.subscriber;
-    this.readingToPrintReceipt = readingAndSubscriber;
-  }
+  // openPrintReading(reading: Reading) {
+  //   let readingAndSubscriber = reading;
+  //   readingAndSubscriber.subscriber = this.subscriber;
+  //   this.readingToPrintReceipt = readingAndSubscriber;
+  // }
 }

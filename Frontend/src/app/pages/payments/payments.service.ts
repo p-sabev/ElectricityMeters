@@ -22,12 +22,12 @@ export class PaymentsService {
   }
 
   // Add
-  insertPayment(body: InsertPayment) {
+  insertPayment(body: InsertPayment): Observable<any> {
     return this.http.post(environment.url + '/api/payments', body);
   }
 
   // Delete
-  deletePayment(id: number) {
+  deletePayment(id: number): Observable<any> {
     return this.http.delete(environment.url + `/api/payments/${id}`);
   }
 

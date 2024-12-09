@@ -5,7 +5,7 @@ import {Title} from "@angular/platform-browser";
 import {AuthService} from "../../services/auth.service";
 import {TranslateModule, TranslatePipe} from "@ngx-translate/core";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {RoleAccessDirective} from "../../../shared/directives/role-access.directive";
+import {RoleAccessDirective} from "../../../shared/directives/role-access/role-access.directive";
 import {NgClass, NgIf} from "@angular/common";
 
 @Component({
