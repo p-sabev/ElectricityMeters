@@ -13,7 +13,6 @@ describe('PendingPaymentsComponent', () => {
   let fixture: ComponentFixture<PendingPaymentsComponent>;
   let readingsService: jasmine.SpyObj<ReadingsService>;
   let errorService: jasmine.SpyObj<ErrorService>;
-  let translate: jasmine.SpyObj<TranslateService>;
 
   const mockPendingPaymentsResponse: PendingPaymentsReportResponse = {
     pendingTotalElectricity: 500,
@@ -62,7 +61,6 @@ describe('PendingPaymentsComponent', () => {
 
     readingsService = TestBed.inject(ReadingsService) as jasmine.SpyObj<ReadingsService>;
     errorService = TestBed.inject(ErrorService) as jasmine.SpyObj<ErrorService>;
-    translate = TestBed.inject(TranslateService) as jasmine.SpyObj<TranslateService>;
   });
 
   it('should create the component', () => {

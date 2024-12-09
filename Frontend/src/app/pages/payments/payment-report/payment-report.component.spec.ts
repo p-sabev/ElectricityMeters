@@ -12,7 +12,7 @@ describe('PaymentReportComponent', () => {
   let fixture: ComponentFixture<PaymentReportComponent>;
   let paymentsService: PaymentsService;
   let errorService: ErrorService;
-  let paymentServiceMock = {
+  const paymentServiceMock = {
     searchPaymentsReport: jasmine.createSpy('searchPaymentsReport').and.returnValue(of({})),
   };
 

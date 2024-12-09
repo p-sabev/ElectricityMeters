@@ -125,7 +125,7 @@ describe('AddReadingForSwitchboardComponent', () => {
   it('should not add readings if no values are provided', () => {
     spyOn(notifications.Info, 'emit');
 
-    // @ts-ignore
+    // @ts-expect-error Testing private method
     component.readingsValues = [null, null];
     component.addReadings();
 

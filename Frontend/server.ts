@@ -10,7 +10,7 @@ import { environment } from './src/environments/environment';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
-  const functions = require('firebase-functions');
+  // const functions = require('firebase-functions');
   const server = express();
   const websiteFileLocation = environment.production ? 'browser' : 'dist/functions/browser';
   const distFolder = join(process.cwd(), websiteFileLocation);

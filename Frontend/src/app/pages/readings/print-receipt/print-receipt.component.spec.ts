@@ -15,11 +15,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('PrintReceiptComponent', () => {
   let component: PrintReceiptComponent;
   let fixture: ComponentFixture<PrintReceiptComponent>;
-  let paymentsService: jasmine.SpyObj<PaymentsService>;
   let settingsService: jasmine.SpyObj<SettingsService>;
-  let notifications: jasmine.SpyObj<NotificationsEmitterService>;
   let errorService: jasmine.SpyObj<ErrorService>;
-  let translate: jasmine.SpyObj<TranslateService>;
 
   const mockFeeList: PaymentFee[] = [
     { id: 1, description: 'Fee 1', value: 50, paymentId: 1, dataGroup: 1 },
@@ -81,11 +78,8 @@ describe('PrintReceiptComponent', () => {
     fixture = TestBed.createComponent(PrintReceiptComponent);
     component = fixture.componentInstance;
 
-    paymentsService = TestBed.inject(PaymentsService) as jasmine.SpyObj<PaymentsService>;
     settingsService = TestBed.inject(SettingsService) as jasmine.SpyObj<SettingsService>;
-    notifications = TestBed.inject(NotificationsEmitterService) as jasmine.SpyObj<NotificationsEmitterService>;
     errorService = TestBed.inject(ErrorService) as jasmine.SpyObj<ErrorService>;
-    translate = TestBed.inject(TranslateService) as jasmine.SpyObj<TranslateService>;
 
     component.reading = mockReading; // Set the reading with feeList null
     settingsService.getDefaultFees.and.returnValue(of(mockFeeList)); // Mock the default fees service

@@ -17,7 +17,6 @@ describe('SettingsComponent', () => {
   let fixture: ComponentFixture<SettingsComponent>;
   let settingsService: jasmine.SpyObj<SettingsService>;
   let errorService: jasmine.SpyObj<ErrorService>;
-  let notifications: jasmine.SpyObj<NotificationsEmitterService>;
 
   const mockFeeList: DefaultFee[] = [
     { description: 'Fee 1', value: 50 },
@@ -58,7 +57,6 @@ describe('SettingsComponent', () => {
 
     settingsService = TestBed.inject(SettingsService) as jasmine.SpyObj<SettingsService>;
     errorService = TestBed.inject(ErrorService) as jasmine.SpyObj<ErrorService>;
-    notifications = TestBed.inject(NotificationsEmitterService) as jasmine.SpyObj<NotificationsEmitterService>;
 
     fixture.detectChanges();
   });

@@ -6,7 +6,6 @@ import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifi
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { of } from 'rxjs';
 import { LoaderComponent } from './core/ui/loader/loader.component';
-import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HeaderComponent } from './core/ui/header/header.component';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
@@ -15,10 +14,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let notificationsEmitterService: NotificationsEmitterService;
   let notificationsService: NotificationsService;
   let translateService: TranslateService;
-  let primeNgConfig: PrimeNGConfig;
 
   beforeEach(async () => {
     const notificationsEmitterServiceMock = {
@@ -70,10 +67,8 @@ describe('AppComponent', () => {
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    notificationsEmitterService = TestBed.inject(NotificationsEmitterService);
     notificationsService = TestBed.inject(NotificationsService);
     translateService = TestBed.inject(TranslateService);
-    primeNgConfig = TestBed.inject(PrimeNGConfig);
   });
 
   it('should create the app', () => {

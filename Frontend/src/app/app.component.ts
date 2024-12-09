@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
 
   showNotification(message: string, type: string) {
     this.translate.get([message, type]).subscribe((data) => {
-      // @ts-ignore
+      // @ts-expect-error - NotificationsService has no types
       this._notifications[type.toLowerCase()](data[type], data[message]);
     });
   }

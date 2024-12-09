@@ -27,8 +27,6 @@ describe('ReadingsComponent', () => {
   let fixture: ComponentFixture<ReadingsComponent>;
   let readingsService: jasmine.SpyObj<ReadingsService>;
   let errorService: jasmine.SpyObj<ErrorService>;
-  let notifications: jasmine.SpyObj<NotificationsEmitterService>;
-  let confirmService: jasmine.SpyObj<ConfirmationService>;
   let translate: jasmine.SpyObj<TranslateService>;
   let tableHelper: jasmine.SpyObj<TableHelperService>;
 
@@ -96,8 +94,6 @@ describe('ReadingsComponent', () => {
 
     readingsService = TestBed.inject(ReadingsService) as jasmine.SpyObj<ReadingsService>;
     errorService = TestBed.inject(ErrorService) as jasmine.SpyObj<ErrorService>;
-    notifications = TestBed.inject(NotificationsEmitterService) as jasmine.SpyObj<NotificationsEmitterService>;
-    confirmService = TestBed.inject(ConfirmationService) as jasmine.SpyObj<ConfirmationService>;
     translate = TestBed.inject(TranslateService) as jasmine.SpyObj<TranslateService>;
     tableHelper = TestBed.inject(TableHelperService) as jasmine.SpyObj<TableHelperService>;
 

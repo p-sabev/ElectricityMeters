@@ -181,7 +181,7 @@ export class PrintReceiptComponent implements OnInit {
         '.font-weight-bold {\n' +
         '  font-weight: bold;\n' +
         '}</style>';
-      // @ts-ignore
+      // @ts-expect-error - Todo: Fix this
       const contents = styles + document.getElementById('print-section').innerHTML;
 
       document.body.innerHTML = contents;

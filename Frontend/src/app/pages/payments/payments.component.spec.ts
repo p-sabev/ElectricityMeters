@@ -16,9 +16,7 @@ describe('PaymentsComponent', () => {
   let paymentsService: PaymentsService;
   let errorService: ErrorService;
   let confirmService: ConfirmationService;
-  let translate: TranslateService;
   let notifications: NotificationsEmitterService;
-  let tableHelper: TableHelperService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -53,9 +51,7 @@ describe('PaymentsComponent', () => {
     paymentsService = TestBed.inject(PaymentsService);
     errorService = TestBed.inject(ErrorService);
     confirmService = TestBed.inject(ConfirmationService);
-    translate = TestBed.inject(TranslateService);
     notifications = TestBed.inject(NotificationsEmitterService);
-    tableHelper = TestBed.inject(TableHelperService);
   });
 
   it('should create the component', () => {

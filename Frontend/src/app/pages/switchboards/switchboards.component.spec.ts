@@ -15,7 +15,6 @@ describe('SwitchboardsComponent', () => {
   let fixture: ComponentFixture<SwitchboardsComponent>;
   let switchboardsService: jasmine.SpyObj<SwitchboardsService>;
   let errorService: jasmine.SpyObj<ErrorService>;
-  let confirmService: jasmine.SpyObj<ConfirmationService>;
   let notificationsService: jasmine.SpyObj<NotificationsEmitterService>;
   let tableHelper: jasmine.SpyObj<TableHelperService>;
 
@@ -50,7 +49,6 @@ describe('SwitchboardsComponent', () => {
     component = fixture.componentInstance;
     switchboardsService = TestBed.inject(SwitchboardsService) as jasmine.SpyObj<SwitchboardsService>;
     errorService = TestBed.inject(ErrorService) as jasmine.SpyObj<ErrorService>;
-    confirmService = TestBed.inject(ConfirmationService) as jasmine.SpyObj<ConfirmationService>;
     notificationsService = TestBed.inject(NotificationsEmitterService) as jasmine.SpyObj<NotificationsEmitterService>;
     tableHelper = TestBed.inject(TableHelperService) as jasmine.SpyObj<TableHelperService>;
   });

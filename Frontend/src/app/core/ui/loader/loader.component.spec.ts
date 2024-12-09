@@ -10,8 +10,6 @@ describe('LoaderComponent', () => {
   let component: LoaderComponent;
   let fixture: ComponentFixture<LoaderComponent>;
   let loaderService: LoaderService;
-  let authService: AuthService;
-  let cdRef: ChangeDetectorRef;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,8 +27,6 @@ describe('LoaderComponent', () => {
     fixture = TestBed.createComponent(LoaderComponent);
     component = fixture.componentInstance;
     loaderService = TestBed.inject(LoaderService);
-    authService = TestBed.inject(AuthService);
-    cdRef = TestBed.inject(ChangeDetectorRef);
   });
 
   it('should create the component', () => {
