@@ -40,7 +40,7 @@ export class PaymentReportComponent {
   dateFrom: Date = moment().startOf('month').toDate();
   dateTo: Date = moment().endOf('month').toDate();
 
-  paymentReportData: PaymentsReportResponse | null = null;
+  paymentReportData: PaymentsReportResponse | undefined;
 
   fetchPaymentReport() {
     const body: SearchPaymentsReport = {

@@ -86,65 +86,6 @@ export class ErrorService {
     }
   }
 
-  processErrorLicense(err: any) {
-    const msgError = err.error;
-    if (msgError !== null) {
-      const { key } = msgError;
-      const msg = msgError.message;
-      switch (key && msg) {
-        case 'License' && 'LicenseDateExpired': {
-          this.notification.Error.emit('LicenseDateError');
-          break;
-        }
-        case 'License' && 'SiteLicenseReached': {
-          this.notification.Error.emit('SiteLicenseReachedError');
-          break;
-        }
-        case 'License' && 'Wrong': {
-          this.notification.Error.emit('LicenseError');
-          break;
-        }
-        default: {
-          this.notification.Error.emit('LicenseError');
-          break;
-        }
-      }
-    }
-  }
-  processErrorSite(err: any) {
-    const msgError = err.error;
-    if (msgError !== null) {
-      const { key } = msgError;
-      const msg = msgError.message;
-      switch (key && msg) {
-        case 'Code' && 'Dublicate': {
-          this.notification.Error.emit('CodeDuplicate');
-          break;
-        }
-        case 'Name' && 'NotUnique': {
-          this.notification.Error.emit('NameNotUnique');
-          break;
-        }
-        case 'License' && 'LicenseDateExpired': {
-          this.notification.Error.emit('LicenseDateError');
-          break;
-        }
-        case 'License' && 'SiteLicenseReached': {
-          this.notification.Error.emit('SiteLicenseReachedError');
-          break;
-        }
-        case 'License' && 'Wrong': {
-          this.notification.Error.emit('LicenseError');
-          break;
-        }
-        default: {
-          this.notification.Error.emit('Unhandled error in error service');
-          break;
-        }
-      }
-    }
-  }
-
   removeFlagWithoutLogout() {
     setTimeout(() => {
       localStorage.removeItem('withoutLogout');
