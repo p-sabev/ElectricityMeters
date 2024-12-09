@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReceiptComponent } from './receipt.component';
 import { Reading } from '../../../core/models/readings.model';
 import { Fee } from '../../../core/models/payment.model';
-import { TwoAfterDotPipe } from '../../../shared/pipes/two-after-dot/two-after-dot.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('ReceiptComponent', () => {

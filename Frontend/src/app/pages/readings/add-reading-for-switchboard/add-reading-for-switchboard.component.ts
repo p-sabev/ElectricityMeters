@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Subscriber} from "../../../core/models/subscribers.model";
-import {InsertMultipleReadings, Reading} from "../../../core/models/readings.model";
+import {InsertMultipleReadings} from "../../../core/models/readings.model";
 import {ReadingsService} from "../readings.service";
 import {NotificationsEmitterService} from "../../../core/services/notifications.service";
 import {ErrorService} from "../../../core/services/error.service";

@@ -4,7 +4,7 @@ import { PaymentsService } from '../payments.service';
 import { ErrorService } from '../../../core/services/error.service';
 import { of, throwError } from 'rxjs';
 import {PaymentsReportResponse} from "../../../core/models/payment.model";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {TranslateModule} from "@ngx-translate/core";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('PaymentReportComponent', () => {
