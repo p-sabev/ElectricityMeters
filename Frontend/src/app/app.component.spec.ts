@@ -6,10 +6,11 @@ import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifi
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { of } from 'rxjs';
 import { LoaderComponent } from './core/ui/loader/loader.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { HeaderComponent } from './core/ui/header/header.component';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -45,25 +46,24 @@ describe('AppComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      imports: [
-        LoaderComponent,
+    declarations: [AppComponent],
+    imports: [LoaderComponent,
         HeaderComponent,
-        HttpClientTestingModule,
         RouterOutlet,
         SimpleNotificationsModule.forRoot(),
         ConfirmDialogModule,
-        TranslateModule.forRoot(),
-      ],
-      providers: [
+        TranslateModule.forRoot()],
+    providers: [
         { provide: NotificationsEmitterService, useValue: notificationsEmitterServiceMock },
         { provide: NotificationsService, useValue: notificationsServiceMock },
         { provide: TranslateService, useValue: translateServiceMock },
         { provide: PrimeNGConfig, useValue: primeNgConfigMock },
         { provide: ActivatedRoute, useValue: { snapshot: { params: {} } } },
         { provide: ConfirmationService, useClass: ConfirmationService },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;

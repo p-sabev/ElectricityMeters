@@ -3,10 +3,11 @@ import { PendingPaymentsComponent } from './pending-payments.component';
 import { ReadingsService } from '../readings.service';
 import { ErrorService } from '../../../core/services/error.service';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of, throwError } from 'rxjs';
 import { PendingPaymentsReportResponse } from '../../../core/models/readings.model';
 import { EventEmitter } from '@angular/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PendingPaymentsComponent', () => {
   let component: PendingPaymentsComponent;
@@ -48,13 +49,15 @@ describe('PendingPaymentsComponent', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [PendingPaymentsComponent, HttpClientTestingModule],
-      providers: [
+    imports: [PendingPaymentsComponent],
+    providers: [
         { provide: ReadingsService, useValue: readingsServiceMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: TranslateService, useValue: translateMock },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(PendingPaymentsComponent);
     component = fixture.componentInstance;

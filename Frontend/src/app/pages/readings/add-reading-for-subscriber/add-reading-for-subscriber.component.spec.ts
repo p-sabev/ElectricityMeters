@@ -2,13 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddReadingForSubscriberComponent } from './add-reading-for-subscriber.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NotificationsEmitterService } from '../../../core/services/notifications.service';
 import { ErrorService } from '../../../core/services/error.service';
 import { ReadingsService } from '../readings.service';
 import { EventEmitter } from '@angular/core';
 import { Subscriber } from '../../../core/models/subscribers.model';
 import { Reading } from '../../../core/models/readings.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AddReadingForSubscriberComponent', () => {
   let component: AddReadingForSubscriberComponent;
@@ -50,13 +51,15 @@ describe('AddReadingForSubscriberComponent', () => {
     const errorServiceMock = jasmine.createSpyObj('ErrorService', ['processError']);
 
     TestBed.configureTestingModule({
-      imports: [AddReadingForSubscriberComponent, ReactiveFormsModule, HttpClientTestingModule],
-      providers: [
+    imports: [AddReadingForSubscriberComponent, ReactiveFormsModule],
+    providers: [
         { provide: ReadingsService, useValue: readingsServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         { provide: ErrorService, useValue: errorServiceMock },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AddReadingForSubscriberComponent);
     component = fixture.componentInstance;

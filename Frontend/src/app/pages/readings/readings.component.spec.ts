@@ -10,8 +10,9 @@ import { of, throwError } from 'rxjs';
 import { Reading } from '../../core/models/readings.model';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faPrint, faTrash, faTimes, faCheckCircle, faSearch, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Directive, Input } from '@angular/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // Mock TranslateDirective
 @Directive({
@@ -74,17 +75,19 @@ describe('ReadingsComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      imports: [ReadingsComponent, HttpClientTestingModule, TranslateModule.forRoot()],
-      declarations: [MockTranslateDirective],
-      providers: [
+    declarations: [MockTranslateDirective],
+    imports: [ReadingsComponent, TranslateModule.forRoot()],
+    providers: [
         { provide: ReadingsService, useValue: readingsServiceMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         { provide: ConfirmationService, useValue: confirmServiceMock },
         { provide: TranslateService, useValue: translateMock },
         { provide: TableHelperService, useValue: tableHelperMock },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     const library = TestBed.inject(FaIconLibrary);
     library.addIcons(faPrint, faTrash, faTimes, faCheckCircle, faSearch, faFileInvoice);

@@ -10,7 +10,8 @@ import { PaymentFee, Reading } from '../../../core/models/readings.model';
 import { EventEmitter } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faMoneyBill, faPlus, faPrint, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PrintReceiptComponent', () => {
   let component: PrintReceiptComponent;
@@ -62,15 +63,17 @@ describe('PrintReceiptComponent', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [PrintReceiptComponent, HttpClientTestingModule],
-      providers: [
+    imports: [PrintReceiptComponent],
+    providers: [
         { provide: PaymentsService, useValue: paymentsServiceMock },
         { provide: SettingsService, useValue: settingsServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: TranslateService, useValue: translateMock },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     const library = TestBed.inject(FaIconLibrary);
     library.addIcons(faPrint, faPlus, faTrash, faMoneyBill);

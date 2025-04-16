@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddReadingForSwitchboardComponent } from './add-reading-for-switchboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of, throwError } from 'rxjs';
 import { NotificationsEmitterService } from '../../../core/services/notifications.service';
 import { ErrorService } from '../../../core/services/error.service';
@@ -9,6 +9,7 @@ import { ReadingsService } from '../readings.service';
 import { EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscriber } from '../../../core/models/subscribers.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AddReadingForSwitchboardComponent', () => {
   let component: AddReadingForSwitchboardComponent;
@@ -51,14 +52,16 @@ describe('AddReadingForSwitchboardComponent', () => {
     const translateServiceMock = jasmine.createSpyObj('TranslateService', ['instant']);
 
     TestBed.configureTestingModule({
-      imports: [AddReadingForSwitchboardComponent, ReactiveFormsModule, HttpClientTestingModule],
-      providers: [
+    imports: [AddReadingForSwitchboardComponent, ReactiveFormsModule],
+    providers: [
         { provide: ReadingsService, useValue: readingsServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: TranslateService, useValue: translateServiceMock },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AddReadingForSwitchboardComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { EditUserComponent } from './edit-user.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UsersService } from '../users.service';
 import { NotificationsEmitterService } from '../../../core/services/notifications.service';
@@ -8,6 +8,7 @@ import { ErrorService } from '../../../core/services/error.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { Role, User } from '../../../core/models/users.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('EditUserComponent', () => {
   let component: EditUserComponent;
@@ -40,14 +41,16 @@ describe('EditUserComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']);
 
     await TestBed.configureTestingModule({
-      imports: [EditUserComponent, ReactiveFormsModule, HttpClientTestingModule, TranslateModule.forRoot()],
-      declarations: [],
-      providers: [
+    declarations: [],
+    imports: [EditUserComponent, ReactiveFormsModule, TranslateModule.forRoot()],
+    providers: [
         { provide: UsersService, useValue: usersSpy },
         { provide: NotificationsEmitterService, useValue: notificationsSpy },
         { provide: ErrorService, useValue: errorSpy },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(EditUserComponent);
     component = fixture.componentInstance;

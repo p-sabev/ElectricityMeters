@@ -7,10 +7,11 @@ import { of, throwError } from 'rxjs';
 import { DefaultFee } from '../../core/models/settings.model';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { EventEmitter } from '@angular/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -35,19 +36,18 @@ describe('SettingsComponent', () => {
     settingsServiceMock.updateDefaultFees.and.returnValue(of(null));
 
     await TestBed.configureTestingModule({
-      imports: [
-        SettingsComponent,
-        HttpClientTestingModule,
+    imports: [SettingsComponent,
         ReactiveFormsModule,
         FormsModule,
-        TranslateModule.forRoot(),
-      ],
-      providers: [
+        TranslateModule.forRoot()],
+    providers: [
         { provide: SettingsService, useValue: settingsServiceMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     const library = TestBed.inject(FaIconLibrary);
     library.addIcons(faTrash, faPlus);

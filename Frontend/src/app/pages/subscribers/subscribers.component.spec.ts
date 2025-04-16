@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { SubscribersComponent } from './subscribers.component';
 import { SubscribersService } from './subscribers.service';
 import { SwitchboardsService } from '../switchboards/switchboards.service';
@@ -9,6 +9,7 @@ import { ConfirmationService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { TableHelperService } from '../../core/helpers/table-helper.service';
 import { of, throwError } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SubscribersComponent', () => {
   let component: SubscribersComponent;
@@ -37,9 +38,9 @@ describe('SubscribersComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']); // Mock EventEmitter
 
     await TestBed.configureTestingModule({
-      imports: [SubscribersComponent, HttpClientTestingModule],
-      declarations: [],
-      providers: [
+    declarations: [],
+    imports: [SubscribersComponent],
+    providers: [
         { provide: SubscribersService, useValue: subscribersSpy },
         { provide: SwitchboardsService, useValue: switchboardsSpy },
         { provide: NotificationsEmitterService, useValue: notificationsSpy },
@@ -47,8 +48,10 @@ describe('SubscribersComponent', () => {
         { provide: ConfirmationService, useValue: confirmSpy },
         { provide: TranslateService, useValue: translateSpy },
         { provide: TableHelperService, useValue: tableHelperSpy },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(SubscribersComponent);
     component = fixture.componentInstance;

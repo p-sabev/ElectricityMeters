@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { SwitchboardsComponent } from './switchboards.component';
 import { SwitchboardsService } from './switchboards.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,6 +9,7 @@ import { NotificationsEmitterService } from '../../core/services/notifications.s
 import { TableHelperService } from '../../core/helpers/table-helper.service';
 import { of, throwError } from 'rxjs';
 import { Switchboard } from '../../core/models/switchboards.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SwitchboardsComponent', () => {
   let component: SwitchboardsComponent;
@@ -34,16 +35,18 @@ describe('SwitchboardsComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']);
 
     await TestBed.configureTestingModule({
-      imports: [SwitchboardsComponent, HttpClientTestingModule, TranslateModule.forRoot()],
-      declarations: [],
-      providers: [
+    declarations: [],
+    imports: [SwitchboardsComponent, TranslateModule.forRoot()],
+    providers: [
         { provide: SwitchboardsService, useValue: switchboardsSpy },
         { provide: ErrorService, useValue: errorSpy },
         { provide: ConfirmationService, useValue: confirmSpy },
         { provide: NotificationsEmitterService, useValue: notificationsSpy },
         { provide: TableHelperService, useValue: tableHelperSpy },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(SwitchboardsComponent);
     component = fixture.componentInstance;

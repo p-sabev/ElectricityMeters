@@ -8,9 +8,10 @@ import { TableHelperService } from '../../core/helpers/table-helper.service';
 import { TranslateService } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { Price } from '../../core/models/prices.model';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PricesComponent', () => {
   let component: PricesComponent;
@@ -42,16 +43,18 @@ describe('PricesComponent', () => {
     const translateMock = jasmine.createSpyObj('TranslateService', ['get']);
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ConfirmDialogModule, TableModule, PricesComponent],
-      providers: [
+    imports: [ConfirmDialogModule, TableModule, PricesComponent],
+    providers: [
         { provide: PricesService, useValue: pricesServiceMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: ConfirmationService, useValue: confirmServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         { provide: TableHelperService, useValue: tableHelperMock },
         { provide: TranslateService, useValue: translateMock },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(PricesComponent);
     component = fixture.componentInstance;

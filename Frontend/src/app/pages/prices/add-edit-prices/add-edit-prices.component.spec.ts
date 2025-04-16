@@ -6,8 +6,9 @@ import { ErrorService } from '../../../core/services/error.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import { Price } from '../../../core/models/prices.model';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { EventEmitter } from '@angular/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AddEditPricesComponent', () => {
   let component: AddEditPricesComponent;
@@ -33,13 +34,15 @@ describe('AddEditPricesComponent', () => {
     const errorServiceMock = jasmine.createSpyObj('ErrorService', ['processError']);
 
     TestBed.configureTestingModule({
-      imports: [AddEditPricesComponent, ReactiveFormsModule, HttpClientTestingModule],
-      providers: [
+    imports: [AddEditPricesComponent, ReactiveFormsModule],
+    providers: [
         { provide: PricesService, useValue: pricesServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         { provide: ErrorService, useValue: errorServiceMock },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AddEditPricesComponent);
     component = fixture.componentInstance;

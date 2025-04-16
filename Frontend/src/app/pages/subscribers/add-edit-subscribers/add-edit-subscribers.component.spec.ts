@@ -1,12 +1,13 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AddEditSubscribersComponent } from './add-edit-subscribers.component';
 import { SubscribersService } from '../subscribers.service';
 import { SwitchboardsService } from '../../switchboards/switchboards.service';
 import { NotificationsEmitterService } from '../../../core/services/notifications.service';
 import { ErrorService } from '../../../core/services/error.service';
 import { of, throwError } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AddEditSubscribersComponent', () => {
   let component: AddEditSubscribersComponent;
@@ -25,14 +26,16 @@ describe('AddEditSubscribersComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']); // Mock EventEmitter
 
     await TestBed.configureTestingModule({
-      imports: [AddEditSubscribersComponent, ReactiveFormsModule, HttpClientTestingModule],
-      providers: [
+    imports: [AddEditSubscribersComponent, ReactiveFormsModule],
+    providers: [
         { provide: SubscribersService, useValue: subscribersSpy },
         { provide: SwitchboardsService, useValue: switchboardsSpy },
         { provide: NotificationsEmitterService, useValue: notificationsSpy },
         { provide: ErrorService, useValue: errorSpy },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AddEditSubscribersComponent);
     component = fixture.componentInstance;

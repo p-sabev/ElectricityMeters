@@ -4,7 +4,8 @@ import { of, Subscription } from 'rxjs';
 import { LoaderComponent } from './loader.component';
 import { LoaderService } from '../../services/loader.service';
 import { AuthService } from '../../services/auth.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LoaderComponent', () => {
   let component: LoaderComponent;
@@ -13,16 +14,18 @@ describe('LoaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoaderComponent, HttpClientTestingModule],
-      providers: [
+    imports: [LoaderComponent],
+    providers: [
         { provide: LoaderService, useValue: { loaderState: of({ show: true }) } },
         {
-          provide: AuthService,
-          useValue: { isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true) },
+            provide: AuthService,
+            useValue: { isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true) },
         },
         { provide: ChangeDetectorRef, useValue: { detectChanges: jasmine.createSpy('detectChanges') } },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(LoaderComponent);
     component = fixture.componentInstance;

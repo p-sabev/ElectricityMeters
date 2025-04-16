@@ -5,7 +5,8 @@ import { ErrorService } from '../../../core/services/error.service';
 import { of, throwError } from 'rxjs';
 import { PaymentsReportResponse } from '../../../core/models/payment.model';
 import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PaymentReportComponent', () => {
   let component: PaymentReportComponent;
@@ -18,12 +19,14 @@ describe('PaymentReportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaymentReportComponent, HttpClientTestingModule, TranslateModule.forRoot()],
-      providers: [
+    imports: [PaymentReportComponent, TranslateModule.forRoot()],
+    providers: [
         { provide: PaymentsService, useValue: paymentServiceMock },
         { provide: ErrorService, useValue: { processError: jasmine.createSpy('processError') } },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(PaymentReportComponent);
     component = fixture.componentInstance;

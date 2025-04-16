@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { UsersComponent } from './users.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
 import { NotificationsEmitterService } from '../../core/services/notifications.service';
@@ -9,6 +9,7 @@ import { UsersService } from './users.service';
 import { TableHelperService } from '../../core/helpers/table-helper.service';
 import { of, throwError } from 'rxjs';
 import { User } from '../../core/models/users.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -51,16 +52,18 @@ describe('UsersComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']);
 
     await TestBed.configureTestingModule({
-      imports: [UsersComponent, HttpClientTestingModule, TranslateModule.forRoot()],
-      declarations: [],
-      providers: [
+    declarations: [],
+    imports: [UsersComponent, TranslateModule.forRoot()],
+    providers: [
         { provide: UsersService, useValue: usersSpy },
         { provide: ErrorService, useValue: errorSpy },
         { provide: ConfirmationService, useValue: confirmSpy },
         { provide: NotificationsEmitterService, useValue: notificationsSpy },
         { provide: TableHelperService, useValue: tableHelperSpy },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;

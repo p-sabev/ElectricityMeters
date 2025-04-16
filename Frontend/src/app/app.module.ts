@@ -9,7 +9,7 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
@@ -26,55 +26,49 @@ import { TokenInterceptor } from './core/interceptors/token/token-interceptor.in
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthGuard } from './core/guards/auth/auth.guard';
 
-@NgModule({
-  declarations: [AppComponent, LoginComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
-    SimpleNotificationsModule.forRoot(),
-    FormsModule,
-    AppRoutingModule,
-    SharedModule,
-    FontAwesomeModule,
-    HttpClientModule,
-    TabViewModule,
-    ButtonModule,
-    TreeModule,
-    ConfirmDialogModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000',
-    }),
-    LoaderComponent,
-    HeaderComponent,
-  ],
-  providers: [
-    provideClientHydration(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoaderInterceptorService,
-      multi: true,
-    },
-    ConfirmationService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-    },
-    AuthGuard,
-  ],
-  exports: [],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [AppComponent, LoginComponent],
+    exports: [],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
+            },
+        }),
+        SimpleNotificationsModule.forRoot(),
+        FormsModule,
+        AppRoutingModule,
+        SharedModule,
+        FontAwesomeModule,
+        TabViewModule,
+        ButtonModule,
+        TreeModule,
+        ConfirmDialogModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000',
+        }),
+        LoaderComponent,
+        HeaderComponent], providers: [
+        provideClientHydration(),
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoaderInterceptorService,
+            multi: true,
+        },
+        ConfirmationService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true,
+        },
+        AuthGuard,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {
   constructor(fasLibrary: FaIconLibrary) {
     fasLibrary.addIconPacks(fas, far);

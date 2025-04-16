@@ -7,8 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotificationsEmitterService } from '../../core/services/notifications.service';
 import { TableHelperService } from '../../core/helpers/table-helper.service';
 import { of, throwError } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Payment } from '../../core/models/payment.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PaymentsComponent', () => {
   let component: PaymentsComponent;
@@ -20,31 +21,33 @@ describe('PaymentsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaymentsComponent, HttpClientTestingModule],
-      providers: [
+    imports: [PaymentsComponent],
+    providers: [
         {
-          provide: PaymentsService,
-          useValue: {
-            searchPayments: jasmine.createSpy('searchPayments').and.returnValue(of({ data: [], totalRecords: 0 })),
-            deletePayment: jasmine.createSpy('deletePayment').and.returnValue(of({})),
-          },
+            provide: PaymentsService,
+            useValue: {
+                searchPayments: jasmine.createSpy('searchPayments').and.returnValue(of({ data: [], totalRecords: 0 })),
+                deletePayment: jasmine.createSpy('deletePayment').and.returnValue(of({})),
+            },
         },
         { provide: ErrorService, useValue: { processError: jasmine.createSpy('processError') } },
         { provide: ConfirmationService, useValue: { confirm: jasmine.createSpy('confirm') } },
         { provide: TranslateService, useValue: { get: jasmine.createSpy('get').and.returnValue(of({})) } },
         { provide: NotificationsEmitterService, useValue: { Success: { emit: jasmine.createSpy('emit') } } },
         {
-          provide: TableHelperService,
-          useValue: {
-            isNoResultsOrNoRecords: jasmine
-              .createSpy('isNoResultsOrNoRecords')
-              .and.returnValue({ noRecords: false, noResults: false }),
-            getPagingSettings: jasmine.createSpy('getPagingSettings').and.returnValue({}),
-            getSortingSettings: jasmine.createSpy('getSortingSettings').and.returnValue({}),
-          },
+            provide: TableHelperService,
+            useValue: {
+                isNoResultsOrNoRecords: jasmine
+                    .createSpy('isNoResultsOrNoRecords')
+                    .and.returnValue({ noRecords: false, noResults: false }),
+                getPagingSettings: jasmine.createSpy('getPagingSettings').and.returnValue({}),
+                getSortingSettings: jasmine.createSpy('getSortingSettings').and.returnValue({}),
+            },
         },
-      ],
-    }).compileComponents();
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(PaymentsComponent);
     component = fixture.componentInstance;
