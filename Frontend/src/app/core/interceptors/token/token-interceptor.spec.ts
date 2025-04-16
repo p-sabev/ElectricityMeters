@@ -1,25 +1,23 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TokenInterceptor } from './token-interceptor.interceptor';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { tokenInterceptor } from './token-interceptor.interceptor';
 
-describe('TokenInterceptor', () => {
+describe('tokenInterceptor (functional)', () => {
   let httpMock: HttpTestingController;
   let authService: AuthService;
   let httpClient: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
-        TokenInterceptor,
+      providers: [
         AuthService,
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-    ]
-});
+        provideHttpClient(withInterceptors([tokenInterceptor])),
+        provideHttpClientTesting()
+      ]
+    });
 
     httpMock = TestBed.inject(HttpTestingController);
     authService = TestBed.inject(AuthService);
@@ -45,6 +43,7 @@ describe('TokenInterceptor', () => {
 
   it('should not add Authorization header if token is not present', () => {
     (authService.getToken as jasmine.Spy).and.returnValue(null);
+
     httpClient.get('/test').subscribe();
 
     const req = httpMock.expectOne('/test');

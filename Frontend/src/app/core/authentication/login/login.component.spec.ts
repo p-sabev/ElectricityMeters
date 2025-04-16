@@ -7,7 +7,7 @@ import { NotificationsEmitterService } from '../../services/notifications.servic
 import { LoginComponent } from './login.component';
 import { FormsModule } from '@angular/forms';
 
-describe('LoginComponent', () => {
+describe('LoginComponent (standalone)', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authServiceMock: any;
@@ -30,8 +30,7 @@ describe('LoginComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [FormsModule],
+      imports: [LoginComponent, FormsModule], // ✅ LoginComponent is standalone
       providers: [
         { provide: AuthService, useValue: authServiceMock },
         { provide: StorageService, useValue: storageServiceMock },
@@ -61,7 +60,7 @@ describe('LoginComponent', () => {
   });
 
   it('should emit error notification on login failure', () => {
-    authServiceMock.login.and.returnValue(throwError('error'));
+    authServiceMock.login.and.returnValue(throwError(() => 'error'));
     component.logIn();
     expect(notificationsMock.Error.emit).toHaveBeenCalledWith('IncorrectUserNameOrPassword');
   });

@@ -2,7 +2,7 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthGuard {
   roles: string[] = [];
 

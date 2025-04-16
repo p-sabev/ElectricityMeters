@@ -1,13 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsEmitterService } from './core/services/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { NotificationAnimationType, NotificationsService, Options } from 'angular2-notifications';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {
+  NotificationAnimationType,
+  NotificationsService, OPTIONS,
+  Options,
+  SimpleNotificationsModule
+} from 'angular2-notifications';
 import { PrimeNGConfig } from 'primeng/api';
+import {LoaderComponent} from "./core/ui/loader/loader.component";
+import {HeaderComponent} from "./core/ui/header/header.component";
+import {RouterOutlet} from "@angular/router";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  imports: [
+    LoaderComponent,
+    HeaderComponent,
+    RouterOutlet,
+    SimpleNotificationsModule,
+    ConfirmDialogModule,
+    TranslateModule
+  ]
 })
 export class AppComponent implements OnInit {
   constructor(

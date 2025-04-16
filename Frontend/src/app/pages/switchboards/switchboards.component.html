@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="row my-4">
+  <div class="row mb-4">
     <div class="col-12">
       <app-page-heading [title]="'Switchboards'"></app-page-heading>
     </div>
 
-    <div *appRoleAccess="'Administrator, Moderator'" class="col-12 mt-5">
+    <div *appRoleAccess="'Administrator, Moderator'" class="col-12 mt-2">
       <button class="btn btn-outline-success" (click)="initAddSwitchboard()">
         <fa-icon [icon]="['fas', 'plus']" [class]="'me-2'"></fa-icon>
         {{ 'AddSwitchboard' | translate }}

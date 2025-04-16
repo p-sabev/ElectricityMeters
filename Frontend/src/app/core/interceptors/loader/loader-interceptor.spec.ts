@@ -1,25 +1,25 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { LoaderInterceptorService } from './loader-interceptor.service';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { loaderInterceptor } from './loader-interceptor.interceptor';
 
-describe('LoaderInterceptorService', () => {
+describe('loaderInterceptor (functional)', () => {
   let httpMock: HttpTestingController;
   let loaderService: LoaderService;
   let httpClient: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
-        LoaderInterceptorService,
+      providers: [
         LoaderService,
-        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-    ]
-});
+        provideHttpClient(
+          withInterceptors([loaderInterceptor])
+        ),
+        provideHttpClientTesting()
+      ]
+    });
 
     httpMock = TestBed.inject(HttpTestingController);
     loaderService = TestBed.inject(LoaderService);
