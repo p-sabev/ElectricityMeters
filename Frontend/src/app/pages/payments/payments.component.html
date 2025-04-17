@@ -37,17 +37,17 @@
         scrollHeight="80vh">
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="id" translate>Id<p-sortIcon field="id" /></th>
+            <th style="min-width: 58px" pSortableColumn="id" translate>Id<p-sortIcon field="id" /></th>
             <th style="min-width: 160px" translate>Subscriber</th>
-            <th pSortableColumn="date" style="min-width: 120px" translate>Date<p-sortIcon field="date" /></th>
-            <th style="min-width: 120px" translate>ReadingInKvh</th>
-            <th style="min-width: 120px" translate>Difference</th>
-            <th style="min-width: 120px" translate>TariffInBgn</th>
-            <th style="min-width: 120px" translate>ForPaymentInBgn</th>
-            <th style="min-width: 120px" translate>Fees</th>
-            <th style="min-width: 120px" translate>PaidInBgn</th>
-            <th style="min-width: 80px" translate>Switchboard</th>
-            <th alignFrozen="right" pFrozenColumn></th>
+            <th pSortableColumn="date" style="min-width: 106px" translate>Date<p-sortIcon field="date" /></th>
+            <th style="min-width: 128px" translate>ReadingInKvh</th>
+            <th style="min-width: 100px" translate>Difference</th>
+            <th style="min-width: 97px" translate>TariffInBgn</th>
+            <th style="min-width: 128px" translate>ForPaymentInBgn</th>
+            <th style="min-width: 92px" translate>Fees</th>
+            <th style="min-width: 110px" translate>PaidInBgn</th>
+            <th style="min-width: 55px" translate>Switchboard</th>
+            <th style="min-width: 123px" alignFrozen="right" pFrozenColumn></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="colgroup">
@@ -111,7 +111,7 @@
               {{ 'BgnVaultSmall' | translate }}
             </td>
             <td>{{ payment.subscriber?.switchboard?.name }}</td>
-            <td class="py-1" alignFrozen="right" pFrozenColumn>
+            <td class="py-1 text-right" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
                 <a
                   class="nav-link text-success cursor-pointer btn-action"

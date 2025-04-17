@@ -44,7 +44,7 @@
             <th pSortableColumn="lastRecordDate" style="min-width: 120px" translate>
               LastRecord<p-sortIcon field="lastRecordDate" />
             </th>
-            <th alignFrozen="right" pFrozenColumn></th>
+            <th style="width: 165px; min-width: 165px;" alignFrozen="right" pFrozenColumn></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="colgroup">
@@ -134,7 +134,7 @@
               <span *ngIf="subscriber.lastRecordDate">{{ subscriber.lastRecordDate | date: 'dd.MM.yyyy' }}</span>
               <span *ngIf="!subscriber.lastRecordDate">-</span>
             </td>
-            <td class="py-1" alignFrozen="right" pFrozenColumn>
+            <td class="py-1 text-right" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator, Moderator, Basic'">
                 <a
                   class="nav-link text-primary cursor-pointer btn-action"

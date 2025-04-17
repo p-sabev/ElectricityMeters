@@ -34,7 +34,7 @@
         <ng-template pTemplate="header">
           <tr>
             <!--            <th pSortableColumn="id" translate>Number<p-sortIcon field="id" /></th>-->
-            <th pSortableColumn="priceInLv" style="min-width: 100px" translate>
+            <th pSortableColumn="priceInLv" style="min-width: 105px" translate>
               PriceInBGN<p-sortIcon field="priceInLv" />
             </th>
             <th pSortableColumn="dateFrom" style="min-width: 120px" translate>
@@ -42,7 +42,7 @@
             </th>
             <th pSortableColumn="dateTo" style="min-width: 120px" translate>DateTo<p-sortIcon field="dateTo" /></th>
             <th style="min-width: 120px" translate>Note</th>
-            <th *appRoleAccess="'Administrator'" alignFrozen="right" pFrozenColumn></th>
+            <th style="width: 90px; min-width: 90px;" *appRoleAccess="'Administrator'" alignFrozen="right" pFrozenColumn></th>
           </tr>
 
           <tr *ngIf="noResults">
@@ -63,7 +63,7 @@
               <span *ngIf="!price.dateTo">-</span>
             </td>
             <td>{{ price.note }}</td>
-            <td *appRoleAccess="'Administrator'" class="py-1" alignFrozen="right" pFrozenColumn>
+            <td *appRoleAccess="'Administrator'" class="py-1 text-right" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator'">
                 <a class="nav-link text-warning cursor-pointer btn-action" (click)="openPriceForEdit(price)">
                   <fa-icon [icon]="['fas', 'edit']" [class]="'me-2'"></fa-icon>

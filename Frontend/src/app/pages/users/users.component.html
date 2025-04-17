@@ -58,7 +58,7 @@
             <td class="font-weight-bold">{{ user.userName }}</td>
             <td class="font-weight-bold">{{ user.email }}</td>
 
-            <td class="py-1" alignFrozen="right" pFrozenColumn>
+            <td class="py-1 text-right" alignFrozen="right" pFrozenColumn>
               <ng-container *appRoleAccess="'Administrator'">
                 <a class="nav-link text-danger cursor-pointer btn-action" (click)="askToDeleteUser(user)">
                   <fa-icon [icon]="['fas', 'trash']" [class]="'me-2'"></fa-icon>
