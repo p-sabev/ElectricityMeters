@@ -251,7 +251,9 @@ body .p-autocomplete.p-autocomplete-multiple .p-autocomplete-multiple-container 
   background: #0000008a;
 }
 .modal-body {
-  max-height: calc(100vh - 200px);
+  //max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 40px);
+  //max-height: 100vh;
 }
 .p-multiselect .p-multiselect-label {
   text-align: left;

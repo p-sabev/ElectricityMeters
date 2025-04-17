@@ -46,6 +46,8 @@ export class AddReadingForSubscriberComponent implements OnInit {
   lastReadingDate: Date | null = null;
   minReadingValue: number = 0;
 
+  theReadingIsSuspiciouslyBig: boolean = false;
+
   ngOnInit() {
     if (this.readingToEdit) {
       this.subscriber = this.readingToEdit.subscriber;
@@ -149,5 +151,19 @@ export class AddReadingForSubscriberComponent implements OnInit {
     body.dateFrom = moment(body.dateFrom).format('YYYY-MM-DD') + 'T00:00:00.000Z';
     body.dateTo = moment(body.dateTo).format('YYYY-MM-DD') + 'T00:00:00.000Z';
     return body;
+  }
+
+  checkIfSingleReadingIsTooBig() {
+    this.theReadingIsSuspiciouslyBig = (this.addEditReadingForm.get('value')?.value || 0) > (this.minReadingValue + 2000);
+  }
+
+  checkIfMultiPhaseReadingIsTooBig() {
+    const enteredSum =
+      (this.addEditReadingForm.get('firstPhaseValue')?.value || 0) +
+      (this.addEditReadingForm.get('secondPhaseValue')?.value || 0) +
+      (this.addEditReadingForm.get('thirdPhaseValue')?.value || 0);
+    console.log('enteredSum', enteredSum);
+    console.log('minReadingValue + 2000', this.minReadingValue + 2000);
+    this.theReadingIsSuspiciouslyBig = enteredSum > (this.minReadingValue + 2000);
   }
 }

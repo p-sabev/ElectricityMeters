@@ -91,19 +91,21 @@
                   scrollHeight="80vh">
                   <ng-template pTemplate="header">
                     <tr>
-                      <th translate>Id</th>
-                      <th style="min-width: 120px" translate>Date</th>
-                      <th style="min-width: 120px" translate>ReadingInKvh</th>
-                      <th style="min-width: 120px" translate>Difference</th>
-                      <th style="min-width: 100px" translate>TariffInBgn</th>
-                      <th style="min-width: 120px" translate>ForPaymentInBgn</th>
+                      <th style="min-width: 60px" translate>Id</th>
+                      <th style="min-width: 110px" translate>DateFrom</th>
+                      <th style="min-width: 110px" translate>DateTo</th>
+                      <th style="min-width: 95px" translate>ReadingInKvh</th>
+                      <th style="min-width: 95px" translate>Difference</th>
+                      <th style="min-width: 85px" translate>TariffInBgn</th>
+                      <th style="min-width: 110px" translate>ForPaymentInBgn</th>
                       <!--                      <th alignFrozen="right" pFrozenColumn></th>-->
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-reading>
                     <tr>
                       <td>{{ reading.id }}</td>
-                      <td>{{ reading.date | date: 'dd.MM.yyyy' }}</td>
+                      <td>{{ reading.dateFrom | date: 'dd.MM.yyyy' }}</td>
+                      <td>{{ reading.dateTo | date: 'dd.MM.yyyy' }}</td>
                       <td>{{ reading.value }} {{ 'kvh' | translate }}</td>
                       <td>{{ reading.difference }} {{ 'kvh' | translate }}</td>
                       <td>{{ reading.currentPrice | twoAfterDot }} {{ 'BgnVaultSmall' | translate }}</td>

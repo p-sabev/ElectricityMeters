@@ -82,7 +82,8 @@
                       id="firstPhaseValue"
                       formControlName="firstPhaseValue"
                       title="{{ 'FirstPhaseReadingInKvh' | translate }}*"
-                      placeholder="{{ 'FirstPhaseReadingInKvh' | translate }}*" />
+                      placeholder="{{ 'FirstPhaseReadingInKvh' | translate }}*"
+                      (keyup)="checkIfMultiPhaseReadingIsTooBig()" />
 
                     <app-form-errors
                       [withoutTooltip]="true"
@@ -98,7 +99,8 @@
                       id="secondPhaseValue"
                       formControlName="secondPhaseValue"
                       title="{{ 'SecondPhaseReadingInKvh' | translate }}*"
-                      placeholder="{{ 'SecondPhaseReadingInKvh' | translate }}*" />
+                      placeholder="{{ 'SecondPhaseReadingInKvh' | translate }}*"
+                      (keyup)="checkIfMultiPhaseReadingIsTooBig()" />
 
                     <app-form-errors
                       [withoutTooltip]="true"
@@ -115,7 +117,8 @@
                         id="thirdPhaseValue"
                         formControlName="thirdPhaseValue"
                         title="{{ 'ThirdPhaseReadingInKvh' | translate }}*"
-                        placeholder="{{ 'ThirdPhaseReadingInKvh' | translate }}*" />
+                        placeholder="{{ 'ThirdPhaseReadingInKvh' | translate }}*"
+                        (keyup)="checkIfMultiPhaseReadingIsTooBig()" />
 
                       <app-form-errors
                         [withoutTooltip]="true"
@@ -133,7 +136,8 @@
                   id="value"
                   formControlName="value"
                   title="{{ 'ReadingInKvh' | translate }}*"
-                  placeholder="{{ 'ReadingInKvh' | translate }}*" />
+                  placeholder="{{ 'ReadingInKvh' | translate }}*"
+                  (keyup)="checkIfSingleReadingIsTooBig()" />
 
                 <app-form-errors
                   [withoutTooltip]="true"
@@ -142,6 +146,15 @@
                   [max]="MAX_INT"></app-form-errors>
               }
             </div>
+
+            @if (theReadingIsSuspiciouslyBig) {
+              <div class="col-12">
+                <div class="alert alert-warning mt-2">
+                  {{ 'WarningTheReadingIsSuspiciouslyBig' | translate }}
+                </div>
+              </div>
+            }
+
           </div>
         </form>
       </div>

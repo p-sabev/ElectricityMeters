@@ -210,5 +210,6 @@
   "ThreePhaseText": "(3-фазен)",
   "SubscriberReadingValueIsLowerThanLastReading": "Стойността на показанието за абонат - '{{subscriberName}}' е по-ниска от последното показание",
   "NoReadingsToInsert": "Липсват коректни показания които да бъдат въведени",
-  "NameSmall": "име"
+  "NameSmall": "име",
+  "WarningTheReadingIsSuspiciouslyBig": "Моля проверете въведеното показание, разликата от предишното въведено е голяма."
 }

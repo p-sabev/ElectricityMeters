@@ -129,6 +129,12 @@
                           </div>
                         }
                       </div>
+
+                      @if (subscriber.lastReading && (((firstPhaseValues[i] || 0) + (secondPhaseValues[i] || 0) + (thirdPhaseValues[i] || 0)) > (subscriber.lastReading + 2000))) {
+                        <div class="alert alert-warning p-1 mt-1" style="font-size: 14px;">
+                          {{ 'WarningTheReadingIsSuspiciouslyBig' | translate }}
+                        </div>
+                      }
                     } @else {
                       <input
                         #readingField="ngModel"
@@ -158,6 +164,12 @@
                               : 0
                         "
                         [max]="MAX_INT"></app-form-errors>
+
+                      @if (subscriber.lastReading && (readingsValues[i] > (subscriber.lastReading + 2000))) {
+                        <div class="alert alert-warning p-1 mt-1" style="font-size: 14px;">
+                          {{ 'WarningTheReadingIsSuspiciouslyBig' | translate }}
+                        </div>
+                      }
                     }
                   </div>
                 </div>
