@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   collapseMenu = true;
+  pageTitle: string = '';
 
   ngOnInit() {
     this.subscribeToChangesInPage();
@@ -45,6 +46,12 @@ export class HeaderComponent implements OnInit {
       )
       .subscribe((event) => {
         this.titleDom.setTitle(event['title']);
+        if (event['title'] !== this.pageTitle) {
+          this.pageTitle = '';
+          setTimeout(() => {
+            this.pageTitle = event['title'];
+          }, 10);
+        }
       });
   }
 

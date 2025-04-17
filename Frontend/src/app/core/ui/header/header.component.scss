@@ -127,7 +127,16 @@
     #00000017 0 -3px 5px;
 }
 
+.page-title {
+  color: white;
+  font-size: 18px;
+}
+
 @media (min-width: 992px) {
+  .page-title {
+    display: none;
+  }
+
   .navbar-expand-custom {
     -ms-flex-flow: row nowrap;
     flex-flow: row nowrap;

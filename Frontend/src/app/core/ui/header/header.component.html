@@ -3,6 +3,12 @@
     <img src="../../../../assets/img/logo.png" alt="Ел-рекърд" style="height: 35px" />
   </a>
 
+  @if (pageTitle.length) {
+    <span class="page-title animate__animated animate__fadeInDownBig">
+      {{ pageTitle }}
+    </span>
+  }
+
   <button
     *ngIf="authService.isAuthenticated()"
     class="navbar-toggler"

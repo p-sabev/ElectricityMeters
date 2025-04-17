@@ -154,7 +154,7 @@ export class AddReadingForSubscriberComponent implements OnInit {
   }
 
   checkIfSingleReadingIsTooBig() {
-    this.theReadingIsSuspiciouslyBig = (this.addEditReadingForm.get('value')?.value || 0) > (this.minReadingValue + 2000);
+    this.theReadingIsSuspiciouslyBig = (this.addEditReadingForm.get('value')?.value || 0) > this.minReadingValue + 2000;
   }
 
   checkIfMultiPhaseReadingIsTooBig() {
@@ -164,6 +164,6 @@ export class AddReadingForSubscriberComponent implements OnInit {
       (this.addEditReadingForm.get('thirdPhaseValue')?.value || 0);
     console.log('enteredSum', enteredSum);
     console.log('minReadingValue + 2000', this.minReadingValue + 2000);
-    this.theReadingIsSuspiciouslyBig = enteredSum > (this.minReadingValue + 2000);
+    this.theReadingIsSuspiciouslyBig = enteredSum > this.minReadingValue + 2000;
   }
 }
