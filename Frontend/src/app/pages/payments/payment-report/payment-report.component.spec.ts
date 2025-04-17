@@ -19,14 +19,14 @@ describe('PaymentReportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [PaymentReportComponent, TranslateModule.forRoot()],
-    providers: [
+      imports: [PaymentReportComponent, TranslateModule.forRoot()],
+      providers: [
         { provide: PaymentsService, useValue: paymentServiceMock },
         { provide: ErrorService, useValue: { processError: jasmine.createSpy('processError') } },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PaymentReportComponent);
     component = fixture.componentInstance;

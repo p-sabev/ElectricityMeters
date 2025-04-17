@@ -36,18 +36,15 @@ describe('SettingsComponent', () => {
     settingsServiceMock.updateDefaultFees.and.returnValue(of(null));
 
     await TestBed.configureTestingModule({
-    imports: [SettingsComponent,
-        ReactiveFormsModule,
-        FormsModule,
-        TranslateModule.forRoot()],
-    providers: [
+      imports: [SettingsComponent, ReactiveFormsModule, FormsModule, TranslateModule.forRoot()],
+      providers: [
         { provide: SettingsService, useValue: settingsServiceMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     const library = TestBed.inject(FaIconLibrary);
     library.addIcons(faTrash, faPlus);

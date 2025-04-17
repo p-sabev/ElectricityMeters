@@ -1,9 +1,10 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": ["projects/**/*", ".angular/**/*"],
   "overrides": [
     {
       "files": ["*.ts"],
+      "plugins": ["@angular-eslint"],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",

@@ -52,9 +52,9 @@ describe('UsersComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']);
 
     await TestBed.configureTestingModule({
-    declarations: [],
-    imports: [UsersComponent, TranslateModule.forRoot()],
-    providers: [
+      declarations: [],
+      imports: [UsersComponent, TranslateModule.forRoot()],
+      providers: [
         { provide: UsersService, useValue: usersSpy },
         { provide: ErrorService, useValue: errorSpy },
         { provide: ConfirmationService, useValue: confirmSpy },
@@ -62,8 +62,8 @@ describe('UsersComponent', () => {
         { provide: TableHelperService, useValue: tableHelperSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;

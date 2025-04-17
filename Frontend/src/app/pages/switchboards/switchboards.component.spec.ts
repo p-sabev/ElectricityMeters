@@ -35,9 +35,9 @@ describe('SwitchboardsComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']);
 
     await TestBed.configureTestingModule({
-    declarations: [],
-    imports: [SwitchboardsComponent, TranslateModule.forRoot()],
-    providers: [
+      declarations: [],
+      imports: [SwitchboardsComponent, TranslateModule.forRoot()],
+      providers: [
         { provide: SwitchboardsService, useValue: switchboardsSpy },
         { provide: ErrorService, useValue: errorSpy },
         { provide: ConfirmationService, useValue: confirmSpy },
@@ -45,8 +45,8 @@ describe('SwitchboardsComponent', () => {
         { provide: TableHelperService, useValue: tableHelperSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SwitchboardsComponent);
     component = fixture.componentInstance;

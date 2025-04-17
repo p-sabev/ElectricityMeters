@@ -49,15 +49,15 @@ describe('PendingPaymentsComponent', () => {
     });
 
     TestBed.configureTestingModule({
-    imports: [PendingPaymentsComponent],
-    providers: [
+      imports: [PendingPaymentsComponent],
+      providers: [
         { provide: ReadingsService, useValue: readingsServiceMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: TranslateService, useValue: translateMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PendingPaymentsComponent);
     component = fixture.componentInstance;

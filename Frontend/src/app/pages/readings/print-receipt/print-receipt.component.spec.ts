@@ -63,8 +63,8 @@ describe('PrintReceiptComponent', () => {
     });
 
     TestBed.configureTestingModule({
-    imports: [PrintReceiptComponent],
-    providers: [
+      imports: [PrintReceiptComponent],
+      providers: [
         { provide: PaymentsService, useValue: paymentsServiceMock },
         { provide: SettingsService, useValue: settingsServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
@@ -72,8 +72,8 @@ describe('PrintReceiptComponent', () => {
         { provide: TranslateService, useValue: translateMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     const library = TestBed.inject(FaIconLibrary);
     library.addIcons(faPrint, faPlus, faTrash, faMoneyBill);

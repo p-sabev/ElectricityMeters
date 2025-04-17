@@ -4,19 +4,16 @@ import { AuthService } from '../../services/auth.service';
 import { LogInCredentials, UserSuccessfullLogInCredentials } from './login.model';
 import { StorageService } from '../../services/storage.service';
 import { NotificationsEmitterService } from '../../services/notifications.service';
-import {NgClass} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [StorageService],
-  imports: [
-    NgClass,
-    FormsModule
-  ],
-  standalone: true
+  imports: [NgClass, FormsModule],
+  standalone: true,
 })
 export class LoginComponent {
   constructor(

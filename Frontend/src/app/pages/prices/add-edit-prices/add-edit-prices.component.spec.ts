@@ -34,15 +34,15 @@ describe('AddEditPricesComponent', () => {
     const errorServiceMock = jasmine.createSpyObj('ErrorService', ['processError']);
 
     TestBed.configureTestingModule({
-    imports: [AddEditPricesComponent, ReactiveFormsModule],
-    providers: [
+      imports: [AddEditPricesComponent, ReactiveFormsModule],
+      providers: [
         { provide: PricesService, useValue: pricesServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         { provide: ErrorService, useValue: errorServiceMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddEditPricesComponent);
     component = fixture.componentInstance;

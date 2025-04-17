@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { tokenInterceptor } from './token-interceptor.interceptor';
 
@@ -12,11 +11,7 @@ describe('tokenInterceptor (functional)', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        AuthService,
-        provideHttpClient(withInterceptors([tokenInterceptor])),
-        provideHttpClientTesting()
-      ]
+      providers: [AuthService, provideHttpClient(withInterceptors([tokenInterceptor])), provideHttpClientTesting()],
     });
 
     httpMock = TestBed.inject(HttpTestingController);

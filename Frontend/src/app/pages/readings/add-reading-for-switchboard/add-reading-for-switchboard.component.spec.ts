@@ -52,16 +52,16 @@ describe('AddReadingForSwitchboardComponent', () => {
     const translateServiceMock = jasmine.createSpyObj('TranslateService', ['instant']);
 
     TestBed.configureTestingModule({
-    imports: [AddReadingForSwitchboardComponent, ReactiveFormsModule],
-    providers: [
+      imports: [AddReadingForSwitchboardComponent, ReactiveFormsModule],
+      providers: [
         { provide: ReadingsService, useValue: readingsServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: TranslateService, useValue: translateServiceMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddReadingForSwitchboardComponent);
     component = fixture.componentInstance;

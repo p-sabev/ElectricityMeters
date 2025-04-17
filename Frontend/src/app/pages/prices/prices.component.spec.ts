@@ -43,8 +43,8 @@ describe('PricesComponent', () => {
     const translateMock = jasmine.createSpyObj('TranslateService', ['get']);
 
     await TestBed.configureTestingModule({
-    imports: [ConfirmDialogModule, TableModule, PricesComponent],
-    providers: [
+      imports: [ConfirmDialogModule, TableModule, PricesComponent],
+      providers: [
         { provide: PricesService, useValue: pricesServiceMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: ConfirmationService, useValue: confirmServiceMock },
@@ -53,8 +53,8 @@ describe('PricesComponent', () => {
         { provide: TranslateService, useValue: translateMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PricesComponent);
     component = fixture.componentInstance;

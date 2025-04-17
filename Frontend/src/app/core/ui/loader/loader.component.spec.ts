@@ -14,18 +14,18 @@ describe('LoaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [LoaderComponent],
-    providers: [
+      imports: [LoaderComponent],
+      providers: [
         { provide: LoaderService, useValue: { loaderState: of({ show: true }) } },
         {
-            provide: AuthService,
-            useValue: { isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true) },
+          provide: AuthService,
+          useValue: { isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true) },
         },
         { provide: ChangeDetectorRef, useValue: { detectChanges: jasmine.createSpy('detectChanges') } },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoaderComponent);
     component = fixture.componentInstance;

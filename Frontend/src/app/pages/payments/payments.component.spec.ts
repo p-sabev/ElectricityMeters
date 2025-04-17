@@ -21,33 +21,33 @@ describe('PaymentsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [PaymentsComponent],
-    providers: [
+      imports: [PaymentsComponent],
+      providers: [
         {
-            provide: PaymentsService,
-            useValue: {
-                searchPayments: jasmine.createSpy('searchPayments').and.returnValue(of({ data: [], totalRecords: 0 })),
-                deletePayment: jasmine.createSpy('deletePayment').and.returnValue(of({})),
-            },
+          provide: PaymentsService,
+          useValue: {
+            searchPayments: jasmine.createSpy('searchPayments').and.returnValue(of({ data: [], totalRecords: 0 })),
+            deletePayment: jasmine.createSpy('deletePayment').and.returnValue(of({})),
+          },
         },
         { provide: ErrorService, useValue: { processError: jasmine.createSpy('processError') } },
         { provide: ConfirmationService, useValue: { confirm: jasmine.createSpy('confirm') } },
         { provide: TranslateService, useValue: { get: jasmine.createSpy('get').and.returnValue(of({})) } },
         { provide: NotificationsEmitterService, useValue: { Success: { emit: jasmine.createSpy('emit') } } },
         {
-            provide: TableHelperService,
-            useValue: {
-                isNoResultsOrNoRecords: jasmine
-                    .createSpy('isNoResultsOrNoRecords')
-                    .and.returnValue({ noRecords: false, noResults: false }),
-                getPagingSettings: jasmine.createSpy('getPagingSettings').and.returnValue({}),
-                getSortingSettings: jasmine.createSpy('getSortingSettings').and.returnValue({}),
-            },
+          provide: TableHelperService,
+          useValue: {
+            isNoResultsOrNoRecords: jasmine
+              .createSpy('isNoResultsOrNoRecords')
+              .and.returnValue({ noRecords: false, noResults: false }),
+            getPagingSettings: jasmine.createSpy('getPagingSettings').and.returnValue({}),
+            getSortingSettings: jasmine.createSpy('getSortingSettings').and.returnValue({}),
+          },
         },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PaymentsComponent);
     component = fixture.componentInstance;

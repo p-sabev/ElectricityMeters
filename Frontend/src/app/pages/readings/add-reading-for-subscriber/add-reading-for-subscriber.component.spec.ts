@@ -51,15 +51,15 @@ describe('AddReadingForSubscriberComponent', () => {
     const errorServiceMock = jasmine.createSpyObj('ErrorService', ['processError']);
 
     TestBed.configureTestingModule({
-    imports: [AddReadingForSubscriberComponent, ReactiveFormsModule],
-    providers: [
+      imports: [AddReadingForSubscriberComponent, ReactiveFormsModule],
+      providers: [
         { provide: ReadingsService, useValue: readingsServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
         { provide: ErrorService, useValue: errorServiceMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddReadingForSubscriberComponent);
     component = fixture.componentInstance;

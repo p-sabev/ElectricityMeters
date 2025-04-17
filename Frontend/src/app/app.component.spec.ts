@@ -7,7 +7,7 @@ import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { of } from 'rxjs';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 
 describe('AppComponent (standalone)', () => {
   let component: AppComponent;

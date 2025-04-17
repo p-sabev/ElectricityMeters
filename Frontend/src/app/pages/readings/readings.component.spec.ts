@@ -75,9 +75,9 @@ describe('ReadingsComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-    declarations: [MockTranslateDirective],
-    imports: [ReadingsComponent, TranslateModule.forRoot()],
-    providers: [
+      declarations: [MockTranslateDirective],
+      imports: [ReadingsComponent, TranslateModule.forRoot()],
+      providers: [
         { provide: ReadingsService, useValue: readingsServiceMock },
         { provide: ErrorService, useValue: errorServiceMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
@@ -86,8 +86,8 @@ describe('ReadingsComponent', () => {
         { provide: TableHelperService, useValue: tableHelperMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     const library = TestBed.inject(FaIconLibrary);
     library.addIcons(faPrint, faTrash, faTimes, faCheckCircle, faSearch, faFileInvoice);

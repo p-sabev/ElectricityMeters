@@ -41,16 +41,16 @@ describe('EditUserComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']);
 
     await TestBed.configureTestingModule({
-    declarations: [],
-    imports: [EditUserComponent, ReactiveFormsModule, TranslateModule.forRoot()],
-    providers: [
+      declarations: [],
+      imports: [EditUserComponent, ReactiveFormsModule, TranslateModule.forRoot()],
+      providers: [
         { provide: UsersService, useValue: usersSpy },
         { provide: NotificationsEmitterService, useValue: notificationsSpy },
         { provide: ErrorService, useValue: errorSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EditUserComponent);
     component = fixture.componentInstance;

@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsEmitterService } from './core/services/notifications.service';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   NotificationAnimationType,
-  NotificationsService, OPTIONS,
+  NotificationsService,
   Options,
-  SimpleNotificationsModule
+  SimpleNotificationsModule,
 } from 'angular2-notifications';
 import { PrimeNGConfig } from 'primeng/api';
-import {LoaderComponent} from "./core/ui/loader/loader.component";
-import {HeaderComponent} from "./core/ui/header/header.component";
-import {RouterOutlet} from "@angular/router";
-import {ConfirmDialogModule} from "primeng/confirmdialog";
+import { LoaderComponent } from './core/ui/loader/loader.component';
+import { HeaderComponent } from './core/ui/header/header.component';
+import { RouterOutlet } from '@angular/router';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-root',
@@ -24,8 +24,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     RouterOutlet,
     SimpleNotificationsModule,
     ConfirmDialogModule,
-    TranslateModule
-  ]
+    TranslateModule,
+  ],
 })
 export class AppComponent implements OnInit {
   constructor(

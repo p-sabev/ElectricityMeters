@@ -63,9 +63,13 @@ describe('DetailsForSubscriberComponent', () => {
     const readingsSpy = jasmine.createSpyObj('ReadingsService', ['getAllReadingsBySubscriberId']);
 
     await TestBed.configureTestingModule({
-    imports: [DetailsForSubscriberComponent, TranslateModule.forRoot()],
-    providers: [{ provide: ReadingsService, useValue: readingsSpy }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+      imports: [DetailsForSubscriberComponent, TranslateModule.forRoot()],
+      providers: [
+        { provide: ReadingsService, useValue: readingsSpy },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DetailsForSubscriberComponent);
     component = fixture.componentInstance;

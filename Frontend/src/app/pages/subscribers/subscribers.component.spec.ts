@@ -38,9 +38,9 @@ describe('SubscribersComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']); // Mock EventEmitter
 
     await TestBed.configureTestingModule({
-    declarations: [],
-    imports: [SubscribersComponent],
-    providers: [
+      declarations: [],
+      imports: [SubscribersComponent],
+      providers: [
         { provide: SubscribersService, useValue: subscribersSpy },
         { provide: SwitchboardsService, useValue: switchboardsSpy },
         { provide: NotificationsEmitterService, useValue: notificationsSpy },
@@ -50,8 +50,8 @@ describe('SubscribersComponent', () => {
         { provide: TableHelperService, useValue: tableHelperSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SubscribersComponent);
     component = fixture.componentInstance;

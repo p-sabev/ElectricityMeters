@@ -26,16 +26,16 @@ describe('AddEditSwitchboardComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']);
 
     await TestBed.configureTestingModule({
-    declarations: [],
-    imports: [AddEditSwitchboardComponent, ReactiveFormsModule, TranslateModule.forRoot()],
-    providers: [
+      declarations: [],
+      imports: [AddEditSwitchboardComponent, ReactiveFormsModule, TranslateModule.forRoot()],
+      providers: [
         { provide: SwitchboardsService, useValue: switchboardsSpy },
         { provide: NotificationsEmitterService, useValue: notificationsSpy },
         { provide: ErrorService, useValue: errorSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddEditSwitchboardComponent);
     component = fixture.componentInstance;

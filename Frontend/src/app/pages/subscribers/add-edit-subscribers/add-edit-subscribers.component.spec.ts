@@ -26,16 +26,16 @@ describe('AddEditSubscribersComponent', () => {
     notificationsSpy.Success = jasmine.createSpyObj('EventEmitter', ['emit']); // Mock EventEmitter
 
     await TestBed.configureTestingModule({
-    imports: [AddEditSubscribersComponent, ReactiveFormsModule],
-    providers: [
+      imports: [AddEditSubscribersComponent, ReactiveFormsModule],
+      providers: [
         { provide: SubscribersService, useValue: subscribersSpy },
         { provide: SwitchboardsService, useValue: switchboardsSpy },
         { provide: NotificationsEmitterService, useValue: notificationsSpy },
         { provide: ErrorService, useValue: errorSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddEditSubscribersComponent);
     component = fixture.componentInstance;
