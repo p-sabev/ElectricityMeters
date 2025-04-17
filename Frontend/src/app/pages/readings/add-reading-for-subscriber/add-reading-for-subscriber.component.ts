@@ -162,8 +162,6 @@ export class AddReadingForSubscriberComponent implements OnInit {
       (this.addEditReadingForm.get('firstPhaseValue')?.value || 0) +
       (this.addEditReadingForm.get('secondPhaseValue')?.value || 0) +
       (this.addEditReadingForm.get('thirdPhaseValue')?.value || 0);
-    console.log('enteredSum', enteredSum);
-    console.log('minReadingValue + 2000', this.minReadingValue + 2000);
     this.theReadingIsSuspiciouslyBig = enteredSum > this.minReadingValue + 2000;
   }
 }

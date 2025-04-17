@@ -198,4 +198,50 @@ describe('AddReadingForSubscriberComponent', () => {
     expect(notifications.Success.emit).not.toHaveBeenCalled();
     expect(component.close.emit).not.toHaveBeenCalled();
   });
+
+  // Test for checkIfSingleReadingIsTooBig
+  it('should set theReadingIsSuspiciouslyBig to true if single reading value is too big', () => {
+    component.addEditReadingForm.patchValue({
+      value: component.minReadingValue + 2001, // Exceeds the threshold
+    });
+
+    component.checkIfSingleReadingIsTooBig();
+
+    expect(component.theReadingIsSuspiciouslyBig).toBeTrue();
+  });
+
+  it('should set theReadingIsSuspiciouslyBig to false if single reading value is within the limit', () => {
+    component.addEditReadingForm.patchValue({
+      value: component.minReadingValue + 1999, // Within the threshold
+    });
+
+    component.checkIfSingleReadingIsTooBig();
+
+    expect(component.theReadingIsSuspiciouslyBig).toBeFalse();
+  });
+
+// Test for checkIfMultiPhaseReadingIsTooBig
+  it('should set theReadingIsSuspiciouslyBig to true if multi-phase reading sum is too big', () => {
+    component.addEditReadingForm.patchValue({
+      firstPhaseValue: 1000,
+      secondPhaseValue: 1000,
+      thirdPhaseValue: 1001, // Sum exceeds the threshold
+    });
+
+    component.checkIfMultiPhaseReadingIsTooBig();
+
+    expect(component.theReadingIsSuspiciouslyBig).toBeTrue();
+  });
+
+  it('should set theReadingIsSuspiciouslyBig to false if multi-phase reading sum is within the limit', () => {
+    component.addEditReadingForm.patchValue({
+      firstPhaseValue: 10,
+      secondPhaseValue: 20,
+      thirdPhaseValue: 999, // Sum within the threshold
+    });
+
+    component.checkIfMultiPhaseReadingIsTooBig();
+
+    expect(component.theReadingIsSuspiciouslyBig).toBeFalse();
+  });
 });
