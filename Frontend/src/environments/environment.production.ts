@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'https://elmeters.site:7007',
+  url: 'https://elmeters.website:7007',
 };

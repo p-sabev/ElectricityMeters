@@ -154,16 +154,16 @@ if (!builder.Environment.IsDevelopment())
                     "http://localhost:4200",
                     "http://192.168.0.207:4200",
                     "http://91.139.199.178:4200",
-                    "http://elmeters.site:4200",
-                    "http://elmeters.site",
+                    "http://elmeters.website:4200",
+                    "http://elmeters.website",
                     "https://localhost:4200",
                     "https://192.168.0.207:4200",
                     "https://91.139.199.178:4200",
-                    "https://elmeters.site:4200",
-                    "https://elmeters.site",
-                    "https://www.elmeters.site",
-                    "http://www.elmeters.site",
-                    "www.elmeters.site")
+                    "https://elmeters.website:4200",
+                    "https://elmeters.website",
+                    "https://www.elmeters.website",
+                    "http://www.elmeters.website",
+                    "www.elmeters.website")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials();
@@ -174,7 +174,7 @@ if (!builder.Environment.IsDevelopment())
     {
         options.ListenAnyIP(7007, listenOptions =>
         {
-            listenOptions.UseHttps("C:\\Users\\Administrator\\certificate-elmeters.pfx", "");
+            listenOptions.UseHttps("C:\\Users\\Administrator\\elmeters-certificate.pfx", "");
         });
     });
 

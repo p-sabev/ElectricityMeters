@@ -211,5 +211,7 @@
   "SubscriberReadingValueIsLowerThanLastReading": "Стойността на показанието за абонат - '{{subscriberName}}' е по-ниска от последното показание",
   "NoReadingsToInsert": "Липсват коректни показания които да бъдат въведени",
   "NameSmall": "име",
-  "WarningTheReadingIsSuspiciouslyBig": "Моля проверете въведеното показание, разликата от предишното въведено е голяма."
+  "WarningTheReadingIsSuspiciouslyBig": "Моля проверете въведеното показание, разликата от предишното въведено е голяма.",
+  "UnhandledKeyMessageError": "Възникна грешка, моля свържете се със системния администратор.",
+  "HttpErrorWithCode": "Възникна грешка с код '{{code}}', моля свържете се със системния администратор. Допълнителна информация - ({{msg}})"
 }

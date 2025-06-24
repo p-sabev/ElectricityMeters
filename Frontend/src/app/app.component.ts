@@ -67,6 +67,9 @@ export class AppComponent implements OnInit {
     this.notificationEmitter.Error.subscribe((error: { key: string; message: string }) => {
       this.handleErrorNotification(error);
     });
+    this.notificationEmitter.ErrorNoTranslate.subscribe((msg: string) => {
+      this.showNotificationError(msg, 'Error');
+    });
     this.notificationEmitter.Info.subscribe((msg) => {
       this.showNotification(msg, 'Info');
     });

@@ -5,5 +5,6 @@ Migrations:
 Export migrations for the server:
   Script-Migration -From <LAST_MIGRATION_IN_DB> -To <LAST_MIGRATION> -Context ApplicationDbContext -Verbose
 
-Build BE proj:
-  dotnet publish
+Publish:
+ - dotnet publish
+ - bin\Release\net8.0\publish

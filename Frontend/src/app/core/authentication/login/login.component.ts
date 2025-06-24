@@ -6,6 +6,7 @@ import { StorageService } from '../../services/storage.service';
 import { NotificationsEmitterService } from '../../services/notifications.service';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent {
     private authService: AuthService,
     private storageService: StorageService,
     private router: Router,
-    private notifications: NotificationsEmitterService
+    private notifications: NotificationsEmitterService,
+    private translate: TranslateService
   ) {}
 
   isSignUp = false;
@@ -36,8 +38,15 @@ export class LoginComponent {
       next: (resp) => {
         this.logUserIntoTheSystem(resp);
       },
-      error: () => {
-        this.notifications.Error.emit('IncorrectUserNameOrPassword');
+      error: (err: any) => {
+        if (err.status === 400) {
+          this.notifications.Error.emit('IncorrectUserNameOrPassword');
+        } else {
+          console.log(err);
+          const msg = this.translate.instant('HttpErrorWithCode', {code: err.status, msg: err.message});
+          this.notifications.ErrorNoTranslate.emit(msg);
+        }
+
       },
     });
   }
