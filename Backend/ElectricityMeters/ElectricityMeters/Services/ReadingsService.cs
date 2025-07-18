@@ -353,7 +353,7 @@ namespace ElectricityMeters.Services
             // Step 1: Get all readings that do not have a payment (i.e., Payment is null)
             var pendingReadings = await _dbContext.Readings
                 .Include(r => r.Subscriber)
-                .Where(r => r.Payment == null)
+                .Where(r => !_dbContext.Payments.Any(p => p.Reading.Id == r.Id))
                 .ToListAsync();
 
             // Step 2: Calculate PendingTotalElectricity (sum of AmountDue for all readings without a payment)
