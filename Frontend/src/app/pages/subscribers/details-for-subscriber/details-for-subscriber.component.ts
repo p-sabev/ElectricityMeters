@@ -10,6 +10,7 @@ import { TableModule } from 'primeng/table';
 import { TwoAfterDotPipe } from '../../../shared/pipes/two-after-dot/two-after-dot.pipe';
 import { PrintReceiptComponent } from '../../readings/print-receipt/print-receipt.component';
 import { catchError, EMPTY, tap } from 'rxjs';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-details-for-subscriber',
@@ -24,6 +25,7 @@ import { catchError, EMPTY, tap } from 'rxjs';
     TableModule,
     TwoAfterDotPipe,
     PrintReceiptComponent,
+    TooltipModule,
   ],
   templateUrl: './details-for-subscriber.component.html',
   styleUrl: './details-for-subscriber.component.scss',
