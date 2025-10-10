@@ -49,9 +49,15 @@
       </p>
       <p class="p-border">
         <span class="font-weight-bold"> За/срещу: </span>
-        н:{{ reading.value }} - с:{{ reading.value - reading.difference }} = {{ reading.difference
-        }}{{ 'kvh' | translate }} * {{ reading.currentPrice | twoAfterDot }}{{ 'BgnVaultSmall' | translate }} =
-        {{ reading.amountDue | twoAfterDot }}{{ 'BgnVaultSmall' | translate }}
+        н:{{ reading.value | twoAfterDot: true }} - с:{{
+          (reading.usedReadingCoefficient
+            ? reading.value - reading.difference / reading.usedReadingCoefficient
+            : reading.value - reading.difference
+          ) | twoAfterDot: true
+        }}
+        = {{ reading.difference | twoAfterDot: true }}{{ 'kvh' | translate }} *
+        {{ (reading.usedFixedPrice ? reading.usedFixedPrice : reading.currentPrice) | twoAfterDot
+        }}{{ 'BgnVaultSmall' | translate }} = {{ reading.amountDue | twoAfterDot }}{{ 'BgnVaultSmall' | translate }}
       </p>
       <p class="p-border" *ngIf="fees?.length && fees[0] && fees[0].value && fees[0].value > 0">
         <span class="font-weight-bold"> {{ fees.length === 1 ? 'Такса' : 'Такси' }}: </span>

@@ -22,6 +22,9 @@ namespace ElectricityMeters.Response.Subscribers
         public double? DefaultReading { get; set; }
         public string Note { get; set; }
         public required int PhaseCount { get; set; }
+        public double? IndividualPrice { get; set; }
+        public double? IndividualPricePercent { get; set; }
+        public double? ReadingCoefficient { get; set; }
     }
 
     public class SubscribersStartResponse
@@ -38,5 +41,8 @@ namespace ElectricityMeters.Response.Subscribers
         public string Note { get; set; }
         public double? DefaultReading { get; set; }
         public required int PhaseCount { get; set; }
+        public double? IndividualPrice { get; set; }
+        public double? IndividualPricePercent { get; set; }
+        public double? ReadingCoefficient { get; set; }
     }
 }

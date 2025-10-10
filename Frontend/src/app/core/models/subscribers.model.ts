@@ -13,10 +13,13 @@ export interface Subscriber {
   lastReading?: number;
   note?: string;
   defaultReading?: number;
+  readingCoefficient?: number;
   phaseCount: number;
   lastFirstPhaseValue?: number;
   lastSecondPhaseValue?: number;
   lastThirdPhaseValue?: number;
+  individualPrice?: number;
+  individualPricePercent?: number;
 }
 
 export interface InsertSubscriber {

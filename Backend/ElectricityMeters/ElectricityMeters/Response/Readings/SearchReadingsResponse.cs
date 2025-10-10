@@ -22,6 +22,8 @@ namespace ElectricityMeters.Response.Readings
         public double Difference { get; set; }
         public double CurrentPrice { get; set; }
         public Price? UsedPrice { get; set; }
+        public double? UsedFixedPrice { get; set; }
+        public double? UsedReadingCoefficient { get; set; }
         public bool IsPaid { get; set; }
         public List<PaymentFee>? FeeList { get; set; }
     }
@@ -39,5 +41,8 @@ namespace ElectricityMeters.Response.Readings
         public double? LastReading { get; set; }
         public string? Note { get; set; }
         public required int PhaseCount { get; set; }
+        public double? IndividualPrice { get; set; }
+        public double? IndividualPricePercent { get; set; }
+        public double? ReadingCoefficient { get; set; }
     }
 }

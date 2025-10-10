@@ -16,12 +16,13 @@ namespace ElectricityMeters.Models
         public double Difference { get; set; }
         public double CurrentPrice { get; set; }
         public int UsedPrice { get; set; }
+        public double? UsedFixedPrice { get; set; }
         public int? Payment {  get; set; }
-
+        public double? UsedReadingCoefficient { get; set; }
 
         public Reading() { }
 
-        public Reading(int id, DateTime dateFrom, DateTime dateTo, double value, double firstPhaseValue, double secondPhaseValue, double thirdPhaseValue, double amountDue, double difference, double currentPrice, Subscriber subscriber)
+        public Reading(int id, DateTime dateFrom, DateTime dateTo, double value, double firstPhaseValue, double secondPhaseValue, double thirdPhaseValue, double amountDue, double difference, double currentPrice, Subscriber subscriber, double? usedFixedPrice)
         {
             Id = id;
             DateFrom = dateFrom;
@@ -34,6 +35,7 @@ namespace ElectricityMeters.Models
             Difference = difference;
             CurrentPrice = currentPrice;
             Subscriber = subscriber;
+            UsedFixedPrice = usedFixedPrice;
         }
     }
 }

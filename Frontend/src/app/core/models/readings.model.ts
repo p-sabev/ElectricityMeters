@@ -15,6 +15,8 @@ export interface Reading {
   currentPrice: number;
   isPaid?: boolean;
   feeList?: PaymentFee[];
+  usedReadingCoefficient?: number;
+  usedFixedPrice?: number;
 }
 
 export interface PaymentFee {

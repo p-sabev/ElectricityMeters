@@ -101,7 +101,7 @@
             <!--              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('meterNumber')"></app-form-errors>-->
             <!--            </div>-->
 
-            <div class="col-lg-6 col-md-12 mt-3">
+            <div class="col-lg-12 col-md-12 mt-3">
               <label>{{ 'Note' | translate }}</label>
 
               <input
@@ -141,21 +141,114 @@
 
               <div class="flex flex-wrap gap-3">
                 <div class="flex align-items-center phase-radio">
-                  <p-radioButton [value]="1" formControlName="phaseCount" [inputId]="'1'" />
-                  <label [for]="'1'" class="phase-label ml-2"> 1 </label>
+                  <p-radioButton [value]="1" formControlName="phaseCount" [inputId]="'phase1'" />
+                  <label [for]="'phase1'" class="phase-label ml-2"> 1 </label>
                 </div>
                 <div class="flex align-items-center phase-radio">
-                  <p-radioButton [value]="2" formControlName="phaseCount" [inputId]="'2'" />
-                  <label [for]="'2'" class="phase-label ml-2"> 2 </label>
+                  <p-radioButton [value]="2" formControlName="phaseCount" [inputId]="'phase2'" />
+                  <label [for]="'phase2'" class="phase-label ml-2"> 2 </label>
                 </div>
                 <div class="flex align-items-center phase-radio">
-                  <p-radioButton [value]="3" formControlName="phaseCount" [inputId]="'3'" />
-                  <label [for]="'3'" class="phase-label ml-2"> 3 </label>
+                  <p-radioButton [value]="3" formControlName="phaseCount" [inputId]="'phase3'" />
+                  <label [for]="'phase3'" class="phase-label ml-2"> 3 </label>
                 </div>
               </div>
 
               <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('phaseCount')"></app-form-errors>
             </div>
+
+            <div class="col-lg-6 col-md-12 mt-3">
+              <label class="mb-1"
+                >{{ 'ReadingCoefficient' | translate }}
+                <fa-icon
+                  [icon]="['fas', 'circle-info']"
+                  pTooltip="{{ 'ReadingCoefficientDescription' | translate }}"
+                  tooltipPosition="top"
+                  [class]="'ml-2 text-primary'"></fa-icon>
+              </label>
+
+              <input
+                formControlName="readingCoefficient"
+                type="number"
+                class="form-control"
+                name="value"
+                id="value"
+                title="{{ 'ReadingCoefficient' | translate }}"
+                placeholder="{{ 'ReadingCoefficient' | translate }}" />
+
+              <app-form-errors
+                [withoutTooltip]="true"
+                [control]="addEditForm.get('readingCoefficient')"></app-form-errors>
+            </div>
+
+            <div class="col-12 mt-3">
+              <label class="mb-1">{{ 'PriceApplied' | translate }}</label>
+
+              <div class="flex flex-wrap gap-3">
+                <div class="flex align-items-center phase-radio">
+                  <p-radioButton [value]="1" formControlName="priceApplied" [inputId]="'price1'" />
+                  <label [for]="'price1'" class="phase-label ml-2">{{ 'CommonPrice' | translate }}</label>
+                </div>
+                <div class="flex align-items-center phase-radio">
+                  <p-radioButton [value]="2" formControlName="priceApplied" [inputId]="'price2'" />
+                  <label [for]="'price2'" class="phase-label ml-2">{{ 'IndividualPrice' | translate }}</label>
+                </div>
+                <div class="flex align-items-center phase-radio">
+                  <p-radioButton [value]="3" formControlName="priceApplied" [inputId]="'price3'" />
+                  <label [for]="'price3'" class="phase-label ml-2">{{ 'IndividualPercent' | translate }}</label>
+                </div>
+              </div>
+
+              <app-form-errors [withoutTooltip]="true" [control]="addEditForm.get('priceApplied')"></app-form-errors>
+            </div>
+
+            @if (addEditForm.get('priceApplied')?.value === 2) {
+              <div class="col-lg-6 col-md-12 mt-3">
+                <label class="mb-1">{{ 'IndividualPrice' | translate }}</label>
+                <input
+                  formControlName="individualPrice"
+                  type="number"
+                  class="form-control"
+                  name="value"
+                  id="value"
+                  title="{{ 'IndividualPrice' | translate }}"
+                  placeholder="{{ 'IndividualPrice' | translate }}" />
+
+                <app-form-errors
+                  [withoutTooltip]="true"
+                  [control]="addEditForm.get('individualPrice')"
+                  [min]="0"></app-form-errors>
+              </div>
+            }
+
+            @if (addEditForm.get('priceApplied')?.value === 3) {
+              <div class="col-lg-6 col-md-12 mt-3">
+                <label class="mb-1">{{ 'IndividualPercent' | translate }}</label>
+                <input
+                  formControlName="individualPricePercent"
+                  type="number"
+                  class="form-control"
+                  name="value"
+                  id="value"
+                  title="{{ 'IndividualPercent' | translate }}"
+                  placeholder="{{ 'IndividualPercent' | translate }}" />
+
+                <app-form-errors
+                  [withoutTooltip]="true"
+                  [control]="addEditForm.get('individualPricePercent')"
+                  [min]="-100"
+                  [max]="100000"></app-form-errors>
+              </div>
+
+              @if (addEditForm.get('individualPricePercent')) {
+                <div class="col-lg-6 col-md-12 mt-3">
+                  <label class="mb-1" style="opacity: 0; display: block">{{ 'IndividualPercent' | translate }}</label>
+                  Пример: При текуща цена 0.20лв: <br />
+                  {{ addEditForm.get('individualPricePercent')?.value }}% от 0.20лв =
+                  {{ (addEditForm.get('individualPricePercent')?.value * 0.2) / 100 | twoAfterDot }}лв
+                </div>
+              }
+            }
           </div>
         </form>
       </div>

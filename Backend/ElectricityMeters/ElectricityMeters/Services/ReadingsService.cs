@@ -60,7 +60,9 @@ namespace ElectricityMeters.Services
                     ThirdPhaseValue = r.ThirdPhaseValue,
                     AmountDue = r.AmountDue,
                     Difference = r.Difference,
+                    UsedReadingCoefficient = r.UsedReadingCoefficient,
                     CurrentPrice = r.CurrentPrice,
+                    UsedFixedPrice = r.UsedFixedPrice,
                     UsedPrice = _dbContext.Prices
                         .Where(p => p.Id == r.UsedPrice)
                         .Select(p => new Price
@@ -84,7 +86,10 @@ namespace ElectricityMeters.Services
                             SwitchboardNumber = s.Switchboard.Name,
                             MeterNumber = s.MeterNumber,
                             Note = s.Note,
-                            PhaseCount = s.PhaseCount
+                            PhaseCount = s.PhaseCount,
+                            IndividualPrice = s.IndividualPrice,
+                            IndividualPricePercent = s.IndividualPricePercent,
+                            ReadingCoefficient = s.ReadingCoefficient
                         })
                         .FirstOrDefault(),
                     IsPaid = _dbContext.Payments.Any(p => p.Reading.Id == r.Id),
@@ -132,13 +137,27 @@ namespace ElectricityMeters.Services
                 .OrderByDescending(p => p.DateFrom)
                 .FirstOrDefaultAsync();
 
-            if (currentPrice == null)
+            double? fixedPrice = null;
+
+            if (subscriber.IndividualPrice != null)
+            {
+                fixedPrice = (double)subscriber.IndividualPrice;
+            }
+            else if (subscriber.IndividualPricePercent != null && currentPrice != null) {
+                fixedPrice = (double)(currentPrice.PriceInLv * subscriber.IndividualPricePercent / 100);
+            }
+
+            if (currentPrice == null && fixedPrice == null)
             {
                 throw new Exception("CannotFindPriceForTheReading");
             }
 
             var difference = lastReading != null ? (insertReading.Value - lastReading.Value) : (subscriber.DefaultReading != null ? (insertReading.Value - subscriber.DefaultReading) : insertReading.Value);
-            var amountDue = difference * currentPrice.PriceInLv;
+            if (subscriber.ReadingCoefficient != null)
+            {
+                difference = difference * subscriber.ReadingCoefficient;
+            }
+            var amountDue = (fixedPrice != null ? (difference * fixedPrice) : (difference * currentPrice.PriceInLv));
 
             var reading = new Reading
             {
@@ -152,7 +171,9 @@ namespace ElectricityMeters.Services
                 Difference = (double)difference,
                 AmountDue = (double)amountDue,
                 CurrentPrice = currentPrice.PriceInLv,
-                UsedPrice = currentPrice.Id
+                UsedPrice = currentPrice.Id,
+                UsedFixedPrice = fixedPrice,
+                UsedReadingCoefficient = subscriber.ReadingCoefficient
             };
 
             _dbContext.Readings.Add(reading);
@@ -199,13 +220,28 @@ namespace ElectricityMeters.Services
                     .OrderByDescending(p => p.DateFrom)
                     .FirstOrDefaultAsync();
 
-                if (currentPrice == null)
+                double? fixedPrice = null;
+
+                if (subscriber.IndividualPrice != null)
                 {
-                    continue; // Skip if no valid price is found
+                    fixedPrice = (double)subscriber.IndividualPrice;
+                }
+                else if (subscriber.IndividualPricePercent != null && currentPrice != null)
+                {
+                    fixedPrice = (double)(currentPrice.PriceInLv * subscriber.IndividualPricePercent / 100);
+                }
+
+                if (currentPrice == null && fixedPrice == null)
+                {
+                    throw new Exception("CannotFindPriceForTheReading");
                 }
 
                 var difference = lastReading != null ? (insertReading.Value - lastReading.Value) : (subscriber.DefaultReading != null ? (insertReading.Value - subscriber.DefaultReading) : insertReading.Value);
-                var amountDue = difference * currentPrice.PriceInLv;
+                if (subscriber.ReadingCoefficient != null)
+                {
+                    difference = difference * subscriber.ReadingCoefficient;
+                }
+                var amountDue = (fixedPrice != null ? (difference * fixedPrice) : (difference * currentPrice.PriceInLv));
 
                 var reading = new Reading
                 {
@@ -219,7 +255,9 @@ namespace ElectricityMeters.Services
                     Difference = (double)difference,
                     AmountDue = (double)amountDue,
                     CurrentPrice = currentPrice.PriceInLv,
-                    UsedPrice = currentPrice.Id
+                    UsedPrice = currentPrice.Id,
+                    UsedFixedPrice = fixedPrice,
+                    UsedReadingCoefficient = subscriber.ReadingCoefficient
                 };
 
                 _dbContext.Readings.Add(reading);
@@ -269,7 +307,18 @@ namespace ElectricityMeters.Services
                 .OrderByDescending(p => p.DateFrom)
                 .FirstOrDefaultAsync();
 
-            if (currentPrice == null)
+            double? fixedPrice = null;
+
+            if (reading.Subscriber.IndividualPrice != null)
+            {
+                fixedPrice = (double)reading.Subscriber.IndividualPrice;
+            }
+            else if (reading.Subscriber.IndividualPricePercent != null && currentPrice != null)
+            {
+                fixedPrice = (double)(currentPrice.PriceInLv * reading.Subscriber.IndividualPricePercent / 100);
+            }
+
+            if (currentPrice == null && fixedPrice == null)
             {
                 throw new Exception("CannotFindPriceForTheReading");
             }
@@ -280,7 +329,11 @@ namespace ElectricityMeters.Services
                 .FirstOrDefaultAsync();
 
             var difference = previousReading != null ? (editReading.Value - lastReading.Value) : (reading.Subscriber.DefaultReading != null ? (editReading.Value - reading.Subscriber.DefaultReading) : editReading.Value);
-            var amountDue = difference * currentPrice.PriceInLv;
+            if (reading.Subscriber.ReadingCoefficient != null)
+            {
+                difference = difference * reading.Subscriber.ReadingCoefficient;
+            }
+            var amountDue = (fixedPrice != null ? (difference * fixedPrice) : (difference * currentPrice.PriceInLv));
 
             reading.DateFrom = editReading.DateFrom;
             reading.DateTo = editReading.DateTo;
@@ -292,6 +345,8 @@ namespace ElectricityMeters.Services
             reading.AmountDue = (double)amountDue;
             reading.CurrentPrice = currentPrice.PriceInLv;
             reading.UsedPrice = currentPrice.Id;
+            reading.UsedFixedPrice = fixedPrice;
+            reading.UsedReadingCoefficient = reading.Subscriber.ReadingCoefficient;
 
             try
             {

@@ -80,6 +80,9 @@ namespace ElectricityMeters.Services
                         .FirstOrDefault(),
                     DefaultReading = p.DefaultReading,
                     PhaseCount = p.PhaseCount,
+                    IndividualPrice = p.IndividualPrice,
+                    IndividualPricePercent = p.IndividualPricePercent,
+                    ReadingCoefficient = p.ReadingCoefficient
                 })
                 .ToListAsync();
 
@@ -98,6 +101,9 @@ namespace ElectricityMeters.Services
                     LastReading = p.LastReadingData?.Value,
                     DefaultReading = p.DefaultReading,
                     PhaseCount = p.PhaseCount,
+                    IndividualPrice = p.IndividualPrice,
+                    IndividualPricePercent = p.IndividualPricePercent,
+                    ReadingCoefficient = p.ReadingCoefficient
                 })
                 .ToList();
 
@@ -128,6 +134,9 @@ namespace ElectricityMeters.Services
                 Note = insertSubscriber.Note,
                 DefaultReading = insertSubscriber.DefaultReading,
                 PhaseCount = insertSubscriber.PhaseCount,
+                IndividualPrice = insertSubscriber.IndividualPrice,
+                IndividualPricePercent = insertSubscriber.IndividualPricePercent,
+                ReadingCoefficient = insertSubscriber.ReadingCoefficient
             };
 
             _dbContext.Subscribers.Add(subscriber);
@@ -159,6 +168,9 @@ namespace ElectricityMeters.Services
             existingSubscriber.Note = editSubscriber.Note;
             existingSubscriber.DefaultReading = editSubscriber.DefaultReading;
             existingSubscriber.PhaseCount = editSubscriber.PhaseCount;
+            existingSubscriber.IndividualPrice = editSubscriber.IndividualPrice;
+            existingSubscriber.IndividualPricePercent = editSubscriber.IndividualPricePercent;
+            existingSubscriber.ReadingCoefficient = editSubscriber.ReadingCoefficient;
 
             try
             {

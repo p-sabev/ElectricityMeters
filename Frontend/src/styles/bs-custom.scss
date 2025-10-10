@@ -126,6 +126,10 @@ button.close {
   text-align: left;
 }
 
+label {
+  font-weight: bold;
+}
+
 @media screen and (max-width: 900px) {
   .modal-xl {
     max-width: calc(100% - 20px) !important;

@@ -6,6 +6,7 @@ import { StorageService } from '../../services/storage.service';
 import { NotificationsEmitterService } from '../../services/notifications.service';
 import { LoginComponent } from './login.component';
 import { FormsModule } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('LoginComponent (standalone)', () => {
   let component: LoginComponent;
@@ -29,6 +30,15 @@ describe('LoginComponent (standalone)', () => {
       Error: { emit: jasmine.createSpy('emit') },
     };
 
+    const translateServiceMock = {
+      addLangs: jasmine.createSpy('addLangs'),
+      setDefaultLang: jasmine.createSpy('setDefaultLang'),
+      use: jasmine.createSpy('use'),
+      get: jasmine
+        .createSpy('get')
+        .and.returnValue(of({ MessageKey: 'TranslatedMessage', Success: 'SuccessTranslated' })),
+      instant: jasmine.createSpy('instant').and.returnValue('translated'),
+    };
     TestBed.configureTestingModule({
       imports: [LoginComponent, FormsModule], // ✅ LoginComponent is standalone
       providers: [
@@ -36,6 +46,7 @@ describe('LoginComponent (standalone)', () => {
         { provide: StorageService, useValue: storageServiceMock },
         { provide: Router, useValue: routerMock },
         { provide: NotificationsEmitterService, useValue: notificationsMock },
+        { provide: TranslateService, useValue: translateServiceMock },
       ],
     });
 

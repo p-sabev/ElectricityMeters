@@ -220,7 +220,7 @@ describe('AddReadingForSubscriberComponent', () => {
     expect(component.theReadingIsSuspiciouslyBig).toBeFalse();
   });
 
-// Test for checkIfMultiPhaseReadingIsTooBig
+  // Test for checkIfMultiPhaseReadingIsTooBig
   it('should set theReadingIsSuspiciouslyBig to true if multi-phase reading sum is too big', () => {
     component.addEditReadingForm.patchValue({
       firstPhaseValue: 1000,

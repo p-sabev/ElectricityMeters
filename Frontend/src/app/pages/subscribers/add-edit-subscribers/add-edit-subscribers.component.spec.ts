@@ -65,6 +65,10 @@ describe('AddEditSubscribersComponent', () => {
         note: 'Note',
         defaultReading: 100,
         phaseCount: 1,
+        readingCoefficient: null,
+        priceApplied: null,
+        individualPricePercent: null,
+        individualPrice: null,
       };
 
       component.addEditForm.setValue(mockFormValue);
@@ -102,6 +106,10 @@ describe('AddEditSubscribersComponent', () => {
         note: 'Note',
         defaultReading: 100,
         phaseCount: 1,
+        readingCoefficient: null,
+        priceApplied: null,
+        individualPricePercent: null,
+        individualPrice: null,
       };
 
       component.addEditForm.setValue(mockFormValue);
@@ -141,6 +149,10 @@ describe('AddEditSubscribersComponent', () => {
         note: '',
         defaultReading: null,
         phaseCount: 1,
+        readingCoefficient: null,
+        priceApplied: 1,
+        individualPricePercent: null,
+        individualPrice: null,
       });
     });
 

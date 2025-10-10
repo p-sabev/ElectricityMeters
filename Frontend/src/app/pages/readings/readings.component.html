@@ -110,15 +110,46 @@
             <td>{{ reading.dateFrom | date: 'dd.MM.yyyy' }}</td>
             <td>{{ reading.dateTo | date: 'dd.MM.yyyy' }}</td>
             <td>
-              {{ reading.value }} {{ 'kvh' | translate }}
+              @if (!reading.value || reading.value % 1 === 0) {
+                {{ reading.value }}
+              } @else {
+                {{ reading.value | twoAfterDot }}
+              }
+              {{ 'kvh' | translate }}
               <app-display-two-three-phase-reading
                 [phaseCount]="reading.subscriber?.phaseCount"
                 [firstPhaseValue]="reading.firstPhaseValue || 0"
                 [secondPhaseValue]="reading.secondPhaseValue || 0"
                 [thirdPhaseValue]="reading.thirdPhaseValue || 0"></app-display-two-three-phase-reading>
             </td>
-            <td>{{ reading.difference }} {{ 'kvh' | translate }}</td>
-            <td>{{ reading.currentPrice | twoAfterDot }} {{ 'BgnVaultSmall' | translate }}</td>
+            <td>
+              @if (!reading.difference || reading.difference % 1 === 0) {
+                {{ reading.difference }}
+              } @else {
+                {{ reading.difference | twoAfterDot }}
+              }
+              {{ 'kvh' | translate }}
+              @if (reading.usedReadingCoefficient) {
+                <fa-icon
+                  [icon]="['fas', 'circle-info']"
+                  pTooltip="Получената разлика е сформирана от разликата на показанията умножена по коефициент ({{
+                    reading.usedReadingCoefficient
+                  }})"
+                  tooltipPosition="top"
+                  [class]="'ml-2 text-warning'"></fa-icon>
+              }
+            </td>
+            <td>
+              {{ (reading.usedFixedPrice ? reading.usedFixedPrice : reading.currentPrice) | twoAfterDot }}
+              {{ 'BgnVaultSmall' | translate }}
+              @if (reading.usedFixedPrice) {
+                <fa-icon
+                  [icon]="['fas', 'circle-info']"
+                  pTooltip="Използвана е тарифа различна от общата"
+                  tooltipPosition="top"
+                  [class]="'ml-2 text-warning'"></fa-icon>
+              }
+            </td>
             <td>{{ reading.amountDue | twoAfterDot }} {{ 'BgnVaultSmall' | translate }}</td>
             <td>
               <fa-icon
