@@ -64,34 +64,34 @@ describe('ReceiptComponent', () => {
     expect(totalFees).toBe(30); // Only considers fees with positive values
   });
 
-  it('should return "нула лева и нула стотинки" for 0 price in priceToWords', () => {
+  it('should return "нула евро и нула цента" for 0 price in priceToWords', () => {
     const words = component.priceToWords(0);
-    expect(words).toBe('нула лева и нула стотинки');
+    expect(words).toBe('нула евро и нула цента');
   });
 
   it('should convert whole numbers to words in Bulgarian', () => {
     const words = component.priceToWords(123);
-    expect(words).toBe('сто двадесет и три лева и нула стотинки');
+    expect(words).toBe('сто двадесет и три евро и нула цента');
   });
 
   it('should convert decimal prices to words in Bulgarian', () => {
     const words = component.priceToWords(123.45);
-    expect(words).toBe('сто двадесет и три лева и четиридесет и пет стотинки');
+    expect(words).toBe('сто двадесет и три евро и четиридесет и пет цента');
   });
 
   it('should handle large numbers correctly in priceToWords', () => {
     const words = component.priceToWords(123456.78);
-    expect(words).toBe('сто двадесет и три хиляди четиристотин петдесет и шест лева и седемдесет и осем стотинки');
+    expect(words).toBe('сто двадесет и три хиляди четиристотин петдесет и шест евро и седемдесет и осем цента');
   });
 
   it('should handle small numbers correctly in priceToWords', () => {
     const words = component.priceToWords(0.78);
-    expect(words).toBe('седемдесет и осем стотинки');
+    expect(words).toBe('седемдесет и осем цента');
   });
 
   it('should handle single-digit prices correctly in priceToWords', () => {
     const words = component.priceToWords(7.09);
-    expect(words).toBe('седем лева и девет стотинки');
+    expect(words).toBe('седем евро и девет цента');
   });
 
   it('should correctly set @Input() properties', () => {

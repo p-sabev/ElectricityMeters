@@ -13,6 +13,7 @@ namespace ElectricityMeters.Models
         public double SecondPhaseValue { get; set; }
         public double ThirdPhaseValue { get; set; }
         public double AmountDue { get; set; }
+        public double AmountDueCopy { get; set; }
         public double Difference { get; set; }
         public double CurrentPrice { get; set; }
         public int UsedPrice { get; set; }

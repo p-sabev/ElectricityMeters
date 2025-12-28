@@ -86,21 +86,21 @@ export class ReceiptComponent {
       return result.trim();
     }
 
-    if (price === 0) return 'нула лева и нула стотинки';
+    if (price === 0) return 'нула евро и нула цента';
 
     const leva = Math.floor(price);
     const stotinki = Math.round((price - leva) * 100);
 
     let levaWords = '';
     if (leva > 0) {
-      levaWords = getThousands(leva) + ' лева';
+      levaWords = getThousands(leva) + ' евро';
     }
 
     let stotinkiWords = '';
     if (stotinki > 0) {
-      stotinkiWords = getHundreds(stotinki) + ' стотинки';
+      stotinkiWords = getHundreds(stotinki) + ' цента';
     } else {
-      stotinkiWords = 'нула стотинки';
+      stotinkiWords = 'нула цента';
     }
 
     return (levaWords + ' и ' + stotinkiWords)

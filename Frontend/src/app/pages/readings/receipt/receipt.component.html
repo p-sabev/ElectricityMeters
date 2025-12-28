@@ -22,7 +22,7 @@
   <!--        <span class="font-weight-bold">-->
   <!--          Сумата:-->
   <!--        </span>-->
-  <!--        {{reading.amountDue | twoAfterDot}} лв.</p>-->
+  <!--        {{reading.amountDue | twoAfterDot}} €</p>-->
   <!--      <p class="p-border last-el-border">-->
   <!--        <span class="font-weight-bold">-->
   <!--          С думи:-->
@@ -67,7 +67,7 @@
               class="fee"
               *ngIf="fee.value && fee.value > 0"
               [ngStyle]="{ display: fees.length === 1 ? 'inline' : 'block' }">
-              {{ fee.value | twoAfterDot }}лв. - {{ fee.description }}
+              {{ fee.value | twoAfterDot }}€ - {{ fee.description }}
             </span>
           </ng-container>
         </span>
@@ -75,7 +75,7 @@
 
       <p class="p-border">
         <span class="font-weight-bold"> Сумата: </span>
-        {{ reading.amountDue + getTotalFees() | twoAfterDot }} лв.
+        {{ reading.amountDue + getTotalFees() | twoAfterDot }} €
       </p>
       <p class="p-border">
         <span class="font-weight-bold"> С думи: </span>

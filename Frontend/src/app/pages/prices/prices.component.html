@@ -60,7 +60,7 @@
         <ng-template pTemplate="body" let-price>
           <tr>
             <!--            <td>{{ price.id }}</td>-->
-            <td class="font-weight-bold">{{ price.priceInLv | twoAfterDot }}лв.</td>
+            <td class="font-weight-bold">{{ price.priceInLv | twoAfterDot }}€</td>
             <td>{{ price.dateFrom | date: 'dd.MM.yyyy' }}</td>
             <td>
               <span *ngIf="price.dateTo">{{ price.dateTo | date: 'dd.MM.yyyy' }}</span>

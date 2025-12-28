@@ -243,9 +243,9 @@
               @if (addEditForm.get('individualPricePercent')) {
                 <div class="col-lg-6 col-md-12 mt-3">
                   <label class="mb-1" style="opacity: 0; display: block">{{ 'IndividualPercent' | translate }}</label>
-                  Пример: При текуща цена 0.20лв: <br />
-                  {{ addEditForm.get('individualPricePercent')?.value }}% от 0.20лв =
-                  {{ (addEditForm.get('individualPricePercent')?.value * 0.2) / 100 | twoAfterDot }}лв
+                  Пример: При текуща цена 0.20€: <br />
+                  {{ addEditForm.get('individualPricePercent')?.value }}% от 0.20€ =
+                  {{ (addEditForm.get('individualPricePercent')?.value * 0.2) / 100 | twoAfterDot }}€
                 </div>
               }
             }

@@ -1,0 +1,99 @@
+-- Скрипт за проверка на броя записи, които ще бъдат обновени
+SELECT 'PaymentFees' AS TableName, 'Value' AS ColumnName, COUNT(*) AS RecordsToUpdate
+FROM PaymentFees 
+WHERE Value IS NOT NULL
+
+UNION ALL
+
+SELECT 'Prices', 'PriceInLv', COUNT(*)
+FROM Prices 
+WHERE PriceInLv IS NOT NULL
+
+UNION ALL
+
+SELECT 'Readings', 'AmountDue', COUNT(*)
+FROM Readings 
+WHERE AmountDue IS NOT NULL
+
+UNION ALL
+
+SELECT 'Readings', 'CurrentPrice', COUNT(*)
+FROM Readings 
+WHERE CurrentPrice IS NOT NULL
+
+UNION ALL
+
+SELECT 'Readings', 'UsedFixedPrice', COUNT(*)
+FROM Readings 
+WHERE UsedFixedPrice IS NOT NULL
+
+UNION ALL
+
+SELECT 'StandartFees', 'Value', COUNT(*)
+FROM StandartFees 
+WHERE Value IS NOT NULL
+
+UNION ALL
+
+SELECT 'Subscribers', 'IndividualPrice', COUNT(*)
+FROM Subscribers 
+WHERE IndividualPrice IS NOT NULL;
+
+
+-- Скрипт за превалутиране от лева към евро с закръгляване до 2 знака
+-- Курс: 1.95583 лева = 1 евро
+-- Закръгляване: до 2 знака след запетаята (round half up)
+-- ВНИМАНИЕ: Направете резервно копие на базата данни преди изпълнение!
+
+BEGIN TRANSACTION;
+
+BEGIN TRY
+    -- PaymentFees - Value
+    UPDATE PaymentFees 
+    SET Value = ROUND(Value / 1.95583, 2)
+    WHERE Value IS NOT NULL;
+
+    -- Prices - PriceInLv
+    UPDATE Prices 
+    SET PriceInLv = ROUND(PriceInLv / 1.95583, 2)
+    WHERE PriceInLv IS NOT NULL;
+
+    -- Readings - AmountDue
+    UPDATE Readings 
+    SET AmountDue = ROUND(AmountDue / 1.95583, 2)
+    WHERE AmountDue IS NOT NULL;
+
+    -- Readings - CurrentPrice
+    UPDATE Readings 
+    SET CurrentPrice = ROUND(CurrentPrice / 1.95583, 2)
+    WHERE CurrentPrice IS NOT NULL;
+
+    -- Readings - UsedFixedPrice
+    UPDATE Readings 
+    SET UsedFixedPrice = ROUND(UsedFixedPrice / 1.95583, 2)
+    WHERE UsedFixedPrice IS NOT NULL;
+
+    -- StandartFees - Value
+    UPDATE StandartFees 
+    SET Value = ROUND(Value / 1.95583, 2)
+    WHERE Value IS NOT NULL;
+
+    -- Subscribers - IndividualPrice
+    UPDATE Subscribers 
+    SET IndividualPrice = ROUND(IndividualPrice / 1.95583, 2)
+    WHERE IndividualPrice IS NOT NULL;
+
+    -- Ако всичко е наред, комитираме транзакцията
+    COMMIT TRANSACTION;
+    
+    PRINT 'Превалутирането е завършено успешно!';
+    PRINT 'Всички стойности са закръглени до 2 знака след десетичната запетая.';
+END TRY
+BEGIN CATCH
+    -- При грешка връщаме промените
+    ROLLBACK TRANSACTION;
+    
+    PRINT 'ГРЕШКА при превалутиране!';
+    PRINT 'Всички промени са отменени.';
+    PRINT 'Съобщение за грешка: ' + ERROR_MESSAGE();
+END CATCH;
