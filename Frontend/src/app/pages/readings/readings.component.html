@@ -150,7 +150,7 @@
                   [class]="'ml-2 text-warning'"></fa-icon>
               }
             </td>
-            <td>{{ reading.amountDue | twoAfterDot }} {{ 'BgnVaultSmall' | translate }}</td>
+            <td>{{ reading.amountDue | twoAfterDot }} {{ 'BgnVaultSmall' | translate }} @if(reading.amountDueCopy) { ({{reading.amountDueCopy | twoAfterDot}}лв.) }</td>
             <td>
               <fa-icon
                 *ngIf="reading.isPaid"

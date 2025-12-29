@@ -11,6 +11,7 @@ export interface Reading {
   secondPhaseValue: number;
   thirdPhaseValue: number;
   amountDue: number;
+  amountDueCopy?: number;
   difference: number;
   currentPrice: number;
   isPaid?: boolean;

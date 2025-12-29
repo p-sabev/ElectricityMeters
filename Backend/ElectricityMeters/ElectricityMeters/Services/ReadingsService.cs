@@ -59,6 +59,7 @@ namespace ElectricityMeters.Services
                     SecondPhaseValue = r.SecondPhaseValue,
                     ThirdPhaseValue = r.ThirdPhaseValue,
                     AmountDue = r.AmountDue,
+                    AmountDueCopy = r.AmountDueCopy,
                     Difference = r.Difference,
                     UsedReadingCoefficient = r.UsedReadingCoefficient,
                     CurrentPrice = r.CurrentPrice,
