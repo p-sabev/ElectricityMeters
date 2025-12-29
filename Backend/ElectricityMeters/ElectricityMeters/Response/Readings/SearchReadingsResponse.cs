@@ -19,6 +19,7 @@ namespace ElectricityMeters.Response.Readings
         public double SecondPhaseValue { get; set; }
         public double ThirdPhaseValue { get; set; }
         public double AmountDue { get; set; }
+        public double AmountDueCopy { get; set; }
         public double Difference { get; set; }
         public double CurrentPrice { get; set; }
         public Price? UsedPrice { get; set; }
