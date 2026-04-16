@@ -38,7 +38,7 @@
                   >
                 </h6>
               </div>
-              <div class="card-body" *ngIf="pendingPaymentsReportData.subscribersPendindPayments?.length">
+              <div class="card-body" *ngIf="pendingPaymentsReportData.subscribersPendindPayments.length">
                 <h3 class="mt-2 text-center">{{ 'SubscribersAwaitingPayment' | translate }}</h3>
 
                 <p-table
@@ -90,9 +90,93 @@
         </div>
       </div>
 
+      <div
+        #exportContainer
+        class="pending-payments-export"
+        *ngIf="pendingPaymentsReportData && pendingPaymentsReportData.subscribersPendindPayments.length">
+        <div class="pending-payments-export__header">
+          <h3 class="text-center mb-3" translate>PendingPaymentsReport</h3>
+
+          <div class="pending-payments-export__totals">
+            <div>
+              <span>{{ 'TotalForElectricity' | translate }}:</span>
+              <strong>
+                {{ pendingPaymentsReportData.pendingTotalElectricity | twoAfterDot }}
+                {{ 'BgnVaultSmall' | translate }}
+              </strong>
+            </div>
+            <div>
+              <span>{{ 'TotalForTaxes' | translate }}:</span>
+              <strong>
+                {{ pendingPaymentsReportData.pendingTotalFees | twoAfterDot }}
+                {{ 'BgnVaultSmall' | translate }}
+              </strong>
+            </div>
+            <div>
+              <span>{{ 'Total' | translate }}:</span>
+              <strong>
+                {{
+                  pendingPaymentsReportData.pendingTotalElectricity + pendingPaymentsReportData.pendingTotalFees
+                    | twoAfterDot
+                }}
+                {{ 'BgnVaultSmall' | translate }}
+              </strong>
+            </div>
+          </div>
+        </div>
+
+        <table class="table table-bordered table-sm mb-0">
+          <thead>
+            <tr>
+              <th scope="col">{{ 'Subscriber' | translate }}</th>
+              <th scope="col" *ngIf="hasSomeWithMoreThanOnePayment">{{ 'PaymentsCount' | translate }}</th>
+              <th scope="col">{{ 'TotalForElectricity' | translate }}</th>
+              <th scope="col">{{ 'TotalForTaxes' | translate }}</th>
+              <th scope="col">{{ 'Total' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let subscriber of pendingPaymentsReportData.subscribersPendindPayments">
+              <td class="fw-bold">{{ formatNameForExport(subscriber.subscriber.name) }}</td>
+              <td *ngIf="hasSomeWithMoreThanOnePayment">{{ subscriber.paymentsCount }}</td>
+              <td>{{ subscriber.totalAmountDue | twoAfterDot }} {{ 'BgnVaultSmall' | translate }}</td>
+              <td>
+                {{ subscriber.paymentsCount * pendingPaymentsReportData.standardFeesSum | twoAfterDot }}
+                {{ 'BgnVaultSmall' | translate }}
+              </td>
+              <td class="fw-bold">
+                {{
+                  subscriber.totalAmountDue + subscriber.paymentsCount * pendingPaymentsReportData.standardFeesSum
+                    | twoAfterDot
+                }}
+                {{ 'BgnVaultSmall' | translate }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="modal-footer">
         <div class="row" style="width: 100%">
           <div class="col-12 p-0">
+            <div class="float-end">
+              <button
+                type="button"
+                class="btn btn-outline-secondary me-2"
+                (click)="exportAsPng()"
+                [disabled]="isExportingPng || isExportingPdf"
+                translate>
+                ExportPNG
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary me-2"
+                (click)="exportAsPdf()"
+                [disabled]="isExportingPdf || isExportingPng"
+                translate>
+                ExportPDF
+              </button>
+            </div>
             <button type="button" class="btn btn-secondary float-start" (click)="close.emit()" translate>Close</button>
           </div>
         </div>

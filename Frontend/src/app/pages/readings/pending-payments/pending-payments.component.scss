@@ -1,3 +1,25 @@
 ::ng-deep .p-datatable-wrapper {
   min-height: 350px;
 }
+
+.pending-payments-export {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 1100px;
+  background: #ffffff;
+  padding: 24px;
+  color: #000000;
+}
+
+.pending-payments-export__totals {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+.pending-payments-export table {
+  font-size: 12px;
+}
