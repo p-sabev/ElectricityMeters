@@ -154,16 +154,16 @@ if (!builder.Environment.IsDevelopment())
                     "http://localhost:4200",
                     "http://192.168.0.207:4200",
                     "http://91.139.199.178:4200",
-                    "http://elmeters.website:4200",
-                    "http://elmeters.website",
+                    "http://elmeters.site:4200",
+                    "http://elmeters.site",
                     "https://localhost:4200",
                     "https://192.168.0.207:4200",
                     "https://91.139.199.178:4200",
-                    "https://elmeters.website:4200",
-                    "https://elmeters.website",
-                    "https://www.elmeters.website",
-                    "http://www.elmeters.website",
-                    "www.elmeters.website")
+                    "https://elmeters.site:4200",
+                    "https://elmeters.site",
+                    "https://www.elmeters.site",
+                    "http://www.elmeters.site",
+                    "www.elmeters.site")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials();
